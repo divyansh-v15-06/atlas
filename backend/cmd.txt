@@ -1,0 +1,16 @@
+cd backend && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o api ./cmd/api && cd ..
+cd frontend && npm run build && cd ..
+tar -czf deploy.tar.gz \
+  docker-compose.prod.yml \
+  .env.production.example \
+  nginx \
+  backend/api \
+  backend/migrations \
+  backend/Dockerfile.prod \
+  frontend/.dockerignore \
+  frontend/.next/standalone \
+  frontend/.next/static \
+  frontend/public \
+  frontend/Dockerfile.prod \
+  deploy
+sshpass -p "nit#@cc@1234" scp -P 22 deploy.tar.gz web@14.139.56.17:/tmp/deploy.tar.gz
