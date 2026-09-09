@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useEffect } from "react";
-import { MOCK_FACULTY } from "@/lib/mock-data";
+import { MOCK_FACULTY, MOCK_PHD_SCHOLARS } from "@/lib/mock-data";
 import { getStoredData, getStoredObject } from "@/lib/faculty-storage";
 
 const PUBS_PER_PAGE = 10;
@@ -52,6 +52,7 @@ export default function FacultyPortfolioPage({
   const [allFacultyPubs, setAllFacultyPubs] = useState<any[]>(baseFaculty?.publications || []);
   const [allFacultyPatents, setAllFacultyPatents] = useState<any[]>(baseFaculty?.patents || []);
   const [allFacultyProjects, setAllFacultyProjects] = useState<any[]>(baseFaculty?.projects || []);
+  const [allSupervisions, setAllSupervisions] = useState<any[]>(baseFaculty?.supervisions || []);
   const [allQualifications, setAllQualifications] = useState<any[]>(baseFaculty?.qualifications || []);
   const [allTeachingExp, setAllTeachingExp] = useState<any[]>(baseFaculty?.teaching_experiences || []);
   const [allAdminExp, setAllAdminExp] = useState<any[]>(baseFaculty?.administrative_experiences || []);
@@ -64,6 +65,7 @@ export default function FacultyPortfolioPage({
       setAllFacultyPubs(getStoredData(baseFaculty, "publications", baseFaculty.publications || []));
       setAllFacultyPatents(getStoredData(baseFaculty, "patents", baseFaculty.patents || []));
       setAllFacultyProjects(getStoredData(baseFaculty, "projects", baseFaculty.projects || []));
+      setAllSupervisions(getStoredData(baseFaculty, "supervisions", baseFaculty.supervisions || []));
       setAllQualifications(getStoredData(baseFaculty, "qualifications", baseFaculty.qualifications || []));
       setAllTeachingExp(getStoredData(baseFaculty, "teaching_experiences", baseFaculty.teaching_experiences || []));
       setAllAdminExp(getStoredData(baseFaculty, "admin_experiences", baseFaculty.administrative_experiences || []));
@@ -72,13 +74,72 @@ export default function FacultyPortfolioPage({
     }
   }, [baseFaculty]);
 
-  const [activeTab, setActiveTab] = useState<"publications" | "patents" | "projects" | "qualifications" | "experience">("publications");
+  const [activeTab, setActiveTab] = useState<
+    "publications" | "patents" | "projects" | "supervisions" | "qualifications" | "experience"
+  >("publications");
   const [pubSearch, setPubSearch] = useState("");
   const [selectedYear, setSelectedYear] = useState<string>("ALL");
   const [selectedType, setSelectedType] = useState<string>("ALL");
   const [currentPage, setCurrentPage] = useState(1);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedAbstractId, setExpandedAbstractId] = useState<string | null>(null);
+
+  // Combined Research Supervisions (base faculty supervisions + matching PhD scholars)
+  const combinedSupervisions = useMemo(() => {
+    if (allSupervisions && allSupervisions.length > 0) {
+      return allSupervisions;
+    }
+    const nameLower = faculty?.full_name?.toLowerCase() || "";
+    const lastName = nameLower.split(" ").pop() || "";
+    if (lastName && lastName.length > 2) {
+      const matched = MOCK_PHD_SCHOLARS.filter((s: any) =>
+        s.supervisor?.toLowerCase().includes(lastName) ||
+        s.co_supervisor?.toLowerCase().includes(lastName)
+      ).map((s: any) => ({
+        id: s.id,
+        level: "Ph.D.",
+        student_name: s.full_name || s.scholar_name,
+        roll_number: s.roll_number || "",
+        thesis_title: s.research_topic || s.title || "Doctoral Research",
+        status: s.status === "passed" ? "Awarded" : "Ongoing",
+        year: s.registration_year || s.batch_year || 2023,
+        co_supervisor: s.co_supervisor || null,
+      }));
+      return matched;
+    }
+    return [];
+  }, [allSupervisions, faculty]);
+
+  // Highlight Stats (Inspired by MNIT presentation, calculated from canonical records)
+  const journalCount = useMemo(() => {
+    return allFacultyPubs.filter(
+      (p: any) =>
+        p.publication_type?.toUpperCase() === "JOURNAL" ||
+        p.type?.toUpperCase() === "JOURNAL"
+    ).length;
+  }, [allFacultyPubs]);
+
+  const conferenceCount = useMemo(() => {
+    return allFacultyPubs.filter(
+      (p: any) =>
+        p.publication_type?.toUpperCase() === "CONFERENCE" ||
+        p.type?.toUpperCase() === "CONFERENCE"
+    ).length;
+  }, [allFacultyPubs]);
+
+  const projectCount = allFacultyProjects.length;
+
+  const phdSupervisedCount = useMemo(() => {
+    const phdList = combinedSupervisions.filter(
+      (s: any) =>
+        s.level?.toLowerCase().includes("ph") ||
+        s.programme?.toLowerCase().includes("ph") ||
+        !s.level
+    );
+    return phdList.length > 0 ? phdList.length : combinedSupervisions.length;
+  }, [combinedSupervisions]);
+
+  const patentCount = allFacultyPatents.length;
 
   if (!faculty) {
     return (
