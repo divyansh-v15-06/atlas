@@ -1,7 +1,9 @@
 "use client";
 
-import { use, useState, useMemo } from "react";
+import { use, useState, useMemo, useEffect, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   Mail,
   Phone,
@@ -22,17 +24,57 @@ import {
   Mic,
   ChevronDown,
   ChevronUp,
-  ChevronLeft,
   ChevronRight,
   Filter,
   RotateCcw,
+  UserCheck,
+  Book,
+  Bookmark,
+  Presentation,
+  Trophy,
+  Users,
+  Compass,
+  LogIn,
+  MapPin,
+  Sparkles,
+  Plus,
+  Edit,
+  Trash2,
+  X,
+  Info,
+  CheckCircle2,
+  AlertTriangle,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { useEffect } from "react";
-import { MOCK_FACULTY, MOCK_PHD_SCHOLARS } from "@/lib/mock-data";
-import { getStoredData, getStoredObject } from "@/lib/faculty-storage";
+import {
+  MOCK_FACULTY,
+  MOCK_PHD_SCHOLARS,
+  MOCK_CONSULTANCIES,
+  MOCK_EVENTS,
+} from "@/lib/mock-data";
+import {
+  getStoredData,
+  setStoredData,
+  getStoredObject,
+  setStoredObject,
+} from "@/lib/faculty-storage";
 import { useDepartment } from "@/context/department-context";
+
+export type TabKey =
+  | "facultyInfo"
+  | "journal"
+  | "conference"
+  | "book"
+  | "book_chapter"
+  | "patents"
+  | "projects"
+  | "events"
+  | "consultancies"
+  | "experttalk"
+  | "researchSupervision"
+  | "administrativeexperience"
+  | "honors"
+  | "internationalAndNationalExposure";
 
 const PUBS_PER_PAGE = 10;
 
@@ -48,6 +90,8 @@ export default function FacultyPortfolioPage({
   const resolvedParams = use(params);
   const resolvedSearchParams = searchParams ? use(searchParams) : {};
   const queryDept = typeof resolvedSearchParams?.dept === "string" ? resolvedSearchParams.dept : undefined;
+  const initialTab = typeof resolvedSearchParams?.tab === "string" ? (resolvedSearchParams.tab as TabKey) : "facultyInfo";
+
   const code = resolvedParams.slug.toUpperCase();
 
   const baseFaculty = MOCK_FACULTY.find(
@@ -67,7 +111,11 @@ export default function FacultyPortfolioPage({
   const [allAdminExp, setAllAdminExp] = useState<any[]>(baseFaculty?.administrative_experiences || []);
   const [allHonors, setAllHonors] = useState<any[]>(baseFaculty?.honors || []);
   const [allTalks, setAllTalks] = useState<any[]>(baseFaculty?.expert_talks || []);
+  const [allExposures, setAllExposures] = useState<any[]>(baseFaculty?.exposures || []);
+  const [allConsultancies, setAllConsultancies] = useState<any[]>([]);
+  const [allEvents, setAllEvents] = useState<any[]>([]);
 
+  // Load and synchronize stored data
   useEffect(() => {
     if (baseFaculty) {
       setFaculty(getStoredObject(baseFaculty, "profile", baseFaculty));
@@ -77,23 +125,47 @@ export default function FacultyPortfolioPage({
       setAllSupervisions(getStoredData(baseFaculty, "supervisions", baseFaculty.supervisions || []));
       setAllQualifications(getStoredData(baseFaculty, "qualifications", baseFaculty.qualifications || []));
       setAllTeachingExp(getStoredData(baseFaculty, "teaching_experiences", baseFaculty.teaching_experiences || []));
-      setAllAdminExp(getStoredData(baseFaculty, "admin_experiences", baseFaculty.administrative_experiences || []));
+      setAllAdminExp(getStoredData(baseFaculty, "admin_experiences", baseFaculty.administrative_experiences || baseFaculty.admin_experiences || []));
       setAllHonors(getStoredData(baseFaculty, "honors", baseFaculty.honors || []));
       setAllTalks(getStoredData(baseFaculty, "expert_talks", baseFaculty.expert_talks || []));
+      setAllExposures(getStoredData(baseFaculty, "exposures", baseFaculty.exposures || []));
+
+      const lastName = (baseFaculty.full_name || "").split(" ").pop()?.toLowerCase() || "";
+      
+      // Match consultancies from seed and stored
+      const defaultConsultancies = MOCK_CONSULTANCIES.filter((c: any) =>
+        (c.faculty_ids && c.faculty_ids.includes(baseFaculty.id)) ||
+        (lastName.length > 2 && c.author_text?.toLowerCase().includes(lastName))
+      );
+      setAllConsultancies(getStoredData(baseFaculty, "consultancies", defaultConsultancies));
+
+      // Match events from seed and stored
+      const defaultEvents = MOCK_EVENTS.filter((e: any) =>
+        (e.faculty_ids && e.faculty_ids.includes(baseFaculty.id)) ||
+        (lastName.length > 2 && (e.convenor?.toLowerCase().includes(lastName) || e.coordinator?.toLowerCase().includes(lastName)))
+      );
+      setAllEvents(getStoredData(baseFaculty, "events", defaultEvents));
     }
   }, [baseFaculty]);
 
-  const [activeTab, setActiveTab] = useState<
-    "publications" | "patents" | "projects" | "supervisions" | "qualifications" | "experience"
-  >("publications");
+  const [activeTab, setActiveTab] = useState<TabKey>(initialTab);
   const [pubSearch, setPubSearch] = useState("");
   const [selectedYear, setSelectedYear] = useState<string>("ALL");
-  const [selectedType, setSelectedType] = useState<string>("ALL");
   const [currentPage, setCurrentPage] = useState(1);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedAbstractId, setExpandedAbstractId] = useState<string | null>(null);
 
-  // Combined Research Supervisions (base faculty supervisions + matching PhD scholars)
+  // Dynamic Modals State
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [formMode, setFormMode] = useState<"add" | "edit">("add");
+  const [editingItem, setEditingItem] = useState<any>(null);
+  const [formData, setFormData] = useState<Record<string, any>>({});
+
+  // Details Modal State (tempcsebase PublicationsModal / ConsultanciesModal)
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [detailItem, setDetailItem] = useState<any>(null);
+
+  // Combined Research Supervisions
   const combinedSupervisions = useMemo(() => {
     if (allSupervisions && allSupervisions.length > 0) {
       return allSupervisions;
@@ -119,24 +191,62 @@ export default function FacultyPortfolioPage({
     return [];
   }, [allSupervisions, faculty]);
 
-  // Highlight Stats (Inspired by MNIT presentation, calculated from canonical records)
-  const journalCount = useMemo(() => {
+  // Categorized Publications
+  const journals = useMemo(() => {
     return allFacultyPubs.filter(
       (p: any) =>
         p.publication_type?.toUpperCase() === "JOURNAL" ||
-        p.type?.toUpperCase() === "JOURNAL"
-    ).length;
+        p.type?.toUpperCase() === "JOURNAL" ||
+        p.research_type_id === 1 ||
+        p.research_type_id === "1"
+    );
   }, [allFacultyPubs]);
 
-  const conferenceCount = useMemo(() => {
+  const conferences = useMemo(() => {
     return allFacultyPubs.filter(
       (p: any) =>
         p.publication_type?.toUpperCase() === "CONFERENCE" ||
-        p.type?.toUpperCase() === "CONFERENCE"
-    ).length;
+        p.type?.toUpperCase() === "CONFERENCE" ||
+        p.research_type_id === 2 ||
+        p.research_type_id === "2"
+    );
   }, [allFacultyPubs]);
 
+  const books = useMemo(() => {
+    return allFacultyPubs.filter(
+      (p: any) =>
+        p.publication_type?.toUpperCase() === "BOOK" ||
+        p.type?.toUpperCase() === "BOOK" ||
+        p.research_type_id === 3 ||
+        p.research_type_id === "3"
+    );
+  }, [allFacultyPubs]);
+
+  const bookChapters = useMemo(() => {
+    return allFacultyPubs.filter(
+      (p: any) =>
+        p.publication_type?.toUpperCase() === "BOOK CHAPTER" ||
+        p.publication_type?.toUpperCase() === "BOOK_CHAPTER" ||
+        p.type?.toUpperCase() === "BOOK_CHAPTER" ||
+        p.research_type_id === 4 ||
+        p.research_type_id === "4"
+    );
+  }, [allFacultyPubs]);
+
+  // Stats Counters
+  const journalCount = journals.length;
+  const conferenceCount = conferences.length;
+  const bookCount = books.length;
+  const bookChapterCount = bookChapters.length;
+  const patentCount = allFacultyPatents.length;
   const projectCount = allFacultyProjects.length;
+  const eventCount = allEvents.length;
+  const consultancyCount = allConsultancies.length;
+  const expertTalkCount = allTalks.length;
+  const supervisionCount = combinedSupervisions.length;
+  const adminExpCount = allAdminExp.length;
+  const honorCount = allHonors.length;
+  const exposureCount = allExposures.length;
 
   const phdSupervisedCount = useMemo(() => {
     const phdList = combinedSupervisions.filter(
@@ -147,8 +257,6 @@ export default function FacultyPortfolioPage({
     );
     return phdList.length > 0 ? phdList.length : combinedSupervisions.length;
   }, [combinedSupervisions]);
-
-  const patentCount = allFacultyPatents.length;
 
   const facultyDeptSlug = faculty?.department_slug || "cse";
   const facultyDeptName = faculty?.department_name || "Computer Science & Engineering";
@@ -164,12 +272,454 @@ export default function FacultyPortfolioPage({
     effectiveDeptSlug !== facultyDeptSlug.toLowerCase()
   );
 
+  const highestQualification = useMemo(() => {
+    if (faculty?.highest_qualification) return faculty.highest_qualification;
+    if (allQualifications && allQualifications.length > 0) {
+      const phds = allQualifications.filter((q: any) => (q.degree || q.nameOfDegree || "").toLowerCase().includes("ph"));
+      if (phds.length > 0) return phds[0].degree || phds[0].nameOfDegree;
+      return allQualifications[0].degree || allQualifications[0].nameOfDegree || "Ph.D.";
+    }
+    return "Ph.D. (Computer Science & Engineering)";
+  }, [allQualifications, faculty]);
+
+  const netTeachingExpText = useMemo(() => {
+    if (faculty?.teaching_experience_summary) return faculty.teaching_experience_summary;
+    if (allTeachingExp && allTeachingExp.length > 0) {
+      return `${allTeachingExp.length} Appointments / Positions`;
+    }
+    return "15+ Years Academic Experience";
+  }, [allTeachingExp, faculty]);
+
+  // Sidebar navigation items (14 Categories matching tempcsebase)
+  const sidebarItems: {
+    key: TabKey;
+    label: string;
+    icon: any;
+    count?: number;
+  }[] = [
+    { key: "facultyInfo", label: "Faculty Profile", icon: UserCheck },
+    { key: "journal", label: "Journal", icon: BookOpen, count: journalCount },
+    { key: "conference", label: "Conference", icon: Presentation, count: conferenceCount },
+    { key: "book", label: "Book", icon: Book, count: bookCount },
+    { key: "book_chapter", label: "Book Chapter", icon: Bookmark, count: bookChapterCount },
+    { key: "patents", label: "Patents", icon: Lightbulb, count: patentCount },
+    { key: "projects", label: "Projects", icon: Briefcase, count: projectCount },
+    { key: "events", label: "Events", icon: Calendar, count: eventCount },
+    { key: "consultancies", label: "Consultancies", icon: Building2, count: consultancyCount },
+    { key: "experttalk", label: "Expert Talk", icon: Mic, count: expertTalkCount },
+    { key: "researchSupervision", label: "Research Supervision", icon: GraduationCap, count: supervisionCount },
+    { key: "administrativeexperience", label: "Administrative Experience", icon: Award, count: adminExpCount },
+    { key: "honors", label: "Honors & Recognitions", icon: Trophy, count: honorCount },
+    { key: "internationalAndNationalExposure", label: "International & National Exposure", icon: Globe, count: exposureCount },
+  ];
+
+  // Active publications list based on active tab
+  const currentPubList = activeTab === "conference" ? conferences : activeTab === "book" ? books : activeTab === "book_chapter" ? bookChapters : journals;
+
+  // Available Years for filter chips
+  const pubYears = Array.from(
+    new Set(
+      currentPubList
+        .map((p: any) => Number(p.year))
+        .filter((y) => !isNaN(y) && y > 0)
+    )
+  ).sort((a, b) => b - a);
+
+  // Filtered publications
+  const filteredPubs = currentPubList.filter((p: any) => {
+    const q = pubSearch.toLowerCase();
+    const matchesSearch =
+      !q ||
+      p.title?.toLowerCase().includes(q) ||
+      p.venue_name?.toLowerCase().includes(q) ||
+      p.journal_or_conference_name?.toLowerCase().includes(q) ||
+      p.author_text?.toLowerCase().includes(q) ||
+      p.doi?.toLowerCase().includes(q);
+
+    const matchesYear = selectedYear === "ALL" || String(p.year) === selectedYear;
+
+    return matchesSearch && matchesYear;
+  });
+
+  const totalPages = Math.ceil(filteredPubs.length / PUBS_PER_PAGE) || 1;
+  const paginatedPubs = filteredPubs.slice(
+    (currentPage - 1) * PUBS_PER_PAGE,
+    currentPage * PUBS_PER_PAGE
+  );
+
+  const copyCitation = (pub: any) => {
+    const authors = pub.author_text || pub.raw_authors || faculty.full_name;
+    const year = pub.year ? `(${pub.year})` : "";
+    const venue = pub.journal_or_conference_name || pub.venue_name || "";
+    const volume = pub.volume ? `Vol. ${pub.volume}` : "";
+    const issue = pub.issue ? `No. ${pub.issue}` : "";
+    const pages = pub.page_range || pub.pages ? `pp. ${pub.page_range || pub.pages}` : "";
+    const doi = pub.doi ? `DOI: ${pub.doi}` : "";
+
+    const parts = [authors, year, `"${pub.title}"`, venue, volume, issue, pages, doi].filter(Boolean);
+    const citation = parts.join(", ") + ".";
+
+    navigator.clipboard.writeText(citation);
+    setCopiedId(pub.id);
+    toast.success("Citation copied to clipboard!");
+    setTimeout(() => setCopiedId(null), 2500);
+  };
+
+  // Open Details Modal
+  const openDetails = (item: any) => {
+    setDetailItem(item);
+    setIsDetailsModalOpen(true);
+  };
+
+  // Open Dynamic Add Form
+  const openAddModal = () => {
+    setFormMode("add");
+    setEditingItem(null);
+    if (activeTab === "facultyInfo") {
+      setFormData({
+        full_name: faculty?.full_name || "",
+        designation: faculty?.designation || "",
+        email: faculty?.email || "",
+        phone: faculty?.phone || "",
+        highest_qualification: highestQualification,
+        teaching_experience_summary: netTeachingExpText,
+        research_interests: (faculty?.research_interests || []).join(", "),
+        bio: faculty?.bio || "",
+        google_scholar_id: faculty?.profile?.google_scholar_id || faculty?.google_scholar_url || "",
+        scopus_id: faculty?.profile?.scopus_id || faculty?.scopus_url || "",
+        orcid: faculty?.profile?.orcid || faculty?.orcid || "",
+        rg_url: faculty?.profile?.rg_url || "",
+        linkedin_url: faculty?.profile?.linkedin_url || faculty?.linkedin_url || "",
+        vidwan_url: faculty?.profile?.vidwan_url || "",
+        publons_url: faculty?.profile?.publons_url || "",
+      });
+    } else {
+      setFormData({});
+    }
+    setIsFormModalOpen(true);
+  };
+
+  // Open Dynamic Edit Form
+  const openEditModal = (item: any) => {
+    setFormMode("edit");
+    setEditingItem(item);
+    setFormData({ ...item });
+    setIsDetailsModalOpen(false);
+    setIsFormModalOpen(true);
+  };
+
+  // Handle Dynamic Form Input
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Save Dynamic Form Submission
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const id = formMode === "edit" ? editingItem?.id : `custom-${Date.now()}`;
+
+    if (activeTab === "facultyInfo") {
+      const updatedFaculty = {
+        ...faculty,
+        full_name: formData.full_name || faculty.full_name,
+        designation: formData.designation || faculty.designation,
+        email: formData.email || faculty.email,
+        phone: formData.phone || faculty.phone,
+        highest_qualification: formData.highest_qualification || highestQualification,
+        teaching_experience_summary: formData.teaching_experience_summary || netTeachingExpText,
+        research_interests: typeof formData.research_interests === "string" ? formData.research_interests.split(",").map((s: string) => s.trim()).filter(Boolean) : faculty.research_interests,
+        bio: formData.bio || faculty.bio,
+        google_scholar_url: formData.google_scholar_id,
+        scopus_url: formData.scopus_id,
+        orcid: formData.orcid,
+        linkedin_url: formData.linkedin_url,
+        profile: {
+          ...faculty.profile,
+          google_scholar_id: formData.google_scholar_id,
+          scopus_id: formData.scopus_id,
+          orcid: formData.orcid,
+          rg_url: formData.rg_url,
+          linkedin_url: formData.linkedin_url,
+          vidwan_url: formData.vidwan_url,
+          publons_url: formData.publons_url,
+          bio: formData.bio,
+        },
+      };
+      setFaculty(updatedFaculty);
+      setStoredObject(baseFaculty, "profile", updatedFaculty);
+      toast.success("Faculty profile updated successfully!");
+    } else if (activeTab === "journal" || activeTab === "conference" || activeTab === "book" || activeTab === "book_chapter") {
+      const typeMap: Record<string, { type: string; id: number }> = {
+        journal: { type: "Journal", id: 1 },
+        conference: { type: "Conference", id: 2 },
+        book: { type: "Book", id: 3 },
+        book_chapter: { type: "Book Chapter", id: 4 },
+      };
+      const record = {
+        id,
+        title: formData.title || "Untitled Publication",
+        publication_type: typeMap[activeTab].type,
+        research_type_id: typeMap[activeTab].id,
+        author_text: formData.author_text || formData.authors || faculty.full_name,
+        journal_or_conference_name: formData.journal_or_conference_name || formData.venue_name || "Academic Proceedings",
+        venue_name: formData.venue_name || formData.journal_or_conference_name || "",
+        volume: formData.volume || "",
+        issue: formData.issue || "",
+        page_range: formData.page_range || formData.pages || "",
+        pages: formData.pages || formData.page_range || "",
+        year: Number(formData.year) || new Date().getFullYear(),
+        doi: formData.doi || "",
+        indexing: formData.indexing || "Scopus",
+        journal_quartile: formData.journal_quartile || "Q1",
+        abstract_text: formData.abstract_text || "",
+      };
+
+      let nextList = [...allFacultyPubs];
+      if (formMode === "edit") {
+        nextList = nextList.map((p) => (p.id === editingItem.id ? { ...p, ...record } : p));
+      } else {
+        nextList = [record, ...nextList];
+      }
+      setAllFacultyPubs(nextList);
+      setStoredData(baseFaculty, "publications", nextList);
+      toast.success(`${typeMap[activeTab].type} record ${formMode === "edit" ? "updated" : "added"}!`);
+    } else if (activeTab === "patents") {
+      const record = {
+        id,
+        title: formData.title || "Untitled Patent",
+        application_number: formData.application_number || "Application Pending",
+        patent_number: formData.patent_number || "",
+        status: formData.status || "Published",
+        filing_date: formData.filing_date || new Date().toISOString().split("T")[0],
+        grant_date: formData.grant_date || "",
+        raw_inventors: formData.raw_inventors || faculty.full_name,
+        patent_office: formData.patent_office || "Indian Patent Office",
+        country: formData.country || "India",
+      };
+      let nextList = [...allFacultyPatents];
+      if (formMode === "edit") {
+        nextList = nextList.map((p) => (p.id === editingItem.id ? { ...p, ...record } : p));
+      } else {
+        nextList = [record, ...nextList];
+      }
+      setAllFacultyPatents(nextList);
+      setStoredData(baseFaculty, "patents", nextList);
+      toast.success(`Patent record ${formMode === "edit" ? "updated" : "added"}!`);
+    } else if (activeTab === "projects") {
+      const record = {
+        id,
+        title: formData.title || "Research Project",
+        funding_agency: formData.funding_agency || "DST-SERB",
+        total_sanctioned_amount: Number(formData.total_sanctioned_amount) || 1500000,
+        status: formData.status || "Ongoing",
+        raw_investigators: formData.raw_investigators || faculty.full_name,
+        reference_number: formData.reference_number || "",
+        year: Number(formData.year) || new Date().getFullYear(),
+      };
+      let nextList = [...allFacultyProjects];
+      if (formMode === "edit") {
+        nextList = nextList.map((p) => (p.id === editingItem.id ? { ...p, ...record } : p));
+      } else {
+        nextList = [record, ...nextList];
+      }
+      setAllFacultyProjects(nextList);
+      setStoredData(baseFaculty, "projects", nextList);
+      toast.success(`Project ${formMode === "edit" ? "updated" : "added"}!`);
+    } else if (activeTab === "events") {
+      const record = {
+        id,
+        title: formData.title || "Department Event / STC",
+        event_type: formData.event_type || "FDP / STC",
+        convenor: formData.convenor || faculty.full_name,
+        coordinator: formData.coordinator || "",
+        sponsoring_agency: formData.sponsoring_agency || "NIT Hamirpur",
+        venue: formData.venue || "DoCSE, NIT Hamirpur",
+        start_date: formData.start_date || new Date().toISOString().split("T")[0],
+        end_date: formData.end_date || "",
+        academic_session: formData.academic_session || "2024-2025",
+        link_url: formData.link_url || "",
+      };
+      let nextList = [...allEvents];
+      if (formMode === "edit") {
+        nextList = nextList.map((e) => (e.id === editingItem.id ? { ...e, ...record } : e));
+      } else {
+        nextList = [record, ...nextList];
+      }
+      setAllEvents(nextList);
+      setStoredData(baseFaculty, "events", nextList);
+      toast.success(`Event ${formMode === "edit" ? "updated" : "added"}!`);
+    } else if (activeTab === "consultancies") {
+      const record = {
+        id,
+        title: formData.title || "Consultancy Project",
+        client_organisation: formData.client_organisation || "Industry Partner",
+        amount: Number(formData.amount) || 250000,
+        academic_session: formData.academic_session || "2024-2025",
+        status: formData.status || "Completed",
+        author_text: formData.author_text || faculty.full_name,
+      };
+      let nextList = [...allConsultancies];
+      if (formMode === "edit") {
+        nextList = nextList.map((c) => (c.id === editingItem.id ? { ...c, ...record } : c));
+      } else {
+        nextList = [record, ...nextList];
+      }
+      setAllConsultancies(nextList);
+      setStoredData(baseFaculty, "consultancies", nextList);
+      toast.success(`Consultancy ${formMode === "edit" ? "updated" : "added"}!`);
+    } else if (activeTab === "experttalk") {
+      const record = {
+        id,
+        title: formData.title || "Invited Keynote Address",
+        venue: formData.venue || "Host Institution",
+        date: formData.date || new Date().toISOString().split("T")[0],
+        description: formData.description || "",
+      };
+      let nextList = [...allTalks];
+      if (formMode === "edit") {
+        nextList = nextList.map((t) => (t.id === editingItem.id ? { ...t, ...record } : t));
+      } else {
+        nextList = [record, ...nextList];
+      }
+      setAllTalks(nextList);
+      setStoredData(baseFaculty, "expert_talks", nextList);
+      toast.success(`Expert talk ${formMode === "edit" ? "updated" : "added"}!`);
+    } else if (activeTab === "researchSupervision") {
+      const record = {
+        id,
+        student_name: formData.student_name || "Research Scholar",
+        roll_number: formData.roll_number || "",
+        thesis_title: formData.thesis_title || "Doctoral Thesis",
+        level: formData.level || "Ph.D.",
+        status: formData.status || "Ongoing",
+        year: formData.year || "2024",
+        co_supervisor: formData.co_supervisor || "",
+      };
+      let nextList = [...combinedSupervisions];
+      if (formMode === "edit") {
+        nextList = nextList.map((s) => (s.id === editingItem.id ? { ...s, ...record } : s));
+      } else {
+        nextList = [record, ...nextList];
+      }
+      setAllSupervisions(nextList);
+      setStoredData(baseFaculty, "supervisions", nextList);
+      toast.success(`Research supervision ${formMode === "edit" ? "updated" : "added"}!`);
+    } else if (activeTab === "administrativeexperience") {
+      const record = {
+        id,
+        position: formData.position || "Head / Coordinator",
+        organization: formData.organization || "NIT Hamirpur",
+        start_date: formData.start_date || "2020",
+        end_date: formData.end_date || "Present",
+      };
+      let nextList = [...allAdminExp];
+      if (formMode === "edit") {
+        nextList = nextList.map((a) => (a.id === editingItem.id ? { ...a, ...record } : a));
+      } else {
+        nextList = [record, ...nextList];
+      }
+      setAllAdminExp(nextList);
+      setStoredData(baseFaculty, "admin_experiences", nextList);
+      toast.success(`Administrative role ${formMode === "edit" ? "updated" : "added"}!`);
+    } else if (activeTab === "honors") {
+      const record = {
+        id,
+        title: formData.title || "Academic Recognition",
+        organization: formData.organization || "Awarding Body",
+        year: formData.year || "2024",
+        description: formData.description || "",
+      };
+      let nextList = [...allHonors];
+      if (formMode === "edit") {
+        nextList = nextList.map((h) => (h.id === editingItem.id ? { ...h, ...record } : h));
+      } else {
+        nextList = [record, ...nextList];
+      }
+      setAllHonors(nextList);
+      setStoredData(baseFaculty, "honors", nextList);
+      toast.success(`Honor / Award ${formMode === "edit" ? "updated" : "added"}!`);
+    } else if (activeTab === "internationalAndNationalExposure") {
+      const record = {
+        id,
+        title: formData.title || "International Delegation",
+        organization: formData.organization || "Host University / Country",
+        year: formData.year || "2024",
+        details: formData.details || "",
+      };
+      let nextList = [...allExposures];
+      if (formMode === "edit") {
+        nextList = nextList.map((x) => (x.id === editingItem.id ? { ...x, ...record } : x));
+      } else {
+        nextList = [record, ...nextList];
+      }
+      setAllExposures(nextList);
+      setStoredData(baseFaculty, "exposures", nextList);
+      toast.success(`Exposure record ${formMode === "edit" ? "updated" : "added"}!`);
+    }
+
+    setIsFormModalOpen(false);
+  };
+
+  // Delete Record
+  const handleDeleteRecord = (item: any) => {
+    if (!confirm("Are you sure you want to remove this record?")) return;
+
+    if (activeTab === "journal" || activeTab === "conference" || activeTab === "book" || activeTab === "book_chapter") {
+      const nextList = allFacultyPubs.filter((p) => p.id !== item.id);
+      setAllFacultyPubs(nextList);
+      setStoredData(baseFaculty, "publications", nextList);
+    } else if (activeTab === "patents") {
+      const nextList = allFacultyPatents.filter((p) => p.id !== item.id);
+      setAllFacultyPatents(nextList);
+      setStoredData(baseFaculty, "patents", nextList);
+    } else if (activeTab === "projects") {
+      const nextList = allFacultyProjects.filter((p) => p.id !== item.id);
+      setAllFacultyProjects(nextList);
+      setStoredData(baseFaculty, "projects", nextList);
+    } else if (activeTab === "events") {
+      const nextList = allEvents.filter((e) => e.id !== item.id);
+      setAllEvents(nextList);
+      setStoredData(baseFaculty, "events", nextList);
+    } else if (activeTab === "consultancies") {
+      const nextList = allConsultancies.filter((c) => c.id !== item.id);
+      setAllConsultancies(nextList);
+      setStoredData(baseFaculty, "consultancies", nextList);
+    } else if (activeTab === "experttalk") {
+      const nextList = allTalks.filter((t) => t.id !== item.id);
+      setAllTalks(nextList);
+      setStoredData(baseFaculty, "expert_talks", nextList);
+    } else if (activeTab === "researchSupervision") {
+      const nextList = combinedSupervisions.filter((s) => s.id !== item.id);
+      setAllSupervisions(nextList);
+      setStoredData(baseFaculty, "supervisions", nextList);
+    } else if (activeTab === "administrativeexperience") {
+      const nextList = allAdminExp.filter((a) => a.id !== item.id);
+      setAllAdminExp(nextList);
+      setStoredData(baseFaculty, "admin_experiences", nextList);
+    } else if (activeTab === "honors") {
+      const nextList = allHonors.filter((h) => h.id !== item.id);
+      setAllHonors(nextList);
+      setStoredData(baseFaculty, "honors", nextList);
+    } else if (activeTab === "internationalAndNationalExposure") {
+      const nextList = allExposures.filter((x) => x.id !== item.id);
+      setAllExposures(nextList);
+      setStoredData(baseFaculty, "exposures", nextList);
+    }
+
+    setIsDetailsModalOpen(false);
+    toast.success("Record deleted successfully!");
+  };
+
   if (!faculty) {
     return (
-      <div className="mx-auto max-w-4xl px-4 py-20 text-center">
+      <div className="mx-auto max-w-4xl px-4 py-20 text-center font-sans">
         <h2 className="text-2xl font-bold text-[#33110e]">Faculty Member Not Found</h2>
         <p className="mt-2 text-neutral-600">The faculty profile you are looking for does not exist.</p>
-        <Link href={`/people/faculty?dept=${effectiveDeptSlug}`} className="mt-6 inline-flex items-center gap-2 text-[#85261e] font-semibold hover:underline">
+        <Link
+          href={`/people/faculty?dept=${effectiveDeptSlug}`}
+          className="mt-6 inline-flex items-center gap-2 text-[#85261e] font-semibold hover:underline"
+        >
           <ArrowLeft className="h-4 w-4" /> Back to Faculty Directory
         </Link>
       </div>
@@ -179,7 +729,6 @@ export default function FacultyPortfolioPage({
   if (isDeptMismatch) {
     return (
       <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 space-y-6 bg-white min-h-[85vh] font-sans">
-        {/* Back Link */}
         <Link
           href={`/people/faculty?dept=${effectiveDeptSlug}`}
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 hover:text-[#33110e] transition"
@@ -187,7 +736,6 @@ export default function FacultyPortfolioPage({
           <ArrowLeft className="h-4 w-4 text-[#85261e]" /> Back to {effectiveDepartment.code} Faculty Directory
         </Link>
 
-        {/* Department Mismatch Card */}
         <div className="rounded-3xl border border-[#eedfd8] bg-[#fff9f6] p-8 sm:p-12 text-center space-y-6 shadow-xs my-6 max-w-3xl mx-auto">
           <div className="mx-auto w-16 h-16 rounded-3xl bg-white border border-[#eedfd8] flex items-center justify-center text-[#85261e] shadow-xs">
             <Building2 className="w-8 h-8 opacity-80" />
@@ -236,745 +784,2495 @@ export default function FacultyPortfolioPage({
     );
   }
 
-  // Available Years for filter chips
-  const pubYears = useMemo(() => {
-    const years = new Set<number>();
-    allFacultyPubs.forEach((p: any) => {
-      if (p.year) years.add(Number(p.year));
-    });
-    return Array.from(years).sort((a, b) => b - a);
-  }, [allFacultyPubs]);
-
-  // Filtered Publications
-  const filteredPubs = useMemo(() => {
-    return allFacultyPubs.filter((p: any) => {
-      const searchLower = pubSearch.toLowerCase();
-      const matchesSearch =
-        !pubSearch ||
-        p.title?.toLowerCase().includes(searchLower) ||
-        p.journal_or_conference_name?.toLowerCase().includes(searchLower) ||
-        p.raw_authors?.toLowerCase().includes(searchLower);
-
-      const matchesYear = selectedYear === "ALL" || String(p.year) === selectedYear;
-      const matchesType = selectedType === "ALL" || p.publication_type === selectedType;
-
-      return matchesSearch && matchesYear && matchesType;
-    });
-  }, [allFacultyPubs, pubSearch, selectedYear, selectedType]);
-
-  const totalPubPages = Math.ceil(filteredPubs.length / PUBS_PER_PAGE) || 1;
-  const paginatedPubs = useMemo(() => {
-    const start = (currentPage - 1) * PUBS_PER_PAGE;
-    return filteredPubs.slice(start, start + PUBS_PER_PAGE);
-  }, [filteredPubs, currentPage]);
-
-  const handleCopyCitation = (pub: any) => {
-    const authors = pub.raw_authors || faculty.full_name;
-    const citation = `${authors} (${pub.year}). "${pub.title}." ${pub.journal_or_conference_name || 'Publication'}, ${pub.volume ? `Vol. ${pub.volume}, ` : ""}${pub.pages ? `pp. ${pub.pages}. ` : ""}${pub.doi ? `https://doi.org/${pub.doi}` : ""}`;
-    navigator.clipboard.writeText(citation);
-    setCopiedId(pub.id);
-    toast.success("Citation copied to clipboard!");
-    setTimeout(() => setCopiedId(null), 2500);
-  };
+  // Academic URLs
+  const scholarUrl = faculty.profile?.google_scholar_id || faculty.google_scholar_url || `https://scholar.google.com/citations?view_op=search_authors&mauthors=${encodeURIComponent(faculty.full_name)}`;
+  const scopusUrl = faculty.profile?.scopus_id || faculty.scopus_url || `https://www.scopus.com/results/authorNamesList.uri?st1=${encodeURIComponent(faculty.full_name)}`;
+  const orcidUrl = faculty.profile?.orcid || faculty.orcid ? `https://orcid.org/${faculty.profile?.orcid || faculty.orcid}` : "https://orcid.org";
+  const linkedInUrl = faculty.profile?.linkedin_url || faculty.linkedin_url || "https://linkedin.com";
+  const researchGateUrl = faculty.profile?.rg_url || `https://www.researchgate.net/search?q=${encodeURIComponent(faculty.full_name)}`;
+  const vidwanUrl = faculty.profile?.vidwan_url || `https://vidwan.inflibnet.ac.in/search?q=${encodeURIComponent(faculty.full_name)}`;
+  const publonsUrl = faculty.profile?.publons_url || `https://www.webofscience.com/wos/author/record?search=${encodeURIComponent(faculty.full_name)}`;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-6 bg-white min-h-[85vh]">
-      {/* Back Link */}
-      <Link
-        href={`/people/faculty?dept=${facultyDeptSlug}`}
-        className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 hover:text-[#33110e] transition"
-      >
-        <ArrowLeft className="h-4 w-4 text-[#85261e]" /> Back to {facultyDeptCode} Faculty Directory
-      </Link>
-
-      {/* 1. Header Hero Card (Signature tempcse Institutional Style) */}
-      <div className="bg-[#fff9f6] border border-[#eedfd8] rounded-xl p-6 shadow-xs">
-        <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
-          {/* Profile Photo Frame */}
-          <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden border-3 border-[#85261e] shadow-sm bg-neutral-100 flex-shrink-0 flex items-center justify-center">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={faculty.image_url || "/hod.jpg"}
-              alt={faculty.full_name}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src =
-                  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400";
-              }}
-            />
+    <div className="min-h-screen bg-[#faf8f6] font-sans pb-16">
+      {/* 1. TOP BREADCRUMB & CONTEXT BAR */}
+      <div className="bg-white border-b border-[#ebdcd5] sticky top-0 z-30 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-xs text-neutral-500 overflow-x-auto no-scrollbar">
+            <Link href="/" className="hover:text-[#33110e] transition">Home</Link>
+            <span>/</span>
+            <Link href={`/people/faculty?dept=${facultyDeptSlug}`} className="hover:text-[#33110e] transition">
+              Department of {facultyDeptCode}
+            </Link>
+            <span>/</span>
+            <Link href={`/people/faculty?dept=${facultyDeptSlug}`} className="hover:text-[#33110e] transition">
+              Faculty Directory
+            </Link>
+            <span>/</span>
+            <span className="font-semibold text-[#85261e] truncate">{faculty.full_name}</span>
           </div>
 
-          {/* Core Info */}
-          <div className="flex-1 space-y-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="bg-[#33110e] text-white text-xs font-bold px-2.5 py-0.5 rounded font-mono">
-                {faculty.employee_code}
-              </span>
-              <span className="bg-[#85261e]/10 text-[#85261e] text-xs font-bold px-2.5 py-0.5 rounded border border-[#85261e]/20">
-                {faculty.designation}
-              </span>
-              <span className="text-xs text-neutral-600 font-semibold">
-                Department of {facultyDeptName}
-              </span>
+          <Link
+            href={`/people/faculty?dept=${facultyDeptSlug}`}
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#85261e] hover:text-[#33110e] transition shrink-0 ml-4"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to {facultyDeptCode} Faculty</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* 2. INSTITUTIONAL FACULTY HEADER (Matching tempcsebase PublicTopNavbar) */}
+      <div className="bg-[#1f1412] text-white shadow-md relative overflow-hidden border-b-4 border-[#85261e]">
+        <div className="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-[#85261e]/20 blur-3xl pointer-events-none" />
+        <div className="absolute left-1/3 -bottom-20 w-96 h-96 rounded-full bg-amber-600/10 blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-9 relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            {/* Left: Faculty Avatar + Identity */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6">
+              <div className="relative group shrink-0">
+                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-2 border-amber-300/30 shadow-xl bg-neutral-900/60 ring-4 ring-white/10">
+                  <Image
+                    src={faculty.image_url || "/hod.jpg"}
+                    alt={faculty.full_name}
+                    width={112}
+                    height={112}
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="absolute -bottom-1.5 -right-1.5 bg-[#85261e] text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded-md border border-white/20 shadow-xs">
+                  {faculty.employee_code || "FACULTY"}
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold tracking-wider uppercase text-amber-300 bg-amber-500/15 border border-amber-400/25 px-2.5 py-0.5 rounded-full">
+                    <Building2 className="w-3 h-3" />
+                    <span>Dept. of {facultyDeptCode}</span>
+                  </span>
+                  <span className="text-xs text-neutral-300 bg-white/10 px-2 py-0.5 rounded-md font-medium">
+                    {faculty.designation}
+                  </span>
+                </div>
+
+                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white drop-shadow-xs">
+                  {faculty.full_name}
+                </h1>
+
+                <div className="flex flex-wrap items-center gap-y-1.5 gap-x-4 text-xs text-neutral-300 pt-0.5">
+                  {faculty.email && (
+                    <a
+                      href={`mailto:${faculty.email}`}
+                      className="inline-flex items-center gap-1.5 hover:text-amber-200 transition"
+                    >
+                      <Mail className="w-3.5 h-3.5 text-amber-400" />
+                      <span>{faculty.email}</span>
+                    </a>
+                  )}
+                  {faculty.phone && (
+                    <a
+                      href={`tel:${faculty.phone}`}
+                      className="inline-flex items-center gap-1.5 hover:text-amber-200 transition"
+                    >
+                      <Phone className="w-3.5 h-3.5 text-amber-400" />
+                      <span>{faculty.phone}</span>
+                    </a>
+                  )}
+                  <span className="inline-flex items-center gap-1.5 text-neutral-400">
+                    <MapPin className="w-3.5 h-3.5 text-amber-400" />
+                    <span>NIT Hamirpur Campus, HP</span>
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#33110e] tracking-tight">
-              {faculty.full_name}
-            </h1>
-
-            <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed max-w-3xl">
-              {faculty.profile?.bio}
-            </p>
-
-            {/* Contacts & Social Links */}
-            <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-neutral-600">
+            {/* Right: Authentic Profile SVG Badges & Faculty Login */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 pt-2 lg:pt-0">
+              {/* Google Scholar SVG */}
               <a
-                href={`mailto:${faculty.email}`}
-                className="flex items-center gap-1.5 font-medium hover:text-[#33110e] text-[#85261e]"
+                href={scholarUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Google Scholar Profile"
+                className="group relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 hover:bg-[#85261e] border border-white/15 hover:border-amber-400/50 text-white transition-all shadow-xs hover:scale-105"
               >
-                <Mail className="w-3.5 h-3.5" /> {faculty.email}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 50 50"
+                  className="fill-current text-white group-hover:text-amber-200 transition"
+                >
+                  <path d="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 21 11 L 11 20 L 17.78125 20 C 17.80125 22.847 19.967531 25.730469 23.769531 25.730469 C 24.129531 25.730469 24.529688 25.690391 24.929688 25.650391 C 24.749688 26.100391 24.560547 26.470078 24.560547 27.080078 C 24.560547 28.230078 25.140391 28.920078 25.650391 29.580078 C 24.020391 29.690078 20.989766 29.879531 18.759766 31.269531 C 16.629766 32.559531 15.980469 34.43 15.980469 35.75 C 15.980469 38.47 18.500469 41 23.730469 41 C 29.930469 41 33.220703 37.510547 33.220703 34.060547 C 33.220703 31.530547 31.779453 30.279922 30.189453 28.919922 L 28.900391 27.890625 C 28.500391 27.570625 27.949219 27.120312 27.949219 26.320312 C 27.949219 25.510313 28.500703 24.989766 28.970703 24.509766 C 30.480703 23.309766 32 21.960234 32 19.240234 C 32 18.197234 31.756203 17.348391 31.408203 16.650391 L 35 13.570312 L 35 17.277344 C 34.405 17.623344 34 18.261 34 19 L 34 25 C 34 26.104 34.896 27 36 27 C 37.104 27 38 26.104 38 25 L 38 19 C 38 18.262 37.595 17.624344 37 17.277344 L 37 12 C 37 11.957 36.980609 11.920906 36.974609 11.878906 L 38 11 L 21 11 z M 24.269531 14.240234 C 27.269531 14.240234 28.820312 18.35 28.820312 21 C 28.820312 21.65 28.739922 22.819922 27.919922 23.669922 C 27.339922 24.259922 26.370938 24.699219 25.460938 24.699219 C 22.370938 24.699219 20.949219 20.620156 20.949219 18.160156 C 20.949219 17.210156 21.14 16.220938 21.75 15.460938 C 22.33 14.710938 23.339531 14.240234 24.269531 14.240234 z M 26.039062 30.609375 C 26.409063 30.609375 26.590859 30.610391 26.880859 30.650391 C 29.620859 32.630391 30.800781 33.620234 30.800781 35.490234 C 30.800781 37.760234 28.97 39.460938 25.5 39.460938 C 21.64 39.460938 19.160156 37.590469 19.160156 34.980469 C 19.160156 32.370469 21.459766 31.499219 22.259766 31.199219 C 23.769766 30.679219 25.719062 30.609375 26.039062 30.609375 z" />
+                </svg>
               </a>
-              <span className="flex items-center gap-1.5">
-                <Phone className="w-3.5 h-3.5 text-neutral-400" /> {faculty.phone}
-              </span>
-              {faculty.profile?.personal_website && (
-                <a
-                  href={faculty.profile.personal_website}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-1 text-[#33110e] font-semibold hover:underline"
-                >
-                  <Globe className="w-3.5 h-3.5" /> Institute Portfolio <ExternalLink className="w-2.5 h-2.5 opacity-60" />
-                </a>
-              )}
-            </div>
 
-            {/* Scholar Indices */}
-            <div className="flex flex-wrap gap-2 pt-2 text-[11px]">
-              {faculty.profile?.orcid && (
-                <span className="bg-white border border-[#eedfd8] px-2.5 py-1 rounded text-neutral-700">
-                  <strong className="text-neutral-900">ORCID:</strong> {faculty.profile.orcid}
-                </span>
-              )}
-              {faculty.profile?.scopus_id && (
-                <a
-                  href={faculty.profile.scopus_id.startsWith("http") ? faculty.profile.scopus_id : `https://www.scopus.com/authid/detail.uri?authorId=${faculty.profile.scopus_id}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="bg-white border border-[#eedfd8] px-2.5 py-1 rounded text-[#85261e] font-semibold hover:underline flex items-center gap-1"
+              {/* Scopus SVG */}
+              <a
+                href={scopusUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Elsevier Scopus Profile"
+                className="group relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 hover:bg-[#85261e] border border-white/15 hover:border-amber-400/50 text-white transition-all shadow-xs hover:scale-105"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  className="fill-current text-white group-hover:text-amber-200 transition"
                 >
-                  Scopus Profile <ExternalLink className="w-2.5 h-2.5 opacity-60" />
-                </a>
-              )}
-              {faculty.profile?.google_scholar_id && (
-                <a
-                  href={faculty.profile.google_scholar_id.startsWith("http") ? faculty.profile.google_scholar_id : `https://scholar.google.com/citations?user=${faculty.profile.google_scholar_id}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="bg-white border border-[#eedfd8] px-2.5 py-1 rounded text-[#85261e] font-semibold hover:underline flex items-center gap-1"
+                  <path d="m24 19.059l-.14-1.777c-1.426.772-2.945 1.076-4.465 1.076c-3.319 0-5.96-2.782-5.96-6.475c0-3.903 2.595-6.31 5.633-6.31c1.917 0 3.39.303 4.792 1.075L24 4.895c-1.286-.608-2.337-.889-4.698-.889c-4.534 0-7.97 3.53-7.97 8.017c0 5.12 4.09 7.924 7.9 7.924c1.916 0 3.506-.257 4.768-.888m-14.954-3.46c0-2.22-1.964-3.225-3.857-4.347C3.716 10.364 2.15 9.756 2.15 8.12c0-1.215.889-2.548 2.642-2.548c1.519 0 2.57.234 3.903 1.029l.117-1.847c-1.239-.514-2.127-.748-4.137-.748C1.8 4.006.047 5.876.047 8.26s2.103 3.413 4.02 4.581c1.426.865 2.922 1.45 2.922 2.992c0 1.496-1.333 2.571-2.922 2.571c-1.566 0-2.594-.35-3.786-1.075L0 19.176c1.215.56 2.454.818 4.16.818c2.385 0 4.885-1.473 4.885-4.395z" />
+                </svg>
+              </a>
+
+              {/* ORCID SVG */}
+              <a
+                href={orcidUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="ORCID ID"
+                className="group relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 hover:bg-[#85261e] border border-white/15 hover:border-amber-400/50 text-white transition-all shadow-xs hover:scale-105"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 512 512"
+                  className="fill-current text-white group-hover:text-amber-200 transition"
                 >
-                  Google Scholar <ExternalLink className="w-2.5 h-2.5 opacity-60" />
-                </a>
-              )}
+                  <path d="M294.8 188.2h-45.9V342h47.5c67.6 0 83.1-51.3 83.1-76.9 0-41.6-26.5-76.9-84.7-76.9zM256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm-80.8 360.8h-29.8v-207.5h29.8zm-14.9-231.1a19.6 19.6 0 1 1 19.6-19.6 19.6 19.6 0 0 1 -19.6 19.6zM300 369h-81V161.3h80.6c76.7 0 110.4 54.8 110.4 103.9C410 318.4 368.4 369 300 369z" />
+                </svg>
+              </a>
+
+              {/* LinkedIn SVG */}
+              <a
+                href={linkedInUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="LinkedIn Profile"
+                className="group relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 hover:bg-[#85261e] border border-white/15 hover:border-amber-400/50 text-white transition-all shadow-xs hover:scale-105"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 50 50"
+                  className="fill-current text-white group-hover:text-amber-200 transition"
+                >
+                  <path d="M41,4H9C6.24,4,4,6.24,4,9v32c0,2.76,2.24,5,5,5h32c2.76,0,5-2.24,5-5V9C46,6.24,43.76,4,41,4z M17,20v19h-6V20H17z M11,14.47c0-1.4,1.2-2.47,3-2.47s2.93,1.07,3,2.47c0,1.4-1.12,2.53-3,2.53C12.2,17,11,15.87,11,14.47z M39,39h-6c0,0,0-9.26,0-10 c0-2-1-4-3.5-4.04h-0.08C27,24.96,26,27.02,26,29c0,0.91,0,10,0,10h-6V20h6v2.56c0,0,1.93-2.56,5.81-2.56 c3.97,0,7.19,2.73,7.19,8.26V39z" />
+                </svg>
+              </a>
+
+              {/* Publons SVG */}
+              <a
+                href={publonsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Publons / Web of Science Profile"
+                className="group relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 hover:bg-[#85261e] border border-white/15 hover:border-amber-400/50 text-white transition-all shadow-xs hover:scale-105"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="18"
+                  viewBox="0 0 320 512"
+                  className="fill-current text-white group-hover:text-amber-200 transition"
+                >
+                  <path d="M282.067 122.981c-3.221-7.856-7.836-15.067-12.993-21.776c-12.29-15.522-28.523-28.691-47.878-33.997c-29.087-8.043-61.327-.414-85.05 17.843c-5.098 3.864-9.623 8.389-13.812 13.2c-2.006-10.384-2.628-21.005-4.98-31.31c-1.205-1.294-2.372-3.23-4.446-2.905c-5.158.1-9.948 2.272-14.643 4.19c-20.224 8.793-40.38 17.724-60.594 26.507c-2.135 1.017-4.803 1.542-6.167 3.667c-.445 2.846-.414 5.8-.03 8.656c1.226 2.805 4.278 4.088 6.76 5.6c6.52 3.666 13.546 6.678 19.266 11.61c5.138 4.228 7.854 10.73 8.32 17.27c.206 2.165.277 4.338.286 6.52c-.019 79.378.012 158.766-.019 238.144c-.513 10.029.14 20.146-1.472 30.095c-.83 4.683-3.517 9.92-8.635 10.848c-7.668.591-15.404-.287-23.06.395c-2.046.078-2.766 2.302-2.639 4.02c.02 4.565-.128 9.14.079 13.714c-.01 1.254 1.353 1.848 2.056 2.707c14.306-.374 28.603-1.413 42.909-1.58c27.347-.533 54.715-.05 82.015 1.6c2.144.01 5.523.039 5.996-2.677c.426-4.882.367-9.83.04-14.703c-.04-2.164-2.243-3.192-4.12-3.192c-5.909-.305-11.816-.038-17.725-.099c-3.437-.09-7.173.414-10.304-1.334c-3.122-1.897-4.21-5.691-5.05-9.021c-2.49-12.47-1.57-25.264-2.035-37.892c-.307-28.069-.73-56.14-.83-84.218c11.619 5.237 24.237 7.964 36.893 9.08c21.984 2.114 44.639-2.233 64.034-12.873c24.434-13.122 43.188-35.511 53.778-60.962c8.389-19.95 12.083-41.724 11.709-63.313c-.072-14.875-1.851-30.002-7.66-43.815z" />
+                </svg>
+              </a>
+
+              {/* ResearchGate Text Badge */}
+              <a
+                href={researchGateUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="ResearchGate Profile"
+                className="inline-flex items-center px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-[#85261e] border border-white/15 hover:border-amber-400/50 text-white text-xs font-bold transition-all shadow-xs hover:scale-105"
+              >
+                RG
+              </a>
+
+              {/* Vidwan Badge */}
+              <a
+                href={vidwanUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="INFLIBNET Vidwan Profile"
+                className="inline-flex items-center px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-[#85261e] border border-white/15 hover:border-amber-400/50 text-white text-xs font-bold transition-all shadow-xs hover:scale-105"
+              >
+                Vidwan
+              </a>
+
+              {/* Faculty Portal Login Link */}
+              <Link
+                href="/faculty/login"
+                className="inline-flex items-center gap-1.5 bg-white hover:bg-neutral-100 text-[#1f1412] px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer ml-1"
+              >
+                <LogIn className="w-3.5 h-3.5 text-[#85261e]" />
+                <span>Portal Login</span>
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 2. Faculty Stats Highlight Cards (Inspired by MNIT presentation, formatted with NITH institutional design) */}
-      <div className={`grid grid-cols-2 ${patentCount > 0 ? "sm:grid-cols-3 lg:grid-cols-5" : "lg:grid-cols-4"} gap-3 sm:gap-4`}>
-        {/* Card 1: Journal Publications */}
-        <button
-          type="button"
-          onClick={() => {
-            setActiveTab("publications");
-            setSelectedType("JOURNAL");
-            setCurrentPage(1);
-          }}
-          className="group flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl border border-[#eedfd8] bg-[#fff9f6] hover:bg-white hover:border-[#85261e]/50 transition-all duration-200 shadow-xs hover:shadow-md text-center relative overflow-hidden cursor-pointer"
-        >
-          <div className="absolute top-0 left-0 right-0 h-1 bg-[#85261e] opacity-85 group-hover:opacity-100 transition" />
-          <div className="w-10 h-10 rounded-xl bg-[#85261e]/10 text-[#85261e] flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:bg-[#85261e] group-hover:text-white transition-all duration-200">
-            <BookOpen className="w-5 h-5" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-extrabold text-[#33110e] tracking-tight group-hover:text-[#85261e] transition">
-            {journalCount}
-          </div>
-          <div className="text-xs sm:text-sm font-bold text-neutral-800 mt-1">
-            Journal Publications
-          </div>
-          <div className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
-            <span>Peer-Reviewed</span>
-            <span className="text-[#85261e] opacity-0 group-hover:opacity-100 transition text-[10px]">→</span>
-          </div>
-        </button>
-
-        {/* Card 2: Conference Publications */}
-        <button
-          type="button"
-          onClick={() => {
-            setActiveTab("publications");
-            setSelectedType("CONFERENCE");
-            setCurrentPage(1);
-          }}
-          className="group flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl border border-[#eedfd8] bg-[#fffdfa] hover:bg-white hover:border-amber-600/50 transition-all duration-200 shadow-xs hover:shadow-md text-center relative overflow-hidden cursor-pointer"
-        >
-          <div className="absolute top-0 left-0 right-0 h-1 bg-amber-600 opacity-85 group-hover:opacity-100 transition" />
-          <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-800 flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:bg-amber-600 group-hover:text-white transition-all duration-200">
-            <Award className="w-5 h-5" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-extrabold text-[#33110e] tracking-tight group-hover:text-amber-800 transition">
-            {conferenceCount}
-          </div>
-          <div className="text-xs sm:text-sm font-bold text-neutral-800 mt-1">
-            Conference Publications
-          </div>
-          <div className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
-            <span>Proceedings & Talks</span>
-            <span className="text-amber-700 opacity-0 group-hover:opacity-100 transition text-[10px]">→</span>
-          </div>
-        </button>
-
-        {/* Optional Card 3: Patents (rendered when faculty has patents) */}
-        {patentCount > 0 && (
-          <button
-            type="button"
-            onClick={() => {
-              setActiveTab("patents");
-            }}
-            className="group flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl border border-[#eedfd8] bg-[#fdfcff] hover:bg-white hover:border-purple-600/50 transition-all duration-200 shadow-xs hover:shadow-md text-center relative overflow-hidden cursor-pointer"
-          >
-            <div className="absolute top-0 left-0 right-0 h-1 bg-purple-600 opacity-85 group-hover:opacity-100 transition" />
-            <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-800 flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-200">
-              <Lightbulb className="w-5 h-5" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-[#33110e] tracking-tight group-hover:text-purple-800 transition">
-              {patentCount}
-            </div>
-            <div className="text-xs sm:text-sm font-bold text-neutral-800 mt-1">
-              Patents
-            </div>
-            <div className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
-              <span>Filed & Granted</span>
-              <span className="text-purple-700 opacity-0 group-hover:opacity-100 transition text-[10px]">→</span>
-            </div>
-          </button>
-        )}
-
-        {/* Card 4: Research Projects */}
-        <button
-          type="button"
-          onClick={() => {
-            setActiveTab("projects");
-          }}
-          className="group flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl border border-[#eedfd8] bg-[#fafdfb] hover:bg-white hover:border-emerald-600/50 transition-all duration-200 shadow-xs hover:shadow-md text-center relative overflow-hidden cursor-pointer"
-        >
-          <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-700 opacity-85 group-hover:opacity-100 transition" />
-          <div className="w-10 h-10 rounded-xl bg-emerald-600/10 text-emerald-800 flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:bg-emerald-700 group-hover:text-white transition-all duration-200">
-            <Briefcase className="w-5 h-5" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-extrabold text-[#33110e] tracking-tight group-hover:text-emerald-800 transition">
-            {projectCount}
-          </div>
-          <div className="text-xs sm:text-sm font-bold text-neutral-800 mt-1">
-            Research Projects
-          </div>
-          <div className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
-            <span>Sponsored R&D Grants</span>
-            <span className="text-emerald-700 opacity-0 group-hover:opacity-100 transition text-[10px]">→</span>
-          </div>
-        </button>
-
-        {/* Card 5: PhD Research Supervised */}
-        <button
-          type="button"
-          onClick={() => {
-            setActiveTab("supervisions");
-          }}
-          className="group flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl border border-[#eedfd8] bg-[#fafaff] hover:bg-white hover:border-indigo-600/50 transition-all duration-200 shadow-xs hover:shadow-md text-center relative overflow-hidden cursor-pointer"
-        >
-          <div className="absolute top-0 left-0 right-0 h-1 bg-indigo-700 opacity-85 group-hover:opacity-100 transition" />
-          <div className="w-10 h-10 rounded-xl bg-indigo-600/10 text-indigo-800 flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:bg-indigo-700 group-hover:text-white transition-all duration-200">
-            <GraduationCap className="w-5 h-5" />
-          </div>
-          <div className="text-2xl sm:text-3xl font-extrabold text-[#33110e] tracking-tight group-hover:text-indigo-800 transition">
-            {phdSupervisedCount}
-          </div>
-          <div className="text-xs sm:text-sm font-bold text-neutral-800 mt-1">
-            PhD Supervised
-          </div>
-          <div className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
-            <span>Doctoral Research</span>
-            <span className="text-indigo-700 opacity-0 group-hover:opacity-100 transition text-[10px]">→</span>
-          </div>
-        </button>
-      </div>
-
-      {/* 3. Interactive Section Tabs */}
-      <div className="border-b border-[#eedfd8] flex flex-wrap gap-2">
-        {[
-          { id: "publications", label: `Publications (${allFacultyPubs.length})`, icon: BookOpen },
-          { id: "patents", label: `Patents (${allFacultyPatents.length})`, icon: Lightbulb },
-          { id: "projects", label: `R&D Projects (${allFacultyProjects.length})`, icon: Award },
-          { id: "supervisions", label: `Research Guidance (${combinedSupervisions.length})`, icon: GraduationCap },
-          { id: "qualifications", label: `Qualifications (${allQualifications.length})`, icon: FileText },
-          { id: "experience", label: `Experience & Talks (${allAdminExp.length + allTalks.length})`, icon: Briefcase },
-        ].map((tab) => {
-          const Icon = tab.icon;
-          const isActive = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              onClick={() => {
-                setActiveTab(tab.id as any);
-                setCurrentPage(1);
-              }}
-              className={`flex items-center gap-2 px-4 py-2.5 text-xs font-bold border-b-2 transition -mb-[2px] ${
-                isActive
-                  ? "border-[#85261e] text-[#33110e] bg-[#fff9f6]"
-                  : "border-transparent text-neutral-600 hover:text-[#33110e] hover:border-neutral-300"
-              }`}
-            >
-              <Icon className={`w-4 h-4 ${isActive ? "text-[#85261e]" : "text-neutral-400"}`} />
-              {tab.label}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* 3. TAB CONTENT */}
-
-      {/* TAB 1: PUBLICATIONS (Optimized with Year Filters, Type Segment, Search & Compact Cards) */}
-      {activeTab === "publications" && (
-        <div className="space-y-5">
-          {/* Controls Bar: Search + Type Filter */}
-          <div className="bg-[#fff9f6] p-3 rounded-lg border border-[#eedfd8] flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="relative w-full sm:w-80">
-              <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-2.5" />
-              <input
-                type="text"
-                placeholder="Search within this faculty's papers..."
-                value={pubSearch}
-                onChange={(e) => {
-                  setPubSearch(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="w-full pl-9 pr-3 py-1.5 text-xs rounded border border-[#eedfd8] bg-white focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
-              />
-            </div>
-
-            {/* Type Filter Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
-              {[
-                { id: "ALL", label: "All Types" },
-                { id: "JOURNAL", label: "Journals" },
-                { id: "CONFERENCE", label: "Conferences" },
-                { id: "BOOK_CHAPTER", label: "Book Chapters" },
-              ].map((t) => (
+      {/* 3. MNIT-STYLE RESEARCH IMPACT METRICS STRIP */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 relative z-20">
+        <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-md p-3 sm:p-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+            {[
+              { label: "Journals", count: journalCount, tab: "journal" as TabKey, icon: BookOpen, color: "text-[#85261e] bg-[#fcf2ef]" },
+              { label: "Conferences", count: conferenceCount, tab: "conference" as TabKey, icon: Presentation, color: "text-amber-700 bg-amber-50" },
+              { label: "Patents", count: patentCount, tab: "patents" as TabKey, icon: Lightbulb, color: "text-indigo-700 bg-indigo-50" },
+              { label: "Projects", count: projectCount, tab: "projects" as TabKey, icon: Briefcase, color: "text-emerald-700 bg-emerald-50" },
+              { label: "PhD Guided", count: phdSupervisedCount, tab: "researchSupervision" as TabKey, icon: GraduationCap, color: "text-blue-700 bg-blue-50" },
+              { label: "Consultancies", count: consultancyCount, tab: "consultancies" as TabKey, icon: Building2, color: "text-purple-700 bg-purple-50" },
+            ].map((stat, idx) => {
+              const Icon = stat.icon;
+              const isSelected = activeTab === stat.tab;
+              return (
                 <button
-                  key={t.id}
+                  key={idx}
+                  type="button"
                   onClick={() => {
-                    setSelectedType(t.id);
-                    setCurrentPage(1);
+                    setActiveTab(stat.tab);
+                    setSelectedYear("ALL");
+                    setPubSearch("");
                   }}
-                  className={`px-2.5 py-1 text-xs font-semibold rounded transition ${
-                    selectedType === t.id
-                      ? "bg-[#33110e] text-white shadow-xs"
-                      : "bg-white text-neutral-700 border border-[#eedfd8] hover:bg-[#eedfd8]/40"
+                  className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                    isSelected
+                      ? "border-[#85261e] bg-[#fff9f6] shadow-sm ring-1 ring-[#85261e]/30"
+                      : "border-neutral-100 hover:border-[#eedfd8] hover:bg-neutral-50"
                   }`}
                 >
-                  {t.label}
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${stat.color}`}>
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-lg sm:text-xl font-black text-neutral-900 leading-tight">
+                      {stat.count}
+                    </div>
+                    <div className="text-[11px] font-semibold text-neutral-500 uppercase tracking-wider truncate">
+                      {stat.label}
+                    </div>
+                  </div>
                 </button>
-              ))}
-            </div>
+              );
+            })}
           </div>
+        </div>
+      </div>
 
-          {/* Year Filter Chips (Horizontal Scroller) */}
-          {pubYears.length > 1 && (
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
-              <span className="text-xs font-bold text-[#33110e] flex items-center gap-1 mr-1 flex-shrink-0">
-                <Calendar className="w-3.5 h-3.5 text-[#85261e]" /> Year:
+      {/* 4. MAIN LAYOUT: OPTIONS TO THE LEFT (PublicSidebar architecture) + MAIN CONTENT */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          {/* A. LEFT OPTIONS NAVIGATION SIDEBAR */}
+          <aside className="lg:col-span-3 bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden lg:sticky lg:top-16">
+            <div className="p-3.5 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+              <span className="text-xs font-bold text-[#33110e] uppercase tracking-wider flex items-center gap-1.5">
+                <Compass className="w-4 h-4 text-[#85261e]" />
+                Portfolio Navigation
               </span>
-              <button
-                onClick={() => {
-                  setSelectedYear("ALL");
-                  setCurrentPage(1);
-                }}
-                className={`px-3 py-1 text-xs font-semibold rounded-full transition flex-shrink-0 ${
-                  selectedYear === "ALL"
-                    ? "bg-[#85261e] text-white font-bold"
-                    : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
-                }`}
-              >
-                All ({allFacultyPubs.length})
-              </button>
-              {pubYears.map((yr) => {
-                const count = allFacultyPubs.filter((p: any) => p.year === yr).length;
+              <span className="text-[11px] font-mono text-[#85261e] font-semibold bg-white px-2 py-0.5 rounded-full border border-[#eedfd8]">
+                14 Sections
+              </span>
+            </div>
+
+            <nav className="p-2 space-y-1 max-h-[75vh] overflow-y-auto no-scrollbar">
+              {sidebarItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.key;
                 return (
                   <button
-                    key={yr}
+                    key={item.key}
+                    type="button"
                     onClick={() => {
-                      setSelectedYear(yr.toString());
+                      setActiveTab(item.key);
+                      setSelectedYear("ALL");
+                      setPubSearch("");
                       setCurrentPage(1);
                     }}
-                    className={`px-3 py-1 text-xs font-semibold rounded-full transition flex-shrink-0 ${
-                      selectedYear === yr.toString()
-                        ? "bg-[#85261e] text-white font-bold"
-                        : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
+                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer text-left ${
+                      isActive
+                        ? "bg-[#85261e] text-white shadow-xs"
+                        : "text-neutral-700 hover:bg-[#fff9f6] hover:text-[#85261e]"
                     }`}
                   >
-                    {yr} ({count})
+                    <div className="flex items-center gap-2.5 truncate">
+                      <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-amber-300" : "text-neutral-400"}`} />
+                      <span className="truncate">{item.label}</span>
+                    </div>
+                    {typeof item.count === "number" && (
+                      <span
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ml-1.5 ${
+                          isActive
+                            ? "bg-white/20 text-white"
+                            : "bg-neutral-100 text-neutral-600 group-hover:bg-[#eedfd8]"
+                        }`}
+                      >
+                        {item.count}
+                      </span>
+                    )}
                   </button>
                 );
               })}
-            </div>
-          )}
+            </nav>
+          </aside>
 
-          {/* Publications List */}
-          <div className="space-y-3">
-            {paginatedPubs.map((pub: any, idx: number) => {
-              const itemNum = (currentPage - 1) * PUBS_PER_PAGE + idx + 1;
-              const isExpanded = expandedAbstractId === pub.id;
+          {/* B. MAIN DISPLAY PANE WITH DYNAMIC ACTIONS & TABLES */}
+          <main className="lg:col-span-9 space-y-5">
+            
+            {/* Top Action Bar for Current Tab: Title + Dynamic "+ Add / Edit" Button */}
+            <div className="bg-white rounded-2xl border border-[#eedfd8] p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h2 className="text-lg sm:text-xl font-extrabold text-[#33110e] flex items-center gap-2">
+                  {activeTab === "facultyInfo" && "Faculty Information & Credentials"}
+                  {activeTab === "journal" && "Journal Publications"}
+                  {activeTab === "conference" && "Conference Proceedings"}
+                  {activeTab === "book" && "Books Authored & Edited"}
+                  {activeTab === "book_chapter" && "Book Chapters Contributed"}
+                  {activeTab === "patents" && "Patents & Intellectual Property"}
+                  {activeTab === "projects" && "Sponsored Research Projects"}
+                  {activeTab === "events" && "Conferences, STCs & FDPs Organized"}
+                  {activeTab === "consultancies" && "Industrial Consultancies"}
+                  {activeTab === "experttalk" && "Keynote Lectures & Expert Talks"}
+                  {activeTab === "researchSupervision" && "Research Scholar Supervision"}
+                  {activeTab === "administrativeexperience" && "Administrative Experience"}
+                  {activeTab === "honors" && "Honors & Recognitions Achieved"}
+                  {activeTab === "internationalAndNationalExposure" && "International & National Exposure"}
+                </h2>
+                <p className="text-xs text-neutral-500">
+                  {activeTab === "facultyInfo"
+                    ? "Official profile details, verified credentials, and institutional information"
+                    : `Active records verified for ${faculty.full_name}`}
+                </p>
+              </div>
 
-              return (
-                <div
-                  key={pub.id}
-                  className="bg-white border border-[#eedfd8] rounded-lg p-4 hover:border-[#85261e]/40 transition shadow-xs hover:shadow-sm"
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={openAddModal}
+                  className="inline-flex items-center gap-1.5 bg-[#85261e] hover:bg-[#33110e] text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
-                    <div className="flex-1 space-y-1.5">
-                      {/* Badges & Meta */}
-                      <div className="flex flex-wrap items-center gap-2 text-[10px]">
-                        <span className="font-mono font-bold text-neutral-500">
-                          #{itemNum}
-                        </span>
-                        <span className="bg-[#33110e] text-white px-2 py-0.5 rounded font-bold uppercase tracking-wider">
-                          {pub.publication_type}
-                        </span>
-                        <span className="bg-amber-100 text-amber-900 border border-amber-300 font-bold px-2 py-0.5 rounded">
-                          {pub.year}
-                        </span>
-                        {pub.is_sci && (
-                          <span className="bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold px-1.5 py-0.5 rounded">
-                            SCI Indexed
-                          </span>
-                        )}
-                        {pub.is_scopus && !pub.is_sci && (
-                          <span className="bg-sky-100 text-sky-900 border border-sky-300 font-bold px-1.5 py-0.5 rounded">
-                            Scopus
-                          </span>
-                        )}
-                      </div>
+                  {activeTab === "facultyInfo" ? (
+                    <>
+                      <Edit className="w-3.5 h-3.5 text-amber-300" />
+                      <span>Edit Profile</span>
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="w-3.5 h-3.5 text-amber-300" />
+                      <span>Add {sidebarItems.find((i) => i.key === activeTab)?.label}</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
 
-                      {/* Title */}
-                      <h3 className="text-sm font-bold text-[#1c110c] leading-snug hover:text-[#85261e] transition cursor-pointer">
-                        {pub.title}
-                      </h3>
+            {/* 1. FACULTY INFO TAB */}
+            {activeTab === "facultyInfo" && (
+              <div className="space-y-6">
+                <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs p-6">
+                  <div className="flex items-center justify-between border-b border-[#eedfd8] pb-4 mb-5">
+                    <div>
+                      <h3 className="text-base font-bold text-[#33110e]">Core Institutional Credentials</h3>
+                      <p className="text-xs text-neutral-500">Official academic appointment and contact channels</p>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 bg-[#fcf2ef] text-[#85261e] text-xs font-bold px-3 py-1 rounded-full border border-[#eedfd8]">
+                      <UserCheck className="w-3.5 h-3.5" />
+                      Verified
+                    </span>
+                  </div>
 
-                      {/* Authors */}
-                      <p className="text-xs text-neutral-600">
-                        <strong className="text-neutral-800">Authors:</strong> {pub.raw_authors || faculty.full_name}
-                      </p>
-
-                      {/* Journal / Conference Venue */}
-                      <p className="text-xs italic text-[#85261e] font-medium">
-                        {pub.journal_or_conference_name}
-                        {pub.volume && `, Vol. ${pub.volume}`}
-                        {pub.issue && `(${pub.issue})`}
-                        {pub.pages && `, pp. ${pub.pages}`}
-                      </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Full Name</span>
+                      <p className="text-sm font-semibold text-neutral-900">{faculty.full_name}</p>
                     </div>
 
-                    {/* Quick Action Buttons */}
-                    <div className="flex items-center sm:flex-col gap-1.5 flex-shrink-0 pt-2 sm:pt-0">
-                      {pub.doi && (
-                        <a
-                          href={pub.doi.startsWith("http") ? pub.doi : `https://doi.org/${pub.doi}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="px-2.5 py-1 bg-[#33110e] text-white rounded text-[11px] font-semibold hover:bg-[#85261e] transition flex items-center gap-1"
-                        >
-                          DOI Link <ExternalLink className="w-2.5 h-2.5" />
-                        </a>
-                      )}
-                      <button
-                        onClick={() => handleCopyCitation(pub)}
-                        className="px-2.5 py-1 border border-[#eedfd8] text-neutral-700 bg-[#fff9f6] rounded text-[11px] font-semibold hover:bg-[#eedfd8] transition flex items-center gap-1"
-                      >
-                        {copiedId === pub.id ? (
-                          <>
-                            <Check className="w-3 h-3 text-emerald-600" /> Copied
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3 h-3 text-neutral-500" /> Cite
-                          </>
-                        )}
-                      </button>
+                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Designation</span>
+                      <p className="text-sm font-semibold text-[#85261e]">{faculty.designation}</p>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Department</span>
+                      <p className="text-sm font-semibold text-neutral-900">{facultyDeptName} ({facultyDeptCode})</p>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Highest Qualification</span>
+                      <p className="text-sm font-semibold text-neutral-900">{highestQualification}</p>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Teaching Experience</span>
+                      <p className="text-sm font-semibold text-neutral-900">{netTeachingExpText}</p>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Contact Phone</span>
+                      <p className="text-sm font-semibold text-neutral-900">{faculty.phone || "+91-1972-254400"}</p>
+                    </div>
+
+                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1 md:col-span-2">
+                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Official Email Address</span>
+                      <p className="text-sm font-semibold text-[#85261e]">{faculty.email}</p>
                     </div>
                   </div>
                 </div>
-              );
-            })}
 
-            {filteredPubs.length === 0 && (
-              <div className="text-center py-12 text-neutral-500 text-xs bg-[#fff9f6] rounded-lg border border-[#eedfd8]">
-                No publications found matching your search or year criteria.
+                {/* Specializations & Bio */}
+                <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs p-6">
+                  <h3 className="text-base font-bold text-[#33110e] mb-3 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-500" />
+                    Specialization &amp; Research Interests
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {(faculty.research_interests || ["Computer Science & Engineering"]).map((interest: string, idx: number) => (
+                      <span
+                        key={idx}
+                        className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-semibold bg-[#fff9f6] text-[#85261e] border border-[#eedfd8]"
+                      >
+                        {interest}
+                      </span>
+                    ))}
+                  </div>
+
+                  {faculty.bio && (
+                    <div className="mt-5 pt-4 border-t border-neutral-100">
+                      <h4 className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-2">Faculty Biography</h4>
+                      <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed">{faculty.bio}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Educational Qualifications Table */}
+                <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                  <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+                    <h3 className="text-sm font-bold text-[#33110e] flex items-center gap-2">
+                      <GraduationCap className="w-4 h-4 text-[#85261e]" />
+                      Educational Qualifications
+                    </h3>
+                    <span className="text-xs text-neutral-500">{allQualifications.length} Degree(s)</span>
+                  </div>
+                  {allQualifications.length > 0 ? (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs border-collapse">
+                        <thead>
+                          <tr className="bg-neutral-50 border-b border-[#eedfd8] text-neutral-600 font-bold uppercase tracking-wider text-[11px]">
+                            <th className="p-3 w-16 text-center">Sr.</th>
+                            <th className="p-3">Degree</th>
+                            <th className="p-3">Institution / University</th>
+                            <th className="p-3 w-28 text-center">Year</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-neutral-100">
+                          {allQualifications.map((q: any, idx: number) => (
+                            <tr key={idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
+                              <td className="p-3 text-center text-neutral-400 font-mono">{idx + 1}</td>
+                              <td className="p-3 font-bold text-[#85261e]">{q.degree || q.nameOfDegree}</td>
+                              <td className="p-3 text-neutral-800 font-medium">{q.institute || q.university || "—"}</td>
+                              <td className="p-3 text-center text-neutral-600 font-semibold">{q.year || "—"}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  ) : (
+                    <div className="p-8 text-center text-xs text-neutral-500">
+                      No qualification records added yet.
+                    </div>
+                  )}
+                </div>
               </div>
             )}
-          </div>
 
-          {/* Pagination Controls */}
-          {totalPubPages > 1 && (
-            <div className="flex items-center justify-between pt-3 text-xs text-neutral-600 border-t border-[#eedfd8]">
-              <p>
-                Showing {(currentPage - 1) * PUBS_PER_PAGE + 1} to{" "}
-                {Math.min(currentPage * PUBS_PER_PAGE, filteredPubs.length)} of {filteredPubs.length} papers
-              </p>
+            {/* 2. PUBLICATIONS TABS (Journal, Conference, Book, Book Chapter) */}
+            {(activeTab === "journal" || activeTab === "conference" || activeTab === "book" || activeTab === "book_chapter") && (
+              <div className="space-y-4">
+                {/* Search & Year Filtering */}
+                <div className="bg-white rounded-2xl border border-[#eedfd8] p-4 shadow-xs space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="relative w-full sm:w-80">
+                      <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                      <input
+                        type="text"
+                        placeholder="Search publications by title, author, venue..."
+                        value={pubSearch}
+                        onChange={(e) => {
+                          setPubSearch(e.target.value);
+                          setCurrentPage(1);
+                        }}
+                        className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl border border-[#eedfd8] focus:outline-none focus:ring-1 focus:ring-[#85261e] bg-[#faf8f6]"
+                      />
+                    </div>
+                    <span className="text-xs text-neutral-500">
+                      {filteredPubs.length} publication(s) match
+                    </span>
+                  </div>
 
-              <div className="flex items-center gap-1.5">
-                <button
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                  className="p-1.5 rounded border border-[#eedfd8] bg-white disabled:opacity-40 hover:bg-[#fff9f6]"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <span className="px-3 py-1 font-semibold text-[#33110e]">
-                  Page {currentPage} of {totalPubPages}
-                </span>
-                <button
-                  onClick={() => setCurrentPage((p) => Math.min(totalPubPages, p + 1))}
-                  disabled={currentPage === totalPubPages}
-                  className="p-1.5 rounded border border-[#eedfd8] bg-white disabled:opacity-40 hover:bg-[#fff9f6]"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* TAB 2: PATENTS */}
-      {activeTab === "patents" && (
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {allFacultyPatents.map((pat: any) => (
-              <div key={pat.id} className="bg-white border border-[#eedfd8] rounded-lg p-4 shadow-xs space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
-                    pat.status === "Granted" ? "bg-emerald-100 text-emerald-900 border border-emerald-300" : "bg-amber-100 text-amber-900 border border-amber-300"
-                  }`}>
-                    {pat.status}
-                  </span>
-                  <span className="text-xs text-neutral-500 font-semibold">{pat.year}</span>
-                </div>
-                <h3 className="text-sm font-bold text-[#33110e]">{pat.title}</h3>
-                <div className="text-xs text-neutral-600 space-y-0.5 border-t border-[#f4ece8] pt-2">
-                  <p><strong>App Number:</strong> {pat.application_number}</p>
-                  <p><strong>Inventors:</strong> {pat.raw_inventors || faculty.full_name}</p>
-                  <p><strong>Office:</strong> {pat.patent_office} ({pat.country})</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          {allFacultyPatents.length === 0 && (
-            <div className="text-center py-12 text-neutral-500 text-xs bg-[#fff9f6] rounded-lg border border-[#eedfd8]">
-              No patents on record for this faculty member.
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* TAB 3: SPONSORED PROJECTS */}
-      {activeTab === "projects" && (
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {allFacultyProjects.map((prj: any) => (
-              <div key={prj.id} className="bg-white border border-[#eedfd8] rounded-lg p-4 shadow-xs space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
-                    prj.status === "Ongoing" ? "bg-blue-100 text-blue-900 border border-blue-300" : "bg-neutral-100 text-neutral-800"
-                  }`}>
-                    {prj.status}
-                  </span>
-                  <span className="text-xs text-[#85261e] font-bold">
-                    ₹{(prj.total_sanctioned_amount / 100000).toFixed(2)} Lakhs
-                  </span>
-                </div>
-                <h3 className="text-sm font-bold text-[#33110e]">{prj.title}</h3>
-                <div className="text-xs text-neutral-600 space-y-0.5 border-t border-[#f4ece8] pt-2">
-                  <p><strong>Funding Agency:</strong> {prj.funding_agency}</p>
-                  <p><strong>Ref Number:</strong> {prj.reference_number || "N/A"}</p>
-                  <p><strong>Principal Investigator:</strong> {prj.raw_investigators || faculty.full_name}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          {allFacultyProjects.length === 0 && (
-            <div className="text-center py-12 text-neutral-500 text-xs bg-[#fff9f6] rounded-lg border border-[#eedfd8]">
-              No sponsored projects on record for this faculty member.
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* TAB 4: RESEARCH GUIDANCE & SUPERVISIONS (Doctoral & PG Scholars) */}
-      {activeTab === "supervisions" && (
-        <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-[#eedfd8] pb-3">
-            <div>
-              <h3 className="text-sm font-bold text-[#33110e] uppercase tracking-wider flex items-center gap-2">
-                <GraduationCap className="w-4 h-4 text-[#85261e]" /> Doctoral & Master&apos;s Research Guidance
-              </h3>
-              <p className="text-xs text-neutral-600 mt-0.5">
-                Scholars guided for Ph.D. dissertations and postgraduate research.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-2 text-xs">
-              <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold">
-                Completed / Awarded: {combinedSupervisions.filter((s: any) => s.status?.toLowerCase().includes("award") || s.status?.toLowerCase().includes("complet") || s.status?.toLowerCase().includes("pass")).length}
-              </span>
-              <span className="bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-0.5 rounded-full font-semibold">
-                Ongoing: {combinedSupervisions.filter((s: any) => s.status?.toLowerCase().includes("ongoing") || s.status?.toLowerCase().includes("pursu")).length}
-              </span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {combinedSupervisions.map((sup: any, i: number) => {
-              const isAwarded =
-                sup.status?.toLowerCase().includes("award") ||
-                sup.status?.toLowerCase().includes("complet") ||
-                sup.status?.toLowerCase().includes("pass");
-              return (
-                <div
-                  key={i}
-                  className="bg-[#fff9f6] border border-[#eedfd8] rounded-xl p-4 shadow-xs hover:shadow-md transition space-y-2.5 flex flex-col justify-between"
-                >
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded bg-white border border-[#eedfd8] text-[#33110e]">
-                        <GraduationCap className="w-3.5 h-3.5 text-[#85261e]" />
-                        {sup.level || "Ph.D."}
+                  {pubYears.length > 0 && (
+                    <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-xs">
+                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
+                        <Filter className="w-3 h-3" /> Filter Year:
                       </span>
-                      <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                          isAwarded
-                            ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-                            : "bg-amber-50 text-amber-800 border-amber-200"
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedYear("ALL"); setCurrentPage(1); }}
+                        className={`px-3 py-1 rounded-full font-semibold transition shrink-0 cursor-pointer ${
+                          selectedYear === "ALL"
+                            ? "bg-[#33110e] text-white"
+                            : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
                         }`}
                       >
-                        {isAwarded ? "Degree Awarded" : "Ongoing"}
-                      </span>
+                        All ({currentPubList.length})
+                      </button>
+                      {pubYears.map((year) => {
+                        const count = currentPubList.filter((p) => Number(p.year) === year).length;
+                        return (
+                          <button
+                            key={year}
+                            type="button"
+                            onClick={() => { setSelectedYear(String(year)); setCurrentPage(1); }}
+                            className={`px-2.5 py-1 rounded-full font-semibold transition shrink-0 cursor-pointer ${
+                              selectedYear === String(year)
+                                ? "bg-[#85261e] text-white"
+                                : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
+                            }`}
+                          >
+                            {year} ({count})
+                          </button>
+                        );
+                      })}
                     </div>
-
-                    <h4 className="text-sm font-bold text-[#33110e]">
-                      {sup.student_name}
-                    </h4>
-
-                    {sup.roll_number && (
-                      <p className="text-[11px] font-mono text-neutral-500">
-                        Roll No: {sup.roll_number}
-                      </p>
-                    )}
-
-                    <p className="text-xs text-neutral-700 leading-relaxed">
-                      <strong className="text-neutral-900 font-medium">Topic:</strong> &ldquo;{sup.thesis_title}&rdquo;
-                    </p>
-                  </div>
-
-                  <div className="pt-2 border-t border-[#eedfd8]/60 text-[11px] text-neutral-600 flex flex-wrap items-center justify-between gap-1">
-                    {sup.year && (
-                      <span><strong>Year:</strong> {sup.year}</span>
-                    )}
-                    {sup.co_supervisor && (
-                      <span><strong>Co-Supervisor:</strong> {sup.co_supervisor}</span>
-                    )}
-                  </div>
+                  )}
                 </div>
-              );
-            })}
-          </div>
 
-          {combinedSupervisions.length === 0 && (
-            <div className="text-center py-12 text-neutral-500 text-xs bg-[#fff9f6] rounded-lg border border-[#eedfd8]">
-              No research supervision records currently listed for this faculty member.
-            </div>
-          )}
-        </div>
-      )}
+                {/* Publications Table with Details & Actions (tempcsebase design) */}
+                <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                  {paginatedPubs.length > 0 ? (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-xs border-collapse">
+                        <thead>
+                          <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
+                            <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
+                            <th className="p-3 border-r border-neutral-700 min-w-[320px]">Publication Details</th>
+                            <th className="p-3 w-20 text-center border-r border-neutral-700">Year</th>
+                            <th className="p-3 w-28 text-center border-r border-neutral-700">Indexing</th>
+                            <th className="p-3 w-32 text-center">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-[#eedfd8]/60">
+                          {paginatedPubs.map((pub: any, idx: number) => {
+                            const isExpanded = expandedAbstractId === pub.id;
+                            const isCopied = copiedId === pub.id;
+                            const serial = (currentPage - 1) * PUBS_PER_PAGE + idx + 1;
+                            return (
+                              <tr key={pub.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
+                                <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                                  {serial}
+                                </td>
 
-      {/* TAB 5: QUALIFICATIONS */}
-      {activeTab === "qualifications" && (
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {allQualifications.map((q: any, i: number) => (
-              <div key={i} className="bg-[#fff9f6] border border-[#eedfd8] rounded-lg p-4 shadow-xs space-y-1">
-                <GraduationCap className="w-5 h-5 text-[#85261e] mb-1" />
-                <h3 className="text-sm font-bold text-[#33110e]">{q.degree}</h3>
-                <p className="text-xs text-neutral-700">{q.institute}</p>
-                <p className="text-[11px] font-semibold text-[#85261e]">Year of Completion: {q.year}</p>
+                                <td className="p-3 align-top space-y-1.5">
+                                  <div className="text-xs font-semibold text-[#800000] leading-snug">
+                                    {pub.author_text || pub.raw_authors || faculty.full_name}
+                                  </div>
+
+                                  <div className="text-xs font-bold text-neutral-900 leading-snug">
+                                    "{pub.title}"
+                                  </div>
+
+                                  <div className="text-xs text-[#0f376f] font-semibold italic">
+                                    {pub.journal_or_conference_name || pub.venue_name || "Academic Publication"}
+                                    {pub.volume && `, Vol: ${pub.volume}`}
+                                    {pub.issue && `, Issue: ${pub.issue}`}
+                                    {pub.page_range && `, pp. ${pub.page_range}`}
+                                    {pub.pages && !pub.page_range && `, pp. ${pub.pages}`}
+                                  </div>
+
+                                  {pub.doi && (
+                                    <div className="text-[11px] text-neutral-500">
+                                      <a
+                                        href={pub.doi.startsWith("http") ? pub.doi : `https://doi.org/${pub.doi}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-1 text-[#85261e] hover:underline"
+                                      >
+                                        <ExternalLink className="w-3 h-3" />
+                                        <span>DOI: {pub.doi}</span>
+                                      </a>
+                                    </div>
+                                  )}
+
+                                  {pub.abstract_text && (
+                                    <div className="pt-1">
+                                      <button
+                                        type="button"
+                                        onClick={() => setExpandedAbstractId(isExpanded ? null : pub.id)}
+                                        className="text-[11px] font-semibold text-neutral-500 hover:text-neutral-900 inline-flex items-center gap-1"
+                                      >
+                                        {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                                        <span>{isExpanded ? "Hide Abstract" : "View Abstract"}</span>
+                                      </button>
+                                      {isExpanded && (
+                                        <p className="mt-1.5 p-3 rounded-lg bg-neutral-50 border border-neutral-200 text-neutral-700 text-[11px] leading-relaxed">
+                                          {pub.abstract_text}
+                                        </p>
+                                      )}
+                                    </div>
+                                  )}
+                                </td>
+
+                                <td className="p-3 text-center align-top font-bold text-neutral-800">
+                                  {pub.year || "—"}
+                                </td>
+
+                                <td className="p-3 text-center align-top space-y-1">
+                                  {pub.indexing && (
+                                    <span className="inline-block px-2 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-bold">
+                                      {pub.indexing}
+                                    </span>
+                                  )}
+                                  {pub.is_scopus && (
+                                    <span className="inline-block px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold">
+                                      Scopus
+                                    </span>
+                                  )}
+                                  {pub.is_sci && (
+                                    <span className="inline-block px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold">
+                                      SCI
+                                    </span>
+                                  )}
+                                  {pub.journal_quartile && (
+                                    <span className="inline-block px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200 text-[10px] font-bold">
+                                      Q{pub.journal_quartile}
+                                    </span>
+                                  )}
+                                  {!pub.indexing && !pub.is_scopus && !pub.is_sci && (
+                                    <span className="text-neutral-400 text-[11px]">—</span>
+                                  )}
+                                </td>
+
+                                <td className="p-3 text-center align-top space-y-1.5">
+                                  {/* Details Button (tempcsebase PublicationsModal) */}
+                                  <button
+                                    type="button"
+                                    onClick={() => openDetails(pub)}
+                                    className="w-full inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px] cursor-pointer"
+                                  >
+                                    <Info className="w-3 h-3" />
+                                    <span>Details</span>
+                                  </button>
+
+                                  <div className="flex items-center gap-1">
+                                    <button
+                                      type="button"
+                                      onClick={() => copyCitation(pub)}
+                                      className="flex-1 inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-neutral-100 hover:bg-[#85261e] hover:text-white text-neutral-700 transition font-semibold text-[10px] cursor-pointer"
+                                      title="Copy Citation"
+                                    >
+                                      {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                                      <span>Cite</span>
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => openEditModal(pub)}
+                                      className="p-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition"
+                                      title="Edit Record"
+                                    >
+                                      <Edit className="w-3 h-3" />
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      onClick={() => handleDeleteRecord(pub)}
+                                      className="p-1 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 transition"
+                                      title="Delete Record"
+                                    >
+                                      <Trash2 className="w-3 h-3" />
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  ) : (
+                    <div className="p-12 text-center space-y-2">
+                      <BookOpen className="w-8 h-8 text-neutral-300 mx-auto" />
+                      <p className="text-xs font-bold text-neutral-600">No records found matching your filters</p>
+                      <button
+                        type="button"
+                        onClick={() => { setSelectedYear("ALL"); setPubSearch(""); }}
+                        className="text-xs text-[#85261e] font-semibold hover:underline"
+                      >
+                        Reset filters
+                      </button>
+                    </div>
+                  )}
+
+                  {totalPages > 1 && (
+                    <div className="p-3.5 bg-[#fdf5f2] border-t border-[#eedfd8] flex items-center justify-between text-xs">
+                      <span className="text-neutral-500 font-medium">
+                        Page {currentPage} of {totalPages} ({filteredPubs.length} items)
+                      </span>
+                      <div className="flex items-center gap-1">
+                        <button
+                          type="button"
+                          disabled={currentPage === 1}
+                          onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                          className="px-2.5 py-1 rounded-lg border border-[#eedfd8] bg-white text-neutral-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-50 font-semibold"
+                        >
+                          Prev
+                        </button>
+                        <button
+                          type="button"
+                          disabled={currentPage === totalPages}
+                          onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                          className="px-2.5 py-1 rounded-lg border border-[#eedfd8] bg-white text-neutral-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-50 font-semibold"
+                        >
+                          Next
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            ))}
-          </div>
-          {allQualifications.length === 0 && (
-            <div className="text-center py-12 text-neutral-500 text-xs bg-[#fff9f6] rounded-lg border border-[#eedfd8]">
-              Educational qualification records are being updated.
-            </div>
-          )}
-        </div>
-      )}
+            )}
 
-      {/* TAB 5: ADMINISTRATIVE EXPERIENCE & TALKS */}
-      {activeTab === "experience" && (
-        <div className="space-y-6">
-          {/* Admin Posts */}
-          <div>
-            <h3 className="text-sm font-bold text-[#33110e] uppercase tracking-wider mb-3 flex items-center gap-2">
-              <Building2 className="w-4 h-4 text-[#85261e]" /> Administrative Responsibilities
-            </h3>
-            <div className="divide-y divide-[#eedfd8] border border-[#eedfd8] rounded-lg overflow-hidden bg-white">
-              {allAdminExp.map((exp: any, i: number) => (
-                <div key={i} className="p-3 hover:bg-[#fff9f6] transition flex justify-between items-center text-xs">
-                  <div>
-                    <h4 className="font-bold text-[#33110e]">{exp.position}</h4>
-                    <p className="text-neutral-600">{exp.organization}</p>
-                  </div>
-                  <span className="text-[11px] font-mono text-neutral-500">
-                    {exp.start_date} – {exp.end_date}
+            {/* 6. PATENTS TAB */}
+            {activeTab === "patents" && (
+              <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
+                    <Lightbulb className="w-4 h-4 text-amber-600" />
+                    Intellectual Property Register ({allFacultyPatents.length})
                   </span>
                 </div>
-              ))}
-              {allAdminExp.length === 0 && (
-                <div className="p-4 text-xs text-neutral-500">No administrative posts on record.</div>
-              )}
-            </div>
-          </div>
+                {allFacultyPatents.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs border-collapse">
+                      <thead>
+                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
+                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3 border-r border-neutral-700">Patent Title</th>
+                          <th className="p-3 w-36 border-r border-neutral-700">Application No.</th>
+                          <th className="p-3 w-28 text-center border-r border-neutral-700">Status</th>
+                          <th className="p-3 w-24 text-center">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#eedfd8]/60">
+                        {allFacultyPatents.map((pat: any, idx: number) => {
+                          const isGranted = (pat.status || "").toLowerCase().includes("grant");
+                          return (
+                            <tr key={pat.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
+                              <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                                {idx + 1}
+                              </td>
+                              <td className="p-3 align-top space-y-1">
+                                <div className="font-bold text-neutral-900 leading-snug">{pat.title}</div>
+                                <div className="text-[11px] text-neutral-500">
+                                  Inventors: {pat.raw_inventors || faculty.full_name}
+                                </div>
+                                {pat.patent_office && (
+                                  <div className="text-[10px] text-neutral-400">
+                                    Office: {pat.patent_office} ({pat.country || "India"})
+                                  </div>
+                                )}
+                              </td>
+                              <td className="p-3 align-top font-mono text-neutral-700 font-semibold">
+                                {pat.application_number || pat.patent_number || "—"}
+                              </td>
+                              <td className="p-3 text-center align-top">
+                                <span
+                                  className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                    isGranted
+                                      ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                                      : "bg-amber-100 text-amber-800 border border-amber-300"
+                                  }`}
+                                >
+                                  {pat.status || "Published"}
+                                </span>
+                              </td>
+                              <td className="p-3 text-center align-top space-y-1">
+                                <button
+                                  type="button"
+                                  onClick={() => openDetails(pat)}
+                                  className="w-full inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px]"
+                                >
+                                  <Info className="w-3 h-3" /> Details
+                                </button>
+                                <div className="flex items-center justify-center gap-1">
+                                  <button
+                                    type="button"
+                                    onClick={() => openEditModal(pat)}
+                                    className="p-1 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                  >
+                                    <Edit className="w-3 h-3" />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeleteRecord(pat)}
+                                    className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                  >
+                                    <Trash2 className="w-3 h-3" />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="p-12 text-center text-neutral-500 text-xs">
+                    No patent records listed. Click "+ Add Patents" to register a patent.
+                  </div>
+                )}
+              </div>
+            )}
 
-          {/* Expert Talks */}
-          <div>
-            <h3 className="text-sm font-bold text-[#33110e] uppercase tracking-wider mb-3 flex items-center gap-2">
-              <Mic className="w-4 h-4 text-[#85261e]" /> Expert Talks & Keynotes
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {allTalks.map((talk: any, i: number) => (
-                <div key={i} className="bg-white border border-[#eedfd8] rounded-lg p-3.5 shadow-xs space-y-1 text-xs">
-                  <h4 className="font-bold text-[#33110e]">{talk.title}</h4>
-                  <p className="text-neutral-700"><strong>Venue / Host:</strong> {talk.venue}</p>
-                  <p className="text-neutral-500 text-[11px]"><strong>Dates:</strong> {talk.start_date} to {talk.end_date}</p>
+            {/* 7. PROJECTS TAB */}
+            {activeTab === "projects" && (
+              <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
+                    <Briefcase className="w-4 h-4 text-emerald-700" />
+                    Sponsored Projects Register ({allFacultyProjects.length})
+                  </span>
                 </div>
-              ))}
-              {allTalks.length === 0 && (
-                <div className="col-span-2 p-4 text-xs text-neutral-500 bg-[#fff9f6] rounded border border-[#eedfd8]">
-                  No expert talks recorded.
+                {allFacultyProjects.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs border-collapse">
+                      <thead>
+                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
+                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3 border-r border-neutral-700 min-w-[280px]">Project Title</th>
+                          <th className="p-3 border-r border-neutral-700">Sponsoring Agency</th>
+                          <th className="p-3 w-28 text-center border-r border-neutral-700">Amount (INR)</th>
+                          <th className="p-3 w-24 text-center">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#eedfd8]/60">
+                        {allFacultyProjects.map((prj: any, idx: number) => (
+                          <tr key={prj.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
+                            <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                              {idx + 1}
+                            </td>
+                            <td className="p-3 align-top space-y-1">
+                              <div className="font-bold text-neutral-900 leading-snug">{prj.title}</div>
+                              <div className="text-[11px] text-neutral-500">
+                                Investigators: {prj.raw_investigators || faculty.full_name}
+                              </div>
+                            </td>
+                            <td className="p-3 align-top font-semibold text-[#85261e]">
+                              {prj.funding_agency || "DST-SERB"}
+                            </td>
+                            <td className="p-3 text-center align-top font-bold text-neutral-900">
+                              {prj.total_sanctioned_amount ? `₹ ${(prj.total_sanctioned_amount / 100000).toFixed(1)} L` : "—"}
+                            </td>
+                            <td className="p-3 text-center align-top space-y-1">
+                              <button
+                                type="button"
+                                onClick={() => openDetails(prj)}
+                                className="w-full inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px]"
+                              >
+                                <Info className="w-3 h-3" /> Details
+                              </button>
+                              <div className="flex items-center justify-center gap-1">
+                                <button
+                                  type="button"
+                                  onClick={() => openEditModal(prj)}
+                                  className="p-1 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                >
+                                  <Edit className="w-3 h-3" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteRecord(prj)}
+                                  className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="p-12 text-center text-neutral-500 text-xs">
+                    No sponsored projects listed. Click "+ Add Projects" to register one.
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 8. EVENTS TAB */}
+            {activeTab === "events" && (
+              <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
+                    <Calendar className="w-4 h-4 text-indigo-600" />
+                    Organized Academic Events ({allEvents.length})
+                  </span>
+                </div>
+                {allEvents.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs border-collapse">
+                      <thead>
+                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
+                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3 border-r border-neutral-700 min-w-[260px]">Event Title</th>
+                          <th className="p-3 w-28 border-r border-neutral-700">Role</th>
+                          <th className="p-3 border-r border-neutral-700">Venue &amp; Dates</th>
+                          <th className="p-3 w-24 text-center">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#eedfd8]/60">
+                        {allEvents.map((evt: any, idx: number) => (
+                          <tr key={evt.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
+                            <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                              {idx + 1}
+                            </td>
+                            <td className="p-3 align-top space-y-1">
+                              <div className="font-bold text-neutral-900 leading-snug">{evt.title}</div>
+                              <div className="text-[11px] text-neutral-500">Type: {evt.event_type || "FDP / STC"}</div>
+                            </td>
+                            <td className="p-3 align-top font-bold text-[#85261e]">
+                              {evt.convenor || "Convenor"}
+                            </td>
+                            <td className="p-3 align-top text-neutral-700">
+                              <div>{evt.venue || "NIT Hamirpur"}</div>
+                              <div className="text-[11px] text-neutral-500">{evt.start_date} to {evt.end_date}</div>
+                            </td>
+                            <td className="p-3 text-center align-top space-y-1">
+                              <button
+                                type="button"
+                                onClick={() => openDetails(evt)}
+                                className="w-full inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px]"
+                              >
+                                <Info className="w-3 h-3" /> Details
+                              </button>
+                              <div className="flex items-center justify-center gap-1">
+                                <button
+                                  type="button"
+                                  onClick={() => openEditModal(evt)}
+                                  className="p-1 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                >
+                                  <Edit className="w-3 h-3" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteRecord(evt)}
+                                  className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="p-12 text-center text-neutral-500 text-xs">
+                    No event records listed.
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 9. CONSULTANCIES TAB (tempcsebase consultancies view) */}
+            {activeTab === "consultancies" && (
+              <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
+                    <Building2 className="w-4 h-4 text-purple-700" />
+                    Industrial Consultancies ({allConsultancies.length})
+                  </span>
+                </div>
+                {allConsultancies.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs border-collapse">
+                      <thead>
+                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
+                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3 border-r border-neutral-700 min-w-[260px]">Consultancy Title</th>
+                          <th className="p-3 border-r border-neutral-700">Client Organization</th>
+                          <th className="p-3 w-28 text-center border-r border-neutral-700">Amount (INR)</th>
+                          <th className="p-3 w-24 text-center">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#eedfd8]/60">
+                        {allConsultancies.map((c: any, idx: number) => (
+                          <tr key={c.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
+                            <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                              {idx + 1}
+                            </td>
+                            <td className="p-3 align-top space-y-1">
+                              <div className="font-bold text-neutral-900 leading-snug">{c.title}</div>
+                              <div className="text-[11px] text-neutral-500">Investigators: {c.author_text || faculty.full_name}</div>
+                            </td>
+                            <td className="p-3 align-top font-semibold text-[#85261e]">
+                              {c.client_organisation}
+                            </td>
+                            <td className="p-3 text-center align-top font-bold text-neutral-900">
+                              {c.amount ? `₹ ${Number(c.amount).toLocaleString("en-IN")}` : "—"}
+                            </td>
+                            <td className="p-3 text-center align-top space-y-1">
+                              <button
+                                type="button"
+                                onClick={() => openDetails(c)}
+                                className="w-full inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px]"
+                              >
+                                <Info className="w-3 h-3" /> Details
+                              </button>
+                              <div className="flex items-center justify-center gap-1">
+                                <button
+                                  type="button"
+                                  onClick={() => openEditModal(c)}
+                                  className="p-1 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                >
+                                  <Edit className="w-3 h-3" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteRecord(c)}
+                                  className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="p-12 text-center text-neutral-500 text-xs">
+                    No consultancy projects listed.
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 10. EXPERT TALK TAB */}
+            {activeTab === "experttalk" && (
+              <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
+                    <Mic className="w-4 h-4 text-amber-600" />
+                    Keynote &amp; Invited Expert Lectures ({allTalks.length})
+                  </span>
+                </div>
+                {allTalks.length > 0 ? (
+                  <div className="divide-y divide-neutral-100">
+                    {allTalks.map((talk: any, idx: number) => (
+                      <div key={idx} className="p-4 sm:p-5 hover:bg-[#fffaf8] transition flex items-start justify-between gap-4">
+                        <div className="flex items-start gap-4 min-w-0 flex-1">
+                          <div className="w-10 h-10 rounded-xl bg-[#fcf2ef] text-[#85261e] flex items-center justify-center shrink-0 border border-[#eedfd8]">
+                            <Mic className="w-5 h-5" />
+                          </div>
+                          <div className="space-y-1.5 min-w-0 flex-1">
+                            <h4 className="text-sm font-bold text-neutral-900 leading-snug">{talk.title}</h4>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-neutral-600">
+                              <span className="font-semibold text-[#85261e]">{talk.venue || "Host Institution"}</span>
+                              <span>•</span>
+                              <span className="text-neutral-500">{talk.date}</span>
+                            </div>
+                            {talk.description && (
+                              <p className="text-xs text-neutral-600 leading-relaxed pt-0.5">{talk.description}</p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => openEditModal(talk)}
+                            className="p-1.5 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                          >
+                            <Edit className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteRecord(talk)}
+                            className="p-1.5 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-12 text-center text-neutral-500 text-xs">
+                    No expert talks recorded.
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 11. RESEARCH SUPERVISION TAB */}
+            {activeTab === "researchSupervision" && (
+              <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
+                    <GraduationCap className="w-4 h-4 text-blue-700" />
+                    Doctoral &amp; Postgraduate Scholars Mentored ({combinedSupervisions.length})
+                  </span>
+                </div>
+                {combinedSupervisions.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs border-collapse">
+                      <thead>
+                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
+                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3 border-r border-neutral-700">Scholar Name</th>
+                          <th className="p-3 border-r border-neutral-700 min-w-[240px]">Thesis / Research Title</th>
+                          <th className="p-3 w-24 text-center border-r border-neutral-700">Program</th>
+                          <th className="p-3 w-24 text-center">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#eedfd8]/60">
+                        {combinedSupervisions.map((s: any, idx: number) => (
+                          <tr key={s.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
+                            <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                              {idx + 1}
+                            </td>
+                            <td className="p-3 align-top space-y-0.5">
+                              <div className="font-bold text-neutral-900">{s.student_name}</div>
+                              {s.roll_number && (
+                                <div className="font-mono text-[11px] text-neutral-400">Roll: {s.roll_number}</div>
+                              )}
+                            </td>
+                            <td className="p-3 align-top space-y-1">
+                              <div className="text-neutral-800 font-medium leading-snug">{s.thesis_title}</div>
+                              {s.co_supervisor && (
+                                <div className="text-[11px] text-neutral-500">Co-Supervisor: {s.co_supervisor}</div>
+                              )}
+                            </td>
+                            <td className="p-3 text-center align-top font-bold text-[#85261e]">
+                              {s.level || "Ph.D."}
+                            </td>
+                            <td className="p-3 text-center align-top space-y-1">
+                              <button
+                                type="button"
+                                onClick={() => openDetails(s)}
+                                className="w-full inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px]"
+                              >
+                                <Info className="w-3 h-3" /> Details
+                              </button>
+                              <div className="flex items-center justify-center gap-1">
+                                <button
+                                  type="button"
+                                  onClick={() => openEditModal(s)}
+                                  className="p-1 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                >
+                                  <Edit className="w-3 h-3" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteRecord(s)}
+                                  className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="p-12 text-center text-neutral-500 text-xs">
+                    No supervision records listed.
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 12. ADMINISTRATIVE EXPERIENCE TAB */}
+            {activeTab === "administrativeexperience" && (
+              <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
+                    <Award className="w-4 h-4 text-[#85261e]" />
+                    Institutional Leadership Appointments ({allAdminExp.length})
+                  </span>
+                </div>
+                {allAdminExp.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs border-collapse">
+                      <thead>
+                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
+                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3 border-r border-neutral-700">Position / Designation</th>
+                          <th className="p-3 border-r border-neutral-700">Department / Organization</th>
+                          <th className="p-3 w-40 text-center border-r border-neutral-700">Duration</th>
+                          <th className="p-3 w-24 text-center">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#eedfd8]/60">
+                        {allAdminExp.map((adm: any, idx: number) => (
+                          <tr key={adm.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
+                            <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                              {idx + 1}
+                            </td>
+                            <td className="p-3 align-top font-bold text-[#85261e]">
+                              {adm.position || adm.role}
+                            </td>
+                            <td className="p-3 align-top text-neutral-800 font-medium">
+                              {adm.organization || "NIT Hamirpur"}
+                            </td>
+                            <td className="p-3 text-center align-top text-neutral-600 font-semibold">
+                              {adm.start_date ? `${adm.start_date} to ${adm.end_date || "Present"}` : "Completed"}
+                            </td>
+                            <td className="p-3 text-center align-top">
+                              <div className="flex items-center justify-center gap-1">
+                                <button
+                                  type="button"
+                                  onClick={() => openEditModal(adm)}
+                                  className="p-1.5 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                >
+                                  <Edit className="w-3 h-3" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteRecord(adm)}
+                                  className="p-1.5 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                >
+                                  <Trash2 className="w-3 h-3" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="p-12 text-center text-neutral-500 text-xs">
+                    No administrative experience records updated.
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 13. HONORS & RECOGNITIONS TAB */}
+            {activeTab === "honors" && (
+              <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
+                    <Trophy className="w-4 h-4 text-amber-600" />
+                    Honors &amp; Recognitions ({allHonors.length})
+                  </span>
+                </div>
+                {allHonors.length > 0 ? (
+                  <div className="divide-y divide-neutral-100">
+                    {allHonors.map((hnr: any, idx: number) => (
+                      <div key={idx} className="p-4 sm:p-5 hover:bg-[#fffaf8] transition flex items-start justify-between gap-4">
+                        <div className="flex items-start gap-4 min-w-0 flex-1">
+                          <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200">
+                            <Trophy className="w-5 h-5" />
+                          </div>
+                          <div className="space-y-1 min-w-0 flex-1">
+                            <h4 className="text-sm font-bold text-neutral-900 leading-snug">{hnr.title}</h4>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-neutral-600">
+                              <span className="font-semibold text-[#85261e]">{hnr.organization || "Awarding Body"}</span>
+                              {hnr.year && (
+                                <>
+                                  <span>•</span>
+                                  <span className="font-bold text-neutral-800">Year {hnr.year}</span>
+                                </>
+                              )}
+                            </div>
+                            {hnr.description && (
+                              <p className="text-xs text-neutral-600 leading-relaxed pt-1">{hnr.description}</p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => openEditModal(hnr)}
+                            className="p-1.5 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                          >
+                            <Edit className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteRecord(hnr)}
+                            className="p-1.5 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-12 text-center text-neutral-500 text-xs">
+                    No honors recorded.
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 14. INTERNATIONAL AND NATIONAL EXPOSURE TAB */}
+            {activeTab === "internationalAndNationalExposure" && (
+              <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
+                    <Globe className="w-4 h-4 text-indigo-600" />
+                    Global &amp; National Academic Exposure ({allExposures.length})
+                  </span>
+                </div>
+                {allExposures.length > 0 ? (
+                  <div className="divide-y divide-neutral-100">
+                    {allExposures.map((exp: any, idx: number) => (
+                      <div key={idx} className="p-4 sm:p-5 hover:bg-[#fffaf8] transition flex items-start justify-between gap-4">
+                        <div className="flex items-start gap-4 min-w-0 flex-1">
+                          <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center shrink-0 border border-indigo-200">
+                            <Globe className="w-5 h-5" />
+                          </div>
+                          <div className="space-y-1 min-w-0 flex-1">
+                            <h4 className="text-sm font-bold text-neutral-900 leading-snug">{exp.title || exp.purpose}</h4>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-neutral-600">
+                              <span className="font-semibold text-[#85261e]">{exp.organization || exp.country || "Host"}</span>
+                              {exp.year && (
+                                <>
+                                  <span>•</span>
+                                  <span className="font-bold text-neutral-800">{exp.year}</span>
+                                </>
+                              )}
+                            </div>
+                            {exp.details && (
+                              <p className="text-xs text-neutral-600 leading-relaxed pt-1">{exp.details}</p>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => openEditModal(exp)}
+                            className="p-1.5 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                          >
+                            <Edit className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteRecord(exp)}
+                            className="p-1.5 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-12 text-center text-neutral-500 text-xs">
+                    No exposure records registered.
+                  </div>
+                )}
+              </div>
+            )}
+
+          </main>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 5. DYNAMIC MODAL FORM (Contextual to activeTab, styled in new theme)      */}
+      {/* ========================================================================= */}
+      {isFormModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div className="bg-white rounded-3xl border border-[#eedfd8] shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="p-5 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#85261e]">
+                  {formMode === "edit" ? "Edit Entry" : "Add New Record"}
+                </span>
+                <h3 className="text-lg font-extrabold text-[#33110e]">
+                  {sidebarItems.find((i) => i.key === activeTab)?.label}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsFormModalOpen(false)}
+                className="p-2 rounded-xl text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Form Body */}
+            <form onSubmit={handleFormSubmit} className="p-6 overflow-y-auto space-y-4 text-xs flex-1">
+              
+              {/* Form fields for FACULTY INFO */}
+              {activeTab === "facultyInfo" && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Full Name *</label>
+                    <input
+                      type="text"
+                      name="full_name"
+                      required
+                      value={formData.full_name || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Designation *</label>
+                    <input
+                      type="text"
+                      name="designation"
+                      required
+                      value={formData.designation || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Official Email *</label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={formData.email || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Phone</label>
+                    <input
+                      type="text"
+                      name="phone"
+                      value={formData.phone || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Highest Qualification</label>
+                    <input
+                      type="text"
+                      name="highest_qualification"
+                      value={formData.highest_qualification || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Teaching Experience Summary</label>
+                    <input
+                      type="text"
+                      name="teaching_experience_summary"
+                      value={formData.teaching_experience_summary || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Specialization &amp; Research Interests (comma separated)</label>
+                    <input
+                      type="text"
+                      name="research_interests"
+                      value={formData.research_interests || ""}
+                      onChange={handleInputChange}
+                      placeholder="e.g. Distributed Systems, Network Security, Machine Learning"
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Biography</label>
+                    <textarea
+                      name="bio"
+                      rows={3}
+                      value={formData.bio || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Academic Profile Links */}
+                  <div className="sm:col-span-2 pt-2 border-t border-neutral-100">
+                    <h4 className="font-bold text-neutral-900 mb-2">Research Profile URLs (Badges)</h4>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Google Scholar URL / ID</label>
+                    <input
+                      type="text"
+                      name="google_scholar_id"
+                      value={formData.google_scholar_id || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Scopus URL / ID</label>
+                    <input
+                      type="text"
+                      name="scopus_id"
+                      value={formData.scopus_id || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">ORCID ID</label>
+                    <input
+                      type="text"
+                      name="orcid"
+                      value={formData.orcid || ""}
+                      onChange={handleInputChange}
+                      placeholder="0000-0002-1825-0097"
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">ResearchGate URL</label>
+                    <input
+                      type="text"
+                      name="rg_url"
+                      value={formData.rg_url || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">LinkedIn Profile URL</label>
+                    <input
+                      type="text"
+                      name="linkedin_url"
+                      value={formData.linkedin_url || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Vidwan Profile URL</label>
+                    <input
+                      type="text"
+                      name="vidwan_url"
+                      value={formData.vidwan_url || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
                 </div>
               )}
+
+              {/* Form fields for PUBLICATIONS (Journal, Conference, Book, Book Chapter) */}
+              {(activeTab === "journal" || activeTab === "conference" || activeTab === "book" || activeTab === "book_chapter") && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Title of Publication *</label>
+                    <input
+                      type="text"
+                      name="title"
+                      required
+                      value={formData.title || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Authors (comma separated) *</label>
+                    <input
+                      type="text"
+                      name="author_text"
+                      required
+                      placeholder="e.g. Lalit Kumar, Parveen Kumar, RK Chauhan"
+                      value={formData.author_text || formData.authors || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">
+                      {activeTab === "journal" ? "Journal Name *" : activeTab === "conference" ? "Conference Name *" : "Publisher / Book Title *"}
+                    </label>
+                    <input
+                      type="text"
+                      name="journal_or_conference_name"
+                      required
+                      value={formData.journal_or_conference_name || formData.venue_name || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Publication Year *</label>
+                    <input
+                      type="number"
+                      name="year"
+                      required
+                      value={formData.year || new Date().getFullYear()}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">DOI</label>
+                    <input
+                      type="text"
+                      name="doi"
+                      placeholder="10.1080/03772063..."
+                      value={formData.doi || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Volume</label>
+                    <input
+                      type="text"
+                      name="volume"
+                      value={formData.volume || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Issue / Number</label>
+                    <input
+                      type="text"
+                      name="issue"
+                      value={formData.issue || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Page Numbers</label>
+                    <input
+                      type="text"
+                      name="page_range"
+                      placeholder="e.g. 485-490"
+                      value={formData.page_range || formData.pages || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Indexing</label>
+                    <select
+                      name="indexing"
+                      value={formData.indexing || "Scopus"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="Scopus">Scopus</option>
+                      <option value="SCI">SCI</option>
+                      <option value="SCIE">SCIE</option>
+                      <option value="Web of Science">Web of Science</option>
+                      <option value="UGC CARE">UGC CARE</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Abstract</label>
+                    <textarea
+                      name="abstract_text"
+                      rows={3}
+                      value={formData.abstract_text || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Form fields for PATENTS */}
+              {activeTab === "patents" && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Patent Title *</label>
+                    <input
+                      type="text"
+                      name="title"
+                      required
+                      value={formData.title || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Application Number *</label>
+                    <input
+                      type="text"
+                      name="application_number"
+                      required
+                      value={formData.application_number || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Patent Status</label>
+                    <select
+                      name="status"
+                      value={formData.status || "Published"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="Granted">Granted</option>
+                      <option value="Published">Published</option>
+                      <option value="Filed">Filed</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Filing Date</label>
+                    <input
+                      type="text"
+                      name="filing_date"
+                      placeholder="YYYY-MM-DD"
+                      value={formData.filing_date || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Grant Date</label>
+                    <input
+                      type="text"
+                      name="grant_date"
+                      placeholder="YYYY-MM-DD"
+                      value={formData.grant_date || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Inventors</label>
+                    <input
+                      type="text"
+                      name="raw_inventors"
+                      placeholder="e.g. Faculty Name, Co-inventors"
+                      value={formData.raw_inventors || faculty.full_name}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Form fields for PROJECTS */}
+              {activeTab === "projects" && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Project Title *</label>
+                    <input
+                      type="text"
+                      name="title"
+                      required
+                      value={formData.title || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Funding / Sponsoring Agency *</label>
+                    <input
+                      type="text"
+                      name="funding_agency"
+                      required
+                      placeholder="e.g. DST-SERB / MeitY"
+                      value={formData.funding_agency || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Sanctioned Amount (INR)</label>
+                    <input
+                      type="number"
+                      name="total_sanctioned_amount"
+                      placeholder="e.g. 2500000"
+                      value={formData.total_sanctioned_amount || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Status</label>
+                    <select
+                      name="status"
+                      value={formData.status || "Ongoing"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="Ongoing">Ongoing</option>
+                      <option value="Completed">Completed</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Sanction / Ref Number</label>
+                    <input
+                      type="text"
+                      name="reference_number"
+                      value={formData.reference_number || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Investigators</label>
+                    <input
+                      type="text"
+                      name="raw_investigators"
+                      value={formData.raw_investigators || faculty.full_name}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Form fields for EVENTS */}
+              {activeTab === "events" && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Event Title *</label>
+                    <input
+                      type="text"
+                      name="title"
+                      required
+                      value={formData.title || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Event Type</label>
+                    <select
+                      name="event_type"
+                      value={formData.event_type || "FDP / STC"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="FDP / STC">FDP / STC</option>
+                      <option value="Conference">Conference</option>
+                      <option value="Workshop">Workshop</option>
+                      <option value="Symposium">Symposium</option>
+                      <option value="Seminar">Seminar</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Role</label>
+                    <input
+                      type="text"
+                      name="convenor"
+                      placeholder="Convenor / Coordinator"
+                      value={formData.convenor || "Convenor"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Sponsoring Agency</label>
+                    <input
+                      type="text"
+                      name="sponsoring_agency"
+                      value={formData.sponsoring_agency || "NIT Hamirpur"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Venue</label>
+                    <input
+                      type="text"
+                      name="venue"
+                      value={formData.venue || "DoCSE, NIT Hamirpur"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Start Date</label>
+                    <input
+                      type="text"
+                      name="start_date"
+                      placeholder="YYYY-MM-DD"
+                      value={formData.start_date || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">End Date</label>
+                    <input
+                      type="text"
+                      name="end_date"
+                      placeholder="YYYY-MM-DD"
+                      value={formData.end_date || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Brochure Link / Document URL</label>
+                    <input
+                      type="text"
+                      name="link_url"
+                      placeholder="https://..."
+                      value={formData.link_url || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Form fields for CONSULTANCIES */}
+              {activeTab === "consultancies" && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Consultancy Title *</label>
+                    <input
+                      type="text"
+                      name="title"
+                      required
+                      value={formData.title || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Client Organization *</label>
+                    <input
+                      type="text"
+                      name="client_organisation"
+                      required
+                      value={formData.client_organisation || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Amount (INR)</label>
+                    <input
+                      type="number"
+                      name="amount"
+                      value={formData.amount || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Academic Session / Year</label>
+                    <input
+                      type="text"
+                      name="academic_session"
+                      placeholder="e.g. 2024-2025"
+                      value={formData.academic_session || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Investigators Involved</label>
+                    <input
+                      type="text"
+                      name="author_text"
+                      value={formData.author_text || faculty.full_name}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Form fields for EXPERT TALKS */}
+              {activeTab === "experttalk" && (
+                <div className="space-y-4">
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Talk Title *</label>
+                    <input
+                      type="text"
+                      name="title"
+                      required
+                      value={formData.title || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">Host Institution / Venue *</label>
+                      <input
+                        type="text"
+                        name="venue"
+                        required
+                        value={formData.venue || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">Date</label>
+                      <input
+                        type="text"
+                        name="date"
+                        placeholder="YYYY-MM-DD"
+                        value={formData.date || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Description / Program Context</label>
+                    <textarea
+                      name="description"
+                      rows={3}
+                      value={formData.description || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Form fields for RESEARCH SUPERVISION */}
+              {activeTab === "researchSupervision" && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Scholar Name *</label>
+                    <input
+                      type="text"
+                      name="student_name"
+                      required
+                      value={formData.student_name || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Roll / Registration No.</label>
+                    <input
+                      type="text"
+                      name="roll_number"
+                      value={formData.roll_number || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Degree Level</label>
+                    <select
+                      name="level"
+                      value={formData.level || "Ph.D."}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="Ph.D.">Ph.D.</option>
+                      <option value="M.Tech">M.Tech</option>
+                      <option value="B.Tech">B.Tech</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1 sm:col-span-2">
+                    <label className="font-bold text-neutral-700">Thesis / Research Title *</label>
+                    <input
+                      type="text"
+                      name="thesis_title"
+                      required
+                      value={formData.thesis_title || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Status</label>
+                    <select
+                      name="status"
+                      value={formData.status || "Ongoing"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="Ongoing">Ongoing</option>
+                      <option value="Awarded">Awarded</option>
+                      <option value="Submitted">Submitted</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Year</label>
+                    <input
+                      type="text"
+                      name="year"
+                      value={formData.year || "2024"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Form fields for ADMINISTRATIVE EXPERIENCE */}
+              {activeTab === "administrativeexperience" && (
+                <div className="space-y-4">
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Position / Role *</label>
+                    <input
+                      type="text"
+                      name="position"
+                      required
+                      placeholder="e.g. Head of the Department, Dean, Warden"
+                      value={formData.position || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Department / Organization *</label>
+                    <input
+                      type="text"
+                      name="organization"
+                      required
+                      value={formData.organization || "NIT Hamirpur"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">Start Date / Year</label>
+                      <input
+                        type="text"
+                        name="start_date"
+                        value={formData.start_date || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">End Date / Year</label>
+                      <input
+                        type="text"
+                        name="end_date"
+                        placeholder="Present"
+                        value={formData.end_date || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Form fields for HONORS */}
+              {activeTab === "honors" && (
+                <div className="space-y-4">
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Honor / Award Title *</label>
+                    <input
+                      type="text"
+                      name="title"
+                      required
+                      value={formData.title || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">Awarding Organization *</label>
+                      <input
+                        type="text"
+                        name="organization"
+                        required
+                        value={formData.organization || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">Year</label>
+                      <input
+                        type="text"
+                        name="year"
+                        value={formData.year || "2024"}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Description / Citation</label>
+                    <textarea
+                      name="description"
+                      rows={3}
+                      value={formData.description || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Form fields for INTERNATIONAL EXPOSURE */}
+              {activeTab === "internationalAndNationalExposure" && (
+                <div className="space-y-4">
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Exposure / Purpose Title *</label>
+                    <input
+                      type="text"
+                      name="title"
+                      required
+                      value={formData.title || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">Host Organization / Country *</label>
+                      <input
+                        type="text"
+                        name="organization"
+                        required
+                        value={formData.organization || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">Year</label>
+                      <input
+                        type="text"
+                        name="year"
+                        value={formData.year || "2024"}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Details</label>
+                    <textarea
+                      name="details"
+                      rows={3}
+                      value={formData.details || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Modal Footer */}
+              <div className="pt-4 border-t border-neutral-100 flex items-center justify-end gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => setIsFormModalOpen(false)}
+                  className="px-4 py-2 rounded-xl border border-[#eedfd8] bg-white text-neutral-700 hover:bg-neutral-50 font-semibold cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-[#85261e] hover:bg-[#33110e] text-white font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+                >
+                  {formMode === "edit" ? "Update Record" : "Save Record"}
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 6. DETAILS MODAL (Matching tempcsebase PublicationsModal)                  */}
+      {/* ========================================================================= */}
+      {isDetailsModalOpen && detailItem && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div className="bg-white rounded-3xl border border-[#eedfd8] shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Header matching tempcsebase */}
+            <div className="p-4 sm:p-5 bg-[#fcf2ef] border-b border-[#eedfd8] flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Info className="w-5 h-5 text-[#85261e]" />
+                <h3 className="text-base sm:text-lg font-bold text-[#33110e]">
+                  Complete Record Details
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsDetailsModalOpen(false)}
+                className="p-1.5 rounded-xl text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Details Content Table (tempcsebase tabular structure) */}
+            <div className="p-6 overflow-y-auto space-y-4 text-xs flex-1">
+              <table className="w-full border border-neutral-200 rounded-xl overflow-hidden divide-y divide-neutral-100">
+                <tbody className="divide-y divide-neutral-100">
+                  {detailItem.title && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-[#85261e] bg-neutral-50/70">Title</td>
+                      <td className="p-3 font-semibold text-neutral-900">{detailItem.title}</td>
+                    </tr>
+                  )}
+                  {(detailItem.author_text || detailItem.authors || detailItem.student_name || detailItem.raw_inventors || detailItem.convenor) && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">
+                        {detailItem.student_name ? "Scholar / Student" : detailItem.raw_inventors ? "Inventors" : "Authors / Investigators"}
+                      </td>
+                      <td className="p-3 text-neutral-800">
+                        {detailItem.author_text || detailItem.authors || detailItem.student_name || detailItem.raw_inventors || detailItem.convenor}
+                      </td>
+                    </tr>
+                  )}
+                  {(detailItem.journal_or_conference_name || detailItem.venue_name || detailItem.venue) && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Venue / Journal</td>
+                      <td className="p-3 text-[#0f376f] font-semibold">
+                        {detailItem.journal_or_conference_name || detailItem.venue_name || detailItem.venue}
+                      </td>
+                    </tr>
+                  )}
+                  {detailItem.funding_agency && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Sponsoring Agency</td>
+                      <td className="p-3 text-neutral-900 font-semibold">{detailItem.funding_agency}</td>
+                    </tr>
+                  )}
+                  {detailItem.client_organisation && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Client Organization</td>
+                      <td className="p-3 text-neutral-900 font-semibold">{detailItem.client_organisation}</td>
+                    </tr>
+                  )}
+                  {detailItem.total_sanctioned_amount && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Sanctioned Amount</td>
+                      <td className="p-3 text-neutral-900 font-bold">₹ {Number(detailItem.total_sanctioned_amount).toLocaleString("en-IN")}</td>
+                    </tr>
+                  )}
+                  {detailItem.amount && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Consultancy Amount</td>
+                      <td className="p-3 text-neutral-900 font-bold">₹ {Number(detailItem.amount).toLocaleString("en-IN")}</td>
+                    </tr>
+                  )}
+                  {detailItem.application_number && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Application Number</td>
+                      <td className="p-3 font-mono text-neutral-800 font-bold">{detailItem.application_number}</td>
+                    </tr>
+                  )}
+                  {detailItem.status && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Status</td>
+                      <td className="p-3">
+                        <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
+                          {detailItem.status}
+                        </span>
+                      </td>
+                    </tr>
+                  )}
+                  {detailItem.year && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Year / Session</td>
+                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.year}</td>
+                    </tr>
+                  )}
+                  {detailItem.doi && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">DOI Link</td>
+                      <td className="p-3">
+                        <a
+                          href={detailItem.doi.startsWith("http") ? detailItem.doi : `https://doi.org/${detailItem.doi}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#85261e] hover:underline font-semibold inline-flex items-center gap-1"
+                        >
+                          <ExternalLink className="w-3 h-3" /> {detailItem.doi}
+                        </a>
+                      </td>
+                    </tr>
+                  )}
+                  {detailItem.abstract_text && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Abstract / Summary</td>
+                      <td className="p-3 text-neutral-700 leading-relaxed">{detailItem.abstract_text}</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+
+              {/* Action Buttons */}
+              <div className="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-neutral-100">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => openEditModal(detailItem)}
+                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-semibold transition cursor-pointer"
+                  >
+                    <Edit className="w-3.5 h-3.5" />
+                    <span>Edit Entry</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteRecord(detailItem)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-semibold transition cursor-pointer"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Delete</span>
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {detailItem.doi && (
+                    <a
+                      href={detailItem.doi.startsWith("http") ? detailItem.doi : `https://doi.org/${detailItem.doi}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#85261e] text-white hover:bg-[#33110e] font-semibold transition"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>Open Document</span>
+                    </a>
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={() => setIsDetailsModalOpen(false)}
+                    className="px-4 py-1.5 rounded-xl border border-[#eedfd8] text-neutral-700 hover:bg-neutral-50 font-semibold cursor-pointer"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
       )}
+
     </div>
   );
 }
