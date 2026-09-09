@@ -57,6 +57,8 @@ import {
   setStoredData,
   getStoredObject,
   setStoredObject,
+  syncMultiFacultyRecord,
+  isMatchingRecord,
 } from "@/lib/faculty-storage";
 import { useDepartment } from "@/context/department-context";
 
@@ -77,6 +79,36 @@ export type TabKey =
   | "internationalAndNationalExposure";
 
 const PUBS_PER_PAGE = 10;
+
+const MONTH_OPTIONS = [
+  { value: 1, label: "January" },
+  { value: 2, label: "February" },
+  { value: 3, label: "March" },
+  { value: 4, label: "April" },
+  { value: 5, label: "May" },
+  { value: 6, label: "June" },
+  { value: 7, label: "July" },
+  { value: 8, label: "August" },
+  { value: 9, label: "September" },
+  { value: 10, label: "October" },
+  { value: 11, label: "November" },
+  { value: 12, label: "December" },
+];
+
+const ACADEMIC_SESSIONS = [
+  "2025-2026",
+  "2024-2025",
+  "2023-2024",
+  "2022-2023",
+  "2021-2022",
+  "2020-2021",
+  "2019-2020",
+  "2018-2019",
+  "2017-2018",
+  "2016-2017",
+  "2015-2016",
+];
+
 
 export default function FacultyPortfolioPage({
   params,
@@ -148,6 +180,21 @@ export default function FacultyPortfolioPage({
     }
   }, [baseFaculty]);
 
+  // Reactive synchronization across profiles & tabs
+  useEffect(() => {
+    const handleStorageUpdate = () => {
+      if (baseFaculty) {
+        setAllFacultyPubs(getStoredData(baseFaculty, "publications", baseFaculty.publications || []));
+        setAllFacultyPatents(getStoredData(baseFaculty, "patents", baseFaculty.patents || []));
+        setAllFacultyProjects(getStoredData(baseFaculty, "projects", baseFaculty.projects || []));
+        setAllConsultancies(getStoredData(baseFaculty, "consultancies", []));
+        setAllEvents(getStoredData(baseFaculty, "events", []));
+      }
+    };
+    window.addEventListener("nith_faculty_storage_update", handleStorageUpdate);
+    return () => window.removeEventListener("nith_faculty_storage_update", handleStorageUpdate);
+  }, [baseFaculty]);
+
   const [activeTab, setActiveTab] = useState<TabKey>(initialTab);
   const [pubSearch, setPubSearch] = useState("");
   const [selectedYear, setSelectedYear] = useState<string>("ALL");
@@ -155,11 +202,15 @@ export default function FacultyPortfolioPage({
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedAbstractId, setExpandedAbstractId] = useState<string | null>(null);
 
-  // Dynamic Modals State
+// Dynamic Modals State
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [formMode, setFormMode] = useState<"add" | "edit">("add");
   const [editingItem, setEditingItem] = useState<any>(null);
   const [formData, setFormData] = useState<Record<string, any>>({});
+  const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
+  const [isCustomIndexing, setIsCustomIndexing] = useState(false);
+  const [customIndexingText, setCustomIndexingText] = useState("");
+  const [facultySearchQuery, setFacultySearchQuery] = useState("");
 
   // Details Modal State (tempcsebase PublicationsModal / ConsultanciesModal)
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
@@ -314,6 +365,26 @@ export default function FacultyPortfolioPage({
   ];
 
   // Active publications list based on active tab
+  // Colleague faculty list for associated faculty selection
+  const colleagueFacultyList = useMemo(() => {
+    return MOCK_FACULTY.filter(
+      (f: any) =>
+        f.employee_code?.toUpperCase() !== baseFaculty?.employee_code?.toUpperCase() &&
+        f.id !== baseFaculty?.id
+    );
+  }, [baseFaculty]);
+
+  const filteredColleagueOptions = useMemo(() => {
+    if (!facultySearchQuery.trim()) return colleagueFacultyList;
+    const q = facultySearchQuery.toLowerCase();
+    return colleagueFacultyList.filter(
+      (f: any) =>
+        f.full_name?.toLowerCase().includes(q) ||
+        f.employee_code?.toLowerCase().includes(q) ||
+        f.department_name?.toLowerCase().includes(q)
+    );
+  }, [colleagueFacultyList, facultySearchQuery]);
+
   const currentPubList = activeTab === "conference" ? conferences : activeTab === "book" ? books : activeTab === "book_chapter" ? bookChapters : journals;
 
   // Available Years for filter chips
@@ -375,6 +446,11 @@ export default function FacultyPortfolioPage({
   const openAddModal = () => {
     setFormMode("add");
     setEditingItem(null);
+    setSelectedAssociatedFaculty([]);
+    setIsCustomIndexing(false);
+    setCustomIndexingText("");
+    setFacultySearchQuery("");
+
     if (activeTab === "facultyInfo") {
       setFormData({
         full_name: faculty?.full_name || "",
@@ -393,6 +469,52 @@ export default function FacultyPortfolioPage({
         vidwan_url: faculty?.profile?.vidwan_url || "",
         publons_url: faculty?.profile?.publons_url || "",
       });
+    } else if (activeTab === "journal" || activeTab === "conference" || activeTab === "book" || activeTab === "book_chapter") {
+      setFormData({
+        year: new Date().getFullYear(),
+        month: "",
+        academic_session: "2024-2025",
+        indexing: "Scopus",
+        journal_quartile: "T",
+        author_text: faculty?.full_name || "",
+        type: activeTab === "journal" ? "Journal" : activeTab === "conference" ? "Conference" : activeTab === "book" ? "Book" : "Book Chapter",
+      });
+    } else if (activeTab === "projects") {
+      setFormData({
+        year: new Date().getFullYear(),
+        month: "",
+        academic_session: "2024-2025",
+        status: "Ongoing",
+        principal_investigator: faculty?.full_name || "",
+        funding_agency: "DST-SERB",
+        total_sanctioned_amount: 1500000,
+      });
+    } else if (activeTab === "patents") {
+      setFormData({
+        year: new Date().getFullYear(),
+        month: "",
+        academic_session: "2024-2025",
+        status: "Published",
+        place: "Indian Patent Office, New Delhi",
+        raw_inventors: faculty?.full_name || "",
+      });
+    } else if (activeTab === "consultancies") {
+      setFormData({
+        year: new Date().getFullYear(),
+        month: "",
+        academic_session: "2024-2025",
+        status: "Completed",
+        author_text: faculty?.full_name || "",
+      });
+    } else if (activeTab === "events") {
+      setFormData({
+        event_type: "FDP / STC",
+        academic_session: "2024-2025",
+        convenor: faculty?.full_name || "",
+        coordinator: "",
+        sponsoring_agency: "NIT Hamirpur",
+        venue: "DoCSE, NIT Hamirpur",
+      });
     } else {
       setFormData({});
     }
@@ -404,6 +526,46 @@ export default function FacultyPortfolioPage({
     setFormMode("edit");
     setEditingItem(item);
     setFormData({ ...item });
+    setFacultySearchQuery("");
+
+    // Detect if indexing is custom
+    const standardIndexings = ["Scopus", "SCI(E)", "SCI", "SCIE", "ESCI", "Web of Science", "UGC CARE"];
+    if (item.indexing && !standardIndexings.includes(item.indexing)) {
+      setIsCustomIndexing(true);
+      setCustomIndexingText(item.indexing);
+    } else {
+      setIsCustomIndexing(item.indexing === "Other");
+      setCustomIndexingText(item.indexing === "Other" ? "" : "");
+    }
+
+    // Populate selected associated faculty
+    let matchedFaculties: any[] = [];
+    if (Array.isArray(item.associated_faculty) && item.associated_faculty.length > 0) {
+      matchedFaculties = item.associated_faculty.map((af: any) => {
+        const found = MOCK_FACULTY.find(
+          (f: any) =>
+            f.employee_code?.toUpperCase() === (af.employee_code || af.code || "").toUpperCase() ||
+            f.id === af.id ||
+            f.full_name?.toLowerCase() === (af.full_name || af.name || "").toLowerCase()
+        );
+        return found || {
+          id: af.id || `ext-${Date.now()}`,
+          employee_code: af.employee_code || af.code || "EXT",
+          full_name: af.full_name || af.name || "Faculty",
+          designation: af.designation || "Faculty",
+          department_name: af.department_name || "CSE",
+        };
+      });
+    } else if (Array.isArray(item.faculty_ids) && item.faculty_ids.length > 0) {
+      matchedFaculties = MOCK_FACULTY.filter(
+        (f: any) =>
+          f.employee_code?.toUpperCase() !== baseFaculty?.employee_code?.toUpperCase() &&
+          f.id !== baseFaculty?.id &&
+          (item.faculty_ids.includes(f.employee_code) || item.faculty_ids.includes(f.id))
+      );
+    }
+    setSelectedAssociatedFaculty(matchedFaculties);
+
     setIsDetailsModalOpen(false);
     setIsFormModalOpen(true);
   };
@@ -417,6 +579,7 @@ export default function FacultyPortfolioPage({
   // Save Dynamic Form Submission
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!baseFaculty) return;
     const id = formMode === "edit" ? editingItem?.id : `custom-${Date.now()}`;
 
     if (activeTab === "facultyInfo") {
@@ -456,8 +619,27 @@ export default function FacultyPortfolioPage({
         book: { type: "Book", id: 3 },
         book_chapter: { type: "Book Chapter", id: 4 },
       };
+
+      const canonicalDoi = (formData.doi || "").trim();
+      const finalIndexing = isCustomIndexing ? (customIndexingText.trim() || "Other") : (formData.indexing || "Scopus");
+      const assignedFacultyIds = Array.from(
+        new Set([
+          baseFaculty.employee_code,
+          baseFaculty.id,
+          ...selectedAssociatedFaculty.map((f: any) => f.employee_code),
+          ...selectedAssociatedFaculty.map((f: any) => f.id),
+        ])
+      );
+      const associatedFaculty = selectedAssociatedFaculty.map((f: any) => ({
+        id: f.id,
+        employee_code: f.employee_code,
+        full_name: f.full_name,
+        designation: f.designation,
+        department_name: f.department_name || "CSE",
+      }));
+
       const record = {
-        id,
+        id: formMode === "edit" ? (editingItem?.id || canonicalDoi || `pub-${Date.now()}`) : (canonicalDoi || `pub-${Date.now()}`),
         title: formData.title || "Untitled Publication",
         publication_type: typeMap[activeTab].type,
         research_type_id: typeMap[activeTab].id,
@@ -469,64 +651,118 @@ export default function FacultyPortfolioPage({
         page_range: formData.page_range || formData.pages || "",
         pages: formData.pages || formData.page_range || "",
         year: Number(formData.year) || new Date().getFullYear(),
-        doi: formData.doi || "",
-        indexing: formData.indexing || "Scopus",
-        journal_quartile: formData.journal_quartile || "Q1",
+        month: formData.month ? Number(formData.month) : null,
+        academic_session: formData.academic_session || "2024-2025",
+        doi: canonicalDoi,
+        indexing: finalIndexing,
+        journal_quartile: formData.journal_quartile || "T",
+        isbn: formData.isbn || "",
         abstract_text: formData.abstract_text || "",
+        faculty_ids: assignedFacultyIds,
+        associated_faculty: associatedFaculty,
       };
 
-      let nextList = [...allFacultyPubs];
-      if (formMode === "edit") {
-        nextList = nextList.map((p) => (p.id === editingItem.id ? { ...p, ...record } : p));
-      } else {
-        nextList = [record, ...nextList];
-      }
-      setAllFacultyPubs(nextList);
-      setStoredData(baseFaculty, "publications", nextList);
-      toast.success(`${typeMap[activeTab].type} record ${formMode === "edit" ? "updated" : "added"}!`);
+      syncMultiFacultyRecord(baseFaculty, "publications", record, selectedAssociatedFaculty, false);
+      setAllFacultyPubs(getStoredData(baseFaculty, "publications", baseFaculty.publications || []));
+      toast.success(`${typeMap[activeTab].type} record saved & synced with associated faculty!`);
     } else if (activeTab === "patents") {
+      const canonicalAppNum = (formData.application_number || "").trim();
+      const assignedFacultyIds = Array.from(
+        new Set([
+          baseFaculty.employee_code,
+          baseFaculty.id,
+          ...selectedAssociatedFaculty.map((f: any) => f.employee_code),
+          ...selectedAssociatedFaculty.map((f: any) => f.id),
+        ])
+      );
+      const associatedFaculty = selectedAssociatedFaculty.map((f: any) => ({
+        id: f.id,
+        employee_code: f.employee_code,
+        full_name: f.full_name,
+        designation: f.designation,
+        department_name: f.department_name || "CSE",
+      }));
+
       const record = {
-        id,
+        id: formMode === "edit" ? (editingItem?.id || canonicalAppNum || `pat-${Date.now()}`) : (canonicalAppNum || `pat-${Date.now()}`),
         title: formData.title || "Untitled Patent",
-        application_number: formData.application_number || "Application Pending",
+        application_number: canonicalAppNum || "Application Pending",
+        reference_no: canonicalAppNum,
         patent_number: formData.patent_number || "",
         status: formData.status || "Published",
         filing_date: formData.filing_date || new Date().toISOString().split("T")[0],
         grant_date: formData.grant_date || "",
+        year: Number(formData.year) || new Date().getFullYear(),
+        month: formData.month ? Number(formData.month) : null,
+        academic_session: formData.academic_session || "2024-2025",
+        place: formData.place || "Indian Patent Office, New Delhi",
         raw_inventors: formData.raw_inventors || faculty.full_name,
-        patent_office: formData.patent_office || "Indian Patent Office",
-        country: formData.country || "India",
+        patent_office: formData.place || "Indian Patent Office",
+        country: "India",
+        faculty_ids: assignedFacultyIds,
+        associated_faculty: associatedFaculty,
       };
-      let nextList = [...allFacultyPatents];
-      if (formMode === "edit") {
-        nextList = nextList.map((p) => (p.id === editingItem.id ? { ...p, ...record } : p));
-      } else {
-        nextList = [record, ...nextList];
-      }
-      setAllFacultyPatents(nextList);
-      setStoredData(baseFaculty, "patents", nextList);
-      toast.success(`Patent record ${formMode === "edit" ? "updated" : "added"}!`);
+
+      syncMultiFacultyRecord(baseFaculty, "patents", record, selectedAssociatedFaculty, false);
+      setAllFacultyPatents(getStoredData(baseFaculty, "patents", baseFaculty.patents || []));
+      toast.success(`Patent record saved & synced with associated faculty!`);
     } else if (activeTab === "projects") {
+      const canonicalRefNum = (formData.reference_number || "").trim();
+      const assignedFacultyIds = Array.from(
+        new Set([
+          baseFaculty.employee_code,
+          baseFaculty.id,
+          ...selectedAssociatedFaculty.map((f: any) => f.employee_code),
+          ...selectedAssociatedFaculty.map((f: any) => f.id),
+        ])
+      );
+      const associatedFaculty = selectedAssociatedFaculty.map((f: any) => ({
+        id: f.id,
+        employee_code: f.employee_code,
+        full_name: f.full_name,
+        designation: f.designation,
+        department_name: f.department_name || "CSE",
+      }));
+
       const record = {
-        id,
+        id: formMode === "edit" ? (editingItem?.id || canonicalRefNum || `proj-${Date.now()}`) : (canonicalRefNum || `proj-${Date.now()}`),
         title: formData.title || "Research Project",
         funding_agency: formData.funding_agency || "DST-SERB",
         total_sanctioned_amount: Number(formData.total_sanctioned_amount) || 1500000,
         status: formData.status || "Ongoing",
         raw_investigators: formData.raw_investigators || faculty.full_name,
-        reference_number: formData.reference_number || "",
+        reference_number: canonicalRefNum,
+        reference_no: canonicalRefNum,
         year: Number(formData.year) || new Date().getFullYear(),
+        month: formData.month ? Number(formData.month) : null,
+        academic_session: formData.academic_session || "2024-2025",
+        duration: formData.duration || "3 Years",
+        principal_investigator: formData.principal_investigator || faculty.full_name,
+        co_principal_investigator: formData.co_principal_investigator || "",
+        faculty_ids: assignedFacultyIds,
+        associated_faculty: associatedFaculty,
       };
-      let nextList = [...allFacultyProjects];
-      if (formMode === "edit") {
-        nextList = nextList.map((p) => (p.id === editingItem.id ? { ...p, ...record } : p));
-      } else {
-        nextList = [record, ...nextList];
-      }
-      setAllFacultyProjects(nextList);
-      setStoredData(baseFaculty, "projects", nextList);
-      toast.success(`Project ${formMode === "edit" ? "updated" : "added"}!`);
+
+      syncMultiFacultyRecord(baseFaculty, "projects", record, selectedAssociatedFaculty, false);
+      setAllFacultyProjects(getStoredData(baseFaculty, "projects", baseFaculty.projects || []));
+      toast.success(`Project record saved & synced with associated faculty!`);
     } else if (activeTab === "events") {
+      const assignedFacultyIds = Array.from(
+        new Set([
+          baseFaculty.employee_code,
+          baseFaculty.id,
+          ...selectedAssociatedFaculty.map((f: any) => f.employee_code),
+          ...selectedAssociatedFaculty.map((f: any) => f.id),
+        ])
+      );
+      const associatedFaculty = selectedAssociatedFaculty.map((f: any) => ({
+        id: f.id,
+        employee_code: f.employee_code,
+        full_name: f.full_name,
+        designation: f.designation,
+        department_name: f.department_name || "CSE",
+      }));
+
       const record = {
         id,
         title: formData.title || "Department Event / STC",
@@ -539,35 +775,49 @@ export default function FacultyPortfolioPage({
         end_date: formData.end_date || "",
         academic_session: formData.academic_session || "2024-2025",
         link_url: formData.link_url || "",
+        faculty_ids: assignedFacultyIds,
+        associated_faculty: associatedFaculty,
       };
-      let nextList = [...allEvents];
-      if (formMode === "edit") {
-        nextList = nextList.map((e) => (e.id === editingItem.id ? { ...e, ...record } : e));
-      } else {
-        nextList = [record, ...nextList];
-      }
-      setAllEvents(nextList);
-      setStoredData(baseFaculty, "events", nextList);
-      toast.success(`Event ${formMode === "edit" ? "updated" : "added"}!`);
+
+      syncMultiFacultyRecord(baseFaculty, "events", record, selectedAssociatedFaculty, false);
+      setAllEvents(getStoredData(baseFaculty, "events", []));
+      toast.success(`Event saved & synced with associated faculty!`);
     } else if (activeTab === "consultancies") {
+      const assignedFacultyIds = Array.from(
+        new Set([
+          baseFaculty.employee_code,
+          baseFaculty.id,
+          ...selectedAssociatedFaculty.map((f: any) => f.employee_code),
+          ...selectedAssociatedFaculty.map((f: any) => f.id),
+        ])
+      );
+      const associatedFaculty = selectedAssociatedFaculty.map((f: any) => ({
+        id: f.id,
+        employee_code: f.employee_code,
+        full_name: f.full_name,
+        designation: f.designation,
+        department_name: f.department_name || "CSE",
+      }));
+
       const record = {
         id,
         title: formData.title || "Consultancy Project",
         client_organisation: formData.client_organisation || "Industry Partner",
         amount: Number(formData.amount) || 250000,
+        year: Number(formData.year) || new Date().getFullYear(),
+        month: formData.month ? Number(formData.month) : null,
         academic_session: formData.academic_session || "2024-2025",
+        reference_number: formData.reference_number || "",
+        reference_no: formData.reference_number || "",
         status: formData.status || "Completed",
         author_text: formData.author_text || faculty.full_name,
+        faculty_ids: assignedFacultyIds,
+        associated_faculty: associatedFaculty,
       };
-      let nextList = [...allConsultancies];
-      if (formMode === "edit") {
-        nextList = nextList.map((c) => (c.id === editingItem.id ? { ...c, ...record } : c));
-      } else {
-        nextList = [record, ...nextList];
-      }
-      setAllConsultancies(nextList);
-      setStoredData(baseFaculty, "consultancies", nextList);
-      toast.success(`Consultancy ${formMode === "edit" ? "updated" : "added"}!`);
+
+      syncMultiFacultyRecord(baseFaculty, "consultancies", record, selectedAssociatedFaculty, false);
+      setAllConsultancies(getStoredData(baseFaculty, "consultancies", []));
+      toast.success(`Consultancy saved & synced with associated faculty!`);
     } else if (activeTab === "experttalk") {
       const record = {
         id,
@@ -664,27 +914,31 @@ export default function FacultyPortfolioPage({
   // Delete Record
   const handleDeleteRecord = (item: any) => {
     if (!confirm("Are you sure you want to remove this record?")) return;
+    if (!baseFaculty) return;
+
+    const coFacultyList = (item.associated_faculty || []).map((af: any) => {
+      return MOCK_FACULTY.find(
+        (f: any) =>
+          f.employee_code?.toUpperCase() === (af.employee_code || af.code || "").toUpperCase() ||
+          f.id === af.id
+      ) || af;
+    });
 
     if (activeTab === "journal" || activeTab === "conference" || activeTab === "book" || activeTab === "book_chapter") {
-      const nextList = allFacultyPubs.filter((p) => p.id !== item.id);
-      setAllFacultyPubs(nextList);
-      setStoredData(baseFaculty, "publications", nextList);
+      syncMultiFacultyRecord(baseFaculty, "publications", item, coFacultyList, true);
+      setAllFacultyPubs(getStoredData(baseFaculty, "publications", baseFaculty.publications || []));
     } else if (activeTab === "patents") {
-      const nextList = allFacultyPatents.filter((p) => p.id !== item.id);
-      setAllFacultyPatents(nextList);
-      setStoredData(baseFaculty, "patents", nextList);
+      syncMultiFacultyRecord(baseFaculty, "patents", item, coFacultyList, true);
+      setAllFacultyPatents(getStoredData(baseFaculty, "patents", baseFaculty.patents || []));
     } else if (activeTab === "projects") {
-      const nextList = allFacultyProjects.filter((p) => p.id !== item.id);
-      setAllFacultyProjects(nextList);
-      setStoredData(baseFaculty, "projects", nextList);
+      syncMultiFacultyRecord(baseFaculty, "projects", item, coFacultyList, true);
+      setAllFacultyProjects(getStoredData(baseFaculty, "projects", baseFaculty.projects || []));
     } else if (activeTab === "events") {
-      const nextList = allEvents.filter((e) => e.id !== item.id);
-      setAllEvents(nextList);
-      setStoredData(baseFaculty, "events", nextList);
+      syncMultiFacultyRecord(baseFaculty, "events", item, coFacultyList, true);
+      setAllEvents(getStoredData(baseFaculty, "events", []));
     } else if (activeTab === "consultancies") {
-      const nextList = allConsultancies.filter((c) => c.id !== item.id);
-      setAllConsultancies(nextList);
-      setStoredData(baseFaculty, "consultancies", nextList);
+      syncMultiFacultyRecord(baseFaculty, "consultancies", item, coFacultyList, true);
+      setAllConsultancies(getStoredData(baseFaculty, "consultancies", []));
     } else if (activeTab === "experttalk") {
       const nextList = allTalks.filter((t) => t.id !== item.id);
       setAllTalks(nextList);
@@ -1384,6 +1638,23 @@ export default function FacultyPortfolioPage({
                                     {pub.author_text || pub.raw_authors || faculty.full_name}
                                   </div>
 
+                                  {Array.isArray(pub.associated_faculty) && pub.associated_faculty.length > 0 && (
+                                    <div className="flex flex-wrap items-center gap-1 pt-0.5">
+                                      <span className="text-[10px] font-bold text-[#85261e] flex items-center gap-0.5">
+                                        <Users className="w-2.5 h-2.5" /> Co-Authors:
+                                      </span>
+                                      {pub.associated_faculty.map((co: any, ci: number) => (
+                                        <Link
+                                          key={ci}
+                                          href={`/people/faculty/${co.employee_code || co.code || co.id}`}
+                                          className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[10px] font-semibold bg-[#eedfd8]/60 text-[#85261e] hover:bg-[#85261e] hover:text-white transition"
+                                        >
+                                          <span>{co.full_name || co.name}</span>
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  )}
+
                                   <div className="text-xs font-bold text-neutral-900 leading-snug">
                                     "{pub.title}"
                                   </div>
@@ -1429,8 +1700,20 @@ export default function FacultyPortfolioPage({
                                   )}
                                 </td>
 
-                                <td className="p-3 text-center align-top font-bold text-neutral-800">
-                                  {pub.year || "—"}
+                                <td className="p-3 text-center align-top space-y-0.5">
+                                  <div className="font-bold text-neutral-800 text-xs">
+                                    {pub.year || "—"}
+                                  </div>
+                                  {pub.month && (
+                                    <div className="text-[10px] text-neutral-500 font-semibold">
+                                      {MONTH_OPTIONS.find((m) => m.value === Number(pub.month))?.label || pub.month}
+                                    </div>
+                                  )}
+                                  {pub.academic_session && (
+                                    <div className="inline-block px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-600 text-[9px] font-mono">
+                                      {pub.academic_session}
+                                    </div>
+                                  )}
                                 </td>
 
                                 <td className="p-3 text-center align-top space-y-1">
@@ -1439,19 +1722,19 @@ export default function FacultyPortfolioPage({
                                       {pub.indexing}
                                     </span>
                                   )}
-                                  {pub.is_scopus && (
+                                  {pub.is_scopus && pub.indexing !== "Scopus" && (
                                     <span className="inline-block px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold">
                                       Scopus
                                     </span>
                                   )}
-                                  {pub.is_sci && (
+                                  {pub.is_sci && pub.indexing !== "SCI" && pub.indexing !== "SCI(E)" && (
                                     <span className="inline-block px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold">
                                       SCI
                                     </span>
                                   )}
                                   {pub.journal_quartile && (
                                     <span className="inline-block px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200 text-[10px] font-bold">
-                                      Q{pub.journal_quartile}
+                                      {pub.journal_quartile === "T" ? "T (Temp)" : `Q${pub.journal_quartile}`}
                                     </span>
                                   )}
                                   {!pub.indexing && !pub.is_scopus && !pub.is_sci && (
@@ -3195,8 +3478,66 @@ export default function FacultyPortfolioPage({
                   )}
                   {detailItem.year && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Year / Session</td>
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Year</td>
                       <td className="p-3 text-neutral-800 font-semibold">{detailItem.year}</td>
+                    </tr>
+                  )}
+                  {detailItem.month && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Month</td>
+                      <td className="p-3 text-neutral-800 font-semibold">
+                        {MONTH_OPTIONS.find((m) => m.value === Number(detailItem.month))?.label || detailItem.month}
+                      </td>
+                    </tr>
+                  )}
+                  {detailItem.academic_session && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Academic Session</td>
+                      <td className="p-3 font-mono font-bold text-neutral-800">{detailItem.academic_session}</td>
+                    </tr>
+                  )}
+                  {detailItem.indexing && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Indexing</td>
+                      <td className="p-3">
+                        <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 border border-blue-300">
+                          {detailItem.indexing}
+                        </span>
+                      </td>
+                    </tr>
+                  )}
+                  {detailItem.journal_quartile && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Journal Quartile</td>
+                      <td className="p-3 font-semibold text-purple-900">
+                        {detailItem.journal_quartile === "T" ? "T (Temporary)" : `Q${detailItem.journal_quartile}`}
+                      </td>
+                    </tr>
+                  )}
+                  {detailItem.isbn && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">ISBN Number</td>
+                      <td className="p-3 font-mono font-semibold text-neutral-800">{detailItem.isbn}</td>
+                    </tr>
+                  )}
+                  {Array.isArray(detailItem.associated_faculty) && detailItem.associated_faculty.length > 0 && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-[#85261e] bg-neutral-50/70">Associated Faculty</td>
+                      <td className="p-3">
+                        <div className="flex flex-wrap gap-1.5">
+                          {detailItem.associated_faculty.map((co: any, ci: number) => (
+                            <Link
+                              key={ci}
+                              href={`/people/faculty/${co.employee_code || co.code || co.id}`}
+                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-[#85261e]/10 text-[#85261e] hover:bg-[#85261e] hover:text-white transition"
+                            >
+                              <Users className="w-3 h-3" />
+                              <span>{co.full_name || co.name}</span>
+                              <span className="text-[10px] opacity-70">({co.employee_code || co.code || "CSE"})</span>
+                            </Link>
+                          ))}
+                        </div>
+                      </td>
                     </tr>
                   )}
                   {detailItem.doi && (

@@ -70,21 +70,31 @@ export interface FacultyProfile {
 export interface Publication {
   id: string;
   title: string;
-  publication_type: "JOURNAL" | "CONFERENCE" | "BOOK" | "BOOK_CHAPTER";
-  journal_or_conference_name: string;
-  volume: string;
-  issue: string;
-  pages: string;
+  publication_type: "JOURNAL" | "CONFERENCE" | "BOOK" | "BOOK_CHAPTER" | string;
+  journal_or_conference_name?: string;
+  venue_name?: string;
+  volume?: string;
+  issue?: string;
+  pages?: string;
+  page_range?: string;
   year: number;
-  month: number;
-  doi: string;
-  issn_isbn: string;
-  impact_factor: number;
-  is_sci: boolean;
-  is_scopus: boolean;
-  is_peer_reviewed: boolean;
-  abstract_text: string;
-  publisher: string;
+  month?: number | string | null;
+  academic_session?: string;
+  doi?: string;
+  issn_isbn?: string;
+  isbn?: string;
+  indexing?: string;
+  journal_quartile?: string;
+  author_text?: string;
+  raw_authors?: string;
+  impact_factor?: number;
+  is_sci?: boolean;
+  is_scopus?: boolean;
+  is_peer_reviewed?: boolean;
+  abstract_text?: string;
+  publisher?: string;
+  faculty_ids?: string[];
+  associated_faculty?: any[];
   authors?: PublicationAuthor[];
 }
 
@@ -101,27 +111,77 @@ export interface Patent {
   id: string;
   title: string;
   application_number: string;
-  patent_number: string;
-  status: "Filed" | "Published" | "Granted" | "Abandoned";
-  filing_date: string;
-  grant_date: string;
-  country: string;
-  patent_office: string;
-  abstract_text: string;
+  patent_number?: string;
+  status: "Filed" | "Published" | "Granted" | "Abandoned" | string;
+  filing_date?: string;
+  grant_date?: string;
+  country?: string;
+  patent_office?: string;
+  place?: string;
+  year?: number | string;
+  month?: number | string | null;
+  academic_session?: string;
+  raw_inventors?: string;
+  author_text?: string;
+  abstract_text?: string;
+  faculty_ids?: string[];
+  associated_faculty?: any[];
 }
 
 export interface Project {
   id: string;
   title: string;
   funding_agency: string;
-  status: "Ongoing" | "Completed" | "Submitted";
-  project_type: string;
-  start_date: string;
-  end_date: string;
+  status: "Ongoing" | "Completed" | "Submitted" | string;
+  project_type?: string;
+  start_date?: string;
+  end_date?: string;
+  duration?: string;
+  year?: number | string;
+  month?: number | string | null;
+  academic_session?: string;
+  principal_investigator?: string;
+  co_principal_investigator?: string;
+  raw_investigators?: string;
+  author_text?: string;
   total_sanctioned_amount: number;
-  total_amount_received: number;
-  scheme: string;
-  reference_number: string;
+  total_amount_received?: number;
+  scheme?: string;
+  reference_number?: string;
+  faculty_ids?: string[];
+  associated_faculty?: any[];
+}
+
+export interface Consultancy {
+  id: string;
+  title: string;
+  client_organisation: string;
+  amount: number;
+  academic_session?: string;
+  year?: number | string;
+  month?: number | string | null;
+  status?: string;
+  reference_number?: string;
+  author_text?: string;
+  faculty_ids?: string[];
+  associated_faculty?: any[];
+}
+
+export interface Event {
+  id: string;
+  title: string;
+  event_type: string;
+  category?: string;
+  convenor?: string;
+  coordinator?: string;
+  sponsoring_agency?: string;
+  venue?: string;
+  start_date?: string;
+  end_date?: string;
+  academic_session?: string;
+  link_url?: string;
+  faculty_ids?: string[];
+  associated_faculty?: any[];
 }
 
 // ─── People ───────────────────────────────────────────────────────────────
