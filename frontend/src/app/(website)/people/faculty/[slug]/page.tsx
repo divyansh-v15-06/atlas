@@ -25,20 +25,29 @@ import {
   ChevronLeft,
   ChevronRight,
   Filter,
+  RotateCcw,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { MOCK_FACULTY, MOCK_PHD_SCHOLARS } from "@/lib/mock-data";
 import { getStoredData, getStoredObject } from "@/lib/faculty-storage";
+import { useDepartment } from "@/context/department-context";
 
 const PUBS_PER_PAGE = 10;
 
 export default function FacultyPortfolioPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  const router = useRouter();
+  const { activeDepartment, departments, selectDepartmentBySlug } = useDepartment();
   const resolvedParams = use(params);
+  const resolvedSearchParams = searchParams ? use(searchParams) : {};
+  const queryDept = typeof resolvedSearchParams?.dept === "string" ? resolvedSearchParams.dept : undefined;
   const code = resolvedParams.slug.toUpperCase();
 
   const baseFaculty = MOCK_FACULTY.find(
@@ -141,14 +150,88 @@ export default function FacultyPortfolioPage({
 
   const patentCount = allFacultyPatents.length;
 
+  const facultyDeptSlug = faculty?.department_slug || "cse";
+  const facultyDeptName = faculty?.department_name || "Computer Science & Engineering";
+  const facultyDeptCode = faculty?.department_code || "CSE";
+
+  const effectiveDeptSlug = (queryDept || activeDepartment?.slug || "cse").toLowerCase();
+  const effectiveDepartment =
+    departments.find((d) => d.slug.toLowerCase() === effectiveDeptSlug) || activeDepartment;
+
+  const isDeptMismatch = Boolean(
+    faculty &&
+    effectiveDeptSlug &&
+    effectiveDeptSlug !== facultyDeptSlug.toLowerCase()
+  );
+
   if (!faculty) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-20 text-center">
         <h2 className="text-2xl font-bold text-[#33110e]">Faculty Member Not Found</h2>
         <p className="mt-2 text-neutral-600">The faculty profile you are looking for does not exist.</p>
-        <Link href="/people/faculty" className="mt-6 inline-flex items-center gap-2 text-[#85261e] font-semibold hover:underline">
+        <Link href={`/people/faculty?dept=${effectiveDeptSlug}`} className="mt-6 inline-flex items-center gap-2 text-[#85261e] font-semibold hover:underline">
           <ArrowLeft className="h-4 w-4" /> Back to Faculty Directory
         </Link>
+      </div>
+    );
+  }
+
+  if (isDeptMismatch) {
+    return (
+      <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 space-y-6 bg-white min-h-[85vh] font-sans">
+        {/* Back Link */}
+        <Link
+          href={`/people/faculty?dept=${effectiveDeptSlug}`}
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 hover:text-[#33110e] transition"
+        >
+          <ArrowLeft className="h-4 w-4 text-[#85261e]" /> Back to {effectiveDepartment.code} Faculty Directory
+        </Link>
+
+        {/* Department Mismatch Card */}
+        <div className="rounded-3xl border border-[#eedfd8] bg-[#fff9f6] p-8 sm:p-12 text-center space-y-6 shadow-xs my-6 max-w-3xl mx-auto">
+          <div className="mx-auto w-16 h-16 rounded-3xl bg-white border border-[#eedfd8] flex items-center justify-center text-[#85261e] shadow-xs">
+            <Building2 className="w-8 h-8 opacity-80" />
+          </div>
+
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-1.5 bg-white text-[#85261e] border border-[#eedfd8] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+              <span>Department Context Mismatch</span>
+            </div>
+
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#33110e] tracking-tight">
+              Faculty Profile Does Not Belong to Department of {effectiveDepartment.name}
+            </h2>
+
+            <p className="text-xs sm:text-sm text-neutral-600 max-w-xl mx-auto leading-relaxed">
+              <strong className="text-neutral-900 font-semibold">{faculty.full_name} ({faculty.employee_code})</strong> is an official faculty member of the{" "}
+              <span className="text-[#85261e] font-bold">Department of {facultyDeptName} ({facultyDeptCode})</span>, but your current departmental context is set to{" "}
+              <span className="text-[#33110e] font-bold">Department of {effectiveDepartment.name} ({effectiveDepartment.code})</span>.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => {
+                selectDepartmentBySlug(facultyDeptSlug);
+                router.push(`/people/faculty/${code.toLowerCase()}?dept=${facultyDeptSlug}`);
+              }}
+              className="inline-flex items-center gap-2 bg-[#33110e] hover:bg-[#85261e] text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+            >
+              <RotateCcw className="w-4 h-4 text-amber-300" />
+              <span>Switch to {facultyDeptCode} &amp; View Profile</span>
+            </button>
+
+            <Link
+              href={`/people/faculty?dept=${effectiveDeptSlug}`}
+              className="inline-flex items-center gap-2 bg-white hover:bg-neutral-50 text-[#33110e] border border-[#eedfd8] px-4 py-2.5 rounded-xl text-xs font-bold shadow-2xs transition"
+            >
+              <span>View {effectiveDepartment.code} Faculty Directory</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
@@ -198,10 +281,10 @@ export default function FacultyPortfolioPage({
     <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-6 bg-white min-h-[85vh]">
       {/* Back Link */}
       <Link
-        href="/people/faculty"
+        href={`/people/faculty?dept=${facultyDeptSlug}`}
         className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 hover:text-[#33110e] transition"
       >
-        <ArrowLeft className="h-4 w-4 text-[#85261e]" /> Back to Faculty Directory
+        <ArrowLeft className="h-4 w-4 text-[#85261e]" /> Back to {facultyDeptCode} Faculty Directory
       </Link>
 
       {/* 1. Header Hero Card (Signature tempcse Institutional Style) */}
@@ -231,7 +314,7 @@ export default function FacultyPortfolioPage({
                 {faculty.designation}
               </span>
               <span className="text-xs text-neutral-600 font-semibold">
-                Department of Computer Science & Engineering
+                Department of {facultyDeptName}
               </span>
             </div>
 

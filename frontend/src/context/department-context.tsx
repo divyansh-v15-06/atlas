@@ -87,6 +87,13 @@ export function DepartmentProvider({ children }: { children: React.ReactNode }) 
     // Push or update query param seamlessly
     const currentParams = new URLSearchParams(window.location.search);
     currentParams.set("dept", dept.slug);
+
+    // If viewing an individual faculty profile and switching departments, navigate to the target department's faculty directory
+    if (pathname.startsWith("/people/faculty/") && pathname !== "/people/faculty") {
+      router.push(`/people/faculty?dept=${dept.slug}`);
+      return;
+    }
+
     router.push(`${pathname}?${currentParams.toString()}`);
   };
 
