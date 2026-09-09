@@ -433,7 +433,8 @@ export default function FacultyPortfolioPage({
           { id: "publications", label: `Publications (${allFacultyPubs.length})`, icon: BookOpen },
           { id: "patents", label: `Patents (${allFacultyPatents.length})`, icon: Lightbulb },
           { id: "projects", label: `R&D Projects (${allFacultyProjects.length})`, icon: Award },
-          { id: "qualifications", label: `Qualifications (${allQualifications.length})`, icon: GraduationCap },
+          { id: "supervisions", label: `Research Guidance (${combinedSupervisions.length})`, icon: GraduationCap },
+          { id: "qualifications", label: `Qualifications (${allQualifications.length})`, icon: FileText },
           { id: "experience", label: `Experience & Talks (${allAdminExp.length + allTalks.length})`, icon: Briefcase },
         ].map((tab) => {
           const Icon = tab.icon;
@@ -736,7 +737,93 @@ export default function FacultyPortfolioPage({
         </div>
       )}
 
-      {/* TAB 4: QUALIFICATIONS */}
+      {/* TAB 4: RESEARCH GUIDANCE & SUPERVISIONS (Doctoral & PG Scholars) */}
+      {activeTab === "supervisions" && (
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-b border-[#eedfd8] pb-3">
+            <div>
+              <h3 className="text-sm font-bold text-[#33110e] uppercase tracking-wider flex items-center gap-2">
+                <GraduationCap className="w-4 h-4 text-[#85261e]" /> Doctoral & Master&apos;s Research Guidance
+              </h3>
+              <p className="text-xs text-neutral-600 mt-0.5">
+                Scholars guided for Ph.D. dissertations and postgraduate research.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-2 text-xs">
+              <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full font-semibold">
+                Completed / Awarded: {combinedSupervisions.filter((s: any) => s.status?.toLowerCase().includes("award") || s.status?.toLowerCase().includes("complet") || s.status?.toLowerCase().includes("pass")).length}
+              </span>
+              <span className="bg-amber-50 text-amber-800 border border-amber-200 px-2.5 py-0.5 rounded-full font-semibold">
+                Ongoing: {combinedSupervisions.filter((s: any) => s.status?.toLowerCase().includes("ongoing") || s.status?.toLowerCase().includes("pursu")).length}
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {combinedSupervisions.map((sup: any, i: number) => {
+              const isAwarded =
+                sup.status?.toLowerCase().includes("award") ||
+                sup.status?.toLowerCase().includes("complet") ||
+                sup.status?.toLowerCase().includes("pass");
+              return (
+                <div
+                  key={i}
+                  className="bg-[#fff9f6] border border-[#eedfd8] rounded-xl p-4 shadow-xs hover:shadow-md transition space-y-2.5 flex flex-col justify-between"
+                >
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded bg-white border border-[#eedfd8] text-[#33110e]">
+                        <GraduationCap className="w-3.5 h-3.5 text-[#85261e]" />
+                        {sup.level || "Ph.D."}
+                      </span>
+                      <span
+                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                          isAwarded
+                            ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                            : "bg-amber-50 text-amber-800 border-amber-200"
+                        }`}
+                      >
+                        {isAwarded ? "Degree Awarded" : "Ongoing"}
+                      </span>
+                    </div>
+
+                    <h4 className="text-sm font-bold text-[#33110e]">
+                      {sup.student_name}
+                    </h4>
+
+                    {sup.roll_number && (
+                      <p className="text-[11px] font-mono text-neutral-500">
+                        Roll No: {sup.roll_number}
+                      </p>
+                    )}
+
+                    <p className="text-xs text-neutral-700 leading-relaxed">
+                      <strong className="text-neutral-900 font-medium">Topic:</strong> &ldquo;{sup.thesis_title}&rdquo;
+                    </p>
+                  </div>
+
+                  <div className="pt-2 border-t border-[#eedfd8]/60 text-[11px] text-neutral-600 flex flex-wrap items-center justify-between gap-1">
+                    {sup.year && (
+                      <span><strong>Year:</strong> {sup.year}</span>
+                    )}
+                    {sup.co_supervisor && (
+                      <span><strong>Co-Supervisor:</strong> {sup.co_supervisor}</span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {combinedSupervisions.length === 0 && (
+            <div className="text-center py-12 text-neutral-500 text-xs bg-[#fff9f6] rounded-lg border border-[#eedfd8]">
+              No research supervision records currently listed for this faculty member.
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* TAB 5: QUALIFICATIONS */}
       {activeTab === "qualifications" && (
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
