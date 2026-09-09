@@ -90,7 +90,7 @@ func (r *pgRepository) GetFacultyByID(ctx context.Context, id string) (*Faculty,
 	querySQL := `
 		SELECT id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_document_id, photo_url, portfolio_slug, sort_order, research_interests, created_at, updated_at
 		FROM faculty
-		WHERE id = $1 AND deleted_at IS NULL
+		WHERE id::text = $1 AND deleted_at IS NULL
 	`
 	var f Faculty
 	err := r.pool.QueryRow(ctx, querySQL, id).Scan(
@@ -111,7 +111,7 @@ func (r *pgRepository) GetFacultyBySlug(ctx context.Context, slug string) (*Facu
 	querySQL := `
 		SELECT id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_document_id, photo_url, portfolio_slug, sort_order, research_interests, created_at, updated_at
 		FROM faculty
-		WHERE LOWER(portfolio_slug) = LOWER($1) AND deleted_at IS NULL
+		WHERE (LOWER(portfolio_slug) = LOWER($1) OR LOWER(employee_code) = LOWER($1)) AND deleted_at IS NULL
 	`
 	var f Faculty
 	err := r.pool.QueryRow(ctx, querySQL, slug).Scan(
