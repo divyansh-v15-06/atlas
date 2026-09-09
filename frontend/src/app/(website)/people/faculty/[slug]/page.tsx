@@ -298,7 +298,136 @@ export default function FacultyPortfolioPage({
         </div>
       </div>
 
-      {/* 2. Interactive Section Tabs */}
+      {/* 2. Faculty Stats Highlight Cards (Inspired by MNIT presentation, formatted with NITH institutional design) */}
+      <div className={`grid grid-cols-2 ${patentCount > 0 ? "sm:grid-cols-3 lg:grid-cols-5" : "lg:grid-cols-4"} gap-3 sm:gap-4`}>
+        {/* Card 1: Journal Publications */}
+        <button
+          type="button"
+          onClick={() => {
+            setActiveTab("publications");
+            setSelectedType("JOURNAL");
+            setCurrentPage(1);
+          }}
+          className="group flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl border border-[#eedfd8] bg-[#fff9f6] hover:bg-white hover:border-[#85261e]/50 transition-all duration-200 shadow-xs hover:shadow-md text-center relative overflow-hidden cursor-pointer"
+        >
+          <div className="absolute top-0 left-0 right-0 h-1 bg-[#85261e] opacity-85 group-hover:opacity-100 transition" />
+          <div className="w-10 h-10 rounded-xl bg-[#85261e]/10 text-[#85261e] flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:bg-[#85261e] group-hover:text-white transition-all duration-200">
+            <BookOpen className="w-5 h-5" />
+          </div>
+          <div className="text-2xl sm:text-3xl font-extrabold text-[#33110e] tracking-tight group-hover:text-[#85261e] transition">
+            {journalCount}
+          </div>
+          <div className="text-xs sm:text-sm font-bold text-neutral-800 mt-1">
+            Journal Publications
+          </div>
+          <div className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
+            <span>Peer-Reviewed</span>
+            <span className="text-[#85261e] opacity-0 group-hover:opacity-100 transition text-[10px]">→</span>
+          </div>
+        </button>
+
+        {/* Card 2: Conference Publications */}
+        <button
+          type="button"
+          onClick={() => {
+            setActiveTab("publications");
+            setSelectedType("CONFERENCE");
+            setCurrentPage(1);
+          }}
+          className="group flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl border border-[#eedfd8] bg-[#fffdfa] hover:bg-white hover:border-amber-600/50 transition-all duration-200 shadow-xs hover:shadow-md text-center relative overflow-hidden cursor-pointer"
+        >
+          <div className="absolute top-0 left-0 right-0 h-1 bg-amber-600 opacity-85 group-hover:opacity-100 transition" />
+          <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-800 flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:bg-amber-600 group-hover:text-white transition-all duration-200">
+            <Award className="w-5 h-5" />
+          </div>
+          <div className="text-2xl sm:text-3xl font-extrabold text-[#33110e] tracking-tight group-hover:text-amber-800 transition">
+            {conferenceCount}
+          </div>
+          <div className="text-xs sm:text-sm font-bold text-neutral-800 mt-1">
+            Conference Publications
+          </div>
+          <div className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
+            <span>Proceedings & Talks</span>
+            <span className="text-amber-700 opacity-0 group-hover:opacity-100 transition text-[10px]">→</span>
+          </div>
+        </button>
+
+        {/* Optional Card 3: Patents (rendered when faculty has patents) */}
+        {patentCount > 0 && (
+          <button
+            type="button"
+            onClick={() => {
+              setActiveTab("patents");
+            }}
+            className="group flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl border border-[#eedfd8] bg-[#fdfcff] hover:bg-white hover:border-purple-600/50 transition-all duration-200 shadow-xs hover:shadow-md text-center relative overflow-hidden cursor-pointer"
+          >
+            <div className="absolute top-0 left-0 right-0 h-1 bg-purple-600 opacity-85 group-hover:opacity-100 transition" />
+            <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-800 flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-200">
+              <Lightbulb className="w-5 h-5" />
+            </div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-[#33110e] tracking-tight group-hover:text-purple-800 transition">
+              {patentCount}
+            </div>
+            <div className="text-xs sm:text-sm font-bold text-neutral-800 mt-1">
+              Patents
+            </div>
+            <div className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
+              <span>Filed & Granted</span>
+              <span className="text-purple-700 opacity-0 group-hover:opacity-100 transition text-[10px]">→</span>
+            </div>
+          </button>
+        )}
+
+        {/* Card 4: Research Projects */}
+        <button
+          type="button"
+          onClick={() => {
+            setActiveTab("projects");
+          }}
+          className="group flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl border border-[#eedfd8] bg-[#fafdfb] hover:bg-white hover:border-emerald-600/50 transition-all duration-200 shadow-xs hover:shadow-md text-center relative overflow-hidden cursor-pointer"
+        >
+          <div className="absolute top-0 left-0 right-0 h-1 bg-emerald-700 opacity-85 group-hover:opacity-100 transition" />
+          <div className="w-10 h-10 rounded-xl bg-emerald-600/10 text-emerald-800 flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:bg-emerald-700 group-hover:text-white transition-all duration-200">
+            <Briefcase className="w-5 h-5" />
+          </div>
+          <div className="text-2xl sm:text-3xl font-extrabold text-[#33110e] tracking-tight group-hover:text-emerald-800 transition">
+            {projectCount}
+          </div>
+          <div className="text-xs sm:text-sm font-bold text-neutral-800 mt-1">
+            Research Projects
+          </div>
+          <div className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
+            <span>Sponsored R&D Grants</span>
+            <span className="text-emerald-700 opacity-0 group-hover:opacity-100 transition text-[10px]">→</span>
+          </div>
+        </button>
+
+        {/* Card 5: PhD Research Supervised */}
+        <button
+          type="button"
+          onClick={() => {
+            setActiveTab("supervisions");
+          }}
+          className="group flex flex-col items-center justify-center p-4 sm:p-5 rounded-xl border border-[#eedfd8] bg-[#fafaff] hover:bg-white hover:border-indigo-600/50 transition-all duration-200 shadow-xs hover:shadow-md text-center relative overflow-hidden cursor-pointer"
+        >
+          <div className="absolute top-0 left-0 right-0 h-1 bg-indigo-700 opacity-85 group-hover:opacity-100 transition" />
+          <div className="w-10 h-10 rounded-xl bg-indigo-600/10 text-indigo-800 flex items-center justify-center mb-2.5 group-hover:scale-110 group-hover:bg-indigo-700 group-hover:text-white transition-all duration-200">
+            <GraduationCap className="w-5 h-5" />
+          </div>
+          <div className="text-2xl sm:text-3xl font-extrabold text-[#33110e] tracking-tight group-hover:text-indigo-800 transition">
+            {phdSupervisedCount}
+          </div>
+          <div className="text-xs sm:text-sm font-bold text-neutral-800 mt-1">
+            PhD Supervised
+          </div>
+          <div className="text-[11px] text-neutral-500 font-medium mt-0.5 flex items-center gap-1">
+            <span>Doctoral Research</span>
+            <span className="text-indigo-700 opacity-0 group-hover:opacity-100 transition text-[10px]">→</span>
+          </div>
+        </button>
+      </div>
+
+      {/* 3. Interactive Section Tabs */}
       <div className="border-b border-[#eedfd8] flex flex-wrap gap-2">
         {[
           { id: "publications", label: `Publications (${allFacultyPubs.length})`, icon: BookOpen },
