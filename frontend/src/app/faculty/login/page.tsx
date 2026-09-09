@@ -59,8 +59,9 @@ export default function FacultyLoginPage() {
           identifier: data.identifier,
           password: data.password,
         });
-        if (res.data?.data?.access_token) {
-          localStorage.setItem("auth_token", res.data.data.access_token);
+        const token = res.data?.data?.token || res.data?.data?.access_token;
+        if (token) {
+          localStorage.setItem("auth_token", token);
           localStorage.setItem(
             "auth_user",
             JSON.stringify(res.data.data.user || { role: "FACULTY", email: data.identifier })

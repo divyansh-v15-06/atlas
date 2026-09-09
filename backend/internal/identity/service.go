@@ -35,7 +35,15 @@ func NewService(repo Repository, jwtSecret string, jwtExpirationHours int) Servi
 }
 
 func (s *service) Login(ctx context.Context, req *LoginRequest) (*LoginResponse, error) {
-	user, err := s.repo.GetByEmail(ctx, req.Email)
+	loginID := req.Email
+	if loginID == "" {
+		loginID = req.Identifier
+	}
+	if loginID == "" {
+		return nil, httperr.BadRequest("Email or faculty code is required")
+	}
+
+	user, err := s.repo.GetByIdentifier(ctx, loginID)
 	if err != nil {
 		return nil, err
 	}

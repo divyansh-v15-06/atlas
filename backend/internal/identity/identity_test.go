@@ -21,6 +21,10 @@ func (m *mockIdentityRepo) GetByEmail(ctx context.Context, email string) (*ident
 	return nil, nil
 }
 
+func (m *mockIdentityRepo) GetByIdentifier(ctx context.Context, identifier string) (*identity.User, error) {
+	return m.GetByEmail(ctx, identifier)
+}
+
 func (m *mockIdentityRepo) GetByID(ctx context.Context, id string) (*identity.User, error) {
 	if m.user != nil && m.user.ID == id {
 		return m.user, nil

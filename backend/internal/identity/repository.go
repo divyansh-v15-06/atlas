@@ -11,6 +11,7 @@ import (
 
 type Repository interface {
 	GetByEmail(ctx context.Context, email string) (*User, error)
+	GetByIdentifier(ctx context.Context, identifier string) (*User, error)
 	GetByID(ctx context.Context, id string) (*User, error)
 	GetRolesByUserID(ctx context.Context, userID string) ([]string, error)
 	GetDepartmentScopesByUserID(ctx context.Context, userID string) ([]string, error)
@@ -31,13 +32,20 @@ func NewRepository(pool *pgxpool.Pool) Repository {
 }
 
 func (r *pgRepository) GetByEmail(ctx context.Context, email string) (*User, error) {
+	return r.GetByIdentifier(ctx, email)
+}
+
+func (r *pgRepository) GetByIdentifier(ctx context.Context, identifier string) (*User, error) {
 	query := `
-		SELECT id, email, password_hash, full_name, is_active, first_login, last_login_at, created_at, updated_at
-		FROM users
-		WHERE LOWER(email) = LOWER($1) AND deleted_at IS NULL
+		SELECT u.id, u.email, u.password_hash, u.full_name, u.is_active, u.first_login, u.last_login_at, u.created_at, u.updated_at
+		FROM users u
+		LEFT JOIN faculty f ON f.user_id = u.id AND f.deleted_at IS NULL
+		WHERE (LOWER(u.email) = LOWER($1) OR UPPER(f.employee_code) = UPPER($1))
+		  AND u.deleted_at IS NULL
+		LIMIT 1
 	`
 	var u User
-	err := r.pool.QueryRow(ctx, query, email).Scan(
+	err := r.pool.QueryRow(ctx, query, identifier).Scan(
 		&u.ID, &u.Email, &u.PasswordHash, &u.FullName, &u.IsActive, &u.FirstLogin, &u.LastLoginAt, &u.CreatedAt, &u.UpdatedAt,
 	)
 	if err != nil {
