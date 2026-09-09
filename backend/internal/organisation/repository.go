@@ -123,7 +123,7 @@ func (r *pgRepository) ListProgrammes(ctx context.Context, departmentID string) 
 	query := `
 		SELECT id, department_id, code, name, level, duration_years, created_at, updated_at
 		FROM programmes
-		WHERE department_id = $1 AND deleted_at IS NULL
+		WHERE ($1 = '' OR department_id::text = $1) AND deleted_at IS NULL
 		ORDER BY level ASC, name ASC
 	`
 	rows, err := r.pool.Query(ctx, query, departmentID)

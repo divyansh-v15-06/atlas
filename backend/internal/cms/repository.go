@@ -2,7 +2,9 @@ package cms
 
 import (
 	"context"
+	"errors"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -173,7 +175,7 @@ func (r *pgRepository) ListAboutSections(ctx context.Context, deptID string) ([]
 	querySQL := `
 		SELECT id, department_id, title, body, sort_order, is_published, created_at, updated_at
 		FROM about_sections
-		WHERE department_id = $1 AND deleted_at IS NULL
+		WHERE ($1 = '' OR department_id::text = $1) AND deleted_at IS NULL
 		ORDER BY sort_order ASC
 	`
 	rows, err := r.pool.Query(ctx, querySQL, deptID)
@@ -213,7 +215,7 @@ func (r *pgRepository) ListProgrammesOffered(ctx context.Context, deptID string)
 	querySQL := `
 		SELECT id, department_id, programme_id, title, body, sort_order, created_at, updated_at
 		FROM programmes_offered
-		WHERE department_id = $1 AND deleted_at IS NULL
+		WHERE ($1 = '' OR department_id::text = $1) AND deleted_at IS NULL
 		ORDER BY sort_order ASC
 	`
 	rows, err := r.pool.Query(ctx, querySQL, deptID)
@@ -253,7 +255,7 @@ func (r *pgRepository) ListQnA(ctx context.Context, deptID string) ([]QnA, error
 	querySQL := `
 		SELECT id, department_id, question, answer, sort_order, created_at, updated_at
 		FROM qna
-		WHERE department_id = $1 AND deleted_at IS NULL
+		WHERE ($1 = '' OR department_id::text = $1) AND deleted_at IS NULL
 		ORDER BY sort_order ASC
 	`
 	rows, err := r.pool.Query(ctx, querySQL, deptID)
@@ -294,7 +296,7 @@ func (r *pgRepository) GetHODMessage(ctx context.Context, deptID string) (*HODMe
 		SELECT h.id, h.department_id, d.name, h.faculty_id, h.hod_name, h.message, h.image_url, h.publish_date::text, h.created_at, h.updated_at
 		FROM hod_messages h
 		JOIN departments d ON d.id = h.department_id
-		WHERE h.department_id = $1 AND h.deleted_at IS NULL
+		WHERE ($1 = '' OR h.department_id::text = $1) AND h.deleted_at IS NULL
 		ORDER BY h.publish_date DESC
 		LIMIT 1
 	`
@@ -303,6 +305,9 @@ func (r *pgRepository) GetHODMessage(ctx context.Context, deptID string) (*HODMe
 		&h.ID, &h.DepartmentID, &h.DepartmentName, &h.FacultyID, &h.HODName, &h.Message, &h.ImageURL, &h.PublishDate, &h.CreatedAt, &h.UpdatedAt,
 	)
 	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, nil
+		}
 		return nil, err
 	}
 	return &h, nil
@@ -370,7 +375,7 @@ func (r *pgRepository) ListSyllabusDocs(ctx context.Context, deptID string) ([]S
 		FROM syllabus_documents sd
 		LEFT JOIN programmes p ON p.id = sd.programme_id
 		JOIN documents d ON d.id = sd.document_id
-		WHERE sd.department_id = $1 AND sd.deleted_at IS NULL
+		WHERE ($1 = '' OR sd.department_id::text = $1) AND sd.deleted_at IS NULL
 		ORDER BY sd.title ASC
 	`
 	rows, err := r.pool.Query(ctx, querySQL, deptID)
@@ -395,7 +400,7 @@ func (r *pgRepository) ListCalendarDocs(ctx context.Context, deptID string) ([]C
 		SELECT cd.id, cd.department_id, cd.academic_year_id, cd.title, cd.document_id, d.source_url, cd.created_at, cd.updated_at
 		FROM calendar_documents cd
 		JOIN documents d ON d.id = cd.document_id
-		WHERE cd.department_id = $1 AND cd.deleted_at IS NULL
+		WHERE ($1 = '' OR cd.department_id::text = $1) AND cd.deleted_at IS NULL
 		ORDER BY cd.created_at DESC
 	`
 	rows, err := r.pool.Query(ctx, querySQL, deptID)
