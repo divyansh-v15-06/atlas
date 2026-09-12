@@ -61,8 +61,16 @@ export default function FacultyPublicationsPage() {
   const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
 
   const loadPublications = (activeFaculty: any) => {
-    const legacyId = activeFaculty.legacy_id;
-    const lastName = activeFaculty.full_name?.toLowerCase().split(" ").pop() || "";
+    const baseFaculty =
+      MOCK_FACULTY.find(
+        (f) =>
+          f.id === activeFaculty?.id ||
+          (f.employee_code && activeFaculty?.employee_code && f.employee_code.toLowerCase() === activeFaculty.employee_code.toLowerCase()) ||
+          (f.legacy_id && activeFaculty?.legacy_id && f.legacy_id === activeFaculty.legacy_id)
+      ) || activeFaculty;
+
+    const legacyId = baseFaculty?.legacy_id;
+    const lastName = baseFaculty?.full_name?.toLowerCase().split(" ").pop() || "";
 
     const userPapers = MOCK_PUBLICATIONS.filter((p: any) => {
       if (legacyId && p.faculty_legacy_ids?.includes(legacyId)) return true;
@@ -71,8 +79,14 @@ export default function FacultyPublicationsPage() {
       return false;
     });
 
-    const fallback = userPapers.length > 0 ? userPapers : MOCK_PUBLICATIONS.slice(0, 15);
-    const stored = getStoredData(activeFaculty, "publications", fallback);
+    const fallback =
+      baseFaculty?.publications && baseFaculty.publications.length > 0
+        ? baseFaculty.publications
+        : userPapers.length > 0
+        ? userPapers
+        : MOCK_PUBLICATIONS.slice(0, 15);
+
+    const stored = getStoredData(baseFaculty, "publications", fallback);
     setPublications(stored);
   };
 
