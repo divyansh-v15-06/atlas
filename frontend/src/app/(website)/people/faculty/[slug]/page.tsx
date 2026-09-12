@@ -511,6 +511,19 @@ export default function FacultyPortfolioPage({
     { key: "internationalAndNationalExposure", label: "International & National Exposure", icon: Globe, count: exposureCount },
   ];
 
+  // Only show tabs in the sidebar that have records (> 0) or are facultyInfo (unless faculty is logged in and canEdit)
+  const visibleSidebarItems = useMemo(() => {
+    return sidebarItems.filter(
+      (item) => canEdit || item.key === "facultyInfo" || (item.count !== undefined && item.count > 0)
+    );
+  }, [sidebarItems, canEdit]);
+
+  useEffect(() => {
+    if (!canEdit && visibleSidebarItems.length > 0 && !visibleSidebarItems.some((i) => i.key === activeTab)) {
+      setActiveTab("facultyInfo");
+    }
+  }, [canEdit, visibleSidebarItems, activeTab]);
+
   // Active publications list based on active tab
   // Colleague faculty list for associated faculty selection
   const colleagueFacultyList = useMemo(() => {
@@ -1430,12 +1443,14 @@ export default function FacultyPortfolioPage({
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6">
               <div className="relative group shrink-0">
                 <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-2 border-amber-300/30 shadow-xl bg-neutral-900/60 ring-4 ring-white/10">
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={faculty.image_url || "/hod.jpg"}
                     alt={faculty.full_name}
-                    width={112}
-                    height={112}
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "/hod.jpg";
+                    }}
                   />
                 </div>
                 <div className="absolute -bottom-1.5 -right-1.5 bg-[#85261e] text-white font-mono text-xs font-bold px-2.5 py-0.5 rounded-md border border-white/20 shadow-xs">
@@ -1608,52 +1623,72 @@ export default function FacultyPortfolioPage({
         </div>
       </div>
 
-      {/* 3. MNIT-STYLE RESEARCH IMPACT METRICS STRIP */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 relative z-20">
-        <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-md p-3 sm:p-4">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
-            {[
-              { label: "Journals", count: journalCount, tab: "journal" as TabKey, icon: BookOpen, color: "text-[#85261e] bg-[#fcf2ef]" },
-              { label: "Conferences", count: conferenceCount, tab: "conference" as TabKey, icon: Presentation, color: "text-amber-700 bg-amber-50" },
-              { label: "Patents", count: patentCount, tab: "patents" as TabKey, icon: Lightbulb, color: "text-indigo-700 bg-indigo-50" },
-              { label: "Projects", count: projectCount, tab: "projects" as TabKey, icon: Briefcase, color: "text-emerald-700 bg-emerald-50" },
-              { label: "PhD Guided", count: phdSupervisedCount, tab: "researchSupervision" as TabKey, icon: GraduationCap, color: "text-blue-700 bg-blue-50" },
-              { label: "Consultancies", count: consultancyCount, tab: "consultancies" as TabKey, icon: Building2, color: "text-purple-700 bg-purple-50" },
-            ].map((stat, idx) => {
-              const Icon = stat.icon;
-              const isSelected = activeTab === stat.tab;
-              return (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => {
-                    setActiveTab(stat.tab);
-                    setSelectedYear("ALL");
-                    setPubSearch("");
-                  }}
-                  className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all cursor-pointer ${
-                    isSelected
-                      ? "border-[#85261e] bg-[#fff9f6] shadow-sm ring-1 ring-[#85261e]/30"
-                      : "border-neutral-100 hover:border-[#eedfd8] hover:bg-neutral-50"
-                  }`}
-                >
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${stat.color}`}>
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-xl sm:text-2xl font-black text-neutral-900 leading-tight">
-                      {stat.count}
-                    </div>
-                    <div className="text-xs font-bold text-neutral-500 uppercase tracking-wider truncate">
-                      {stat.label}
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
+      {/* 3. MNIT-STYLE RESEARCH IMPACT METRICS STRIP (Only display non-zero stats) */}
+      {(() => {
+        const visibleMetrics = [
+          { label: "Journals", count: journalCount, tab: "journal" as TabKey, icon: BookOpen, color: "text-[#85261e] bg-[#fcf2ef]" },
+          { label: "Conferences", count: conferenceCount, tab: "conference" as TabKey, icon: Presentation, color: "text-amber-700 bg-amber-50" },
+          { label: "Patents", count: patentCount, tab: "patents" as TabKey, icon: Lightbulb, color: "text-indigo-700 bg-indigo-50" },
+          { label: "Projects", count: projectCount, tab: "projects" as TabKey, icon: Briefcase, color: "text-emerald-700 bg-emerald-50" },
+          { label: "PhD Guided", count: phdSupervisedCount, tab: "researchSupervision" as TabKey, icon: GraduationCap, color: "text-blue-700 bg-blue-50" },
+          { label: "Consultancies", count: consultancyCount, tab: "consultancies" as TabKey, icon: Building2, color: "text-purple-700 bg-purple-50" },
+        ].filter((stat) => stat.count > 0);
+
+        if (visibleMetrics.length === 0) return null;
+
+        return (
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 relative z-20">
+            <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-md p-3 sm:p-4">
+              <div
+                className={`grid grid-cols-2 sm:grid-cols-3 ${
+                  visibleMetrics.length >= 6
+                    ? "lg:grid-cols-6"
+                    : visibleMetrics.length === 5
+                    ? "lg:grid-cols-5"
+                    : visibleMetrics.length === 4
+                    ? "lg:grid-cols-4"
+                    : visibleMetrics.length === 3
+                    ? "lg:grid-cols-3"
+                    : "lg:grid-cols-2"
+                } gap-2 sm:gap-3`}
+              >
+                {visibleMetrics.map((stat, idx) => {
+                  const Icon = stat.icon;
+                  const isSelected = activeTab === stat.tab;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        setActiveTab(stat.tab);
+                        setSelectedYear("ALL");
+                        setPubSearch("");
+                      }}
+                      className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                        isSelected
+                          ? "border-[#85261e] bg-[#fff9f6] shadow-sm ring-1 ring-[#85261e]/30"
+                          : "border-neutral-100 hover:border-[#eedfd8] hover:bg-neutral-50"
+                      }`}
+                    >
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${stat.color}`}>
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-xl sm:text-2xl font-black text-neutral-900 leading-tight">
+                          {stat.count}
+                        </div>
+                        <div className="text-xs font-bold text-neutral-500 uppercase tracking-wider truncate">
+                          {stat.label}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        );
+      })()}
 
       {/* 4. MAIN LAYOUT: OPTIONS TO THE LEFT (PublicSidebar architecture) + MAIN CONTENT */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
@@ -1667,12 +1702,12 @@ export default function FacultyPortfolioPage({
                 Portfolio Navigation
               </span>
               <span className="text-xs font-mono text-[#85261e] font-semibold bg-white px-2.5 py-0.5 rounded-full border border-[#eedfd8]">
-                15 Sections
+                {visibleSidebarItems.length} {visibleSidebarItems.length === 1 ? "Section" : "Sections"}
               </span>
             </div>
 
             <nav className="p-2.5 space-y-1.5 max-h-[75vh] overflow-y-auto no-scrollbar">
-              {sidebarItems.map((item) => {
+              {visibleSidebarItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.key;
                 return (
@@ -1695,7 +1730,7 @@ export default function FacultyPortfolioPage({
                       <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-amber-300" : "text-neutral-400"}`} />
                       <span className="truncate">{item.label}</span>
                     </div>
-                    {typeof item.count === "number" && (
+                    {typeof item.count === "number" && item.count > 0 && (
                       <span
                         className={`text-xs font-bold px-2.5 py-0.5 rounded-full shrink-0 ml-1.5 ${
                           isActive
@@ -1849,40 +1884,58 @@ export default function FacultyPortfolioPage({
                     </span>
                   </div>
 
-                  {/* Scholarly Metrics Grid */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8] text-center">
-                      <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">Publications</span>
-                      <span className="text-2xl sm:text-3xl font-black text-[#85261e]">{allFacultyPubs.length}</span>
-                      <span className="text-[11px] text-neutral-500 block mt-1">{sciIndexedCount} SCI · {scopusIndexedCount} Scopus</span>
-                    </div>
+                  {/* Scholarly Metrics Grid (Only display non-zero metrics) */}
+                  {(() => {
+                    const cards = [
+                      allFacultyPubs.length > 0 && {
+                        label: "Publications",
+                        main: allFacultyPubs.length,
+                        sub: `${sciIndexedCount > 0 ? `${sciIndexedCount} SCI` : ""}${
+                          sciIndexedCount > 0 && scopusIndexedCount > 0 ? " · " : ""
+                        }${scopusIndexedCount > 0 ? `${scopusIndexedCount} Scopus` : ""}` || "Peer-Reviewed",
+                        color: "text-[#85261e]",
+                      },
+                      allFacultyProjects.length > 0 && {
+                        label: "R&D Projects",
+                        main:
+                          totalProjectGrantsAmount >= 10000000
+                            ? `₹${(totalProjectGrantsAmount / 10000000).toFixed(1)}Cr`
+                            : totalProjectGrantsAmount >= 100000
+                            ? `₹${(totalProjectGrantsAmount / 100000).toFixed(0)}L`
+                            : `₹${totalProjectGrantsAmount.toLocaleString("en-IN")}`,
+                        sub: `${allFacultyProjects.length} Sponsored Grants`,
+                        color: "text-[#0d9488]",
+                      },
+                      allFacultyPatents.length > 0 && {
+                        label: "Patents",
+                        main: allFacultyPatents.length,
+                        sub: `${allFacultyPatents.filter((pt: any) => (pt.status || "").toLowerCase().includes("grant")).length} Granted`,
+                        color: "text-amber-600",
+                      },
+                      phdSupervisedCount > 0 && {
+                        label: "Ph.D. Scholars",
+                        main: phdSupervisedCount,
+                        sub: "Guided / Defended",
+                        color: "text-indigo-600",
+                      },
+                    ].filter(Boolean) as { label: string; main: any; sub: string; color: string }[];
 
-                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8] text-center">
-                      <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">R&amp;D Projects</span>
-                      <span className="text-2xl sm:text-3xl font-black text-[#0d9488]">
-                        {totalProjectGrantsAmount >= 10000000
-                          ? `₹${(totalProjectGrantsAmount / 10000000).toFixed(1)}Cr`
-                          : totalProjectGrantsAmount >= 100000
-                          ? `₹${(totalProjectGrantsAmount / 100000).toFixed(0)}L`
-                          : `₹${totalProjectGrantsAmount.toLocaleString("en-IN")}`}
-                      </span>
-                      <span className="text-[11px] text-neutral-500 block mt-1">{allFacultyProjects.length} Sponsored Grants</span>
-                    </div>
+                    if (cards.length === 0) return null;
 
-                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8] text-center">
-                      <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">Patents</span>
-                      <span className="text-2xl sm:text-3xl font-black text-amber-600">{allFacultyPatents.length}</span>
-                      <span className="text-[11px] text-neutral-500 block mt-1">
-                        {allFacultyPatents.filter((pt: any) => (pt.status || "").toLowerCase().includes("grant")).length} Granted
-                      </span>
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8] text-center">
-                      <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">Ph.D. Scholars</span>
-                      <span className="text-2xl sm:text-3xl font-black text-indigo-600">{phdSupervisedCount}</span>
-                      <span className="text-[11px] text-neutral-500 block mt-1">Guided / Defended</span>
-                    </div>
-                  </div>
+                    return (
+                      <div className={`grid grid-cols-2 ${cards.length >= 4 ? "sm:grid-cols-4" : cards.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-3`}>
+                        {cards.map((card, i) => (
+                          <div key={i} className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8] text-center">
+                            <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">
+                              {card.label}
+                            </span>
+                            <span className={`text-2xl sm:text-3xl font-black ${card.color}`}>{card.main}</span>
+                            <span className="text-[11px] text-neutral-500 block mt-1">{card.sub}</span>
+                          </div>
+                        ))}
+                      </div>
+                    );
+                  })()}
 
                   {/* Visual Charts */}
                   <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 pt-1">
