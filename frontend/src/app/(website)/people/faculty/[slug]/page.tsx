@@ -46,7 +46,21 @@ import {
   AlertTriangle,
   Eye,
   BookOpenCheck,
+  BarChart2,
+  TrendingUp,
 } from "lucide-react";
+import {
+  BarChart as RechartsBarChart,
+  Bar as RechartsBar,
+  XAxis as RechartsXAxis,
+  YAxis as RechartsYAxis,
+  CartesianGrid as RechartsCartesianGrid,
+  Tooltip as RechartsTooltip,
+  ResponsiveContainer as RechartsResponsiveContainer,
+  PieChart as RechartsPieChart,
+  Pie as RechartsPie,
+  Cell as RechartsCell,
+} from "recharts";
 import { toast } from "sonner";
 import {
   MOCK_FACULTY,
@@ -326,6 +340,52 @@ export default function FacultyPortfolioPage({
     );
     return phdList.length > 0 ? phdList.length : combinedSupervisions.length;
   }, [combinedSupervisions]);
+
+  // Analytics & Research Trends
+  const facultyPubsTimeline = useMemo(() => {
+    const map: Record<number, { year: number; journal: number; conference: number; book: number; total: number }> = {};
+    allFacultyPubs.forEach((p: any) => {
+      const yr = Number(p.year);
+      if (!yr || isNaN(yr)) return;
+      if (!map[yr]) {
+        map[yr] = { year: yr, journal: 0, conference: 0, book: 0, total: 0 };
+      }
+      const t = (p.publication_type || p.type || "").toUpperCase();
+      if (t === "CONFERENCE") map[yr].conference++;
+      else if (t === "BOOK" || t === "BOOK_CHAPTER" || t === "BOOK CHAPTER") map[yr].book++;
+      else map[yr].journal++;
+      map[yr].total++;
+    });
+    const list = Object.values(map).sort((a, b) => a.year - b.year);
+    return list.slice(-7);
+  }, [allFacultyPubs]);
+
+  const facultyResearchMix = useMemo(() => {
+    return [
+      { name: "Journals", value: journalCount, color: "#85261e" },
+      { name: "Conferences", value: conferenceCount, color: "#c85a44" },
+      { name: "Books / Chapters", value: bookCount + bookChapterCount, color: "#d97706" },
+      { name: "Patents", value: patentCount, color: "#0d9488" },
+    ].filter((item) => item.value > 0);
+  }, [journalCount, conferenceCount, bookCount, bookChapterCount, patentCount]);
+
+  const totalProjectGrantsAmount = useMemo(() => {
+    return allFacultyProjects.reduce((sum: number, prj: any) => {
+      return sum + (Number(prj.sanctioned_amount) || 0);
+    }, 0);
+  }, [allFacultyProjects]);
+
+  const sciIndexedCount = useMemo(() => {
+    return allFacultyPubs.filter(
+      (p: any) => p.is_sci === true || (p.indexing || "").toLowerCase().includes("sci")
+    ).length;
+  }, [allFacultyPubs]);
+
+  const scopusIndexedCount = useMemo(() => {
+    return allFacultyPubs.filter(
+      (p: any) => p.is_scopus === true || (p.indexing || "").toLowerCase().includes("scopus")
+    ).length;
+  }, [allFacultyPubs]);
 
   const facultyDeptSlug = faculty?.department_slug || "cse";
   const facultyDeptName = faculty?.department_name || "Computer Science & Engineering";
@@ -1752,6 +1812,152 @@ export default function FacultyPortfolioPage({
                       <p className="text-sm sm:text-base text-neutral-700 leading-relaxed">{faculty.bio}</p>
                     </div>
                   )}
+                </div>
+
+                {/* Research Output & Career Visualizations */}
+                <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs p-6 space-y-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#eedfd8] gap-2">
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-bold text-[#33110e] flex items-center gap-2">
+                        <TrendingUp className="w-5 h-5 text-[#85261e]" />
+                        Scholarly Output &amp; Research Visualizations
+                      </h3>
+                      <p className="text-sm text-neutral-500">Career research trajectory, indexed publications, and grants</p>
+                    </div>
+                    <span className="inline-flex items-center gap-1.5 bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] px-3.5 py-1.5 rounded-full text-xs font-bold self-start sm:self-auto">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                      Interactive Analytics
+                    </span>
+                  </div>
+
+                  {/* Scholarly Metrics Grid */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8] text-center">
+                      <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">Publications</span>
+                      <span className="text-2xl sm:text-3xl font-black text-[#85261e]">{allFacultyPubs.length}</span>
+                      <span className="text-[11px] text-neutral-500 block mt-1">{sciIndexedCount} SCI · {scopusIndexedCount} Scopus</span>
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8] text-center">
+                      <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">R&amp;D Projects</span>
+                      <span className="text-2xl sm:text-3xl font-black text-[#0d9488]">
+                        {totalProjectGrantsAmount >= 10000000
+                          ? `₹${(totalProjectGrantsAmount / 10000000).toFixed(1)}Cr`
+                          : totalProjectGrantsAmount >= 100000
+                          ? `₹${(totalProjectGrantsAmount / 100000).toFixed(0)}L`
+                          : `₹${totalProjectGrantsAmount.toLocaleString("en-IN")}`}
+                      </span>
+                      <span className="text-[11px] text-neutral-500 block mt-1">{allFacultyProjects.length} Sponsored Grants</span>
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8] text-center">
+                      <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">Patents</span>
+                      <span className="text-2xl sm:text-3xl font-black text-amber-600">{allFacultyPatents.length}</span>
+                      <span className="text-[11px] text-neutral-500 block mt-1">
+                        {allFacultyPatents.filter((pt: any) => (pt.status || "").toLowerCase().includes("grant")).length} Granted
+                      </span>
+                    </div>
+
+                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8] text-center">
+                      <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">Ph.D. Scholars</span>
+                      <span className="text-2xl sm:text-3xl font-black text-indigo-600">{phdSupervisedCount}</span>
+                      <span className="text-[11px] text-neutral-500 block mt-1">Guided / Defended</span>
+                    </div>
+                  </div>
+
+                  {/* Visual Charts */}
+                  <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 pt-1">
+                    {/* Publication Output Timeline */}
+                    <div className="lg:col-span-3 bg-[#faf8f6] rounded-xl p-4 border border-[#eedfd8]/80">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="text-xs font-bold text-[#33110e] uppercase tracking-wider flex items-center gap-1.5">
+                          <BookOpen className="w-3.5 h-3.5 text-[#85261e]" />
+                          Publication Output Over Recent Years
+                        </h4>
+                        <span className="text-[11px] text-neutral-400">Journals, Conferences &amp; Books</span>
+                      </div>
+                      {facultyPubsTimeline.length > 0 ? (
+                        <div className="h-56 w-full">
+                          <RechartsResponsiveContainer width="100%" height="100%">
+                            <RechartsBarChart data={facultyPubsTimeline} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                              <RechartsCartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eedfd8" opacity={0.6} />
+                              <RechartsXAxis dataKey="year" stroke="#78716c" fontSize={11} tickLine={false} />
+                              <RechartsYAxis stroke="#78716c" fontSize={11} tickLine={false} allowDecimals={false} />
+                              <RechartsTooltip
+                                contentStyle={{
+                                  backgroundColor: "#33110e",
+                                  borderColor: "#eedfd8",
+                                  borderRadius: "10px",
+                                  color: "#fff",
+                                  fontSize: "12px",
+                                }}
+                              />
+                              <RechartsBar dataKey="journal" name="Journals" fill="#85261e" stackId="a" radius={[0, 0, 0, 0]} />
+                              <RechartsBar dataKey="conference" name="Conferences" fill="#c85a44" stackId="a" radius={[0, 0, 0, 0]} />
+                              <RechartsBar dataKey="book" name="Books" fill="#d97706" stackId="a" radius={[3, 3, 0, 0]} />
+                            </RechartsBarChart>
+                          </RechartsResponsiveContainer>
+                        </div>
+                      ) : (
+                        <div className="h-56 flex items-center justify-center text-xs text-neutral-400">
+                          No publication timeline records found
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Scholarly Portfolio Mix */}
+                    <div className="lg:col-span-2 bg-[#faf8f6] rounded-xl p-4 border border-[#eedfd8]/80 flex flex-col justify-between">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-xs font-bold text-[#33110e] uppercase tracking-wider flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                          Scholarly Distribution Mix
+                        </h4>
+                      </div>
+                      {facultyResearchMix.length > 0 ? (
+                        <div className="h-44 w-full">
+                          <RechartsResponsiveContainer width="100%" height="100%">
+                            <RechartsPieChart>
+                              <RechartsPie
+                                data={facultyResearchMix}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={36}
+                                outerRadius={60}
+                                paddingAngle={3}
+                                dataKey="value"
+                              >
+                                {facultyResearchMix.map((entry, index) => (
+                                  <RechartsCell key={`cell-${index}`} fill={entry.color} stroke="#fff" strokeWidth={1} />
+                                ))}
+                              </RechartsPie>
+                              <RechartsTooltip
+                                contentStyle={{
+                                  backgroundColor: "#33110e",
+                                  borderColor: "#eedfd8",
+                                  borderRadius: "10px",
+                                  color: "#fff",
+                                  fontSize: "12px",
+                                }}
+                              />
+                            </RechartsPieChart>
+                          </RechartsResponsiveContainer>
+                        </div>
+                      ) : (
+                        <div className="h-44 flex items-center justify-center text-xs text-neutral-400">
+                          No scholarly distribution records available
+                        </div>
+                      )}
+                      <div className="grid grid-cols-2 gap-1.5 pt-2 border-t border-[#eedfd8]/60 text-[11px]">
+                        {facultyResearchMix.map((item, idx) => (
+                          <div key={idx} className="flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: item.color }} />
+                            <span className="text-neutral-600 truncate">{item.name}:</span>
+                            <span className="font-bold text-neutral-900">{item.value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Educational Qualifications Table */}

@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import React, { useState, useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -12,141 +12,161 @@ import {
   Cell,
   LineChart,
   Line,
-  LabelList,
   Legend,
   ResponsiveContainer,
-} from "recharts"
-import { ChartTooltip } from "@/components/ui/chart"
-import { type ChartType, ChartTypeSelector } from "../chart-type-selector"
-import { useRouter } from "next/navigation"
+  Tooltip,
+} from "recharts";
+import { type ChartType, ChartTypeSelector } from "../chart-type-selector";
 
-interface Project {
-  year: number
-  status: string
-  id: number
-  facultyIds: number[]
-  funding: number
+export interface ProjectItem {
+  id?: number | string;
+  year: number;
+  status: string;
+  funding: number;
+  facultyIds?: number[];
 }
 
 interface ProjectsChartProps {
-  data: Project[]
-  facfilter?: number
-  startYear?: number
-  endYear?: number
+  data: ProjectItem[];
+  facfilter?: string;
+  startYear?: number | null;
+  endYear?: number | null;
 }
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8", "#82CA9D"]
+const PROJECT_PALETTE = ["#0d9488", "#85261e", "#d97706", "#475569"];
 
-export default function ProjectsChart({ data,facfilter,startYear,endYear }: ProjectsChartProps) {
-  const [chartType, setChartType] = useState<ChartType>("bar")
-  const router = useRouter()
-  // Aggregate data by year
-  const aggregatedData = data.reduce(
-    (acc, item) => {
-      const existingItem = acc.find((i) => i.year === item.year)
-      if (existingItem) {
-        if (item.status === "Ongoing") {
-          existingItem.ongoing += 1
-          existingItem.ongoingFunding += item.funding
-        } else if (item.status === "Completed") {
-          existingItem.completed += 1
-          existingItem.completedFunding += item.funding
-        }
-        existingItem.totalFunding += item.funding
-      } else {
-        acc.push({
-          year: item.year,
-          ongoing: item.status === "Ongoing" ? 1 : 0,
-          completed: item.status === "Completed" ? 1 : 0,
-          ongoingFunding: item.status === "Ongoing" ? item.funding : 0,
-          completedFunding: item.status === "Completed" ? item.funding : 0,
-          totalFunding: item.funding,
-        })
-      }
-      return acc
-    },
-    [] as {
-      year: number
-      ongoing: number
-      completed: number
-      ongoingFunding: number
-      completedFunding: number
-      totalFunding: number
-    }[],
-  )
+function formatINR(val: number): string {
+  if (val >= 10000000) {
+    return `₹${(val / 10000000).toFixed(2)} Cr`;
+  }
+  if (val >= 100000) {
+    return `₹${(val / 100000).toFixed(1)} L`;
+  }
+  return `₹${val.toLocaleString("en-IN")}`;
+}
 
-  // Sort by year
-  aggregatedData.sort((a, b) => a.year - b.year)
-
-  // For pie chart, we need different data structure
-  const pieData = [
-    { name: "Ongoing", value: data.filter((item) => item.status === "Ongoing").length },
-    { name: "Completed", value: data.filter((item) => item.status === "Completed").length },
-  ]
-
-  // If no data, show a message
-  if (data.length === 0) {
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <p className="text-gray-500">No data available for the selected filters.</p>
+      <div className="bg-[#33110e] text-white p-3 rounded-xl shadow-xl border border-[#eedfd8]/30 text-xs space-y-1.5 z-50">
+        <p className="font-bold text-sm border-b border-white/20 pb-1 text-[#eedfd8]">
+          {label ? `Year: ${label}` : payload[0]?.name || "Research Projects"}
+        </p>
+        {payload.map((entry: any, index: number) => {
+          const isFunding = entry.dataKey?.toString().toLowerCase().includes("funding");
+          return (
+            <div key={`item-${index}`} className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: entry.color || entry.fill }} />
+                <span className="capitalize text-neutral-200">{entry.name}:</span>
+              </div>
+              <span className="font-bold text-white">
+                {isFunding ? formatINR(entry.value) : entry.value}
+              </span>
+            </div>
+          );
+        })}
       </div>
-    )
+    );
   }
-   const CustomClickableDot = ({ cx, cy, payload, stroke, publicationType }: any) => {
-  const handleClick = () => {
-    const year = payload.year
-    router.push(
-      `/research/projects?startYear=${year}&&endYear=${year}&&type=${publicationType}&&facultyName=${facfilter}`)
+  return null;
+};
+
+export default function ProjectsChart({
+  data,
+  facfilter,
+  startYear,
+  endYear,
+}: ProjectsChartProps) {
+  const [chartType, setChartType] = useState<ChartType>("bar");
+
+  // Aggregate projects by year
+  const aggregatedData = useMemo(() => {
+    if (!data || data.length === 0) return [];
+    const map: Record<
+      number,
+      { year: number; ongoing: number; completed: number; ongoingFunding: number; completedFunding: number; totalFunding: number; total: number }
+    > = {};
+
+    data.forEach((p) => {
+      if (!map[p.year]) {
+        map[p.year] = {
+          year: p.year,
+          ongoing: 0,
+          completed: 0,
+          ongoingFunding: 0,
+          completedFunding: 0,
+          totalFunding: 0,
+          total: 0,
+        };
+      }
+      const st = (p.status || "").toLowerCase();
+      const fund = Number(p.funding) || 0;
+      if (st.includes("ongoing")) {
+        map[p.year].ongoing += 1;
+        map[p.year].ongoingFunding += fund;
+      } else {
+        map[p.year].completed += 1;
+        map[p.year].completedFunding += fund;
+      }
+      map[p.year].totalFunding += fund;
+      map[p.year].total += 1;
+    });
+
+    return Object.values(map).sort((a, b) => a.year - b.year);
+  }, [data]);
+
+  // Pie chart by project status
+  const pieData = useMemo(() => {
+    if (!data || data.length === 0) return [];
+    const ongoing = data.filter((d) => (d.status || "").toLowerCase().includes("ongoing")).length;
+    const completed = data.length - ongoing;
+    return [
+      { name: "Ongoing Projects", value: ongoing },
+      { name: "Completed Projects", value: completed },
+    ].filter((d) => d.value > 0);
+  }, [data]);
+
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 border border-dashed border-[#eedfd8] rounded-2xl bg-[#fff9f6]/40 p-6 text-center">
+        <p className="text-sm font-semibold text-neutral-600">No research project records found</p>
+        <p className="text-xs text-neutral-400 mt-1">Try expanding the year range or funding range filters</p>
+      </div>
+    );
   }
 
   return (
-    <circle
-      cx={cx}
-      cy={cy}
-      r={6}
-      fill={stroke}
-      stroke="#fff"
-      strokeWidth={2}
-      style={{ cursor: "pointer" }}
-      onClick={handleClick}
-    />
-  )
-}
-
-  return (
-    <div>
+    <div className="w-full">
       <ChartTypeSelector value={chartType} onValueChange={setChartType} />
-      <div className="h-[300px] w-full">
+
+      <div className="h-[320px] w-full pt-2">
         {chartType === "bar" && (
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={aggregatedData}
-              margin={{
-                top: 10,
-                right: 30,
-                left: 20,
-                bottom: 20,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="year" />
-              <YAxis />
-              <ChartTooltip />
-              <Legend />
-              <Bar dataKey="ongoing" name="Ongoing" fill="#2a9d90" radius={[4, 4, 0, 0]} barSize={20}
-               onClick={(data, index) => {
-                  const year = aggregatedData[index].year
-                  router.push(`/research/projects?startYear=${year}&&endYear=${year}&&type=Ongoing&&facultyName=${facfilter}`)
-                }}>
-                <LabelList dataKey="ongoing" position="center" fill="#fff" />
-              </Bar>
-              <Bar dataKey="completed" name="Completed" fill="#274754" radius={[4, 4, 0, 0]} barSize={20} onClick={(data, index) => {
-                  const year = aggregatedData[index].year
-                  router.push(`/research/projects?startYear=${year}&&endYear=${year}&&type=Completed&&facultyName=${facfilter}`)
-                }}>
-                <LabelList dataKey="completed" position="center" fill="#fff" />
-              </Bar>
+            <BarChart data={aggregatedData} margin={{ top: 15, right: 20, left: -10, bottom: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eedfd8" opacity={0.6} />
+              <XAxis dataKey="year" stroke="#78716c" fontSize={12} tickLine={false} />
+              <YAxis stroke="#78716c" fontSize={12} tickLine={false} allowDecimals={false} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ paddingTop: 10, fontSize: "12px" }} />
+              <Bar dataKey="ongoing" name="Ongoing Projects" fill="#0d9488" stackId="a" radius={[0, 0, 0, 0]} />
+              <Bar dataKey="completed" name="Completed Projects" fill="#85261e" stackId="a" radius={[4, 4, 0, 0]} />
             </BarChart>
+          </ResponsiveContainer>
+        )}
+
+        {chartType === "line" && (
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={aggregatedData} margin={{ top: 15, right: 20, left: -10, bottom: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eedfd8" opacity={0.6} />
+              <XAxis dataKey="year" stroke="#78716c" fontSize={12} tickLine={false} />
+              <YAxis stroke="#78716c" fontSize={12} tickLine={false} allowDecimals={false} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ paddingTop: 10, fontSize: "12px" }} />
+              <Line type="monotone" dataKey="ongoing" name="Ongoing Projects" stroke="#0d9488" strokeWidth={2.5} dot={{ r: 4 }} />
+              <Line type="monotone" dataKey="completed" name="Completed Projects" stroke="#85261e" strokeWidth={2.5} dot={{ r: 4 }} />
+              <Line type="monotone" dataKey="total" name="Total Projects" stroke="#d97706" strokeWidth={1.8} strokeDasharray="3 3" dot={{ r: 3 }} />
+            </LineChart>
           </ResponsiveContainer>
         )}
 
@@ -157,63 +177,23 @@ export default function ProjectsChart({ data,facfilter,startYear,endYear }: Proj
                 data={pieData}
                 cx="50%"
                 cy="50%"
-                labelLine={true}
-                label={({ name, percent, value }) => `${name}: ${value} (${(percent * 100).toFixed(0)}%)`}
-                outerRadius={80}
-                fill="#8884d8"
+                innerRadius={55}
+                outerRadius={95}
+                paddingAngle={4}
                 dataKey="value"
+                label={({ name, percent }: any) => `${name} ${(percent * 100).toFixed(0)}%`}
+                labelLine={true}
               >
                 {pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} onClick={() => {
-                      const type = pieData[index].name.replace(" ", "")
-                      router.push(`/research/projects?type=${type}&&facultyName=${facfilter}&&startYear=${startYear}&&endYear=${endYear}`)
-                    }}  />
+                  <Cell key={`cell-${index}`} fill={PROJECT_PALETTE[index % PROJECT_PALETTE.length]} stroke="#fff" strokeWidth={1.5} />
                 ))}
               </Pie>
-              <Legend />
-              <ChartTooltip />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ paddingTop: 10, fontSize: "12px" }} />
             </PieChart>
-          </ResponsiveContainer>
-        )}
-
-        {chartType === "line" && (
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={aggregatedData}
-              margin={{
-                top: 10,
-                right: 30,
-                left: 20,
-                bottom: 20,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="year" />
-              <YAxis />
-              <ChartTooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="ongoing"
-                name="Ongoing"
-                stroke="#2a9d90"
-                strokeWidth={2}
-                dot={{ r: 4 }}
-                activeDot={(props) => <CustomClickableDot {...props} stroke="#2a9d90" publicationType="Ongoing" />}
-              />
-              <Line
-                type="monotone"
-                dataKey="completed"
-                name="Completed"
-                stroke="#274754"
-                strokeWidth={2}
-                dot={{ r: 4 }}
-                activeDot={(props) => <CustomClickableDot {...props} stroke="#274754" publicationType="Completed" />}
-              />
-            </LineChart>
           </ResponsiveContainer>
         )}
       </div>
     </div>
-  )
+  );
 }

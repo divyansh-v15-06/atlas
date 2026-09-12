@@ -50,7 +50,7 @@ export function FacultyFilter({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[280px] p-0 border border-[#eedfd8] shadow-lg rounded-xl">
         <Command>
           <CommandInput placeholder="Search faculty..." />
           <CommandList>

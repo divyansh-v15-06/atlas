@@ -24,6 +24,7 @@ import {
   ExternalLink,
   ShieldCheck,
   BookOpenCheck,
+  BarChart2,
 } from "lucide-react";
 import { MOCK_FACULTY } from "@/lib/mock-data";
 
@@ -33,6 +34,7 @@ type SidebarLink =
 
 const sidebarLinks: SidebarLink[] = [
   { label: "Dashboard", href: "/faculty", icon: LayoutDashboard },
+  { label: "Research Analytics", href: "/faculty/analytics", icon: BarChart2 },
   { label: "Faculty Profile", href: "/faculty/profile", icon: User },
   {
     section: "Academic Profile & CV",
