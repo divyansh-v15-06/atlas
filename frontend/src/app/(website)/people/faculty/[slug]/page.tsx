@@ -481,7 +481,7 @@ export default function FacultyPortfolioPage({
     return getStoredData<CourseTaught>(
       baseFaculty,
       "courses",
-      facultyCoursesFallback.length > 0 ? facultyCoursesFallback : MOCK_COURSES_TAUGHT.slice(0, 3)
+      facultyCoursesFallback
     );
   }, [baseFaculty, facultyCoursesFallback]);
 
@@ -511,18 +511,18 @@ export default function FacultyPortfolioPage({
     { key: "internationalAndNationalExposure", label: "International & National Exposure", icon: Globe, count: exposureCount },
   ];
 
-  // Only show tabs in the sidebar that have records (> 0) or are facultyInfo (unless faculty is logged in and canEdit)
+  // Unconditionally hide any tab from the sidebar that has 0 records across ALL faculty profiles
   const visibleSidebarItems = useMemo(() => {
     return sidebarItems.filter(
-      (item) => canEdit || item.key === "facultyInfo" || (item.count !== undefined && item.count > 0)
+      (item) => item.key === "facultyInfo" || (item.count !== undefined && item.count > 0)
     );
-  }, [sidebarItems, canEdit]);
+  }, [sidebarItems]);
 
   useEffect(() => {
-    if (!canEdit && visibleSidebarItems.length > 0 && !visibleSidebarItems.some((i) => i.key === activeTab)) {
+    if (visibleSidebarItems.length > 0 && !visibleSidebarItems.some((i) => i.key === activeTab)) {
       setActiveTab("facultyInfo");
     }
-  }, [canEdit, visibleSidebarItems, activeTab]);
+  }, [visibleSidebarItems, activeTab]);
 
   // Active publications list based on active tab
   // Colleague faculty list for associated faculty selection
