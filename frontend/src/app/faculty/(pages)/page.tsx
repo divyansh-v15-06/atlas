@@ -28,7 +28,7 @@ import {
   MOCK_PHD_SCHOLARS,
 } from "@/lib/mock-data";
 
-import { resolveFacultyDepartment } from "@/lib/faculty-storage";
+import { resolveFacultyDepartment, getStoredData } from "@/lib/faculty-storage";
 
 export default function FacultyDashboardPage() {
   const [user, setUser] = useState<any>(null);
@@ -55,30 +55,78 @@ export default function FacultyDashboardPage() {
 
   const facultyDept = resolveFacultyDepartment(activeFaculty, user);
 
-  // Publications associated with this faculty
+  // Personal Publications associated with this faculty
   const facultyPublications = useMemo(() => {
     const legacyId = activeFaculty.legacy_id;
-    const nameLower = activeFaculty.full_name.toLowerCase();
+    const nameLower = (activeFaculty.full_name || "").toLowerCase();
     const lastName = nameLower.split(" ").pop() || "";
+    const facId = activeFaculty.id;
+
+    const basePubs = Array.isArray(activeFaculty.publications) && activeFaculty.publications.length > 0
+      ? activeFaculty.publications
+      : [];
 
     const userPapers = MOCK_PUBLICATIONS.filter((p: any) => {
       if (legacyId && p.faculty_legacy_ids?.includes(legacyId)) return true;
+      if (facId && p.faculty_ids?.includes(facId)) return true;
       if (p.author_text && typeof p.author_text === "string" && p.author_text.toLowerCase().includes(lastName)) return true;
-      if (Array.isArray(p.authors) && p.authors.some((a: any) => typeof a === "string" && a.toLowerCase().includes(lastName))) return true;
+      if (Array.isArray(p.authors) && p.authors.some((a: any) => typeof a === "string" ? a.toLowerCase().includes(lastName) : (a.author_name && a.author_name.toLowerCase().includes(lastName)))) return true;
       return false;
     });
 
-    return userPapers.length > 0 ? userPapers : MOCK_PUBLICATIONS.slice(0, 10);
+    const fallback = basePubs.length > 0 ? basePubs : userPapers;
+    return getStoredData(activeFaculty, "publications", fallback);
+  }, [activeFaculty]);
+
+  // Personal Patents associated with this faculty
+  const facultyPatents = useMemo(() => {
+    const nameLower = (activeFaculty.full_name || "").toLowerCase();
+    const lastName = nameLower.split(" ").pop() || "";
+    const facId = activeFaculty.id;
+
+    const basePatents = Array.isArray(activeFaculty.patents) && activeFaculty.patents.length > 0
+      ? activeFaculty.patents
+      : [];
+
+    const userPatents = MOCK_PATENTS.filter((p: any) => {
+      if (facId && p.faculty_ids?.includes(facId)) return true;
+      if (p.raw_inventors && p.raw_inventors.toLowerCase().includes(lastName)) return true;
+      return false;
+    });
+
+    const fallback = basePatents.length > 0 ? basePatents : userPatents;
+    return getStoredData(activeFaculty, "patents", fallback);
+  }, [activeFaculty]);
+
+  // Personal Projects associated with this faculty
+  const facultyProjects = useMemo(() => {
+    const nameLower = (activeFaculty.full_name || "").toLowerCase();
+    const lastName = nameLower.split(" ").pop() || "";
+    const facId = activeFaculty.id;
+
+    const baseProjects = Array.isArray(activeFaculty.projects) && activeFaculty.projects.length > 0
+      ? activeFaculty.projects
+      : [];
+
+    const userProjects = MOCK_PROJECTS.filter((p: any) => {
+      if (facId && p.faculty_ids?.includes(facId)) return true;
+      if (p.raw_investigators && p.raw_investigators.toLowerCase().includes(lastName)) return true;
+      return false;
+    });
+
+    const fallback = baseProjects.length > 0 ? baseProjects : userProjects;
+    return getStoredData(activeFaculty, "projects", fallback);
   }, [activeFaculty]);
 
   // Supervised PhD Scholars
   const supervisedScholars = useMemo(() => {
-    const nameLower = activeFaculty.full_name.toLowerCase();
+    const nameLower = (activeFaculty.full_name || "").toLowerCase();
     const lastName = nameLower.split(" ").pop() || "";
-    return MOCK_PHD_SCHOLARS.filter((s) =>
+    const base = MOCK_PHD_SCHOLARS.filter((s) =>
       s.supervisor?.toLowerCase().includes(lastName) ||
       s.co_supervisor?.toLowerCase().includes(lastName)
     );
+    return getStoredData(activeFaculty, "supervisions", base);
   }, [activeFaculty]);
 
   return (
@@ -137,7 +185,7 @@ export default function FacultyDashboardPage() {
           },
           {
             label: "Patents Filed / Granted",
-            value: MOCK_PATENTS.length,
+            value: facultyPatents.length,
             note: "Indian & International IPR",
             icon: FileText,
             color: "text-blue-700",
@@ -145,7 +193,7 @@ export default function FacultyDashboardPage() {
           },
           {
             label: "R&D Sponsored Projects",
-            value: MOCK_PROJECTS.length,
+            value: facultyProjects.length,
             note: "DST, MeitY & SERB Grants",
             icon: Lightbulb,
             color: "text-amber-700",

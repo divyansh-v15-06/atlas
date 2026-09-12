@@ -18,6 +18,7 @@ import {
   MOCK_PATENTS,
   MOCK_EVENTS,
 } from "@/lib/mock-data";
+import { getStoredData } from "@/lib/faculty-storage";
 import {
   BookOpen,
   FolderGit2,
@@ -39,34 +40,105 @@ interface AnalyticsData {
   eventsData: EventItem[];
 }
 
-function buildFacultyFallbackAnalytics(facultyName: string): AnalyticsData {
-  // Publications
-  const publicationsData: PublicationItem[] = MOCK_PUBLICATIONS.map((p) => ({
+function buildFacultyFallbackAnalytics(faculty: any): AnalyticsData {
+  if (!faculty) {
+    return {
+      publicationsData: [],
+      projectsData: [],
+      patentsData: [],
+      eventsData: [],
+    };
+  }
+
+  const legacyId = faculty.legacy_id;
+  const nameLower = (faculty.full_name || "").toLowerCase();
+  const lastName = nameLower.split(" ").pop() || "";
+  const facId = faculty.id;
+
+  // 1. Personal Publications
+  const basePubs = Array.isArray(faculty.publications) && faculty.publications.length > 0 
+    ? faculty.publications 
+    : [];
+
+  const matchedPubs = MOCK_PUBLICATIONS.filter((p: any) => {
+    if (legacyId && p.faculty_legacy_ids?.includes(legacyId)) return true;
+    if (facId && p.faculty_ids?.includes(facId)) return true;
+    if (p.author_text && typeof p.author_text === "string" && p.author_text.toLowerCase().includes(lastName)) return true;
+    if (Array.isArray(p.authors) && p.authors.some((a: any) => 
+      typeof a === "string" ? a.toLowerCase().includes(lastName) : (a.author_name && a.author_name.toLowerCase().includes(lastName))
+    )) return true;
+    return false;
+  });
+
+  const combinedPubs = basePubs.length > 0 ? basePubs : matchedPubs;
+  const storedPubs = getStoredData(faculty, "publications", combinedPubs);
+
+  const publicationsData: PublicationItem[] = storedPubs.map((p: any) => ({
     year: Number(p.year) || 2024,
-    type: p.publication_type,
+    type: p.publication_type || p.type || "Journal",
     indexing: p.journal_quartile || p.indexing || "Scopus",
   }));
 
-  // Projects
-  const projectsData: ProjectItem[] = MOCK_PROJECTS.map((p, idx) => ({
-    id: idx + 1,
-    year: Number(p.year) || 2024,
-    status: p.status,
-    funding: Number(p.total_sanctioned_amount) || 1200000,
+  // 2. Personal Projects
+  const baseProjects = Array.isArray(faculty.projects) && faculty.projects.length > 0 
+    ? faculty.projects 
+    : [];
+
+  const matchedProjects = MOCK_PROJECTS.filter((p: any) => {
+    if (facId && p.faculty_ids?.includes(facId)) return true;
+    if (p.raw_investigators && p.raw_investigators.toLowerCase().includes(lastName)) return true;
+    return false;
+  });
+
+  const combinedProjects = baseProjects.length > 0 ? baseProjects : matchedProjects;
+  const storedProjects = getStoredData(faculty, "projects", combinedProjects);
+
+  const projectsData: ProjectItem[] = storedProjects.map((p: any, idx: number) => ({
+    id: p.id || idx + 1,
+    year: Number(p.year || (p.start_date ? p.start_date.split("-")[0] : 2024)) || 2024,
+    status: p.status || "Ongoing",
+    funding: Number(p.total_sanctioned_amount || p.funding || 1500000),
   }));
 
-  // Patents
-  const patentsData: PatentItem[] = MOCK_PATENTS.map((p, idx) => ({
-    id: idx + 1,
-    year: Number(p.year) || 2024,
-    status: p.status,
+  // 3. Personal Patents
+  const basePatents = Array.isArray(faculty.patents) && faculty.patents.length > 0 
+    ? faculty.patents 
+    : [];
+
+  const matchedPatents = MOCK_PATENTS.filter((p: any) => {
+    if (facId && p.faculty_ids?.includes(facId)) return true;
+    if (p.raw_inventors && p.raw_inventors.toLowerCase().includes(lastName)) return true;
+    return false;
+  });
+
+  const combinedPatents = basePatents.length > 0 ? basePatents : matchedPatents;
+  const storedPatents = getStoredData(faculty, "patents", combinedPatents);
+
+  const patentsData: PatentItem[] = storedPatents.map((p: any, idx: number) => ({
+    id: p.id || idx + 1,
+    year: Number(p.year || (p.filing_date ? p.filing_date.split("-")[0] : 2023)) || 2023,
+    status: p.status || "Granted",
   }));
 
-  // Events
-  const eventsData: EventItem[] = MOCK_EVENTS.map((e: any, idx: number) => ({
-    id: idx + 1,
-    year: Number(e.year) || 2024,
-    type: e.event_type || "Workshop",
+  // 4. Personal Events
+  const baseEvents = Array.isArray(faculty.events) && faculty.events.length > 0 
+    ? faculty.events 
+    : [];
+
+  const matchedEvents = MOCK_EVENTS.filter((e: any) => {
+    if (facId && e.faculty_ids?.includes(facId)) return true;
+    if (e.convenor && e.convenor.toLowerCase().includes(lastName)) return true;
+    if (e.coordinator && e.coordinator.toLowerCase().includes(lastName)) return true;
+    return false;
+  });
+
+  const combinedEvents = baseEvents.length > 0 ? baseEvents : matchedEvents;
+  const storedEvents = getStoredData(faculty, "events", combinedEvents);
+
+  const eventsData: EventItem[] = storedEvents.map((e: any, idx: number) => ({
+    id: e.id || idx + 1,
+    year: Number(e.year || (e.start_date ? e.start_date.split("-")[0] : 2024)) || 2024,
+    type: e.event_type || e.type || "Workshop",
   }));
 
   return {
@@ -77,7 +149,8 @@ function buildFacultyFallbackAnalytics(facultyName: string): AnalyticsData {
   };
 }
 
-export default function Dashboard2() {
+export default function Dashboard2({ faculty }: { faculty?: any }) {
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
   const [startYear, setStartYear] = useState<number | null>(null);
@@ -87,39 +160,87 @@ export default function Dashboard2() {
   const [patentStatus, setPatentStatus] = useState("all");
   const [publicationType, setPublicationType] = useState("all");
   const [fundingRange, setFundingRange] = useState<[number, number]>([0, 10000000]);
-  const [username, setUsername] = useState<string>("Dr. Arun Kumar Yadav");
-  const [userId, setUserId] = useState<string>("101");
   const [allYears, setAllYears] = useState<number[]>([]);
   const [minFunding, setMinFunding] = useState<number>(0);
   const [maxFunding, setMaxFunding] = useState<number>(10000000);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.sessionStorage) {
-      const storedName = sessionStorage.getItem("facultyName");
-      const storedId = sessionStorage.getItem("userId");
-      if (storedName) setUsername(storedName);
-      if (storedId) setUserId(storedId);
+    if (typeof window !== "undefined") {
+      const raw = localStorage.getItem("auth_user");
+      if (raw) {
+        try {
+          setCurrentUser(JSON.parse(raw));
+        } catch {}
+      }
     }
   }, []);
+
+  const activeFaculty = useMemo(() => {
+    if (faculty) return faculty;
+    if (currentUser) {
+      const match = MOCK_FACULTY.find(
+        (f) =>
+          f.employee_code?.toLowerCase() === currentUser.employee_code?.toLowerCase() ||
+          f.email?.toLowerCase() === currentUser.email?.toLowerCase() ||
+          f.id === currentUser.faculty_id ||
+          f.id === currentUser.id
+      );
+      if (match) return match;
+    }
+    return MOCK_FACULTY[0];
+  }, [faculty, currentUser]);
+
+  const username = activeFaculty.full_name || "Faculty Member";
+  const userId = activeFaculty.employee_code || activeFaculty.id || "101";
 
   useEffect(() => {
     let isMounted = true;
     async function loadData() {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
-        const res = await fetch(`${apiUrl}/api/v1/analytics/get?name=${encodeURIComponent(username)}&id=${userId}`);
+        const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+        const baseUrl = rawApiUrl.replace(/\/api\/v1\/?$/, "");
+        const res = await fetch(`${baseUrl}/api/v1/analytics/get?name=${encodeURIComponent(username)}&id=${encodeURIComponent(userId)}`);
         if (res.ok) {
           const json = await res.json();
-          if (json.data && json.data.publicationsData) {
-            if (isMounted) processIncomingData(json.data);
-            return;
+          if (json.data && json.data.publicationsData && json.data.publicationsData.length > 0) {
+            const facEntry = json.data.facultyData?.find(
+              (f: any) =>
+                f.name?.toLowerCase() === activeFaculty.full_name?.toLowerCase() ||
+                String(f.id) === String(activeFaculty.legacy_id)
+            );
+            const mySeqId = facEntry?.id;
+
+            const filteredPubs = mySeqId
+              ? json.data.publicationsData.filter((p: any) => p.facultyIds?.includes(mySeqId))
+              : json.data.publicationsData;
+            const filteredProjects = mySeqId
+              ? json.data.projectsData?.filter((p: any) => p.facultyIds?.includes(mySeqId)) || []
+              : json.data.projectsData || [];
+            const filteredPatents = mySeqId
+              ? json.data.patentsData?.filter((p: any) => p.facultyIds?.includes(mySeqId)) || []
+              : json.data.patentsData || [];
+            const filteredEvents = mySeqId
+              ? json.data.eventsData?.filter((e: any) => e.facultyIds?.includes(mySeqId)) || []
+              : json.data.eventsData || [];
+
+            if (filteredPubs.length > 0 || filteredProjects.length > 0 || filteredPatents.length > 0) {
+              if (isMounted) {
+                processIncomingData({
+                  publicationsData: filteredPubs,
+                  projectsData: filteredProjects,
+                  patentsData: filteredPatents,
+                  eventsData: filteredEvents,
+                });
+              }
+              return;
+            }
           }
         }
       } catch (err) {
         // Fallback gracefully
       }
       if (isMounted) {
-        processIncomingData(buildFacultyFallbackAnalytics(username));
+        processIncomingData(buildFacultyFallbackAnalytics(activeFaculty));
       }
     }
 
@@ -153,11 +274,12 @@ export default function Dashboard2() {
     return () => {
       isMounted = false;
     };
-  }, [username, userId]);
+  }, [username, userId, activeFaculty]);
 
   const handleDownloadCV = (format: "docx" | "pdf") => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
-    const downloadUrl = `${apiUrl}/api/v1/resume/download-resume?uniqueId=${userId}&format=${format}`;
+    const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+    const baseUrl = rawApiUrl.replace(/\/api\/v1\/?$/, "");
+    const downloadUrl = `${baseUrl}/api/v1/resume/download-resume?uniqueId=${encodeURIComponent(activeFaculty.employee_code || activeFaculty.id)}&format=${format}`;
     window.open(downloadUrl, "_blank");
   };
 
