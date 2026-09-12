@@ -106,6 +106,8 @@ type ExpertTalk struct {
 	HostOrganization string    `json:"host_organization"`
 	Venue            *string   `json:"venue,omitempty"`
 	TalkDate         string    `json:"talk_date"`
+	EndDate          *string   `json:"end_date,omitempty"`
+	AcademicSession  *string   `json:"academic_session,omitempty"`
 	Description      *string   `json:"description,omitempty"`
 	CreatedAt        time.Time `json:"created_at"`
 	UpdatedAt        time.Time `json:"updated_at"`
@@ -219,5 +221,7 @@ type CreateExpertTalkRequest struct {
 	HostOrganization string  `json:"host_organization" validate:"required"`
 	Venue            *string `json:"venue"`
 	TalkDate         string  `json:"talk_date" validate:"required"`
+	EndDate          *string `json:"end_date"`
+	AcademicSession  *string `json:"academic_session"`
 	Description      *string `json:"description"`
 }

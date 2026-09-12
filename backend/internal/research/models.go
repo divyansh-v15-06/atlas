@@ -175,11 +175,12 @@ type Supervision struct {
 	ID               string                  `json:"id"`
 	DepartmentID     string                  `json:"department_id"`
 	DepartmentName   string                  `json:"department_name,omitempty"`
-	ProgrammeLevel   string                  `json:"programme_level"` // 'MTech', 'PhD'
+	ProgrammeLevel   string                  `json:"programme_level"` // 'MTech', 'PhD', 'BTech'
 	ScholarName      string                  `json:"scholar_name"`
 	RollNumber       *string                 `json:"roll_number,omitempty"`
 	ThesisTitle      string                  `json:"thesis_title"`
 	Status           string                  `json:"status"` // 'Ongoing', 'Submitted', 'Awarded'
+	AcademicSession  *string                 `json:"academic_session,omitempty"`
 	RegistrationDate *string                 `json:"registration_date,omitempty"`
 	SubmissionDate   *string                 `json:"submission_date,omitempty"`
 	AwardDate        *string                 `json:"award_date,omitempty"`
@@ -204,6 +205,8 @@ type Event struct {
 	DepartmentName  string             `json:"department_name,omitempty"`
 	Title           string             `json:"title"`
 	EventType       string             `json:"event_type"` // 'STC', 'E-STC', 'Workshop', 'Conference', 'Seminar', 'FDP'
+	Category        *string            `json:"category,omitempty"` // 'organized', 'attended'
+	AcademicSession *string            `json:"academic_session,omitempty"`
 	Venue           *string            `json:"venue,omitempty"`
 	Sponsor         *string            `json:"sponsor,omitempty"`
 	StartDate       string             `json:"start_date"`
@@ -352,11 +355,12 @@ type SupervisorInput struct {
 
 type CreateSupervisionRequest struct {
 	DepartmentID     string            `json:"department_id" validate:"required"`
-	ProgrammeLevel   string            `json:"programme_level" validate:"required,oneof=MTech PhD"`
+	ProgrammeLevel   string            `json:"programme_level" validate:"required,oneof=MTech PhD BTech"`
 	ScholarName      string            `json:"scholar_name" validate:"required"`
 	RollNumber       *string           `json:"roll_number"`
 	ThesisTitle      string            `json:"thesis_title" validate:"required"`
 	Status           string            `json:"status" validate:"required,oneof=Ongoing Submitted Awarded"`
+	AcademicSession  *string           `json:"academic_session"`
 	RegistrationDate *string           `json:"registration_date"`
 	SubmissionDate   *string           `json:"submission_date"`
 	AwardDate        *string           `json:"award_date"`
@@ -373,7 +377,9 @@ type CoordinatorInput struct {
 type CreateEventRequest struct {
 	DepartmentID    string             `json:"department_id" validate:"required"`
 	Title           string             `json:"title" validate:"required"`
-	EventType       string             `json:"event_type" validate:"required,oneof=STC E-STC Workshop Conference Seminar FDP"`
+	EventType       string             `json:"event_type" validate:"required"`
+	Category        *string            `json:"category"`
+	AcademicSession *string            `json:"academic_session"`
 	Venue           *string            `json:"venue"`
 	Sponsor         *string            `json:"sponsor"`
 	StartDate       string             `json:"start_date" validate:"required"`

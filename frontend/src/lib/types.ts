@@ -174,12 +174,53 @@ export interface Event {
   category?: string;
   convenor?: string;
   coordinator?: string;
+  position1?: string;
+  position2?: string;
+  positionother1?: string;
+  positionother2?: string;
   sponsoring_agency?: string;
   venue?: string;
   start_date?: string;
   end_date?: string;
   academic_session?: string;
   link_url?: string;
+  faculty_ids?: string[];
+  associated_faculty?: any[];
+}
+
+export interface Supervision {
+  id: string;
+  department_id?: string;
+  scholar_name?: string;
+  student_name?: string;
+  roll_number?: string;
+  programme_level?: string;
+  level?: string;
+  thesis_title?: string;
+  status?: string;
+  year?: number | string;
+  academic_session?: string;
+  registration_date?: string;
+  submission_date?: string;
+  award_date?: string;
+  co_supervisor?: string;
+  co_supervisors?: string;
+  raw_supervisors?: string;
+  faculty_ids?: string[];
+  associated_faculty?: any[];
+}
+
+export interface ExpertTalk {
+  id: string;
+  title: string;
+  venue?: string;
+  host_organization?: string;
+  talk_date?: string;
+  start_date?: string;
+  end_date?: string;
+  is_present?: boolean;
+  academic_session?: string;
+  description?: string;
   faculty_ids?: string[];
   associated_faculty?: any[];
 }

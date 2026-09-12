@@ -107,6 +107,19 @@ const ACADEMIC_SESSIONS = [
   "2017-2018",
   "2016-2017",
   "2015-2016",
+  "2014-2015",
+  "2013-2014",
+  "2012-2013",
+  "2011-2012",
+  "2010-2011",
+];
+
+const JOURNAL_QUARTILES = ["Q1", "Q2", "Q3", "Q4", "T"];
+const EVENT_POSTS = ["Chairman", "Convenor", "Coordinator", "Organizing Secretary", "Other"];
+const EVENT_TYPES = ["FDP / STC", "Conference", "Workshop", "Symposium", "Seminar", "STC", "E-STC", "GIAN"];
+const EVENT_CATEGORIES = [
+  { value: "organized", label: "Organized" },
+  { value: "attended", label: "Attended" },
 ];
 
 
@@ -442,6 +455,103 @@ export default function FacultyPortfolioPage({
     setIsDetailsModalOpen(true);
   };
 
+  // Reusable Associated Faculty Multi-select Picker
+  const renderAssociatedFacultyPicker = (label: string = "Associated Faculty (Automatic Co-Author / Co-PI Sync)") => (
+    <div className="space-y-2 sm:col-span-2 border border-[#eedfd8]/80 bg-[#fff9f6] p-3.5 rounded-2xl">
+      <div className="flex items-center justify-between">
+        <label className="font-bold text-neutral-800 text-xs sm:text-sm flex items-center gap-1.5">
+          <Users className="w-4 h-4 text-[#85261e]" />
+          <span>{label}</span>
+        </label>
+        <span className="text-[11px] text-neutral-500 font-medium">
+          Auto-syncs record to chosen colleagues
+        </span>
+      </div>
+
+      {/* Selected Faculty Pills */}
+      {selectedAssociatedFaculty.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 pt-1">
+          {selectedAssociatedFaculty.map((f: any) => (
+            <span
+              key={f.id || f.employee_code}
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-[#85261e] text-white shadow-xs"
+            >
+              <span>{f.full_name}</span>
+              <span className="opacity-75 text-[10px]">({f.employee_code || "CSE"})</span>
+              <button
+                type="button"
+                onClick={() =>
+                  setSelectedAssociatedFaculty((prev) =>
+                    prev.filter((item) => item.employee_code !== f.employee_code && item.id !== f.id)
+                  )
+                }
+                className="ml-1 hover:text-red-200 cursor-pointer font-bold"
+              >
+                ✕
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Search & Add Picker */}
+      <div className="space-y-1.5 pt-1">
+        <input
+          type="text"
+          placeholder="Search colleague by name or employee code to associate..."
+          value={facultySearchQuery}
+          onChange={(e) => setFacultySearchQuery(e.target.value)}
+          className="w-full text-xs p-2 rounded-xl border border-[#eedfd8] bg-white focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+        />
+        {facultySearchQuery.trim().length > 0 && (
+          <div className="max-h-36 overflow-y-auto border border-[#eedfd8] rounded-xl bg-white divide-y divide-neutral-100 shadow-sm">
+            {filteredColleagueOptions.length > 0 ? (
+              filteredColleagueOptions.slice(0, 8).map((colleague: any) => {
+                const isSelected = selectedAssociatedFaculty.some(
+                  (item) => item.employee_code === colleague.employee_code || item.id === colleague.id
+                );
+                return (
+                  <button
+                    key={colleague.id || colleague.employee_code}
+                    type="button"
+                    onClick={() => {
+                      if (isSelected) {
+                        setSelectedAssociatedFaculty((prev) =>
+                          prev.filter(
+                            (item) =>
+                              item.employee_code !== colleague.employee_code && item.id !== colleague.id
+                          )
+                        );
+                      } else {
+                        setSelectedAssociatedFaculty((prev) => [...prev, colleague]);
+                      }
+                      setFacultySearchQuery("");
+                    }}
+                    className={`w-full text-left px-3 py-1.5 text-xs flex items-center justify-between hover:bg-[#eedfd8]/30 transition ${
+                      isSelected ? "bg-[#eedfd8]/50 font-bold text-[#85261e]" : "text-neutral-700"
+                    }`}
+                  >
+                    <div className="flex flex-col">
+                      <span className="font-semibold">{colleague.full_name}</span>
+                      <span className="text-[10px] text-neutral-500">
+                        {colleague.designation} • {colleague.department_name || "CSE"}
+                      </span>
+                    </div>
+                    <span className="font-mono text-[10px] bg-neutral-100 px-1.5 py-0.5 rounded">
+                      {isSelected ? "Selected ✓" : colleague.employee_code}
+                    </span>
+                  </button>
+                );
+              })
+            ) : (
+              <div className="p-2 text-xs text-neutral-400 text-center">No colleagues found matching query</div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
   // Open Dynamic Add Form
   const openAddModal = () => {
     setFormMode("add");
@@ -471,35 +581,56 @@ export default function FacultyPortfolioPage({
       });
     } else if (activeTab === "journal" || activeTab === "conference" || activeTab === "book" || activeTab === "book_chapter") {
       setFormData({
+        title: "",
         year: new Date().getFullYear(),
         month: "",
         academic_session: "2024-2025",
         indexing: "Scopus",
         journal_quartile: "T",
+        isbn: "",
         author_text: faculty?.full_name || "",
+        journal_or_conference_name: "",
+        volume: "",
+        issue: "",
+        page_range: "",
+        doi: "",
+        abstract_text: "",
         type: activeTab === "journal" ? "Journal" : activeTab === "conference" ? "Conference" : activeTab === "book" ? "Book" : "Book Chapter",
       });
     } else if (activeTab === "projects") {
       setFormData({
+        title: "",
+        reference_number: "",
         year: new Date().getFullYear(),
         month: "",
         academic_session: "2024-2025",
         status: "Ongoing",
+        duration: "36 Months",
         principal_investigator: faculty?.full_name || "",
+        co_principal_investigator: "",
         funding_agency: "DST-SERB",
         total_sanctioned_amount: 1500000,
+        raw_investigators: faculty?.full_name || "",
       });
     } else if (activeTab === "patents") {
       setFormData({
+        title: "",
+        application_number: "",
         year: new Date().getFullYear(),
         month: "",
         academic_session: "2024-2025",
         status: "Published",
         place: "Indian Patent Office, New Delhi",
+        filing_date: new Date().toISOString().split("T")[0],
+        grant_date: "",
         raw_inventors: faculty?.full_name || "",
       });
     } else if (activeTab === "consultancies") {
       setFormData({
+        title: "",
+        client_organisation: "",
+        reference_number: "",
+        amount: 250000,
         year: new Date().getFullYear(),
         month: "",
         academic_session: "2024-2025",
@@ -508,12 +639,43 @@ export default function FacultyPortfolioPage({
       });
     } else if (activeTab === "events") {
       setFormData({
+        title: "",
         event_type: "FDP / STC",
+        category: "organized",
         academic_session: "2024-2025",
+        position1: "Coordinator",
+        positionother1: "",
         convenor: faculty?.full_name || "",
+        position2: "",
+        positionother2: "",
         coordinator: "",
         sponsoring_agency: "NIT Hamirpur",
         venue: "DoCSE, NIT Hamirpur",
+        start_date: new Date().toISOString().split("T")[0],
+        end_date: "",
+        link_url: "",
+      });
+    } else if (activeTab === "experttalk") {
+      setFormData({
+        title: "",
+        host_organization: "",
+        venue: "",
+        date: new Date().toISOString().split("T")[0],
+        end_date: "",
+        is_present: false,
+        academic_session: "2024-2025",
+        description: "",
+      });
+    } else if (activeTab === "researchSupervision") {
+      setFormData({
+        level: "Ph.D.",
+        student_name: "",
+        roll_number: "",
+        thesis_title: "",
+        status: "Ongoing",
+        year: new Date().getFullYear(),
+        academic_session: "2024-2025",
+        co_supervisor: "",
       });
     } else {
       setFormData({});
@@ -525,7 +687,14 @@ export default function FacultyPortfolioPage({
   const openEditModal = (item: any) => {
     setFormMode("edit");
     setEditingItem(item);
-    setFormData({ ...item });
+    setFormData({
+      ...item,
+      is_present: item.end_date === "Present" || item.is_present || false,
+      position1: item.position1 || "Coordinator",
+      positionother1: item.positionother1 || "",
+      position2: item.position2 || "",
+      positionother2: item.positionother2 || "",
+    });
     setFacultySearchQuery("");
 
     // Detect if indexing is custom
@@ -767,7 +936,12 @@ export default function FacultyPortfolioPage({
         id,
         title: formData.title || "Department Event / STC",
         event_type: formData.event_type || "FDP / STC",
+        category: formData.category || "organized",
+        position1: formData.position1 || "Coordinator",
+        positionother1: formData.positionother1 || "",
         convenor: formData.convenor || faculty.full_name,
+        position2: formData.position2 || "",
+        positionother2: formData.positionother2 || "",
         coordinator: formData.coordinator || "",
         sponsoring_agency: formData.sponsoring_agency || "NIT Hamirpur",
         venue: formData.venue || "DoCSE, NIT Hamirpur",
@@ -819,42 +993,77 @@ export default function FacultyPortfolioPage({
       setAllConsultancies(getStoredData(baseFaculty, "consultancies", []));
       toast.success(`Consultancy saved & synced with associated faculty!`);
     } else if (activeTab === "experttalk") {
+      const assignedFacultyIds = Array.from(
+        new Set([
+          baseFaculty.employee_code,
+          baseFaculty.id,
+          ...selectedAssociatedFaculty.map((f: any) => f.employee_code),
+          ...selectedAssociatedFaculty.map((f: any) => f.id),
+        ])
+      );
+      const associatedFaculty = selectedAssociatedFaculty.map((f: any) => ({
+        id: f.id,
+        employee_code: f.employee_code,
+        full_name: f.full_name,
+        designation: f.designation,
+        department_name: f.department_name || "CSE",
+      }));
+
+      const finalEndDate = formData.is_present ? "Present" : (formData.end_date || "");
       const record = {
         id,
         title: formData.title || "Invited Keynote Address",
+        host_organization: formData.host_organization || "",
         venue: formData.venue || "Host Institution",
-        date: formData.date || new Date().toISOString().split("T")[0],
+        talk_date: formData.date || formData.start_date || new Date().toISOString().split("T")[0],
+        date: formData.date || formData.start_date || new Date().toISOString().split("T")[0],
+        start_date: formData.date || formData.start_date || new Date().toISOString().split("T")[0],
+        end_date: finalEndDate,
+        is_present: Boolean(formData.is_present),
+        academic_session: formData.academic_session || "2024-2025",
         description: formData.description || "",
+        faculty_ids: assignedFacultyIds,
+        associated_faculty: associatedFaculty,
       };
-      let nextList = [...allTalks];
-      if (formMode === "edit") {
-        nextList = nextList.map((t) => (t.id === editingItem.id ? { ...t, ...record } : t));
-      } else {
-        nextList = [record, ...nextList];
-      }
-      setAllTalks(nextList);
-      setStoredData(baseFaculty, "expert_talks", nextList);
-      toast.success(`Expert talk ${formMode === "edit" ? "updated" : "added"}!`);
+
+      syncMultiFacultyRecord(baseFaculty, "expert_talks", record, selectedAssociatedFaculty, false);
+      setAllTalks(getStoredData(baseFaculty, "expert_talks", []));
+      toast.success(`Expert talk ${formMode === "edit" ? "updated" : "saved"} & synced!`);
     } else if (activeTab === "researchSupervision") {
+      const assignedFacultyIds = Array.from(
+        new Set([
+          baseFaculty.employee_code,
+          baseFaculty.id,
+          ...selectedAssociatedFaculty.map((f: any) => f.employee_code),
+          ...selectedAssociatedFaculty.map((f: any) => f.id),
+        ])
+      );
+      const associatedFaculty = selectedAssociatedFaculty.map((f: any) => ({
+        id: f.id,
+        employee_code: f.employee_code,
+        full_name: f.full_name,
+        designation: f.designation,
+        department_name: f.department_name || "CSE",
+      }));
+
       const record = {
         id,
         student_name: formData.student_name || "Research Scholar",
+        scholar_name: formData.student_name || "Research Scholar",
         roll_number: formData.roll_number || "",
         thesis_title: formData.thesis_title || "Doctoral Thesis",
         level: formData.level || "Ph.D.",
         status: formData.status || "Ongoing",
         year: formData.year || "2024",
+        academic_session: formData.academic_session || "2024-2025",
         co_supervisor: formData.co_supervisor || "",
+        faculty_ids: assignedFacultyIds,
+        associated_faculty: associatedFaculty,
       };
-      let nextList = [...combinedSupervisions];
-      if (formMode === "edit") {
-        nextList = nextList.map((s) => (s.id === editingItem.id ? { ...s, ...record } : s));
-      } else {
-        nextList = [record, ...nextList];
-      }
-      setAllSupervisions(nextList);
-      setStoredData(baseFaculty, "supervisions", nextList);
-      toast.success(`Research supervision ${formMode === "edit" ? "updated" : "added"}!`);
+
+      syncMultiFacultyRecord(baseFaculty, "supervisions", record, selectedAssociatedFaculty, false);
+      setAllSupervisions(getStoredData(baseFaculty, "supervisions", baseFaculty.supervisions || []));
+      toast.success(`Research supervision ${formMode === "edit" ? "updated" : "saved"} & synced!`);
     } else if (activeTab === "administrativeexperience") {
       const record = {
         id,
@@ -2715,6 +2924,38 @@ export default function FacultyPortfolioPage({
                     />
                   </div>
                   <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Month of Publication</label>
+                    <select
+                      name="month"
+                      value={formData.month || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="">Select Month</option>
+                      {MONTH_OPTIONS.map((m) => (
+                        <option key={m.value} value={m.value}>
+                          {m.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Academic Session *</label>
+                    <select
+                      name="academic_session"
+                      required
+                      value={formData.academic_session || "2024-2025"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white font-mono"
+                    >
+                      {ACADEMIC_SESSIONS.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-1">
                     <label className="font-bold text-neutral-700">DOI</label>
                     <input
                       type="text"
@@ -2760,18 +3001,72 @@ export default function FacultyPortfolioPage({
                     <label className="font-bold text-neutral-700">Indexing</label>
                     <select
                       name="indexing"
-                      value={formData.indexing || "Scopus"}
-                      onChange={handleInputChange}
+                      value={isCustomIndexing ? "Other" : (formData.indexing || "Scopus")}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        if (val === "Other") {
+                          setIsCustomIndexing(true);
+                          setFormData((prev) => ({ ...prev, indexing: "Other" }));
+                        } else {
+                          setIsCustomIndexing(false);
+                          setCustomIndexingText("");
+                          setFormData((prev) => ({ ...prev, indexing: val }));
+                        }
+                      }}
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
                     >
                       <option value="Scopus">Scopus</option>
                       <option value="SCI">SCI</option>
                       <option value="SCIE">SCIE</option>
+                      <option value="ESCI">ESCI</option>
                       <option value="Web of Science">Web of Science</option>
                       <option value="UGC CARE">UGC CARE</option>
                       <option value="Other">Other</option>
                     </select>
                   </div>
+                  {(isCustomIndexing || formData.indexing === "Other") && (
+                    <div className="space-y-1">
+                      <label className="font-bold text-[#85261e]">Specify Other Indexing *</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. IEEE Xplore, Google Scholar, PubMed"
+                        value={customIndexingText}
+                        onChange={(e) => setCustomIndexingText(e.target.value)}
+                        className="w-full p-2.5 rounded-xl border border-[#85261e] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-red-50/20"
+                      />
+                    </div>
+                  )}
+                  {activeTab === "journal" && (
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">Journal Quartile</label>
+                      <select
+                        name="journal_quartile"
+                        value={formData.journal_quartile || "T"}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                      >
+                        <option value="Q1">Q1 (Top Quartile)</option>
+                        <option value="Q2">Q2 (Second Quartile)</option>
+                        <option value="Q3">Q3 (Third Quartile)</option>
+                        <option value="Q4">Q4 (Fourth Quartile)</option>
+                        <option value="T">T (Temporary / Unclassified)</option>
+                      </select>
+                    </div>
+                  )}
+                  {(activeTab === "book" || activeTab === "book_chapter") && (
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">ISBN Number</label>
+                      <input
+                        type="text"
+                        name="isbn"
+                        placeholder="e.g. 978-3-16-148410-0"
+                        value={formData.isbn || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none font-mono"
+                      />
+                    </div>
+                  )}
                   <div className="space-y-1 sm:col-span-2">
                     <label className="font-bold text-neutral-700">Abstract</label>
                     <textarea
@@ -2782,6 +3077,7 @@ export default function FacultyPortfolioPage({
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
+                  {renderAssociatedFacultyPicker("Associated Faculty (Co-Authors)")}
                 </div>
               )}
 
@@ -2824,6 +3120,17 @@ export default function FacultyPortfolioPage({
                     </select>
                   </div>
                   <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Awarding Agency / Place</label>
+                    <input
+                      type="text"
+                      name="place"
+                      placeholder="e.g. Indian Patent Office, New Delhi"
+                      value={formData.place || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
                     <label className="font-bold text-neutral-700">Filing Date</label>
                     <input
                       type="text"
@@ -2845,8 +3152,51 @@ export default function FacultyPortfolioPage({
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Patent Year *</label>
+                    <input
+                      type="number"
+                      name="year"
+                      required
+                      value={formData.year || new Date().getFullYear()}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Month</label>
+                    <select
+                      name="month"
+                      value={formData.month || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="">Select Month</option>
+                      {MONTH_OPTIONS.map((m) => (
+                        <option key={m.value} value={m.value}>
+                          {m.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Academic Session *</label>
+                    <select
+                      name="academic_session"
+                      required
+                      value={formData.academic_session || "2024-2025"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white font-mono"
+                    >
+                      {ACADEMIC_SESSIONS.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                   <div className="space-y-1 sm:col-span-2">
-                    <label className="font-bold text-neutral-700">Inventors</label>
+                    <label className="font-bold text-neutral-700">Inventors (text)</label>
                     <input
                       type="text"
                       name="raw_inventors"
@@ -2856,6 +3206,7 @@ export default function FacultyPortfolioPage({
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
+                  {renderAssociatedFacultyPicker("Associated Faculty (Co-Inventors)")}
                 </div>
               )}
 
@@ -2874,29 +3225,6 @@ export default function FacultyPortfolioPage({
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Funding / Sponsoring Agency *</label>
-                    <input
-                      type="text"
-                      name="funding_agency"
-                      required
-                      placeholder="e.g. DST-SERB / MeitY"
-                      value={formData.funding_agency || ""}
-                      onChange={handleInputChange}
-                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Sanctioned Amount (INR)</label>
-                    <input
-                      type="number"
-                      name="total_sanctioned_amount"
-                      placeholder="e.g. 2500000"
-                      value={formData.total_sanctioned_amount || ""}
-                      onChange={handleInputChange}
-                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
-                    />
-                  </div>
-                  <div className="space-y-1">
                     <label className="font-bold text-neutral-700">Status</label>
                     <select
                       name="status"
@@ -2909,17 +3237,119 @@ export default function FacultyPortfolioPage({
                     </select>
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Sanction / Ref Number</label>
+                    <label className="font-bold text-neutral-700">Reference / Sanction Number *</label>
                     <input
                       type="text"
                       name="reference_number"
+                      required
+                      placeholder="e.g. CRG/2023/001428"
                       value={formData.reference_number || ""}
                       onChange={handleInputChange}
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Funding / Sponsoring Agency *</label>
+                    <input
+                      type="text"
+                      name="funding_agency"
+                      required
+                      placeholder="e.g. DST-SERB, MeitY, DRDO, CSIR"
+                      value={formData.funding_agency || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Sanctioned Amount (INR) *</label>
+                    <input
+                      type="number"
+                      name="total_sanctioned_amount"
+                      required
+                      placeholder="e.g. 2500000"
+                      value={formData.total_sanctioned_amount || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Duration (in Months / Years)</label>
+                    <input
+                      type="text"
+                      name="duration"
+                      placeholder="e.g. 36 Months or 3 Years"
+                      value={formData.duration || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Year of Sanction *</label>
+                    <input
+                      type="number"
+                      name="year"
+                      required
+                      value={formData.year || new Date().getFullYear()}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Month of Sanction</label>
+                    <select
+                      name="month"
+                      value={formData.month || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="">Select Month</option>
+                      {MONTH_OPTIONS.map((m) => (
+                        <option key={m.value} value={m.value}>
+                          {m.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Academic Session *</label>
+                    <select
+                      name="academic_session"
+                      required
+                      value={formData.academic_session || "2024-2025"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white font-mono"
+                    >
+                      {ACADEMIC_SESSIONS.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Principal Investigator (PI) *</label>
+                    <input
+                      type="text"
+                      name="principal_investigator"
+                      required
+                      value={formData.principal_investigator || faculty.full_name}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Co-Principal Investigator (Co-PI)</label>
+                    <input
+                      type="text"
+                      name="co_principal_investigator"
+                      placeholder="e.g. Dr. Faculty Colleague"
+                      value={formData.co_principal_investigator || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
                   <div className="space-y-1 sm:col-span-2">
-                    <label className="font-bold text-neutral-700">Investigators</label>
+                    <label className="font-bold text-neutral-700">All Investigators (text summary)</label>
                     <input
                       type="text"
                       name="raw_investigators"
@@ -2928,6 +3358,7 @@ export default function FacultyPortfolioPage({
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
+                  {renderAssociatedFacultyPicker("Associated Co-PIs (Colleague Faculty Sync)")}
                 </div>
               )}
 
@@ -2953,49 +3384,56 @@ export default function FacultyPortfolioPage({
                       onChange={handleInputChange}
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
                     >
-                      <option value="FDP / STC">FDP / STC</option>
-                      <option value="Conference">Conference</option>
-                      <option value="Workshop">Workshop</option>
-                      <option value="Symposium">Symposium</option>
-                      <option value="Seminar">Seminar</option>
+                      {EVENT_TYPES.map((t) => (
+                        <option key={t} value={t}>
+                          {t}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Role</label>
-                    <input
-                      type="text"
-                      name="convenor"
-                      placeholder="Convenor / Coordinator"
-                      value={formData.convenor || "Convenor"}
+                    <label className="font-bold text-neutral-700">Category</label>
+                    <select
+                      name="category"
+                      value={formData.category || "organized"}
                       onChange={handleInputChange}
-                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
-                    />
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white capitalize"
+                    >
+                      {EVENT_CATEGORIES.map((c) => (
+                        <option key={c.value} value={c.value}>
+                          {c.label}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Sponsoring Agency</label>
-                    <input
-                      type="text"
-                      name="sponsoring_agency"
-                      value={formData.sponsoring_agency || "NIT Hamirpur"}
-                      onChange={handleInputChange}
-                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Venue</label>
+                    <label className="font-bold text-neutral-700">Venue *</label>
                     <input
                       type="text"
                       name="venue"
+                      required
                       value={formData.venue || "DoCSE, NIT Hamirpur"}
                       onChange={handleInputChange}
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Start Date</label>
+                    <label className="font-bold text-neutral-700">Sponsoring Agency *</label>
+                    <input
+                      type="text"
+                      name="sponsoring_agency"
+                      required
+                      value={formData.sponsoring_agency || "NIT Hamirpur"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Start Date *</label>
                     <input
                       type="text"
                       name="start_date"
+                      required
                       placeholder="YYYY-MM-DD"
                       value={formData.start_date || ""}
                       onChange={handleInputChange}
@@ -3013,7 +3451,23 @@ export default function FacultyPortfolioPage({
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
-                  <div className="space-y-1 sm:col-span-2">
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Academic Session *</label>
+                    <select
+                      name="academic_session"
+                      required
+                      value={formData.academic_session || "2024-2025"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white font-mono"
+                    >
+                      {ACADEMIC_SESSIONS.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-1">
                     <label className="font-bold text-neutral-700">Brochure Link / Document URL</label>
                     <input
                       type="text"
@@ -3024,6 +3478,103 @@ export default function FacultyPortfolioPage({
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
+
+                  {/* Position 1 Block (Matching tempcsebase) */}
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Position 1</label>
+                    <select
+                      name="position1"
+                      value={formData.position1 || "Coordinator"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      {EVENT_POSTS.map((p) => (
+                        <option key={p} value={p}>
+                          {p}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {formData.position1 === "Other" && (
+                    <div className="space-y-1">
+                      <label className="font-bold text-[#85261e]">Other Position 1</label>
+                      <input
+                        type="text"
+                        name="positionother1"
+                        placeholder="Specify role title"
+                        value={formData.positionother1 || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#85261e] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-red-50/20"
+                      />
+                    </div>
+                  )}
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">
+                      {formData.position1 === "Other"
+                        ? formData.positionother1 || "Other Role"
+                        : formData.position1 || "Convenor"}{" "}
+                      Faculty Names
+                    </label>
+                    <input
+                      type="text"
+                      name="convenor"
+                      placeholder="e.g. Dr. Faculty One, Dr. Faculty Two"
+                      value={formData.convenor || faculty.full_name}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+
+                  {/* Position 2 Block (Matching tempcsebase) */}
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Position 2</label>
+                    <select
+                      name="position2"
+                      value={formData.position2 || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="">None / Not Applicable</option>
+                      {EVENT_POSTS.map((p) => (
+                        <option key={p} value={p}>
+                          {p}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {formData.position2 === "Other" && (
+                    <div className="space-y-1">
+                      <label className="font-bold text-[#85261e]">Other Position 2</label>
+                      <input
+                        type="text"
+                        name="positionother2"
+                        placeholder="Specify role title"
+                        value={formData.positionother2 || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#85261e] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-red-50/20"
+                      />
+                    </div>
+                  )}
+                  {formData.position2 && (
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">
+                        {formData.position2 === "Other"
+                          ? formData.positionother2 || "Other Role"
+                          : formData.position2}{" "}
+                        Faculty Names
+                      </label>
+                      <input
+                        type="text"
+                        name="coordinator"
+                        placeholder="e.g. Dr. Faculty Three"
+                        value={formData.coordinator || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                      />
+                    </div>
+                  )}
+
+                  {renderAssociatedFacultyPicker("Associated Faculty (Event Organizers / Coordinators)")}
                 </div>
               )}
 
@@ -3053,28 +3604,84 @@ export default function FacultyPortfolioPage({
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Amount (INR)</label>
+                    <label className="font-bold text-neutral-700">Status</label>
+                    <select
+                      name="status"
+                      value={formData.status || "Ongoing"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="Ongoing">Ongoing</option>
+                      <option value="Completed">Completed</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Reference / Sanction Number</label>
+                    <input
+                      type="text"
+                      name="reference_number"
+                      placeholder="e.g. NITH/CONS/2024/09"
+                      value={formData.reference_number || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Amount (INR) *</label>
                     <input
                       type="number"
                       name="amount"
+                      required
                       value={formData.amount || ""}
                       onChange={handleInputChange}
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Academic Session / Year</label>
+                    <label className="font-bold text-neutral-700">Start Year *</label>
                     <input
-                      type="text"
-                      name="academic_session"
-                      placeholder="e.g. 2024-2025"
-                      value={formData.academic_session || ""}
+                      type="number"
+                      name="year"
+                      required
+                      value={formData.year || new Date().getFullYear()}
                       onChange={handleInputChange}
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Month</label>
+                    <select
+                      name="month"
+                      value={formData.month || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="">Select Month</option>
+                      {MONTH_OPTIONS.map((m) => (
+                        <option key={m.value} value={m.value}>
+                          {m.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Academic Session *</label>
+                    <select
+                      name="academic_session"
+                      required
+                      value={formData.academic_session || "2024-2025"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white font-mono"
+                    >
+                      {ACADEMIC_SESSIONS.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                   <div className="space-y-1 sm:col-span-2">
-                    <label className="font-bold text-neutral-700">Investigators Involved</label>
+                    <label className="font-bold text-neutral-700">Investigators Involved (text)</label>
                     <input
                       type="text"
                       name="author_text"
@@ -3083,6 +3690,7 @@ export default function FacultyPortfolioPage({
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
+                  {renderAssociatedFacultyPicker("Associated Faculty (Co-Consultants)")}
                 </div>
               )}
 
@@ -3102,26 +3710,93 @@ export default function FacultyPortfolioPage({
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1">
-                      <label className="font-bold text-neutral-700">Host Institution / Venue *</label>
+                      <label className="font-bold text-neutral-700">Host Institution / Organization *</label>
+                      <input
+                        type="text"
+                        name="host_organization"
+                        required
+                        placeholder="e.g. IIT Roorkee / IEEE Chapter"
+                        value={formData.host_organization || ""}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <label className="font-bold text-neutral-700">Venue / Location *</label>
                       <input
                         type="text"
                         name="venue"
                         required
+                        placeholder="e.g. Virtual / Roorkee, India"
                         value={formData.venue || ""}
                         onChange={handleInputChange}
                         className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="font-bold text-neutral-700">Date</label>
+                      <label className="font-bold text-neutral-700">Start Date *</label>
                       <input
                         type="text"
                         name="date"
+                        required
                         placeholder="YYYY-MM-DD"
                         value={formData.date || ""}
                         onChange={handleInputChange}
                         className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                       />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="font-bold text-neutral-700">End Date</label>
+                        <label className="flex items-center gap-1.5 text-xs text-[#85261e] font-semibold cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(formData.is_present)}
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                is_present: e.target.checked,
+                                end_date: e.target.checked ? "Present" : "",
+                              }))
+                            }
+                            className="rounded border-[#eedfd8] text-[#85261e] focus:ring-[#85261e]"
+                          />
+                          <span>Ongoing / Present</span>
+                        </label>
+                      </div>
+                      {formData.is_present ? (
+                        <input
+                          type="text"
+                          readOnly
+                          value="Present"
+                          className="w-full p-2.5 rounded-xl border border-emerald-300 bg-emerald-50/50 text-emerald-900 font-bold"
+                        />
+                      ) : (
+                        <input
+                          type="text"
+                          name="end_date"
+                          placeholder="YYYY-MM-DD"
+                          value={formData.end_date || ""}
+                          onChange={handleInputChange}
+                          className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                        />
+                      )}
+                    </div>
+                    <div className="space-y-1 sm:col-span-2">
+                      <label className="font-bold text-neutral-700">Academic Session *</label>
+                      <select
+                        name="academic_session"
+                        required
+                        value={formData.academic_session || "2024-2025"}
+                        onChange={handleInputChange}
+                        className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white font-mono"
+                      >
+                        {ACADEMIC_SESSIONS.map((s) => (
+                          <option key={s} value={s}>
+                            {s}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                   <div className="space-y-1">
@@ -3134,13 +3809,27 @@ export default function FacultyPortfolioPage({
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
+                  {renderAssociatedFacultyPicker("Associated Faculty")}
                 </div>
               )}
 
               {/* Form fields for RESEARCH SUPERVISION */}
               {activeTab === "researchSupervision" && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1 sm:col-span-2">
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Degree / Program *</label>
+                    <select
+                      name="level"
+                      value={formData.level || "Ph.D."}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
+                    >
+                      <option value="Ph.D.">Ph.D.</option>
+                      <option value="M.Tech">M.Tech</option>
+                      <option value="B.Tech">B.Tech</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
                     <label className="font-bold text-neutral-700">Scholar Name *</label>
                     <input
                       type="text"
@@ -3152,27 +3841,16 @@ export default function FacultyPortfolioPage({
                     />
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Roll / Registration No.</label>
+                    <label className="font-bold text-neutral-700">Roll / Registration No. *</label>
                     <input
                       type="text"
                       name="roll_number"
+                      required
+                      placeholder="e.g. 21DCS005"
                       value={formData.roll_number || ""}
                       onChange={handleInputChange}
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Degree Level</label>
-                    <select
-                      name="level"
-                      value={formData.level || "Ph.D."}
-                      onChange={handleInputChange}
-                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
-                    >
-                      <option value="Ph.D.">Ph.D.</option>
-                      <option value="M.Tech">M.Tech</option>
-                      <option value="B.Tech">B.Tech</option>
-                    </select>
                   </div>
                   <div className="space-y-1 sm:col-span-2">
                     <label className="font-bold text-neutral-700">Thesis / Research Title *</label>
@@ -3194,20 +3872,50 @@ export default function FacultyPortfolioPage({
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
                     >
                       <option value="Ongoing">Ongoing</option>
+                      <option value="Completed">Completed</option>
                       <option value="Awarded">Awarded</option>
                       <option value="Submitted">Submitted</option>
                     </select>
                   </div>
                   <div className="space-y-1">
-                    <label className="font-bold text-neutral-700">Year</label>
+                    <label className="font-bold text-neutral-700">Year *</label>
                     <input
-                      type="text"
+                      type="number"
                       name="year"
-                      value={formData.year || "2024"}
+                      required
+                      value={formData.year || new Date().getFullYear()}
                       onChange={handleInputChange}
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Academic Session *</label>
+                    <select
+                      name="academic_session"
+                      required
+                      value={formData.academic_session || "2024-2025"}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white font-mono"
+                    >
+                      {ACADEMIC_SESSIONS.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <label className="font-bold text-neutral-700">Co-Supervisors</label>
+                    <input
+                      type="text"
+                      name="co_supervisor"
+                      placeholder="e.g. Dr. Co-Supervisor Name"
+                      value={formData.co_supervisor || ""}
+                      onChange={handleInputChange}
+                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                    />
+                  </div>
+                  {renderAssociatedFacultyPicker("Associated Faculty (Co-Supervisors)")}
                 </div>
               )}
 
@@ -3553,6 +4261,66 @@ export default function FacultyPortfolioPage({
                           <ExternalLink className="w-3 h-3" /> {detailItem.doi}
                         </a>
                       </td>
+                    </tr>
+                  )}
+                  {detailItem.place && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Awarding Agency / Place</td>
+                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.place}</td>
+                    </tr>
+                  )}
+                  {(detailItem.reference_number || detailItem.reference_no) && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Reference / Sanction No.</td>
+                      <td className="p-3 font-mono font-bold text-neutral-800">{detailItem.reference_number || detailItem.reference_no}</td>
+                    </tr>
+                  )}
+                  {detailItem.duration && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Duration</td>
+                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.duration}</td>
+                    </tr>
+                  )}
+                  {detailItem.principal_investigator && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Principal Investigator (PI)</td>
+                      <td className="p-3 text-neutral-900 font-semibold">{detailItem.principal_investigator}</td>
+                    </tr>
+                  )}
+                  {detailItem.co_principal_investigator && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Co-PI</td>
+                      <td className="p-3 text-neutral-800">{detailItem.co_principal_investigator}</td>
+                    </tr>
+                  )}
+                  {detailItem.co_supervisor && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Co-Supervisors</td>
+                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.co_supervisor}</td>
+                    </tr>
+                  )}
+                  {detailItem.category && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Category</td>
+                      <td className="p-3 capitalize font-semibold text-neutral-800">{detailItem.category}</td>
+                    </tr>
+                  )}
+                  {detailItem.host_organization && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Host Institution</td>
+                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.host_organization}</td>
+                    </tr>
+                  )}
+                  {(detailItem.start_date || detailItem.date || detailItem.talk_date) && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Start Date</td>
+                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.start_date || detailItem.date || detailItem.talk_date}</td>
+                    </tr>
+                  )}
+                  {detailItem.end_date && (
+                    <tr className="bg-white">
+                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">End Date</td>
+                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.end_date}</td>
                     </tr>
                   )}
                   {detailItem.abstract_text && (
