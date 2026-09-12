@@ -223,6 +223,11 @@ export default function FacultyPortfolioPage({
         setAllFacultyProjects(getStoredData(baseFaculty, "projects", baseFaculty.projects || []));
         setAllConsultancies(getStoredData(baseFaculty, "consultancies", []));
         setAllEvents(getStoredData(baseFaculty, "events", []));
+        setAllTalks(getStoredData(baseFaculty, "expert_talks", baseFaculty.expert_talks || []));
+        setAllSupervisions(getStoredData(baseFaculty, "supervisions", baseFaculty.supervisions || []));
+        setAllAdminExp(getStoredData(baseFaculty, "admin_experiences", baseFaculty.administrative_experiences || baseFaculty.admin_experiences || []));
+        setAllHonors(getStoredData(baseFaculty, "honors", baseFaculty.honors || []));
+        setAllExposures(getStoredData(baseFaculty, "exposures", baseFaculty.exposures || []));
       }
     };
     window.addEventListener("nith_faculty_storage_update", handleStorageUpdate);
@@ -1283,25 +1288,20 @@ export default function FacultyPortfolioPage({
       syncMultiFacultyRecord(baseFaculty, "consultancies", item, coFacultyList, true);
       setAllConsultancies(getStoredData(baseFaculty, "consultancies", []));
     } else if (activeTab === "experttalk") {
-      const nextList = allTalks.filter((t) => t.id !== item.id);
-      setAllTalks(nextList);
-      setStoredData(baseFaculty, "expert_talks", nextList);
+      syncMultiFacultyRecord(baseFaculty, "expert_talks", item, coFacultyList, true);
+      setAllTalks(getStoredData(baseFaculty, "expert_talks", baseFaculty.expert_talks || []));
     } else if (activeTab === "researchSupervision") {
-      const nextList = combinedSupervisions.filter((s) => s.id !== item.id);
-      setAllSupervisions(nextList);
-      setStoredData(baseFaculty, "supervisions", nextList);
+      syncMultiFacultyRecord(baseFaculty, "supervisions", item, coFacultyList, true);
+      setAllSupervisions(getStoredData(baseFaculty, "supervisions", baseFaculty.supervisions || []));
     } else if (activeTab === "administrativeexperience") {
-      const nextList = allAdminExp.filter((a) => a.id !== item.id);
-      setAllAdminExp(nextList);
-      setStoredData(baseFaculty, "admin_experiences", nextList);
+      syncMultiFacultyRecord(baseFaculty, "admin_experiences", item, coFacultyList, true);
+      setAllAdminExp(getStoredData(baseFaculty, "admin_experiences", baseFaculty.administrative_experiences || baseFaculty.admin_experiences || []));
     } else if (activeTab === "honors") {
-      const nextList = allHonors.filter((h) => h.id !== item.id);
-      setAllHonors(nextList);
-      setStoredData(baseFaculty, "honors", nextList);
+      syncMultiFacultyRecord(baseFaculty, "honors", item, coFacultyList, true);
+      setAllHonors(getStoredData(baseFaculty, "honors", baseFaculty.honors || []));
     } else if (activeTab === "internationalAndNationalExposure") {
-      const nextList = allExposures.filter((x) => x.id !== item.id);
-      setAllExposures(nextList);
-      setStoredData(baseFaculty, "exposures", nextList);
+      syncMultiFacultyRecord(baseFaculty, "exposures", item, coFacultyList, true);
+      setAllExposures(getStoredData(baseFaculty, "exposures", baseFaculty.exposures || []));
     }
 
     setIsDetailsModalOpen(false);
