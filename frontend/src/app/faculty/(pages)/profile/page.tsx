@@ -269,14 +269,48 @@ export default function FacultyProfilePage() {
               <input
                 type="text"
                 placeholder="https://scholar.google.com/citations?user=..."
-                value={faculty.scholar_url || faculty.google_scholar_id || ""}
+                value={faculty.scholar_url || faculty.google_scholar_id || faculty.google_scholar_url || ""}
                 onChange={(e) =>
                   setFaculty({
                     ...faculty,
                     scholar_url: e.target.value,
                     google_scholar_id: e.target.value,
+                    google_scholar_url: e.target.value,
                   })
                 }
+                className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+              />
+            </div>
+
+            <div>
+              <label className="mb-1.5 block text-xs font-bold text-[#33110e]">INFLIBNET Vidwan URL / ID</label>
+              <input
+                type="text"
+                placeholder="https://vidwan.inflibnet.ac.in/profile/..."
+                value={faculty.vidwan_url || (faculty.profile as any)?.vidwan_url || ""}
+                onChange={(e) => setFaculty({ ...faculty, vidwan_url: e.target.value })}
+                className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+              />
+            </div>
+
+            <div>
+              <label className="mb-1.5 block text-xs font-bold text-[#33110e]">ResearchGate Profile URL</label>
+              <input
+                type="text"
+                placeholder="https://www.researchgate.net/profile/..."
+                value={faculty.rg_url || (faculty.profile as any)?.rg_url || ""}
+                onChange={(e) => setFaculty({ ...faculty, rg_url: e.target.value })}
+                className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+              />
+            </div>
+
+            <div>
+              <label className="mb-1.5 block text-xs font-bold text-[#33110e]">LinkedIn Profile URL</label>
+              <input
+                type="text"
+                placeholder="https://www.linkedin.com/in/..."
+                value={faculty.linkedin_url || (faculty.profile as any)?.linkedin_url || ""}
+                onChange={(e) => setFaculty({ ...faculty, linkedin_url: e.target.value })}
                 className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
               />
             </div>

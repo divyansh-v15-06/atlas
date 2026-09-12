@@ -150,7 +150,7 @@ func (r *pgRepository) GetLegacyCounts(ctx context.Context, deptID string) (*Leg
 
 func (r *pgRepository) GetLegacyAnalytics(ctx context.Context, deptID, facultyName, facultyCode string) (*LegacyAnalyticsResponse, error) {
 	facQuery := `
-		SELECT f.id, f.full_name
+		SELECT f.id, f.full_name, COALESCE(f.employee_code, '')
 		FROM faculty f
 		WHERE f.deleted_at IS NULL
 		ORDER BY f.sort_order ASC, f.id ASC
@@ -163,11 +163,12 @@ func (r *pgRepository) GetLegacyAnalytics(ctx context.Context, deptID, facultyNa
 
 	facultyData := make([]LegacyAnalyticsFaculty, 0)
 	facUUIDToSeq := make(map[string]int)
+	facUUIDToCode := make(map[string]string)
 
 	idx := 1
 	for facRows.Next() {
-		var uuidStr, name string
-		if err := facRows.Scan(&uuidStr, &name); err != nil {
+		var uuidStr, name, empCode string
+		if err := facRows.Scan(&uuidStr, &name, &empCode); err != nil {
 			return nil, err
 		}
 		facultyData = append(facultyData, LegacyAnalyticsFaculty{
@@ -175,6 +176,7 @@ func (r *pgRepository) GetLegacyAnalytics(ctx context.Context, deptID, facultyNa
 			Name: name,
 		})
 		facUUIDToSeq[uuidStr] = idx
+		facUUIDToCode[uuidStr] = empCode
 		idx++
 	}
 
@@ -349,6 +351,66 @@ func (r *pgRepository) GetLegacyAnalytics(ctx context.Context, deptID, facultyNa
 		events = append(events, ev)
 	}
 
+	// If a specific faculty is requested by name or code, filter output collections
+	var targetSeq *int
+	if facultyCode != "" {
+		for uuidStr, seq := range facUUIDToSeq {
+			if code, ok := facUUIDToCode[uuidStr]; ok && strings.EqualFold(code, facultyCode) {
+				s := seq
+				targetSeq = &s
+				break
+			}
+			if strings.EqualFold(uuidStr, facultyCode) {
+				s := seq
+				targetSeq = &s
+				break
+			}
+		}
+	}
+	if targetSeq == nil && facultyName != "" {
+		for _, f := range facultyData {
+			if strings.EqualFold(strings.TrimSpace(f.Name), strings.TrimSpace(facultyName)) {
+				s := f.ID
+				targetSeq = &s
+				break
+			}
+		}
+	}
+
+	if targetSeq != nil {
+		filteredPubs := make([]LegacyAnalyticsPublication, 0)
+		for _, p := range pubs {
+			if containsInt(p.FacultyIDs, *targetSeq) {
+				filteredPubs = append(filteredPubs, p)
+			}
+		}
+		pubs = filteredPubs
+
+		filteredPatents := make([]LegacyAnalyticsPatent, 0)
+		for _, pat := range patents {
+			if containsInt(pat.FacultyIDs, *targetSeq) {
+				filteredPatents = append(filteredPatents, pat)
+			}
+		}
+		patents = filteredPatents
+
+		filteredProjects := make([]LegacyAnalyticsProject, 0)
+		for _, prj := range projects {
+			if containsInt(prj.FacultyIDs, *targetSeq) {
+				filteredProjects = append(filteredProjects, prj)
+			}
+		}
+		projects = filteredProjects
+
+		filteredEvents := make([]LegacyAnalyticsEvent, 0)
+		for _, ev := range events {
+			if containsInt(ev.FacultyIDs, *targetSeq) {
+				filteredEvents = append(filteredEvents, ev)
+			}
+		}
+		events = filteredEvents
+	}
+
 	return &LegacyAnalyticsResponse{
 		FacultyData:      facultyData,
 		PublicationsData: pubs,
@@ -356,6 +418,15 @@ func (r *pgRepository) GetLegacyAnalytics(ctx context.Context, deptID, facultyNa
 		ProjectsData:     projects,
 		EventsData:       events,
 	}, nil
+}
+
+func containsInt(slice []int, val int) bool {
+	for _, item := range slice {
+		if item == val {
+			return true
+		}
+	}
+	return false
 }
 
 // ----------------------------------------------------------------------------

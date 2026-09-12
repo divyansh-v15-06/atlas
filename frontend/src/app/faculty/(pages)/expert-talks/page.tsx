@@ -1,29 +1,90 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Trash2, Mic2, X, Building2, Calendar, Sparkles, BookOpen, Clock, Presentation } from "lucide-react";
+import {
+  Plus,
+  Trash2,
+  Edit,
+  Mic2,
+  X,
+  Building2,
+  Calendar,
+  Sparkles,
+  BookOpen,
+  Clock,
+  Presentation,
+  CheckCircle2,
+} from "lucide-react";
 import { toast } from "sonner";
 import { MOCK_FACULTY } from "@/lib/mock-data";
-import { getStoredData, setStoredData } from "@/lib/faculty-storage";
+import { getStoredData, saveFacultyRecord } from "@/lib/faculty-storage";
+import AssociatedFacultyPicker from "@/components/faculty/AssociatedFacultyPicker";
+import { ACADEMIC_SESSIONS } from "@/lib/faculty-constants";
 
-interface ExpertTalk {
+export interface ExpertTalk {
+  id?: string;
   title: string;
   venue: string;
+  start_date?: string;
   date?: string;
+  end_date?: string;
+  academic_session?: string;
+  is_present?: boolean;
+  status?: string;
   description?: string;
+  associated_faculty?: any[];
+  faculty_ids?: string[];
 }
 
 export default function ExpertTalksPage() {
   const [user, setUser] = useState<any>(null);
   const [faculty, setFaculty] = useState<any>(MOCK_FACULTY[0]);
   const [items, setItems] = useState<ExpertTalk[]>([]);
-  const [showModal, setShowModal] = useState(false);
 
-  // Form states
+  // Modal State
+  const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState<"add" | "edit">("add");
+  const [editingId, setEditingId] = useState<string | null>(null);
+
+  // Form states matching tempcsebase
   const [title, setTitle] = useState("");
   const [venue, setVenue] = useState("");
-  const [date, setDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [academicSession, setAcademicSession] = useState(ACADEMIC_SESSIONS[1] || "2024-2025");
+  const [isPresent, setIsPresent] = useState(false);
   const [description, setDescription] = useState("");
+  const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
+
+  const loadTalks = (activeFaculty: any) => {
+    const facultyTalks = (activeFaculty as any).expert_talks || [];
+    const fallback =
+      facultyTalks.length > 0
+        ? facultyTalks
+        : [
+            {
+              id: "talk-1",
+              title: "Emerging Trends in Artificial Intelligence and Cloud Systems",
+              venue: "National Institute of Technology Hamirpur",
+              start_date: "2024-04-12",
+              date: "2024-04-12",
+              academic_session: "2023-2024",
+              description: "Keynote lecture in One-Week Faculty Development Programme.",
+            },
+            {
+              id: "talk-2",
+              title: "Wireless Sensor Networks & Distributed Security",
+              venue: "IEEE Delhi Section & IIT Roorkee",
+              start_date: "2023-11-20",
+              date: "2023-11-20",
+              academic_session: "2023-2024",
+              description: "Invited expert session for postgraduate researchers.",
+            },
+          ];
+
+    const stored = getStoredData<ExpertTalk>(activeFaculty, "expert_talks", fallback);
+    setItems(stored);
+  };
 
   useEffect(() => {
     let activeFaculty = MOCK_FACULTY[0];
@@ -45,56 +106,90 @@ export default function ExpertTalksPage() {
       } catch {}
     }
 
-    const facultyTalks = (activeFaculty as any).expert_talks || [];
-    const fallback =
-      facultyTalks.length > 0
-        ? facultyTalks
-        : [
-            {
-              title: "Emerging Trends in Artificial Intelligence and Cloud Systems",
-              venue: "National Institute of Technology Hamirpur",
-              date: "2024-04-12",
-              description: "Keynote lecture in One-Week Faculty Development Programme.",
-            },
-            {
-              title: "Wireless Sensor Networks & Distributed Security",
-              venue: "IEEE Delhi Section & IIT Roorkee",
-              date: "2023-11-20",
-              description: "Invited expert session for postgraduate researchers.",
-            },
-          ];
+    loadTalks(activeFaculty);
 
-    const stored = getStoredData<ExpertTalk>(activeFaculty, "expert_talks", fallback);
-    setItems(stored);
+    const handleStorageUpdate = (e: any) => {
+      if (!e.detail?.section || e.detail.section === "expert_talks") {
+        loadTalks(activeFaculty);
+      }
+    };
+    window.addEventListener("nith_faculty_storage_update", handleStorageUpdate);
+    return () => window.removeEventListener("nith_faculty_storage_update", handleStorageUpdate);
   }, []);
 
-  const handleAdd = (e: React.FormEvent) => {
+  const openAddModal = () => {
+    setModalMode("add");
+    setEditingId(null);
+    setTitle("");
+    setVenue("");
+    setStartDate(new Date().toISOString().split("T")[0]);
+    setEndDate("");
+    setAcademicSession(ACADEMIC_SESSIONS[1] || "2024-2025");
+    setIsPresent(false);
+    setDescription("");
+    setSelectedAssociatedFaculty([]);
+    setShowModal(true);
+  };
+
+  const openEditModal = (talk: ExpertTalk) => {
+    setModalMode("edit");
+    setEditingId(talk.id || talk.title);
+    setTitle(talk.title || "");
+    setVenue(talk.venue || "");
+    setStartDate(talk.start_date || talk.date || "");
+    setEndDate(talk.end_date || "");
+    setAcademicSession(talk.academic_session || ACADEMIC_SESSIONS[1]);
+    setIsPresent(Boolean(talk.is_present));
+    setDescription(talk.description || "");
+
+    const linked = Array.isArray(talk.associated_faculty)
+      ? talk.associated_faculty
+      : Array.isArray(talk.faculty_ids)
+      ? MOCK_FACULTY.filter((f) => talk.faculty_ids?.includes(f.id))
+      : [];
+    setSelectedAssociatedFaculty(linked);
+    setShowModal(true);
+  };
+
+  const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !venue.trim()) {
       toast.error("Please provide Talk Title and Host Institution / Venue");
       return;
     }
-    const newTalk: ExpertTalk = {
+
+    const talkRecord: ExpertTalk = {
+      id: modalMode === "edit" && editingId ? editingId : `talk-${Date.now()}`,
       title: title.trim(),
       venue: venue.trim(),
-      date: date.trim() || undefined,
+      start_date: startDate.trim() || undefined,
+      date: startDate.trim() || undefined,
+      end_date: isPresent ? "Present" : endDate.trim() || undefined,
+      academic_session: academicSession,
+      is_present: isPresent,
+      status: isPresent ? "Ongoing" : "Delivered",
       description: description.trim() || undefined,
+      associated_faculty: selectedAssociatedFaculty,
+      faculty_ids: [
+        faculty.id,
+        ...selectedAssociatedFaculty.map((f) => f.id || f.employee_code),
+      ],
     };
-    const updated = [newTalk, ...items];
-    setItems(updated);
-    setStoredData(faculty, "expert_talks", updated);
+
+    saveFacultyRecord(faculty, "expert_talks", talkRecord, false);
+    loadTalks(faculty);
     setShowModal(false);
-    setTitle("");
-    setVenue("");
-    setDate("");
-    setDescription("");
-    toast.success("Expert talk & keynote lecture saved and persisted!");
+    toast.success(
+      modalMode === "edit"
+        ? "Expert talk updated and synchronized successfully!"
+        : "Expert talk and keynote lecture recorded and synchronized!"
+    );
   };
 
-  const handleDelete = (index: number) => {
-    const updated = items.filter((_, idx) => idx !== index);
-    setItems(updated);
-    setStoredData(faculty, "expert_talks", updated);
+  const handleDelete = (talk: ExpertTalk) => {
+    if (!window.confirm(`Are you sure you want to delete "${talk.title}"?`)) return;
+    saveFacultyRecord(faculty, "expert_talks", talk, true);
+    loadTalks(faculty);
     toast.success("Talk record removed and storage updated");
   };
 
@@ -106,70 +201,83 @@ export default function ExpertTalksPage() {
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-[#33110e] tracking-tight uppercase flex items-center gap-2">
               <Mic2 className="w-6 h-6 text-[#85261e]" />
-              Invited Talks, Keynotes &amp; Guest Lectures
+              Keynote Lectures &amp; Expert Talks
             </h1>
             <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-xs font-bold px-2.5 py-0.5 rounded-full">
-              {items.length} Talks Recorded
+              {items.length} Delivered
             </span>
           </div>
           <p className="text-xs text-neutral-600 mt-1">
-            Keynote addresses, FDP/STC sessions, and invited expert lectures delivered by{" "}
-            <strong>{faculty.full_name}</strong> ({faculty.employee_code || "Faculty"}).
+            Invited keynote talks, plenary addresses, and expert lectures delivered at national and
+            international venues by <strong>{faculty.full_name}</strong>.
           </p>
         </div>
 
         <button
           type="button"
-          onClick={() => setShowModal(true)}
+          onClick={openAddModal}
           className="inline-flex items-center gap-2 rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-4 py-2.5 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
         >
           <Plus className="h-4 w-4 text-amber-300" />
-          <span>Add Invited Talk</span>
+          <span>Add Talk</span>
         </button>
       </div>
 
-      {/* Talks Cards Grid */}
+      {/* Talks List */}
       <div className="space-y-3">
-        {items.map((item, i) => (
+        {items.map((talk, idx) => (
           <div
-            key={i}
-            className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-xs hover:border-[#85261e]/40 transition duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+            key={talk.id || idx}
+            className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-2xs hover:shadow-md transition space-y-2 group"
           >
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#fff9f6] border border-[#eedfd8] flex items-center justify-center text-[#85261e] flex-shrink-0 shadow-2xs group-hover:bg-[#33110e] group-hover:text-amber-300 transition duration-200">
-                <Presentation className="w-6 h-6" />
-              </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#33110e] text-white uppercase">
+                <Presentation className="w-3 h-3 text-amber-300" />
+                Keynote / Lecture
+              </span>
 
-              <div className="space-y-1.5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="font-bold text-sm sm:text-base text-[#1c110c] group-hover:text-[#85261e] transition leading-snug">
-                    {item.title}
-                  </h3>
-                  {item.date && (
-                    <span className="bg-[#fff9f6] text-[#33110e] border border-[#eedfd8] text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full">
-                      {item.date}
-                    </span>
-                  )}
-                </div>
+              {talk.academic_session && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-neutral-100 text-neutral-600">
+                  Session: {talk.academic_session}
+                </span>
+              )}
 
-                <p className="text-xs text-neutral-700 font-medium flex items-center gap-1.5">
-                  <Building2 className="w-3.5 h-3.5 text-[#85261e] flex-shrink-0" />
-                  <span>Hosted at: <strong>{item.venue}</strong></span>
-                </p>
-
-                {item.description && (
-                  <p className="text-xs text-neutral-600 leading-relaxed bg-[#fff9f6] border border-[#eedfd8]/60 rounded-xl p-2.5 italic">
-                    &quot;{item.description}&quot;
-                  </p>
-                )}
-              </div>
+              <span className="text-xs font-bold text-neutral-400 ml-auto font-mono">
+                {talk.start_date || talk.date || "Delivered"}
+                {talk.end_date && talk.end_date !== talk.start_date && ` to ${talk.end_date}`}
+              </span>
             </div>
 
-            <div className="flex items-center gap-2 self-end sm:self-center border-t sm:border-t-0 pt-2 sm:pt-0 border-[#eedfd8]/60 w-full sm:w-auto justify-end">
+            <h3 className="text-sm sm:text-base font-bold text-[#1c110c] leading-snug">
+              {talk.title}
+            </h3>
+
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#85261e]">
+              <Building2 className="w-3.5 h-3.5" />
+              <span>{talk.venue}</span>
+            </div>
+
+            {talk.description && (
+              <p className="text-xs text-neutral-600 leading-relaxed pt-1">
+                {talk.description}
+              </p>
+            )}
+
+            {/* Actions Strip */}
+            <div className="flex items-center justify-end gap-1 pt-3 border-t border-[#eedfd8]/60 text-xs">
               <button
                 type="button"
-                onClick={() => handleDelete(i)}
-                className="p-2 text-neutral-400 hover:text-red-700 transition rounded-xl hover:bg-red-50 cursor-pointer"
+                onClick={() => openEditModal(talk)}
+                className="p-1.5 text-neutral-500 hover:text-[#85261e] transition rounded-lg hover:bg-[#fdf5f2] cursor-pointer"
+                title="Edit Talk"
+              >
+                <Edit className="h-4 w-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleDelete(talk)}
+                className="p-1.5 text-neutral-400 hover:text-red-700 transition rounded-lg hover:bg-red-50 cursor-pointer"
                 title="Remove Talk"
               >
                 <Trash2 className="h-4 w-4" />
@@ -180,23 +288,24 @@ export default function ExpertTalksPage() {
 
         {items.length === 0 && (
           <div className="text-center py-16 text-neutral-500 text-xs bg-white rounded-2xl border border-[#eedfd8]">
-            No invited talks or keynote addresses recorded yet. Click &quot;Add Invited Talk&quot; to log your sessions.
+            No expert talks recorded. Click "+ Add Talk" to log your keynote presentations.
           </div>
         )}
       </div>
 
-      {/* Add Talk Modal */}
+      {/* Add / Edit Talk Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs font-sans">
-          <div className="w-full max-w-lg rounded-3xl border border-[#eedfd8] bg-white p-6 sm:p-8 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs font-sans overflow-y-auto">
+          <div className="w-full max-w-2xl rounded-3xl border border-[#eedfd8] bg-white p-6 sm:p-8 shadow-2xl space-y-5 my-8 max-h-[90vh] flex flex-col overflow-hidden">
+            {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-[#eedfd8]/60 pb-3">
               <div>
-                <h2 className="text-lg font-bold text-[#33110e]">
-                  Add Invited Talk / Keynote Address
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#85261e]">
+                  {modalMode === "edit" ? "Modify Lecture Record" : "New Keynote Entry"}
+                </span>
+                <h2 className="text-xl font-extrabold text-[#33110e]">
+                  {modalMode === "edit" ? "Edit Keynote Lecture" : "Register Keynote / Expert Talk"}
                 </h2>
-                <p className="text-xs text-neutral-500">
-                  Log guest lectures, FDP sessions, and conference keynote addresses.
-                </p>
               </div>
               <button
                 type="button"
@@ -207,74 +316,125 @@ export default function ExpertTalksPage() {
               </button>
             </div>
 
-            <form onSubmit={handleAdd} className="space-y-4">
+            {/* Modal Body */}
+            <form onSubmit={handleSave} className="space-y-4 overflow-y-auto pr-1 flex-1 text-xs">
+              {/* Title */}
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Talk / Keynote Title *
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Artificial Intelligence & Cyber Threat Intelligence (Keynote)"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  required
-                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Host Institution / Venue / Department *
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. Guru Jambheshwar University of Science and Technology, Hisar"
-                  value={venue}
-                  onChange={(e) => setVenue(e.target.value)}
-                  required
-                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Date / Session (Optional)
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. 2024-03-18 or 2024"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs font-mono text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Event / FDP / STC Description
+                  Lecture / Talk Topic *
                 </label>
                 <textarea
-                  rows={3}
-                  placeholder="e.g. One-Week Faculty Development Programme on Artificial Intelligence & Data Analytics"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-3 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e] leading-relaxed"
+                  rows={2}
+                  required
+                  placeholder="e.g. Scalable Machine Learning Architectures for Edge Computing"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-3 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 />
               </div>
 
-              <div className="flex justify-end gap-2.5 pt-4 border-t border-[#eedfd8]/60">
+              {/* Venue & Academic Session */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Hosting Institution / Venue *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. IIT Roorkee / IEEE Delhi Section / NIT Hamirpur"
+                    value={venue}
+                    onChange={(e) => setVenue(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Academic Session *
+                  </label>
+                  <select
+                    value={academicSession}
+                    onChange={(e) => setAcademicSession(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  >
+                    {ACADEMIC_SESSIONS.map((sess) => (
+                      <option key={sess} value={sess}>
+                        {sess}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Dates */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Start Date / Date Delivered
+                  </label>
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    End Date (if multi-day event)
+                  </label>
+                  <input
+                    type="date"
+                    disabled={isPresent}
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] disabled:opacity-50 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  />
+                </div>
+              </div>
+
+              {/* Description */}
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                  Brief Description / Target Audience
+                </label>
+                <textarea
+                  rows={2}
+                  placeholder="e.g. Delivered as part of AICTE sponsored Faculty Development Programme for 120 faculty attendees."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-3 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                />
+              </div>
+
+              {/* Associated Faculty Picker for instant cross-sync */}
+              <div className="pt-2 border-t border-[#eedfd8]/60">
+                <AssociatedFacultyPicker
+                  selected={selectedAssociatedFaculty}
+                  onChange={setSelectedAssociatedFaculty}
+                  currentFaculty={faculty}
+                  label="Co-Speakers / Associated Faculty (NIT Hamirpur)"
+                  placeholder="Link co-speaker colleagues..."
+                  helperText="Selected colleagues will automatically see this talk logged on their profile."
+                />
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-[#eedfd8]">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2 text-xs font-bold text-neutral-700 hover:bg-[#fff9f6] transition cursor-pointer"
+                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2.5 text-xs font-bold text-neutral-600 hover:bg-neutral-50 transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-5 py-2 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+                  className="rounded-xl bg-[#85261e] hover:bg-[#33110e] px-5 py-2.5 text-xs font-bold text-white shadow-xs hover:shadow-md transition cursor-pointer"
                 >
-                  Save Talk Record
+                  {modalMode === "edit" ? "Save Changes" : "Record Talk"}
                 </button>
               </div>
             </form>

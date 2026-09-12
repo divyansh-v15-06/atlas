@@ -103,8 +103,9 @@ export default function Dashboard() {
     let isMounted = true;
     async function loadData() {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
-        const res = await fetch(`${apiUrl}/api/v1/analytics/get`);
+        const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+        const baseUrl = rawApiUrl.replace(/\/api\/v1\/?$/, "");
+        const res = await fetch(`${baseUrl}/api/v1/analytics/get`);
         if (res.ok) {
           const json = await res.json();
           if (json.data && json.data.publicationsData) {

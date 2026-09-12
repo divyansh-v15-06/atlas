@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import {
   Plus,
   Trash2,
+  Edit,
   GraduationCap,
   X,
   Search,
@@ -17,9 +18,15 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { MOCK_FACULTY } from "@/lib/mock-data";
-import { getStoredData, setStoredData } from "@/lib/faculty-storage";
+import { getStoredData, saveFacultyRecord } from "@/lib/faculty-storage";
+import AssociatedFacultyPicker from "@/components/faculty/AssociatedFacultyPicker";
+import {
+  ACADEMIC_SESSIONS,
+  SUPERVISION_LEVELS,
+  SUPERVISION_STATUSES,
+} from "@/lib/faculty-constants";
 
-interface Supervision {
+export interface Supervision {
   id?: number | string;
   level: string;
   student_name: string;
@@ -27,7 +34,10 @@ interface Supervision {
   thesis_title: string;
   status: string;
   year?: number | string;
+  academic_session?: string;
   co_supervisor?: string | null;
+  associated_faculty?: any[];
+  faculty_ids?: string[];
 }
 
 export default function FacultySupervisionsPage() {
@@ -40,13 +50,42 @@ export default function FacultySupervisionsPage() {
 
   // Modal State
   const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState<"add" | "edit">("add");
+  const [editingId, setEditingId] = useState<string | null>(null);
+
+  // Form states matching tempcsebase
   const [level, setLevel] = useState("Ph.D.");
   const [name, setName] = useState("");
   const [rollNo, setRollNo] = useState("");
   const [topic, setTopic] = useState("");
   const [status, setStatus] = useState("Ongoing");
+  const [academicSession, setAcademicSession] = useState(ACADEMIC_SESSIONS[1] || "2024-2025");
   const [year, setYear] = useState(new Date().getFullYear());
   const [coSupervisor, setCoSupervisor] = useState("");
+  const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
+
+  const loadSupervisions = (activeFaculty: any) => {
+    const facultySupervisions = (activeFaculty as any).supervisions || [];
+    const fallback =
+      facultySupervisions.length > 0
+        ? facultySupervisions
+        : [
+            {
+              id: "sup-default-1",
+              level: "Ph.D.",
+              student_name: "Praveen Prakash",
+              roll_number: "23RCS004",
+              thesis_title: "Lightweight Security Model of Internet of Things Systems",
+              status: "Ongoing",
+              year: 2023,
+              academic_session: "2023-2024",
+              co_supervisor: null,
+            },
+          ];
+
+    const stored = getStoredData<Supervision>(activeFaculty, "supervisions", fallback);
+    setItems(stored);
+  };
 
   useEffect(() => {
     let activeFaculty = MOCK_FACULTY[0];
@@ -68,25 +107,15 @@ export default function FacultySupervisionsPage() {
       } catch {}
     }
 
-    const facultySupervisions = (activeFaculty as any).supervisions || [];
-    const fallback =
-      facultySupervisions.length > 0
-        ? facultySupervisions
-        : [
-            {
-              id: "sup-default-1",
-              level: "Ph.D.",
-              student_name: "Praveen Prakash",
-              roll_number: "23RCS004",
-              thesis_title: "Lightweight Security Model of Internet of Things Systems",
-              status: "Ongoing",
-              year: 2023,
-              co_supervisor: null,
-            },
-          ];
+    loadSupervisions(activeFaculty);
 
-    const stored = getStoredData<Supervision>(activeFaculty, "supervisions", fallback);
-    setItems(stored);
+    const handleStorageUpdate = (e: any) => {
+      if (!e.detail?.section || e.detail.section === "supervisions") {
+        loadSupervisions(activeFaculty);
+      }
+    };
+    window.addEventListener("nith_faculty_storage_update", handleStorageUpdate);
+    return () => window.removeEventListener("nith_faculty_storage_update", handleStorageUpdate);
   }, []);
 
   const filteredItems = useMemo(() => {
@@ -94,65 +123,115 @@ export default function FacultySupervisionsPage() {
       const q = search.toLowerCase();
       const matchesSearch =
         !search ||
-        it.student_name.toLowerCase().includes(q) ||
+        it.student_name?.toLowerCase().includes(q) ||
         (it.roll_number && String(it.roll_number).toLowerCase().includes(q)) ||
-        it.thesis_title.toLowerCase().includes(q) ||
+        it.thesis_title?.toLowerCase().includes(q) ||
         (it.co_supervisor && it.co_supervisor.toLowerCase().includes(q));
 
       const matchesLevel =
         levelFilter === "ALL" ||
-        (levelFilter === "PHD" && it.level.toLowerCase().includes("ph")) ||
-        (levelFilter === "PG" && (it.level.toLowerCase().includes("m.tech") || it.level.toLowerCase().includes("pg")));
+        (levelFilter === "PHD" && it.level?.toLowerCase().includes("ph")) ||
+        (levelFilter === "PG" && (it.level?.toLowerCase().includes("m.tech") || it.level?.toLowerCase().includes("pg"))) ||
+        (levelFilter === "UG" && (it.level?.toLowerCase().includes("b.tech") || it.level?.toLowerCase().includes("ug")));
 
       const matchesStatus =
-        statusFilter === "ALL" || it.status.toLowerCase() === statusFilter.toLowerCase();
+        statusFilter === "ALL" || it.status?.toLowerCase() === statusFilter.toLowerCase();
 
       return matchesSearch && matchesLevel && matchesStatus;
     });
   }, [items, search, levelFilter, statusFilter]);
 
   const phdCount = useMemo(
-    () => items.filter((it) => it.level.toLowerCase().includes("ph")).length,
+    () => items.filter((it) => it.level?.toLowerCase().includes("ph")).length,
     [items]
   );
   const pgCount = useMemo(
-    () => items.filter((it) => it.level.toLowerCase().includes("m.tech") || it.level.toLowerCase().includes("pg")).length,
+    () => items.filter((it) => it.level?.toLowerCase().includes("m.tech") || it.level?.toLowerCase().includes("pg")).length,
+    [items]
+  );
+  const ugCount = useMemo(
+    () => items.filter((it) => it.level?.toLowerCase().includes("b.tech") || it.level?.toLowerCase().includes("ug")).length,
     [items]
   );
 
-  const handleAdd = (e: React.FormEvent) => {
+  const openAddModal = () => {
+    setModalMode("add");
+    setEditingId(null);
+    setLevel("Ph.D.");
+    setName("");
+    setRollNo("");
+    setTopic("");
+    setStatus("Ongoing");
+    setAcademicSession(ACADEMIC_SESSIONS[1] || "2024-2025");
+    setYear(new Date().getFullYear());
+    setCoSupervisor("");
+    setSelectedAssociatedFaculty([]);
+    setShowModal(true);
+  };
+
+  const openEditModal = (sup: Supervision) => {
+    setModalMode("edit");
+    setEditingId(String(sup.id || sup.student_name));
+    setLevel(sup.level || "Ph.D.");
+    setName(sup.student_name || "");
+    setRollNo(String(sup.roll_number || ""));
+    setTopic(sup.thesis_title || "");
+    setStatus(sup.status || "Ongoing");
+    setAcademicSession(sup.academic_session || ACADEMIC_SESSIONS[1]);
+    setYear(Number(sup.year) || new Date().getFullYear());
+    setCoSupervisor(sup.co_supervisor || "");
+
+    const linked = Array.isArray(sup.associated_faculty)
+      ? sup.associated_faculty
+      : Array.isArray(sup.faculty_ids)
+      ? MOCK_FACULTY.filter((f) => sup.faculty_ids?.includes(f.id))
+      : [];
+    setSelectedAssociatedFaculty(linked);
+    setShowModal(true);
+  };
+
+  const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !topic.trim()) {
-      toast.error("Please provide Scholar Name and Thesis Title");
+      toast.error("Please provide Scholar / Student Name and Dissertation Topic");
       return;
     }
+
+    const coSupText = selectedAssociatedFaculty.length > 0
+      ? selectedAssociatedFaculty.map((f) => f.full_name).join(", ")
+      : coSupervisor.trim() || null;
+
     const newEntry: Supervision = {
-      id: `sup-${Date.now()}`,
+      id: modalMode === "edit" && editingId ? editingId : `sup-${Date.now()}`,
       level: level,
       student_name: name.trim(),
       roll_number: rollNo.trim() || undefined,
       thesis_title: topic.trim(),
       status: status,
-      year: year,
-      co_supervisor: coSupervisor.trim() || null,
+      year: Number(year) || new Date().getFullYear(),
+      academic_session: academicSession,
+      co_supervisor: coSupText,
+      associated_faculty: selectedAssociatedFaculty,
+      faculty_ids: [
+        faculty.id,
+        ...selectedAssociatedFaculty.map((f) => f.id || f.employee_code),
+      ],
     };
-    const updated = [newEntry, ...items];
-    setItems(updated);
-    setStoredData(faculty, "supervisions", updated);
+
+    saveFacultyRecord(faculty, "supervisions", newEntry, false);
+    loadSupervisions(faculty);
     setShowModal(false);
-    setName("");
-    setRollNo("");
-    setTopic("");
-    setCoSupervisor("");
-    setStatus("Ongoing");
-    setLevel("Ph.D.");
-    toast.success("Research supervision record saved and persisted!");
+    toast.success(
+      modalMode === "edit"
+        ? "Research supervision record updated and synchronized successfully!"
+        : "Research supervision record created and synchronized with co-supervisors!"
+    );
   };
 
-  const handleDelete = (index: number) => {
-    const updated = items.filter((_, idx) => idx !== index);
-    setItems(updated);
-    setStoredData(faculty, "supervisions", updated);
+  const handleDelete = (sup: Supervision) => {
+    if (!window.confirm(`Are you sure you want to delete "${sup.student_name}"?`)) return;
+    saveFacultyRecord(faculty, "supervisions", sup, true);
+    loadSupervisions(faculty);
     toast.success("Supervision record removed and storage updated");
   };
 
@@ -164,182 +243,192 @@ export default function FacultySupervisionsPage() {
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-[#33110e] tracking-tight uppercase flex items-center gap-2">
               <GraduationCap className="w-6 h-6 text-[#85261e]" />
-              Research Supervisions (Ph.D. &amp; PG / M.Tech)
+              Research Scholar Supervision
             </h1>
             <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-xs font-bold px-2.5 py-0.5 rounded-full">
-              {items.length} Scholars Guided
+              {items.length} Guided
             </span>
           </div>
           <p className="text-xs text-neutral-600 mt-1">
-            Doctoral dissertations, Master of Technology theses, and research guidance of{" "}
-            <strong>{faculty.full_name}</strong> ({faculty.employee_code || "Faculty"}).
+            Doctoral, Post-Graduate, and Undergraduate student research supervised by{" "}
+            <strong>{faculty.full_name}</strong>.
           </p>
         </div>
 
         <button
           type="button"
-          onClick={() => setShowModal(true)}
+          onClick={openAddModal}
           className="inline-flex items-center gap-2 rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-4 py-2.5 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
         >
           <Plus className="h-4 w-4 text-amber-300" />
-          <span>Add Research Scholar</span>
+          <span>Add Scholar</span>
         </button>
       </div>
 
-      {/* Search & Level/Status Filters */}
-      <div className="bg-white border border-[#eedfd8] rounded-2xl p-4 shadow-xs space-y-3">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-2.5" />
-            <input
-              type="text"
-              placeholder="Search scholar name, roll no, topic, co-supervisor..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl border border-[#eedfd8] bg-[#fff9f6] text-[#33110e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
-            />
-          </div>
+      {/* Stats Strip */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="bg-white rounded-2xl border border-[#eedfd8] p-4 shadow-2xs">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+            Ph.D. Doctoral Scholars
+          </span>
+          <p className="text-xl sm:text-2xl font-black text-[#85261e] mt-0.5">
+            {phdCount} Candidates
+          </p>
+        </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            {/* Level Filter */}
-            <div className="flex flex-wrap items-center gap-1.5 bg-[#fff9f6] p-1 rounded-xl border border-[#eedfd8]">
-              {[
-                { id: "ALL", label: `All (${items.length})` },
-                { id: "PHD", label: `Ph.D. (${phdCount})` },
-                { id: "PG", label: `M.Tech / PG (${pgCount})` },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setLevelFilter(tab.id)}
-                  className={`px-3 py-1 text-xs font-semibold rounded-lg transition cursor-pointer ${
-                    levelFilter === tab.id
-                      ? "bg-[#33110e] text-white shadow-xs"
-                      : "text-[#33110e] hover:bg-[#eedfd8]/50"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+        <div className="bg-white rounded-2xl border border-[#eedfd8] p-4 shadow-2xs">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+            M.Tech Dissertations
+          </span>
+          <p className="text-xl sm:text-2xl font-black text-blue-700 mt-0.5">
+            {pgCount} Theses
+          </p>
+        </div>
 
-            {/* Status Filter */}
-            <div className="flex flex-wrap items-center gap-1.5 bg-[#fff9f6] p-1 rounded-xl border border-[#eedfd8]">
-              {[
-                { id: "ALL", label: "All Status" },
-                { id: "Ongoing", label: "Ongoing" },
-                { id: "Completed", label: "Completed" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setStatusFilter(tab.id)}
-                  className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition cursor-pointer ${
-                    statusFilter === tab.id
-                      ? "bg-[#85261e] text-white shadow-xs"
-                      : "text-[#33110e] hover:bg-[#eedfd8]/50"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-          </div>
+        <div className="bg-white rounded-2xl border border-[#eedfd8] p-4 shadow-2xs">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+            B.Tech Major Projects
+          </span>
+          <p className="text-xl sm:text-2xl font-black text-emerald-700 mt-0.5">
+            {ugCount} Guided
+          </p>
         </div>
       </div>
 
-      {/* Supervisions Cards Grid */}
-      <div className="space-y-3.5">
-        {filteredItems.map((it, i) => {
-          const isOngoing = it.status.toLowerCase() === "ongoing";
-          const isPhd = it.level.toLowerCase().includes("ph");
-          return (
-            <div
-              key={i}
-              className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-xs hover:border-[#85261e]/40 transition duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#fff9f6] border border-[#eedfd8] flex items-center justify-center text-[#85261e] flex-shrink-0 shadow-2xs group-hover:bg-[#33110e] group-hover:text-amber-300 transition duration-200">
-                  <GraduationCap className="w-6 h-6" />
-                </div>
+      {/* Filter Strip */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
+          <input
+            type="text"
+            placeholder="Search scholars by name, roll number, topic or co-supervisor..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#eedfd8] bg-white text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e] shadow-2xs"
+          />
+        </div>
 
-                <div className="space-y-1.5">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="font-bold text-sm sm:text-base text-[#1c110c] group-hover:text-[#85261e] transition">
-                      {it.student_name}
-                    </h3>
+        <select
+          value={levelFilter}
+          onChange={(e) => setLevelFilter(e.target.value)}
+          className="px-4 py-2.5 rounded-xl border border-[#eedfd8] bg-white text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e] shadow-2xs cursor-pointer"
+        >
+          <option value="ALL">All Levels</option>
+          <option value="PHD">Ph.D.</option>
+          <option value="PG">M.Tech</option>
+          <option value="UG">B.Tech</option>
+        </select>
 
-                    {it.roll_number && (
-                      <span className="bg-[#fff9f6] text-[#33110e] border border-[#eedfd8] text-[11px] font-mono font-bold px-2 py-0.5 rounded">
-                        Roll: {it.roll_number}
-                      </span>
-                    )}
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="px-4 py-2.5 rounded-xl border border-[#eedfd8] bg-white text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e] shadow-2xs cursor-pointer"
+        >
+          <option value="ALL">All Statuses</option>
+          <option value="Ongoing">Ongoing</option>
+          <option value="Awarded">Awarded / Completed</option>
+          <option value="Submitted">Submitted</option>
+        </select>
+      </div>
 
-                    <span
-                      className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${
-                        isPhd
-                          ? "bg-[#33110e] text-white"
-                          : "bg-neutral-800 text-white"
-                      }`}
-                    >
-                      {it.level}
-                    </span>
+      {/* Scholars List */}
+      <div className="space-y-3">
+        {filteredItems.map((sup) => (
+          <div
+            key={sup.id}
+            className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-2xs hover:shadow-md transition space-y-3 group"
+          >
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#33110e] text-white">
+                {sup.level || "Ph.D."}
+              </span>
 
-                    <span
-                      className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
-                        isOngoing
-                          ? "bg-amber-50 text-amber-800 border-amber-300"
-                          : "bg-emerald-50 text-emerald-800 border-emerald-300"
-                      }`}
-                    >
-                      {it.status} {it.year ? `(${it.year})` : ""}
-                    </span>
-                  </div>
+              <span
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                  sup.status?.toLowerCase() === "awarded" || sup.status?.toLowerCase() === "completed"
+                    ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                    : "bg-blue-100 text-blue-800 border border-blue-300"
+                }`}
+              >
+                {sup.status || "Ongoing"}
+              </span>
 
-                  <p className="text-xs text-neutral-700 leading-relaxed font-medium bg-[#fff9f6] border border-[#eedfd8]/60 rounded-xl p-2.5 italic">
-                    &quot;{it.thesis_title}&quot;
-                  </p>
+              {sup.academic_session && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-neutral-100 text-neutral-600">
+                  Session: {sup.academic_session}
+                </span>
+              )}
 
-                  {it.co_supervisor && (
-                    <p className="text-[11px] text-neutral-500 flex items-center gap-1 pt-0.5">
-                      <Users className="w-3 h-3 text-[#85261e]" />
-                      <span>Co-Supervisor: <strong>{it.co_supervisor}</strong></span>
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 self-end sm:self-center border-t sm:border-t-0 pt-2 sm:pt-0 border-[#eedfd8]/60 w-full sm:w-auto justify-end">
-                <button
-                  type="button"
-                  onClick={() => handleDelete(i)}
-                  className="p-2 text-neutral-400 hover:text-red-700 transition rounded-xl hover:bg-red-50 cursor-pointer"
-                  title="Remove Supervision Record"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
-              </div>
+              <span className="text-xs font-bold text-neutral-400 ml-auto font-mono">
+                {sup.year}
+              </span>
             </div>
-          );
-        })}
+
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+              <h3 className="text-sm sm:text-base font-bold text-[#1c110c]">
+                {sup.student_name}
+              </h3>
+              {sup.roll_number && (
+                <span className="font-mono text-xs font-semibold text-[#85261e]">
+                  Roll: {sup.roll_number}
+                </span>
+              )}
+            </div>
+
+            <p className="text-xs text-neutral-700 italic bg-[#fff9f6] p-3 rounded-xl border border-[#eedfd8]/60">
+              "{sup.thesis_title}"
+            </p>
+
+            {sup.co_supervisor && (
+              <p className="text-xs text-neutral-500 flex items-center gap-1.5">
+                <Users className="w-3.5 h-3.5 text-neutral-400" />
+                <span>Co-Supervisor(s): <strong>{sup.co_supervisor}</strong></span>
+              </p>
+            )}
+
+            {/* Actions Strip */}
+            <div className="flex items-center justify-end gap-1 pt-3 border-t border-[#eedfd8]/60 text-xs">
+              <button
+                type="button"
+                onClick={() => openEditModal(sup)}
+                className="p-1.5 text-neutral-500 hover:text-[#85261e] transition rounded-lg hover:bg-[#fdf5f2] cursor-pointer"
+                title="Edit Scholar"
+              >
+                <Edit className="h-4 w-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleDelete(sup)}
+                className="p-1.5 text-neutral-400 hover:text-red-700 transition rounded-lg hover:bg-red-50 cursor-pointer"
+                title="Remove Scholar"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        ))}
 
         {filteredItems.length === 0 && (
           <div className="text-center py-16 text-neutral-500 text-xs bg-white rounded-2xl border border-[#eedfd8]">
-            No research supervision records found matching your filters.
+            No supervision records found matching your query.
           </div>
         )}
       </div>
 
-      {/* Add Supervision Modal */}
+      {/* Add / Edit Supervision Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs font-sans overflow-y-auto">
-          <div className="w-full max-w-xl rounded-3xl border border-[#eedfd8] bg-white p-6 sm:p-8 shadow-2xl space-y-5 my-8">
+          <div className="w-full max-w-2xl rounded-3xl border border-[#eedfd8] bg-white p-6 sm:p-8 shadow-2xl space-y-5 my-8 max-h-[90vh] flex flex-col overflow-hidden">
+            {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-[#eedfd8]/60 pb-3">
               <div>
-                <h2 className="text-lg font-bold text-[#33110e]">
-                  Add Research Scholar Guidance
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#85261e]">
+                  {modalMode === "edit" ? "Modify Supervision" : "New Scholar Record"}
+                </span>
+                <h2 className="text-xl font-extrabold text-[#33110e]">
+                  {modalMode === "edit" ? "Edit Supervision Details" : "Record Scholar Supervision"}
                 </h2>
-                <p className="text-xs text-neutral-500">
-                  Log Ph.D. doctoral dissertations or M.Tech postgraduate theses.
-                </p>
               </div>
               <button
                 type="button"
@@ -350,46 +439,72 @@ export default function FacultySupervisionsPage() {
               </button>
             </div>
 
-            <form onSubmit={handleAdd} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Modal Body */}
+            <form onSubmit={handleSave} className="space-y-4 overflow-y-auto pr-1 flex-1 text-xs">
+              {/* Level, Status, Academic Session */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Degree Level *
+                    Programme Level *
                   </label>
                   <select
                     value={level}
                     onChange={(e) => setLevel(e.target.value)}
                     className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   >
-                    <option value="Ph.D.">Ph.D. Doctoral Dissertation</option>
-                    <option value="M.Tech / PG">M.Tech / Postgraduate Thesis</option>
+                    {SUPERVISION_LEVELS.map((lvl) => (
+                      <option key={lvl} value={lvl}>
+                        {lvl}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Status *
+                    Supervision Status *
                   </label>
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
                     className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   >
-                    <option value="Ongoing">Ongoing / Pursuing</option>
-                    <option value="Completed">Completed / Awarded</option>
+                    {SUPERVISION_STATUSES.map((st) => (
+                      <option key={st} value={st}>
+                        {st}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Academic Session *
+                  </label>
+                  <select
+                    value={academicSession}
+                    onChange={(e) => setAcademicSession(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  >
+                    {ACADEMIC_SESSIONS.map((sess) => (
+                      <option key={sess} value={sess}>
+                        {sess}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Student Name & Roll No */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Scholar Name *
+                    Scholar / Student Full Name *
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Akash Verma"
+                    placeholder="e.g. Praveen Prakash"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
@@ -398,73 +513,90 @@ export default function FacultySupervisionsPage() {
 
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Roll Number
+                    Roll Number / Registration ID
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. 22RCS006 or 19M520"
+                    placeholder="e.g. 23RCS004"
                     value={rollNo}
                     onChange={(e) => setRollNo(e.target.value)}
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   />
                 </div>
               </div>
 
+              {/* Thesis Title */}
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Research Topic / Dissertation Title *
+                  Dissertation / Thesis Title *
                 </label>
                 <textarea
                   rows={2}
                   required
-                  placeholder="e.g. Deep Learning based Brain Tumor Segmentation and Classification from MRI Images"
+                  placeholder="e.g. Lightweight Cryptographic Primitives and Intrusion Detection in Edge Computing"
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
                   className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-3 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Year & External Co-Supervisor */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Enrolment / Completion Year *
+                    Year (Enrollment / Awarded) *
                   </label>
                   <input
                     type="number"
+                    required
+                    min={1990}
+                    max={2035}
                     value={year}
                     onChange={(e) => setYear(Number(e.target.value))}
-                    required
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   />
                 </div>
 
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Co-Supervisor (If Any)
+                    External Co-Supervisor (if outside NITH)
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Dr. Co-Supervisor Name"
+                    placeholder="e.g. Prof. R. K. Sharma (IIT Roorkee)"
                     value={coSupervisor}
                     onChange={(e) => setCoSupervisor(e.target.value)}
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2.5 pt-4 border-t border-[#eedfd8]/60">
+              {/* Associated Faculty Picker for internal co-supervisors */}
+              <div className="pt-2 border-t border-[#eedfd8]/60">
+                <AssociatedFacultyPicker
+                  selected={selectedAssociatedFaculty}
+                  onChange={setSelectedAssociatedFaculty}
+                  currentFaculty={faculty}
+                  label="Internal Co-Supervisors (NIT Hamirpur Faculty)"
+                  placeholder="Link internal co-supervisor colleagues..."
+                  helperText="Selected colleagues will automatically see this scholar in their supervision list."
+                />
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-[#eedfd8]">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2 text-xs font-bold text-neutral-700 hover:bg-[#fff9f6] transition cursor-pointer"
+                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2.5 text-xs font-bold text-neutral-600 hover:bg-neutral-50 transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-5 py-2 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+                  className="rounded-xl bg-[#85261e] hover:bg-[#33110e] px-5 py-2.5 text-xs font-bold text-white shadow-xs hover:shadow-md transition cursor-pointer"
                 >
-                  Save Scholar Record
+                  {modalMode === "edit" ? "Save Changes" : "Record Supervision"}
                 </button>
               </div>
             </form>

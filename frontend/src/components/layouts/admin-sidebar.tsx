@@ -45,6 +45,7 @@ type SidebarItem =
 
 const sidebarLinks: SidebarItem[] = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { label: "Visual Analytics & Graphs", href: "/admin/analytics", icon: BarChart3, badge: "Charts" },
   {
     section: "People Management",
     id: "people",

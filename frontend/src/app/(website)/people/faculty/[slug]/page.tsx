@@ -1603,25 +1603,6 @@ export default function FacultyPortfolioPage({
               >
                 Vidwan
               </a>
-
-              {/* Faculty Portal Login Link or Dashboard */}
-              {canEdit ? (
-                <Link
-                  href="/faculty"
-                  className="inline-flex items-center gap-1.5 bg-[#85261e] hover:bg-[#33110e] text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer ml-1"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
-                  <span>Faculty Dashboard</span>
-                </Link>
-              ) : (
-                <Link
-                  href="/faculty/login"
-                  className="inline-flex items-center gap-1.5 bg-white hover:bg-neutral-100 text-[#1f1412] px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer ml-1"
-                >
-                  <LogIn className="w-3.5 h-3.5 text-[#85261e]" />
-                  <span>Faculty Login</span>
-                </Link>
-              )}
             </div>
           </div>
         </div>
@@ -1764,43 +1745,13 @@ export default function FacultyPortfolioPage({
               </div>
 
               <div className="flex items-center gap-2 shrink-0">
-                {canEdit ? (
-                  activeTab === "courses" ? (
-                    <Link
-                      href="/faculty/courses"
-                      className="inline-flex items-center gap-2 bg-[#85261e] hover:bg-[#33110e] text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-xs hover:shadow-md transition cursor-pointer"
-                    >
-                      <BookOpenCheck className="w-4 h-4 text-amber-300" />
-                      <span>Faculty Timetable</span>
-                    </Link>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={openAddModal}
-                      className="inline-flex items-center gap-2 bg-[#85261e] hover:bg-[#33110e] text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-xs hover:shadow-md transition cursor-pointer"
-                    >
-                      {activeTab === "facultyInfo" ? (
-                        <>
-                          <Edit className="w-4 h-4 text-amber-300" />
-                          <span>Edit Profile</span>
-                        </>
-                      ) : (
-                        <>
-                          <Plus className="w-4 h-4 text-amber-300" />
-                          <span>Add {sidebarItems.find((i) => i.key === activeTab)?.label}</span>
-                        </>
-                      )}
-                    </button>
-                  )
-                ) : (
-                  <Link
-                    href="/faculty/export"
-                    className="inline-flex items-center gap-2 bg-[#fff9f6] hover:bg-[#85261e] hover:text-white text-[#85261e] border border-[#eedfd8] px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-2xs"
-                  >
-                    <Download className="w-3.5 h-3.5 text-amber-500" />
-                    <span>Download CV</span>
-                  </Link>
-                )}
+                <Link
+                  href="/faculty/export"
+                  className="inline-flex items-center gap-2 bg-[#fff9f6] hover:bg-[#85261e] hover:text-white text-[#85261e] border border-[#eedfd8] px-3.5 py-2 rounded-xl text-xs font-bold transition shadow-2xs"
+                >
+                  <Download className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Download CV</span>
+                </Link>
               </div>
             </div>
 
@@ -2275,39 +2226,15 @@ export default function FacultyPortfolioPage({
                                       <span>Details</span>
                                     </button>
 
-                                    <div className="flex items-center gap-1.5">
-                                      <button
-                                        type="button"
-                                        onClick={() => copyCitation(pub)}
-                                        className="flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-xl bg-neutral-100 hover:bg-[#85261e] hover:text-white text-neutral-700 transition font-bold text-xs cursor-pointer"
-                                        title="Copy Citation"
-                                      >
-                                        {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-                                        <span>Cite</span>
-                                      </button>
-
-                                      {canEdit && (
-                                        <>
-                                          <button
-                                            type="button"
-                                            onClick={() => openEditModal(pub)}
-                                            className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
-                                            title="Edit Record"
-                                          >
-                                            <Edit className="w-3.5 h-3.5" />
-                                          </button>
-
-                                          <button
-                                            type="button"
-                                            onClick={() => handleDeleteRecord(pub)}
-                                            className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
-                                            title="Delete Record"
-                                          >
-                                            <Trash2 className="w-3.5 h-3.5" />
-                                          </button>
-                                        </>
-                                      )}
-                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => copyCitation(pub)}
+                                      className="w-full inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-xl bg-neutral-100 hover:bg-[#85261e] hover:text-white text-neutral-700 transition font-bold text-xs cursor-pointer"
+                                      title="Copy Citation"
+                                    >
+                                      {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                                      <span>Cite</span>
+                                    </button>
                                   </td>
                               </tr>
                             );
@@ -2420,26 +2347,6 @@ export default function FacultyPortfolioPage({
                                 >
                                   <Info className="w-3.5 h-3.5" /> Details
                                 </button>
-                                {canEdit && (
-                                  <div className="flex items-center justify-center gap-1.5">
-                                    <button
-                                      type="button"
-                                      onClick={() => openEditModal(pat)}
-                                      className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
-                                      title="Edit Record"
-                                    >
-                                      <Edit className="w-3.5 h-3.5" />
-                                    </button>
-                                    <button
-                                      type="button"
-                                      onClick={() => handleDeleteRecord(pat)}
-                                      className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
-                                      title="Delete Record"
-                                    >
-                                      <Trash2 className="w-3.5 h-3.5" />
-                                    </button>
-                                  </div>
-                                )}
                               </td>
                             </tr>
                           );
@@ -2449,9 +2356,7 @@ export default function FacultyPortfolioPage({
                   </div>
                 ) : (
                   <div className="p-12 text-center text-neutral-500 text-sm">
-                    {canEdit
-                      ? 'No patent records listed. Click "+ Add Patents" to register a patent.'
-                      : "No patent records listed for this faculty member."}
+                    No patent records listed for this faculty member.
                   </div>
                 )}
               </div>
@@ -2504,26 +2409,6 @@ export default function FacultyPortfolioPage({
                               >
                                 <Info className="w-3.5 h-3.5" /> Details
                               </button>
-                              {canEdit && (
-                                <div className="flex items-center justify-center gap-1.5">
-                                  <button
-                                    type="button"
-                                    onClick={() => openEditModal(prj)}
-                                    className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
-                                    title="Edit Record"
-                                  >
-                                    <Edit className="w-3.5 h-3.5" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleDeleteRecord(prj)}
-                                    className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
-                                    title="Delete Record"
-                                  >
-                                    <Trash2 className="w-3.5 h-3.5" />
-                                  </button>
-                                </div>
-                              )}
                             </td>
                           </tr>
                         ))}
@@ -2532,9 +2417,7 @@ export default function FacultyPortfolioPage({
                   </div>
                 ) : (
                   <div className="p-12 text-center text-neutral-500 text-sm">
-                    {canEdit
-                      ? 'No sponsored projects listed. Click "+ Add Projects" to register one.'
-                      : "No sponsored projects listed for this faculty member."}
+                    No sponsored projects listed for this faculty member.
                   </div>
                 )}
               </div>
@@ -2586,26 +2469,6 @@ export default function FacultyPortfolioPage({
                               >
                                 <Info className="w-3.5 h-3.5" /> Details
                               </button>
-                              {canEdit && (
-                                <div className="flex items-center justify-center gap-1.5">
-                                  <button
-                                    type="button"
-                                    onClick={() => openEditModal(evt)}
-                                    className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
-                                    title="Edit Record"
-                                  >
-                                    <Edit className="w-3.5 h-3.5" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleDeleteRecord(evt)}
-                                    className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
-                                    title="Delete Record"
-                                  >
-                                    <Trash2 className="w-3.5 h-3.5" />
-                                  </button>
-                                </div>
-                              )}
                             </td>
                           </tr>
                         ))}
@@ -2665,26 +2528,6 @@ export default function FacultyPortfolioPage({
                               >
                                 <Info className="w-3.5 h-3.5" /> Details
                               </button>
-                              {canEdit && (
-                                <div className="flex items-center justify-center gap-1.5">
-                                  <button
-                                    type="button"
-                                    onClick={() => openEditModal(c)}
-                                    className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
-                                    title="Edit Record"
-                                  >
-                                    <Edit className="w-3.5 h-3.5" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleDeleteRecord(c)}
-                                    className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
-                                    title="Delete Record"
-                                  >
-                                    <Trash2 className="w-3.5 h-3.5" />
-                                  </button>
-                                </div>
-                              )}
                             </td>
                           </tr>
                         ))}
@@ -2728,26 +2571,6 @@ export default function FacultyPortfolioPage({
                             )}
                           </div>
                         </div>
-                        {canEdit && (
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <button
-                              type="button"
-                              onClick={() => openEditModal(talk)}
-                              className="p-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
-                              title="Edit Record"
-                            >
-                              <Edit className="w-4 h-4" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => handleDeleteRecord(talk)}
-                              className="p-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
-                              title="Delete Record"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </div>
-                        )}
                       </div>
                     ))}
                   </div>
@@ -2809,26 +2632,6 @@ export default function FacultyPortfolioPage({
                               >
                                 <Info className="w-3.5 h-3.5" /> Details
                               </button>
-                              {canEdit && (
-                                <div className="flex items-center justify-center gap-1.5">
-                                  <button
-                                    type="button"
-                                    onClick={() => openEditModal(s)}
-                                    className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
-                                    title="Edit Record"
-                                  >
-                                    <Edit className="w-3.5 h-3.5" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleDeleteRecord(s)}
-                                    className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
-                                    title="Delete Record"
-                                  >
-                                    <Trash2 className="w-3.5 h-3.5" />
-                                  </button>
-                                </div>
-                              )}
                             </td>
                           </tr>
                         ))}
@@ -2861,7 +2664,6 @@ export default function FacultyPortfolioPage({
                           <th className="p-3.5 border-r border-neutral-700">Position / Designation</th>
                           <th className="p-3.5 border-r border-neutral-700">Department / Organization</th>
                           <th className="p-3.5 w-44 text-center border-r border-neutral-700">Duration</th>
-                          {canEdit && <th className="p-3.5 w-28 text-center">Actions</th>}
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#eedfd8]/60">
@@ -2879,28 +2681,6 @@ export default function FacultyPortfolioPage({
                             <td className="p-3.5 text-center align-top text-neutral-700 font-semibold text-sm">
                               {adm.start_date ? `${adm.start_date} to ${adm.end_date || "Present"}` : "Completed"}
                             </td>
-                            {canEdit && (
-                              <td className="p-3.5 text-center align-top">
-                                <div className="flex items-center justify-center gap-1.5">
-                                  <button
-                                    type="button"
-                                    onClick={() => openEditModal(adm)}
-                                    className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
-                                    title="Edit Record"
-                                  >
-                                    <Edit className="w-3.5 h-3.5" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() => handleDeleteRecord(adm)}
-                                    className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
-                                    title="Delete Record"
-                                  >
-                                    <Trash2 className="w-3.5 h-3.5" />
-                                  </button>
-                                </div>
-                              </td>
-                            )}
                           </tr>
                         ))}
                       </tbody>
@@ -2947,26 +2727,6 @@ export default function FacultyPortfolioPage({
                             )}
                           </div>
                         </div>
-                        {canEdit && (
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <button
-                              type="button"
-                              onClick={() => openEditModal(hnr)}
-                              className="p-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
-                              title="Edit Record"
-                            >
-                              <Edit className="w-4 h-4" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => handleDeleteRecord(hnr)}
-                              className="p-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
-                              title="Delete Record"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </div>
-                        )}
                       </div>
                     ))}
                   </div>
@@ -3011,26 +2771,6 @@ export default function FacultyPortfolioPage({
                             )}
                           </div>
                         </div>
-                        {canEdit && (
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <button
-                              type="button"
-                              onClick={() => openEditModal(exp)}
-                              className="p-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
-                              title="Edit Record"
-                            >
-                              <Edit className="w-4 h-4" />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => handleDeleteRecord(exp)}
-                              className="p-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
-                              title="Delete Record"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </button>
-                          </div>
-                        )}
                       </div>
                     ))}
                   </div>
@@ -4844,31 +4584,9 @@ export default function FacultyPortfolioPage({
 
               {/* Action Buttons */}
               <div className="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-neutral-100">
-                {canEdit ? (
-                  <div className="flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => openEditModal(detailItem)}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-bold text-sm transition cursor-pointer"
-                    >
-                      <Edit className="w-4 h-4" />
-                      <span>Edit Entry</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => handleDeleteRecord(detailItem)}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-bold text-sm transition cursor-pointer"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      <span>Delete</span>
-                    </button>
-                  </div>
-                ) : (
-                  <div className="text-xs text-neutral-400 font-medium">
-                    Official Institutional Record • NIT Hamirpur
-                  </div>
-                )}
+                <div className="text-xs text-neutral-400 font-medium">
+                  Official Institutional Record • NIT Hamirpur
+                </div>
 
                 <div className="flex items-center gap-2">
                   {detailItem.doi && (

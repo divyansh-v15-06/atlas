@@ -105,6 +105,18 @@ export function getStoredData<T>(faculty: any, section: string, defaultFallback:
   return defaultFallback;
 }
 
+export function saveFacultyRecord(
+  currentFaculty: any,
+  section: string,
+  record: any,
+  isDelete: boolean = false
+): void {
+  const associatedList = Array.isArray(record?.associated_faculty)
+    ? record.associated_faculty
+    : [];
+  syncMultiFacultyRecord(currentFaculty, section, record, associatedList, isDelete);
+}
+
 export function syncMultiFacultyRecord(
   currentFaculty: any,
   section: string,

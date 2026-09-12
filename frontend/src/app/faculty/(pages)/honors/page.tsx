@@ -1,15 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Trash2, Award, X, Building2, Calendar, Sparkles, Trophy, CheckCircle2 } from "lucide-react";
+import { Plus, Trash2, Edit, Award, X, Building2, Calendar, Sparkles, Trophy, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { MOCK_FACULTY } from "@/lib/mock-data";
-import { getStoredData, setStoredData } from "@/lib/faculty-storage";
+import { getStoredData, saveFacultyRecord } from "@/lib/faculty-storage";
+import { ACADEMIC_SESSIONS } from "@/lib/faculty-constants";
 
-interface Honor {
+export interface Honor {
+  id?: string;
   title: string;
   organization: string;
   year: number | string;
+  academic_session?: string;
+  description?: string;
 }
 
 export default function HonorsPage() {
@@ -17,11 +21,43 @@ export default function HonorsPage() {
   const [faculty, setFaculty] = useState<any>(MOCK_FACULTY[0]);
   const [honors, setHonors] = useState<Honor[]>([]);
   const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState<"add" | "edit">("add");
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   // Form states
   const [title, setTitle] = useState("");
   const [organization, setOrganization] = useState("");
   const [year, setYear] = useState<number | string>(new Date().getFullYear());
+  const [academicSession, setAcademicSession] = useState(ACADEMIC_SESSIONS[1] || "2024-2025");
+  const [description, setDescription] = useState("");
+
+  const loadHonors = (activeFaculty: any) => {
+    const facultyHonors = (activeFaculty as any).honors || [];
+    const fallback =
+      facultyHonors.length > 0
+        ? facultyHonors
+        : [
+            {
+              id: "hnr-1",
+              title: "Best Research Paper Award",
+              organization: "IEEE International Conference on Advanced Networks",
+              year: 2022,
+              academic_session: "2022-2023",
+              description: "Awarded for exceptional contribution in wireless sensor network security.",
+            },
+            {
+              id: "hnr-2",
+              title: "Excellence in Teaching & Research Citation",
+              organization: "National Institute of Technology Hamirpur",
+              year: 2020,
+              academic_session: "2020-2021",
+              description: "Institutional citation presented on Teacher's Day.",
+            },
+          ];
+
+    const stored = getStoredData<Honor>(activeFaculty, "honors", fallback);
+    setHonors(stored);
+  };
 
   useEffect(() => {
     let activeFaculty = MOCK_FACULTY[0];
@@ -43,53 +79,70 @@ export default function HonorsPage() {
       } catch {}
     }
 
-    const facultyHonors = (activeFaculty as any).honors || [];
-    const fallback =
-      facultyHonors.length > 0
-        ? facultyHonors
-        : [
-            {
-              title: "Best Research Paper Award",
-              organization: "IEEE International Conference on Advanced Networks",
-              year: 2022,
-            },
-            {
-              title: "Excellence in Teaching & Research Citation",
-              organization: "National Institute of Technology Hamirpur",
-              year: 2020,
-            },
-          ];
+    loadHonors(activeFaculty);
 
-    const stored = getStoredData<Honor>(activeFaculty, "honors", fallback);
-    setHonors(stored);
+    const handleStorageUpdate = (e: any) => {
+      if (!e.detail?.section || e.detail.section === "honors") {
+        loadHonors(activeFaculty);
+      }
+    };
+    window.addEventListener("nith_faculty_storage_update", handleStorageUpdate);
+    return () => window.removeEventListener("nith_faculty_storage_update", handleStorageUpdate);
   }, []);
 
-  const handleAdd = (e: React.FormEvent) => {
+  const openAddModal = () => {
+    setModalMode("add");
+    setEditingId(null);
+    setTitle("");
+    setOrganization("");
+    setYear(new Date().getFullYear());
+    setAcademicSession(ACADEMIC_SESSIONS[1] || "2024-2025");
+    setDescription("");
+    setShowModal(true);
+  };
+
+  const openEditModal = (hnr: Honor) => {
+    setModalMode("edit");
+    setEditingId(hnr.id || hnr.title);
+    setTitle(hnr.title || "");
+    setOrganization(hnr.organization || "");
+    setYear(hnr.year || new Date().getFullYear());
+    setAcademicSession(hnr.academic_session || ACADEMIC_SESSIONS[1]);
+    setDescription(hnr.description || "");
+    setShowModal(true);
+  };
+
+  const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !organization.trim()) {
       toast.error("Please provide Award Title and Awarding Body");
       return;
     }
+
     const newHonor: Honor = {
+      id: modalMode === "edit" && editingId ? editingId : `hnr-${Date.now()}`,
       title: title.trim(),
       organization: organization.trim(),
       year: year || new Date().getFullYear(),
+      academic_session: academicSession,
+      description: description.trim() || undefined,
     };
-    const updated = [newHonor, ...honors];
-    setHonors(updated);
-    setStoredData(faculty, "honors", updated);
+
+    saveFacultyRecord(faculty, "honors", newHonor, false);
+    loadHonors(faculty);
     setShowModal(false);
-    setTitle("");
-    setOrganization("");
-    setYear(new Date().getFullYear());
-    toast.success("Award / Honor record saved and persisted!");
+    toast.success(
+      modalMode === "edit"
+        ? "Honor / recognition updated successfully!"
+        : "Honor / recognition award recorded and saved!"
+    );
   };
 
-  const handleDelete = (index: number) => {
-    const updated = honors.filter((_, idx) => idx !== index);
-    setHonors(updated);
-    setStoredData(faculty, "honors", updated);
-    toast.success("Award record removed and storage updated");
+  const handleDelete = (hnr: Honor) => {
+    if (!window.confirm(`Are you sure you want to delete "${hnr.title}"?`)) return;
+    saveFacultyRecord(faculty, "honors", hnr, true);
+    loadHonors(faculty);
+    toast.success("Honor record removed and storage updated");
   };
 
   return (
@@ -99,63 +152,83 @@ export default function HonorsPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-[#33110e] tracking-tight uppercase flex items-center gap-2">
-              <Award className="w-6 h-6 text-[#85261e]" />
-              Honors, Awards &amp; Recognitions
+              <Trophy className="w-6 h-6 text-[#85261e]" />
+              Honors &amp; Recognitions
             </h1>
             <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-xs font-bold px-2.5 py-0.5 rounded-full">
-              {honors.length} Recognitions Recorded
+              {honors.length} Awards
             </span>
           </div>
           <p className="text-xs text-neutral-600 mt-1">
-            National, international, and institutional awards conferred to{" "}
-            <strong>{faculty.full_name}</strong> ({faculty.employee_code || "Faculty"}).
+            Academic fellowships, prestigious recognitions, and awards conferred to{" "}
+            <strong>{faculty.full_name}</strong>.
           </p>
         </div>
 
         <button
           type="button"
-          onClick={() => setShowModal(true)}
+          onClick={openAddModal}
           className="inline-flex items-center gap-2 rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-4 py-2.5 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
         >
           <Plus className="h-4 w-4 text-amber-300" />
-          <span>Add Award / Honor</span>
+          <span>Add Recognition</span>
         </button>
       </div>
 
-      {/* Honors Cards Grid */}
+      {/* List */}
       <div className="space-y-3">
-        {honors.map((item, i) => (
+        {honors.map((hnr, idx) => (
           <div
-            key={i}
-            className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-xs hover:border-[#85261e]/40 transition duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+            key={hnr.id || idx}
+            className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-2xs hover:shadow-md transition space-y-2 group"
           >
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#fff9f6] border border-[#eedfd8] flex items-center justify-center text-amber-600 flex-shrink-0 shadow-2xs group-hover:bg-[#33110e] group-hover:text-amber-300 transition duration-200">
-                <Trophy className="w-6 h-6" />
-              </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                <Trophy className="w-3 h-3 text-amber-700" />
+                Honor / Award
+              </span>
 
-              <div className="space-y-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="font-bold text-sm sm:text-base text-[#1c110c] group-hover:text-[#85261e] transition">
-                    {item.title}
-                  </h3>
-                  <span className="bg-[#fff9f6] text-[#33110e] border border-[#eedfd8] text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full">
-                    Year: {item.year}
-                  </span>
-                </div>
+              {hnr.academic_session && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-neutral-100 text-neutral-600">
+                  Session: {hnr.academic_session}
+                </span>
+              )}
 
-                <p className="text-xs text-neutral-700 font-medium flex items-center gap-1.5">
-                  <Building2 className="w-3.5 h-3.5 text-[#85261e]" />
-                  <span>Awarded by: <strong>{item.organization}</strong></span>
-                </p>
-              </div>
+              <span className="text-xs font-bold text-neutral-400 ml-auto font-mono">
+                {hnr.year}
+              </span>
             </div>
 
-            <div className="flex items-center gap-2 self-end sm:self-center border-t sm:border-t-0 pt-2 sm:pt-0 border-[#eedfd8]/60 w-full sm:w-auto justify-end">
+            <h3 className="text-sm sm:text-base font-bold text-[#1c110c] leading-snug">
+              {hnr.title}
+            </h3>
+
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#85261e]">
+              <Building2 className="w-3.5 h-3.5" />
+              <span>{hnr.organization}</span>
+            </div>
+
+            {hnr.description && (
+              <p className="text-xs text-neutral-600 leading-relaxed pt-1">
+                {hnr.description}
+              </p>
+            )}
+
+            {/* Actions Strip */}
+            <div className="flex items-center justify-end gap-1 pt-3 border-t border-[#eedfd8]/60 text-xs">
               <button
                 type="button"
-                onClick={() => handleDelete(i)}
-                className="p-2 text-neutral-400 hover:text-red-700 transition rounded-xl hover:bg-red-50 cursor-pointer"
+                onClick={() => openEditModal(hnr)}
+                className="p-1.5 text-neutral-500 hover:text-[#85261e] transition rounded-lg hover:bg-[#fdf5f2] cursor-pointer"
+                title="Edit Honor"
+              >
+                <Edit className="h-4 w-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleDelete(hnr)}
+                className="p-1.5 text-neutral-400 hover:text-red-700 transition rounded-lg hover:bg-red-50 cursor-pointer"
                 title="Remove Honor"
               >
                 <Trash2 className="h-4 w-4" />
@@ -166,23 +239,23 @@ export default function HonorsPage() {
 
         {honors.length === 0 && (
           <div className="text-center py-16 text-neutral-500 text-xs bg-white rounded-2xl border border-[#eedfd8]">
-            No honors or awards recorded yet. Click &quot;Add Award / Honor&quot; to log your recognitions.
+            No honors recorded. Click "Add Recognition" to log your academic awards.
           </div>
         )}
       </div>
 
-      {/* Add Honor Modal */}
+      {/* Add / Edit Honor Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs font-sans">
           <div className="w-full max-w-lg rounded-3xl border border-[#eedfd8] bg-white p-6 sm:p-8 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between border-b border-[#eedfd8]/60 pb-3">
               <div>
-                <h2 className="text-lg font-bold text-[#33110e]">
-                  Add Award / Honor
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#85261e]">
+                  {modalMode === "edit" ? "Modify Recognition" : "New Recognition"}
+                </span>
+                <h2 className="text-xl font-extrabold text-[#33110e]">
+                  {modalMode === "edit" ? "Edit Academic Recognition" : "Add Academic Recognition"}
                 </h2>
-                <p className="text-xs text-neutral-500">
-                  Log fellowships, best paper awards, and state/national recognitions.
-                </p>
               </div>
               <button
                 type="button"
@@ -193,14 +266,14 @@ export default function HonorsPage() {
               </button>
             </div>
 
-            <form onSubmit={handleAdd} className="space-y-4">
+            <form onSubmit={handleSave} className="space-y-4 text-xs">
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Award / Honor Title *
+                  Honor / Award Title *
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Best Paper Award, TCS Research Fellowship, University Gold Medal"
+                  placeholder="e.g. Best Paper Award / IEEE Senior Member / National Award"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
@@ -214,7 +287,7 @@ export default function HonorsPage() {
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. IEEE, Department of Science & Technology, Cisco, Wiley"
+                  placeholder="e.g. IEEE / Springer / Government of India / NIT Hamirpur"
                   value={organization}
                   onChange={(e) => setOrganization(e.target.value)}
                   required
@@ -222,32 +295,66 @@ export default function HonorsPage() {
                 />
               </div>
 
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Year *
+                  </label>
+                  <input
+                    type="number"
+                    min={1970}
+                    max={2035}
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                    required
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Academic Session
+                  </label>
+                  <select
+                    value={academicSession}
+                    onChange={(e) => setAcademicSession(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  >
+                    {ACADEMIC_SESSIONS.map((sess) => (
+                      <option key={sess} value={sess}>
+                        {sess}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Year of Award *
+                  Description / Citation Details
                 </label>
-                <input
-                  type="number"
-                  value={year}
-                  onChange={(e) => setYear(Number(e.target.value))}
-                  required
-                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                <textarea
+                  rows={2}
+                  placeholder="e.g. Awarded for exceptional research excellence in cloud computing at IEEE ICAN conference."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-3 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 />
               </div>
 
-              <div className="flex justify-end gap-2.5 pt-4 border-t border-[#eedfd8]/60">
+              <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-[#eedfd8]">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2 text-xs font-bold text-neutral-700 hover:bg-[#fff9f6] transition cursor-pointer"
+                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2 text-xs font-bold text-neutral-600 hover:bg-neutral-50 transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-5 py-2 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+                  className="rounded-xl bg-[#85261e] hover:bg-[#33110e] px-5 py-2 text-xs font-bold text-white shadow-xs hover:shadow-md transition cursor-pointer"
                 >
-                  Save Honor
+                  {modalMode === "edit" ? "Save Changes" : "Save Honor"}
                 </button>
               </div>
             </form>

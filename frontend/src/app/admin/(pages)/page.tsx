@@ -45,13 +45,24 @@ import {
   MOCK_PROJECTS,
   MOCK_STUDENTS,
 } from "@/lib/mock-data";
-import { formatINR } from "@/lib/utils";
+import { formatINR, cn } from "@/lib/utils";
 import { useDepartment } from "@/context/department-context";
 import { toast } from "sonner";
+import Dashboard from "@/components/dashboard";
 
 export default function AdminDashboardPage() {
   const { activeDepartment } = useDepartment();
   const [adminUser, setAdminUser] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState<"overview" | "analytics">("overview");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("tab") === "analytics") {
+        setActiveTab("analytics");
+      }
+    }
+  }, []);
 
   // Faculty state (loaded from localStorage or mock data)
   const [facultyList, setFacultyList] = useState<any[]>(MOCK_FACULTY);
@@ -395,6 +406,15 @@ export default function AdminDashboardPage() {
 
             <button
               type="button"
+              onClick={() => setActiveTab(activeTab === "analytics" ? "overview" : "analytics")}
+              className="flex items-center gap-2 rounded-xl bg-amber-400/20 border border-amber-300/40 hover:bg-amber-400/30 px-3.5 py-2.5 text-xs font-bold text-amber-200 transition backdrop-blur-xs shadow-2xs cursor-pointer group"
+            >
+              <BarChart3 className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+              {activeTab === "analytics" ? "Operational Console" : "Visual Analytics & Graphs"}
+            </button>
+
+            <button
+              type="button"
               onClick={handleExportDepartmentReport}
               className="flex items-center gap-2 rounded-xl bg-[#1c110c]/40 border border-white/20 hover:bg-[#1c110c]/70 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
               title="Export complete departmental dossier"
@@ -406,8 +426,61 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* KPI Stat Cards with Real-time Counters and Refresh Trigger */}
-      <div className="space-y-2">
+      {/* Top View Selector: Operations Console vs Visual Analytics & Research Graphs */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#eedfd8] pb-3">
+        <div className="flex items-center gap-2 bg-[#f6ece7] p-1 rounded-2xl border border-[#eedfd8]">
+          <button
+            type="button"
+            onClick={() => setActiveTab("overview")}
+            className={cn(
+              "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer",
+              activeTab === "overview"
+                ? "bg-[#33110e] text-white shadow-xs"
+                : "text-[#6b5c58] hover:text-[#33110e] hover:bg-white/60"
+            )}
+          >
+            <Layers className="w-4 h-4 text-amber-300" />
+            Operations & Directory Console
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setActiveTab("analytics")}
+            className={cn(
+              "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer",
+              activeTab === "analytics"
+                ? "bg-[#85261e] text-white shadow-xs"
+                : "text-[#6b5c58] hover:text-[#85261e] hover:bg-white/60"
+            )}
+          >
+            <BarChart3 className="w-4 h-4 text-amber-400" />
+            Visual Analytics & Research Graphs
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-400/20 text-[#85261e] font-mono font-extrabold border border-amber-400/30">
+              Interactive
+            </span>
+          </button>
+        </div>
+
+        {activeTab === "analytics" ? (
+          <p className="text-xs text-[#6b5c58] hidden sm:block">
+            Interactive multi-year charts for Publications, Grants, Patents &amp; Events
+          </p>
+        ) : (
+          <button
+            type="button"
+            onClick={() => setActiveTab("analytics")}
+            className="text-xs font-bold text-[#85261e] hover:underline flex items-center gap-1.5 cursor-pointer"
+          >
+            <BarChart3 className="w-3.5 h-3.5" />
+            View Research Graphs &amp; Stats →
+          </button>
+        )}
+      </div>
+
+      {activeTab === "overview" ? (
+        <>
+          {/* KPI Stat Cards with Real-time Counters and Refresh Trigger */}
+          <div className="space-y-2">
         <div className="flex items-center justify-between px-1">
           <p className="text-xs font-bold text-[#6b5c58] uppercase tracking-wider flex items-center gap-1.5">
             <Activity className="w-3.5 h-3.5 text-[#85261e]" />
@@ -487,6 +560,38 @@ export default function AdminDashboardPage() {
               </div>
             </Link>
           ))}
+        </div>
+      </div>
+
+      {/* Visual Analytics Quick Access Banner */}
+      <div className="rounded-2xl border border-amber-200/80 bg-gradient-to-r from-amber-50/90 via-orange-50/50 to-amber-50/90 p-4.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-2xs">
+        <div className="flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#85261e] to-[#33110e] flex items-center justify-center text-amber-300 shadow-xs shrink-0">
+            <BarChart3 className="w-5 h-5" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h4 className="text-xs font-extrabold text-[#33110e] uppercase tracking-wider">
+                Interactive Research Statistics &amp; Visual Analytics Engine
+              </h4>
+              <span className="text-[10px] bg-amber-200/60 text-[#85261e] font-bold px-2 py-0.5 rounded-full">
+                Live Charts
+              </span>
+            </div>
+            <p className="text-xs text-neutral-600 mt-0.5">
+              Explore multi-year publication indexing trends (SCI/Scopus), sanctioned project grants, patent filings, and faculty productivity graphs.
+            </p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            type="button"
+            onClick={() => setActiveTab("analytics")}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#85261e] hover:bg-[#a63026] text-white text-xs font-bold transition shadow-xs cursor-pointer"
+          >
+            <TrendingUp className="w-3.5 h-3.5 text-amber-300" />
+            Open Visual Graphs &amp; Stats →
+          </button>
         </div>
       </div>
 
@@ -671,12 +776,12 @@ export default function AdminDashboardPage() {
               Quick Console Tools
             </h2>
 
-            <div className="space-y-1.5">
+            <div className="grid gap-2">
               {[
-                { label: "Announcements & Notices", href: "/admin/news/announcements", icon: Megaphone, count: announcements.length },
-                { label: "Student Roster & CSV Import", href: "/admin/people/students", icon: GraduationCap, count: MOCK_STUDENTS.length },
-                { label: "Faculty Credentials / Password Reset", href: "/admin/credentials/facultiescredentials", icon: Shield, count: facultyList.length },
-                { label: "Placement Statistics & Records", href: "/admin/placement", icon: BarChart3 },
+                { label: "Faculty Login Credentials", href: "/admin/credentials/facultiescredentials", icon: KeyRound, count: facultyList.length },
+                { label: "Research Publications DB", href: "/admin/research/publications", icon: FileText, count: MOCK_PUBLICATIONS.length },
+                { label: "Sponsored R&D Projects", href: "/admin/research/projects", icon: Lightbulb, count: MOCK_PROJECTS.length },
+                { label: "Student Roster Records", href: "/admin/people/students", icon: GraduationCap, count: MOCK_STUDENTS.length },
                 { label: "HOD Message & Profile Editor", href: "/admin/hod", icon: Building2 },
                 { label: "Research Visual Analytics", href: "/admin/analytics", icon: Activity },
                 { label: "Courses & Curricula", href: "/admin/academics/courses", icon: BookOpen },
@@ -714,7 +819,7 @@ export default function AdminDashboardPage() {
               <button
                 type="button"
                 onClick={() => setIsNewAnnouncementOpen(true)}
-                className="text-[10.5px] font-bold text-[#85261e] hover:underline"
+                className="text-[10.5px] font-bold text-[#85261e] hover:underline cursor-pointer"
               >
                 + Post
               </button>
@@ -746,6 +851,12 @@ export default function AdminDashboardPage() {
           </div>
         </div>
       </div>
+      </>
+      ) : (
+        <div className="pt-2 animate-in fade-in duration-200">
+          <Dashboard />
+        </div>
+      )}
 
       {/* ========================================================================= */}
       {/* MODAL 1: ADD FACULTY MEMBER */}
