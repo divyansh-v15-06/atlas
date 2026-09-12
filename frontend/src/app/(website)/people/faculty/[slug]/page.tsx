@@ -1603,25 +1603,6 @@ export default function FacultyPortfolioPage({
               >
                 Vidwan
               </a>
-
-              {/* Faculty Portal Login Link or Dashboard */}
-              {canEdit ? (
-                <Link
-                  href="/faculty"
-                  className="inline-flex items-center gap-1.5 bg-[#85261e] hover:bg-[#33110e] text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer ml-1"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
-                  <span>Faculty Dashboard</span>
-                </Link>
-              ) : (
-                <Link
-                  href="/faculty/login"
-                  className="inline-flex items-center gap-1.5 bg-white hover:bg-neutral-100 text-[#1f1412] px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer ml-1"
-                >
-                  <LogIn className="w-3.5 h-3.5 text-[#85261e]" />
-                  <span>Faculty Login</span>
-                </Link>
-              )}
             </div>
           </div>
         </div>
