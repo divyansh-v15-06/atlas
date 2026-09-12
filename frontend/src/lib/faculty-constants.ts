@@ -60,3 +60,4 @@ export const PROJECT_STATUSES = ["Ongoing", "Completed"];
 export const SUPERVISION_LEVELS = ["Ph.D.", "M.Tech", "B.Tech"];
 
 export const SUPERVISION_STATUSES = ["Ongoing", "Awarded", "Submitted"];
+
