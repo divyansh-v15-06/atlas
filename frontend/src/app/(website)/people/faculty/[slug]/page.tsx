@@ -44,6 +44,8 @@ import {
   Info,
   CheckCircle2,
   AlertTriangle,
+  Eye,
+  BookOpenCheck,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -51,7 +53,9 @@ import {
   MOCK_PHD_SCHOLARS,
   MOCK_CONSULTANCIES,
   MOCK_EVENTS,
+  MOCK_COURSES_TAUGHT,
 } from "@/lib/mock-data";
+import { CourseTaught } from "@/lib/types";
 import {
   getStoredData,
   setStoredData,
@@ -76,7 +80,8 @@ export type TabKey =
   | "researchSupervision"
   | "administrativeexperience"
   | "honors"
-  | "internationalAndNationalExposure";
+  | "internationalAndNationalExposure"
+  | "courses";
 
 const PUBS_PER_PAGE = 10;
 
@@ -354,7 +359,27 @@ export default function FacultyPortfolioPage({
     return "15+ Years Academic Experience";
   }, [allTeachingExp, faculty]);
 
-  // Sidebar navigation items (14 Categories matching tempcsebase)
+  // Courses Taught
+  const facultyCoursesFallback = useMemo(() => {
+    return MOCK_COURSES_TAUGHT.filter(
+      (c) =>
+        c.faculty_code === baseFaculty?.employee_code ||
+        c.faculty_name === baseFaculty?.full_name ||
+        c.faculty_id === baseFaculty?.id
+    );
+  }, [baseFaculty]);
+
+  const allCoursesTaught = useMemo(() => {
+    return getStoredData<CourseTaught>(
+      baseFaculty,
+      "courses",
+      facultyCoursesFallback.length > 0 ? facultyCoursesFallback : MOCK_COURSES_TAUGHT.slice(0, 3)
+    );
+  }, [baseFaculty, facultyCoursesFallback]);
+
+  const coursesCount = allCoursesTaught.length;
+
+  // Sidebar navigation items (15 Categories matching tempcsebase + courses)
   const sidebarItems: {
     key: TabKey;
     label: string;
@@ -372,6 +397,7 @@ export default function FacultyPortfolioPage({
     { key: "consultancies", label: "Consultancies", icon: Building2, count: consultancyCount },
     { key: "experttalk", label: "Expert Talk", icon: Mic, count: expertTalkCount },
     { key: "researchSupervision", label: "Research Supervision", icon: GraduationCap, count: supervisionCount },
+    { key: "courses", label: "Courses Taught", icon: BookOpenCheck, count: coursesCount },
     { key: "administrativeexperience", label: "Administrative Experience", icon: Award, count: adminExpCount },
     { key: "honors", label: "Honors & Recognitions", icon: Trophy, count: honorCount },
     { key: "internationalAndNationalExposure", label: "International & National Exposure", icon: Globe, count: exposureCount },
@@ -1542,7 +1568,7 @@ export default function FacultyPortfolioPage({
                 Portfolio Navigation
               </span>
               <span className="text-xs font-mono text-[#85261e] font-semibold bg-white px-2.5 py-0.5 rounded-full border border-[#eedfd8]">
-                14 Sections
+                15 Sections
               </span>
             </div>
 
@@ -1608,32 +1634,45 @@ export default function FacultyPortfolioPage({
                   {activeTab === "administrativeexperience" && "Administrative Experience"}
                   {activeTab === "honors" && "Honors & Recognitions Achieved"}
                   {activeTab === "internationalAndNationalExposure" && "International & National Exposure"}
+                  {activeTab === "courses" && "Curriculum Teaching & Courses Assigned"}
                 </h2>
                 <p className="text-sm text-neutral-500 mt-0.5">
                   {activeTab === "facultyInfo"
                     ? "Official profile details, verified credentials, and institutional information"
+                    : activeTab === "courses"
+                    ? `Curriculum allocations and weekly teaching hours for ${faculty.full_name}`
                     : `Active records verified for ${faculty.full_name}`}
                 </p>
               </div>
 
               <div className="flex items-center gap-2 shrink-0">
-                <button
-                  type="button"
-                  onClick={openAddModal}
-                  className="inline-flex items-center gap-2 bg-[#85261e] hover:bg-[#33110e] text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-xs hover:shadow-md transition cursor-pointer"
-                >
-                  {activeTab === "facultyInfo" ? (
-                    <>
-                      <Edit className="w-4 h-4 text-amber-300" />
-                      <span>Edit Profile</span>
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="w-4 h-4 text-amber-300" />
-                      <span>Add {sidebarItems.find((i) => i.key === activeTab)?.label}</span>
-                    </>
-                  )}
-                </button>
+                {activeTab === "courses" ? (
+                  <Link
+                    href="/faculty/courses"
+                    className="inline-flex items-center gap-2 bg-[#85261e] hover:bg-[#33110e] text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+                  >
+                    <BookOpenCheck className="w-4 h-4 text-amber-300" />
+                    <span>Faculty Timetable</span>
+                  </Link>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={openAddModal}
+                    className="inline-flex items-center gap-2 bg-[#85261e] hover:bg-[#33110e] text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+                  >
+                    {activeTab === "facultyInfo" ? (
+                      <>
+                        <Edit className="w-4 h-4 text-amber-300" />
+                        <span>Edit Profile</span>
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="w-4 h-4 text-amber-300" />
+                        <span>Add {sidebarItems.find((i) => i.key === activeTab)?.label}</span>
+                      </>
+                    )}
+                  </button>
+                )}
               </div>
             </div>
 
@@ -2680,6 +2719,111 @@ export default function FacultyPortfolioPage({
                 ) : (
                   <div className="p-12 text-center text-neutral-500 text-sm">
                     No exposure records registered.
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* 15. COURSES TAUGHT TAB */}
+            {activeTab === "courses" && (
+              <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+                <div className="p-4 sm:p-5 bg-[#fdf5f2] border-b border-[#eedfd8] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <span className="text-base sm:text-lg font-bold text-[#33110e] flex items-center gap-2">
+                      <BookOpenCheck className="w-5 h-5 text-[#85261e]" />
+                      Curriculum Teaching &amp; Courses Assigned ({allCoursesTaught.length})
+                    </span>
+                    <p className="text-xs sm:text-sm text-[#5c4033] mt-0.5">
+                      Official course assignments, credits, and weekly contact hours for {faculty.full_name}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-[#85261e] bg-white px-3 py-1 rounded-full border border-[#eedfd8]">
+                      {allCoursesTaught.reduce((sum: number, c: any) => sum + (Number(c.credits) || 0), 0)} Total Teaching Credits
+                    </span>
+                  </div>
+                </div>
+
+                {allCoursesTaught.length > 0 ? (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-sm">
+                      <thead className="bg-[#fff9f6] text-xs font-black uppercase text-[#33110e] border-b border-[#eedfd8]">
+                        <tr>
+                          <th className="px-5 py-3.5 text-center w-14">Sr.</th>
+                          <th className="px-5 py-3.5">Course Code</th>
+                          <th className="px-5 py-3.5">Course Title</th>
+                          <th className="px-5 py-3.5 text-center">Level</th>
+                          <th className="px-5 py-3.5 text-center">Semester</th>
+                          <th className="px-5 py-3.5 text-center">L - T - P</th>
+                          <th className="px-5 py-3.5 text-center">Credits</th>
+                          <th className="px-5 py-3.5 text-center">Session</th>
+                          <th className="px-5 py-3.5 text-right">Details</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#eedfd8]/60 text-[#1c110c]">
+                        {allCoursesTaught.map((course: any, idx: number) => (
+                          <tr key={course.id || idx} className="hover:bg-[#fff9f6]/70 transition-colors">
+                            <td className="px-5 py-3.5 text-center font-mono font-bold text-[#85261e] text-xs">{idx + 1}</td>
+                            <td className="px-5 py-3.5 font-mono font-bold text-xs">
+                              <span className="px-2.5 py-1 rounded bg-[#33110e] text-white">
+                                {course.course_code}
+                              </span>
+                            </td>
+                            <td className="px-5 py-3.5 font-bold text-sm text-neutral-900">
+                              <div>
+                                {course.course_name}
+                                {course.section && (
+                                  <span className="ml-2 px-2 py-0.5 rounded text-xs font-semibold bg-[#eedfd8]/60 text-[#5c4033]">
+                                    {course.section}
+                                  </span>
+                                )}
+                              </div>
+                            </td>
+                            <td className="px-5 py-3.5 text-center">
+                              <span
+                                className={`inline-block px-2 py-0.5 rounded text-xs font-bold ${
+                                  course.course_level === "PG"
+                                    ? "bg-purple-100 text-purple-800 border border-purple-200"
+                                    : course.course_level === "Doctoral"
+                                    ? "bg-amber-100 text-amber-800 border border-amber-200"
+                                    : "bg-blue-100 text-blue-800 border border-blue-200"
+                                }`}
+                              >
+                                {course.course_level || "UG"}
+                              </span>
+                            </td>
+                            <td className="px-5 py-3.5 text-center font-bold text-xs text-neutral-700">
+                              {course.semester ? `Sem ${course.semester}` : "-"}
+                            </td>
+                            <td className="px-5 py-3.5 text-center font-mono text-xs font-bold text-[#5c4033]">
+                              {course.lecture_hours ?? 3} - {course.tutorial_hours ?? 0} - {course.practical_hours ?? 0}
+                            </td>
+                            <td className="px-5 py-3.5 text-center">
+                              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] font-mono font-black text-xs">
+                                {course.credits}
+                              </span>
+                            </td>
+                            <td className="px-5 py-3.5 text-center font-mono text-xs text-[#5c4033]">
+                              {course.academic_year || "2024-2025"}
+                            </td>
+                            <td className="px-5 py-3.5 text-right">
+                              <button
+                                type="button"
+                                onClick={() => openDetails(course)}
+                                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-[#eedfd8] bg-white text-[#33110e] text-xs font-bold hover:bg-[#33110e] hover:text-white transition shadow-2xs cursor-pointer"
+                              >
+                                <Eye className="w-3.5 h-3.5" /> Details
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="p-12 text-center text-neutral-500 text-sm">
+                    <BookOpenCheck className="w-8 h-8 mx-auto text-[#85261e]/40 mb-2" />
+                    No course assignments recorded for this academic session.
                   </div>
                 )}
               </div>
@@ -4120,10 +4264,58 @@ export default function FacultyPortfolioPage({
             <div className="p-6 overflow-y-auto space-y-4 text-sm flex-1">
               <table className="w-full border border-neutral-200 rounded-xl overflow-hidden divide-y divide-neutral-100 text-sm">
                 <tbody className="divide-y divide-neutral-100">
-                  {detailItem.title && (
+                  {(detailItem.title || detailItem.course_name) && (
                     <tr className="bg-white">
-                      <td className="p-3.5 w-1/3 font-bold text-[#85261e] bg-neutral-50/80 text-sm">Title</td>
-                      <td className="p-3.5 font-bold text-neutral-900 text-base">{detailItem.title}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-[#85261e] bg-neutral-50/80 text-sm">
+                        {detailItem.course_name ? "Course Title" : "Title"}
+                      </td>
+                      <td className="p-3.5 font-bold text-neutral-900 text-base">
+                        {detailItem.course_name || detailItem.title}
+                      </td>
+                    </tr>
+                  )}
+                  {detailItem.course_code && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Course Code</td>
+                      <td className="p-3.5 font-mono font-bold text-[#85261e] text-sm">{detailItem.course_code}</td>
+                    </tr>
+                  )}
+                  {detailItem.course_level && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Course Level</td>
+                      <td className="p-3.5 font-bold text-neutral-800 text-sm">{detailItem.course_level}</td>
+                    </tr>
+                  )}
+                  {detailItem.semester && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Semester</td>
+                      <td className="p-3.5 font-bold text-neutral-800 text-sm">Semester {detailItem.semester}</td>
+                    </tr>
+                  )}
+                  {(typeof detailItem.lecture_hours === "number" || typeof detailItem.tutorial_hours === "number" || typeof detailItem.practical_hours === "number") && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Contact Hours (L - T - P)</td>
+                      <td className="p-3.5 font-mono font-bold text-neutral-800 text-sm">
+                        {detailItem.lecture_hours ?? 3} hrs (L) — {detailItem.tutorial_hours ?? 0} hrs (T) — {detailItem.practical_hours ?? 0} hrs (P)
+                      </td>
+                    </tr>
+                  )}
+                  {detailItem.credits && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Credits</td>
+                      <td className="p-3.5 font-bold text-[#85261e] text-sm">{detailItem.credits} Credits</td>
+                    </tr>
+                  )}
+                  {detailItem.academic_year && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Academic Session</td>
+                      <td className="p-3.5 font-mono text-neutral-800 text-sm">{detailItem.academic_year}</td>
+                    </tr>
+                  )}
+                  {detailItem.description && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Syllabus Outline</td>
+                      <td className="p-3.5 text-neutral-700 leading-relaxed text-sm">{detailItem.description}</td>
                     </tr>
                   )}
                   {(detailItem.author_text || detailItem.authors || detailItem.student_name || detailItem.raw_inventors || detailItem.convenor) && (

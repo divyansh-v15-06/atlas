@@ -23,6 +23,7 @@ import {
   ArrowLeft,
   ExternalLink,
   ShieldCheck,
+  BookOpenCheck,
 } from "lucide-react";
 import { MOCK_FACULTY } from "@/lib/mock-data";
 
@@ -38,6 +39,7 @@ const sidebarLinks: SidebarLink[] = [
     items: [
       { label: "Qualifications", href: "/faculty/qualifications", icon: GraduationCap },
       { label: "Teaching Experience", href: "/faculty/teaching-exp", icon: Briefcase },
+      { label: "Courses Taught", href: "/faculty/courses", icon: BookOpenCheck },
       { label: "Administrative Roles", href: "/faculty/admin-exp", icon: ShieldCheck },
       { label: "Honors & Awards", href: "/faculty/honors", icon: Award },
       { label: "Foreign Visits & Exposure", href: "/faculty/exposures", icon: Globe },

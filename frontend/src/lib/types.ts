@@ -320,6 +320,42 @@ export interface DepartmentKPIs {
   event_count: number;
 }
 
+export interface Course {
+  id: string;
+  code: string;
+  name: string;
+  credits: number;
+  semester?: number | string;
+  level?: "UG" | "PG" | "Doctoral" | string;
+  type?: string;
+  lecture_hours?: number;
+  tutorial_hours?: number;
+  practical_hours?: number;
+  description?: string;
+  department_id?: string;
+}
+
+export interface CourseTaught {
+  id: string;
+  faculty_id?: string;
+  faculty_code?: string;
+  faculty_name?: string;
+  course_code: string;
+  course_name: string;
+  semester: number | string;
+  course_level: "UG" | "PG" | "Doctoral" | string;
+  lecture_hours: number;
+  tutorial_hours: number;
+  practical_hours: number;
+  credits: number;
+  academic_year: string;
+  section?: string;
+  description?: string;
+  department_id?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
 // ─── Pagination ───────────────────────────────────────────────────────────
 export interface PaginatedResponse<T> {
   data: T[];
