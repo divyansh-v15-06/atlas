@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import React, { useState, useMemo } from "react";
 import {
   BarChart,
   Bar,
@@ -12,129 +12,129 @@ import {
   Cell,
   LineChart,
   Line,
-  LabelList,
   Legend,
   ResponsiveContainer,
-} from "recharts"
-import { ChartTooltip } from "@/components/ui/chart"
-import { type ChartType, ChartTypeSelector } from "../chart-type-selector"
-import { useRouter } from "next/navigation"
+  Tooltip,
+} from "recharts";
+import { type ChartType, ChartTypeSelector } from "../chart-type-selector";
 
-interface Patent {
-  year: number
-  status: string
-  id: number
-  facultyIds: number[]
+export interface PatentItem {
+  id?: number | string;
+  year: number;
+  status: string;
+  facultyIds?: number[];
 }
 
 interface PatentsChartProps {
-  data: Patent[]
-  facfilter?: number
-  startYear?: number
-  endYear?: number
+  data: PatentItem[];
+  facfilter?: string;
+  startYear?: number | null;
+  endYear?: number | null;
 }
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8", "#82CA9D"]
+const PATENT_COLORS = ["#d97706", "#85261e", "#0d9488", "#475569"];
 
-export default function PatentsChart({ data ,facfilter,startYear,endYear}: PatentsChartProps) {
-  const [chartType, setChartType] = useState<ChartType>("bar")
-  const router = useRouter()
-
-  // Aggregate data by year
-  const aggregatedData = data.reduce(
-    (acc, item) => {
-      const existingItem = acc.find((i) => i.year === item.year)
-      if (existingItem) {
-        if (item.status === "Published") {
-          existingItem.published += 1
-        } else if (item.status === "Granted") {
-          existingItem.granted += 1
-        }
-      } else {
-        acc.push({
-          year: item.year,
-          published: item.status === "Published" ? 1 : 0,
-          granted: item.status === "Granted" ? 1 : 0,
-        })
-      }
-      return acc
-    },
-    [] as { year: number; published: number; granted: number }[],
-  )
-
-  // Sort by year
-  aggregatedData.sort((a, b) => a.year - b.year)
-
-  // For pie chart, we need different data structure
-  const pieData = [
-    { name: "Published", value: data.filter((item) => item.status === "Published").length },
-    { name: "Granted", value: data.filter((item) => item.status === "Granted").length },
-  ]
-
-  // If no data, show a message
-  if (data.length === 0) {
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <p className="text-gray-500">No data available for the selected filters.</p>
+      <div className="bg-[#33110e] text-white p-3 rounded-xl shadow-xl border border-[#eedfd8]/30 text-xs space-y-1.5 z-50">
+        <p className="font-bold text-sm border-b border-white/20 pb-1 text-[#eedfd8]">
+          {label ? `Year: ${label}` : payload[0]?.name || "Patents"}
+        </p>
+        {payload.map((entry: any, index: number) => (
+          <div key={`item-${index}`} className="flex items-center justify-between gap-4">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: entry.color || entry.fill }} />
+              <span className="capitalize text-neutral-200">{entry.name}:</span>
+            </div>
+            <span className="font-bold text-white">{entry.value}</span>
+          </div>
+        ))}
       </div>
-    )
+    );
   }
-   const CustomClickableDot = ({ cx, cy, payload, stroke, publicationType }: any) => {
-  const handleClick = () => {
-    const year = payload.year
-    router.push(
-      `/research/patents?startYear=${year}&&endYear=${year}&&type=${publicationType}&&facultyName=${facfilter}`)
+  return null;
+};
+
+export default function PatentsChart({
+  data,
+  facfilter,
+  startYear,
+  endYear,
+}: PatentsChartProps) {
+  const [chartType, setChartType] = useState<ChartType>("bar");
+
+  // Aggregate patents by year
+  const aggregatedData = useMemo(() => {
+    if (!data || data.length === 0) return [];
+    const map: Record<number, { year: number; published: number; granted: number; total: number }> = {};
+
+    data.forEach((item) => {
+      if (!map[item.year]) {
+        map[item.year] = { year: item.year, published: 0, granted: 0, total: 0 };
+      }
+      const st = (item.status || "").toLowerCase();
+      if (st.includes("grant")) {
+        map[item.year].granted += 1;
+      } else {
+        map[item.year].published += 1;
+      }
+      map[item.year].total += 1;
+    });
+
+    return Object.values(map).sort((a, b) => a.year - b.year);
+  }, [data]);
+
+  // Pie data by status
+  const pieData = useMemo(() => {
+    if (!data || data.length === 0) return [];
+    const granted = data.filter((d) => (d.status || "").toLowerCase().includes("grant")).length;
+    const published = data.length - granted;
+    return [
+      { name: "Patents Granted", value: granted },
+      { name: "Patents Published / Filed", value: published },
+    ].filter((d) => d.value > 0);
+  }, [data]);
+
+  if (!data || data.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 border border-dashed border-[#eedfd8] rounded-2xl bg-[#fff9f6]/40 p-6 text-center">
+        <p className="text-sm font-semibold text-neutral-600">No patent records found</p>
+        <p className="text-xs text-neutral-400 mt-1">Adjust year range or patent filters above</p>
+      </div>
+    );
   }
 
   return (
-    <circle
-      cx={cx}
-      cy={cy}
-      r={6}
-      fill={stroke}
-      stroke="#fff"
-      strokeWidth={2}
-      style={{ cursor: "pointer" }}
-      onClick={handleClick}
-    />
-  )
-}
-
-  return (
-    <div>
+    <div className="w-full">
       <ChartTypeSelector value={chartType} onValueChange={setChartType} />
-      <div className="h-[300px] w-full">
+
+      <div className="h-[320px] w-full pt-2">
         {chartType === "bar" && (
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={aggregatedData}
-              margin={{
-                top: 10,
-                right: 30,
-                left: 20,
-                bottom: 20,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="year" />
-              <YAxis />
-              <ChartTooltip />
-              <Legend />
-              <Bar dataKey="published" name="Published" fill="#e8c468" radius={[4, 4, 0, 0]} barSize={20}
-              onClick={(data, index) => {
-                  const year = aggregatedData[index].year
-                  router.push(`/research/patents?startYear=${year}&&endYear=${year}&&type=Published&&facultyName=${facfilter}`)
-                }}>
-                <LabelList dataKey="published" position="center" fill="#fff" />
-              </Bar>
-              <Bar dataKey="granted" name="Granted" fill="#f4a462" radius={[4, 4, 0, 0]} barSize={20}
-              onClick={(data, index) => {
-                  const year = aggregatedData[index].year
-                  router.push(`/research/patents?startYear=${year}&&endYear=${year}&&type=Granted&&facultyName=${facfilter}`)
-                }}>
-                <LabelList dataKey="granted" position="center" fill="#fff" />
-              </Bar>
+            <BarChart data={aggregatedData} margin={{ top: 15, right: 20, left: -10, bottom: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eedfd8" opacity={0.6} />
+              <XAxis dataKey="year" stroke="#78716c" fontSize={12} tickLine={false} />
+              <YAxis stroke="#78716c" fontSize={12} tickLine={false} allowDecimals={false} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ paddingTop: 10, fontSize: "12px" }} />
+              <Bar dataKey="granted" name="Patents Granted" fill="#85261e" stackId="a" radius={[0, 0, 0, 0]} />
+              <Bar dataKey="published" name="Patents Published/Filed" fill="#d97706" stackId="a" radius={[4, 4, 0, 0]} />
             </BarChart>
+          </ResponsiveContainer>
+        )}
+
+        {chartType === "line" && (
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={aggregatedData} margin={{ top: 15, right: 20, left: -10, bottom: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eedfd8" opacity={0.6} />
+              <XAxis dataKey="year" stroke="#78716c" fontSize={12} tickLine={false} />
+              <YAxis stroke="#78716c" fontSize={12} tickLine={false} allowDecimals={false} />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ paddingTop: 10, fontSize: "12px" }} />
+              <Line type="monotone" dataKey="granted" name="Patents Granted" stroke="#85261e" strokeWidth={2.5} dot={{ r: 4 }} />
+              <Line type="monotone" dataKey="published" name="Patents Published/Filed" stroke="#d97706" strokeWidth={2.5} dot={{ r: 4 }} />
+            </LineChart>
           </ResponsiveContainer>
         )}
 
@@ -145,64 +145,23 @@ export default function PatentsChart({ data ,facfilter,startYear,endYear}: Paten
                 data={pieData}
                 cx="50%"
                 cy="50%"
-                labelLine={true}
-                label={({ name, percent, value }) => `${name}: ${value} (${(percent * 100).toFixed(0)}%)`}
-                outerRadius={80}
-                fill="#8884d8"
+                innerRadius={55}
+                outerRadius={95}
+                paddingAngle={4}
                 dataKey="value"
+                label={({ name, percent }: any) => `${name} ${(percent * 100).toFixed(0)}%`}
+                labelLine={true}
               >
                 {pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} 
-                  onClick={() => {
-                      const type = pieData[index].name.replace(" ", "")
-                      router.push(`/research/patents?type=${type}&&facultyName=${facfilter}&&startYear=${startYear}&&endYear=${endYear}`)
-                    }}  />
+                  <Cell key={`cell-${index}`} fill={PATENT_COLORS[index % PATENT_COLORS.length]} stroke="#fff" strokeWidth={1.5} />
                 ))}
               </Pie>
-              <Legend />
-              <ChartTooltip />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend wrapperStyle={{ paddingTop: 10, fontSize: "12px" }} />
             </PieChart>
-          </ResponsiveContainer>
-        )}
-
-        {chartType === "line" && (
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              data={aggregatedData}
-              margin={{
-                top: 10,
-                right: 30,
-                left: 20,
-                bottom: 20,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              <XAxis dataKey="year" />
-              <YAxis />
-              <ChartTooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="published"
-                name="published"
-                stroke="#e8c468"
-                strokeWidth={2}
-                dot={{ r: 4 }}
-                activeDot={(props) => <CustomClickableDot {...props} stroke="#e8c468" publicationType="Published" />}
-              />
-              <Line
-                type="monotone"
-                dataKey="granted"
-                name="Granted"
-                stroke="#2a9d90"
-                strokeWidth={2}
-                dot={{ r: 4 }}
-                activeDot={(props) => <CustomClickableDot {...props} stroke="#2a9d90" publicationType="Granted" />}
-              />
-            </LineChart>
           </ResponsiveContainer>
         )}
       </div>
     </div>
-  )
+  );
 }

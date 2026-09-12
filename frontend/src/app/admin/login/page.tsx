@@ -82,9 +82,14 @@ export default function AdminLoginPage() {
             id: "33333333-3333-3333-3333-333333333333",
             email: data.email,
             full_name: data.email.includes("hod") ? "Head of Department (Admin)" : "System Administrator",
-            roles: ["INSTITUTE_ADMIN", "DEPARTMENT_ADMIN"],
+            role: "ADMIN",
+            roles: ["ADMIN", "INSTITUTE_ADMIN", "DEPARTMENT_ADMIN"],
           })
         );
+        if (typeof window !== "undefined") {
+          window.dispatchEvent(new Event("storage"));
+          window.dispatchEvent(new CustomEvent("nith_faculty_storage_update"));
+        }
         toast.success("Welcome back, System Administrator!");
         router.push("/admin");
       } else {

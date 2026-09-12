@@ -34,15 +34,16 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 && typeof window !== "undefined") {
+    const isLoginEndpoint = error.config?.url?.includes("/auth/login") || error.config?.url?.includes("/login");
+    if (error.response?.status === 401 && !isLoginEndpoint && typeof window !== "undefined") {
       localStorage.removeItem("auth_token");
       localStorage.removeItem("auth_user");
 
-      // Determine which portal we're on for redirect
+      // Determine which portal we're on for redirect (avoid reloading if already on login page)
       const path = window.location.pathname;
-      if (path.startsWith("/admin")) {
+      if (path.startsWith("/admin") && path !== "/admin/login") {
         window.location.href = "/admin/login";
-      } else if (path.startsWith("/faculty")) {
+      } else if (path.startsWith("/faculty") && path !== "/faculty/login") {
         window.location.href = "/faculty/login";
       }
     }

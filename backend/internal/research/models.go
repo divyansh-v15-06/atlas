@@ -15,6 +15,8 @@ type Publication struct {
 	Pages           *string                 `json:"pages,omitempty"`
 	PublishedDate   *string                 `json:"published_date,omitempty"`
 	Year            int                     `json:"year"`
+	Month           *int                    `json:"month,omitempty"`
+	AcademicSession *string                 `json:"academic_session,omitempty"`
 	Indexing        *string                 `json:"indexing,omitempty"`
 	Quartile        *string                 `json:"quartile,omitempty"`
 	Status          string                  `json:"status"` // 'DRAFT', 'SUBMITTED', 'DEPARTMENT_VERIFIED', 'PUBLISHED', 'RETURNED', 'ARCHIVED'
@@ -29,11 +31,11 @@ type Publication struct {
 }
 
 type PublicationAuthor struct {
-	ID             string  `json:"id"`
-	PublicationID  string  `json:"publication_id"`
-	FacultyID      *string `json:"faculty_id,omitempty"`
-	AuthorName     string  `json:"author_name"`
-	AuthorOrder    int     `json:"author_order"`
+	ID              string  `json:"id"`
+	PublicationID   string  `json:"publication_id"`
+	FacultyID       *string `json:"faculty_id,omitempty"`
+	AuthorName      string  `json:"author_name"`
+	AuthorOrder     int     `json:"author_order"`
 	IsCorresponding bool    `json:"is_corresponding"`
 }
 
@@ -58,6 +60,9 @@ type Patent struct {
 	PublicationDate   *string            `json:"publication_date,omitempty"`
 	GrantDate         *string            `json:"grant_date,omitempty"`
 	Year              int                `json:"year"`
+	Month             *int               `json:"month,omitempty"`
+	AcademicSession   *string            `json:"academic_session,omitempty"`
+	Place             *string            `json:"place,omitempty"`
 	ApplicantName     *string            `json:"applicant_name,omitempty"`
 	RawInventors      *string            `json:"raw_inventors,omitempty"`
 	DocumentID        *string            `json:"document_id,omitempty"`
@@ -83,26 +88,31 @@ type PatentDepartment struct {
 }
 
 type Project struct {
-	ID                    string              `json:"id"`
-	Title                 string              `json:"title"`
-	ProjectNumber         *string             `json:"project_number,omitempty"`
-	Sponsor               string              `json:"sponsor"`
-	Scheme                *string             `json:"scheme,omitempty"`
-	Status                string              `json:"status"` // 'Ongoing', 'Completed'
-	StartDate             *string             `json:"start_date,omitempty"`
-	EndDate               *string             `json:"end_date,omitempty"`
-	Year                  int                 `json:"year"`
-	TotalSanctionedAmount float64             `json:"total_sanctioned_amount"`
-	TotalAmountReceived   float64             `json:"total_amount_received"`
-	LeadDepartmentID      string              `json:"lead_department_id"`
-	LeadDepartmentName    string              `json:"lead_department_name,omitempty"`
-	RawInvestigators      *string             `json:"raw_investigators,omitempty"`
-	WorkflowStatus        string              `json:"workflow_status"`
-	CreatedAt             time.Time           `json:"created_at"`
-	UpdatedAt             time.Time           `json:"updated_at"`
-	Members               []ProjectMember     `json:"members,omitempty"`
-	Departments           []ProjectDepartment `json:"departments,omitempty"`
-	Grants                []Grant             `json:"grants,omitempty"`
+	ID                      string              `json:"id"`
+	Title                   string              `json:"title"`
+	ProjectNumber           *string             `json:"project_number,omitempty"`
+	Sponsor                 string              `json:"sponsor"`
+	Scheme                  *string             `json:"scheme,omitempty"`
+	Status                  string              `json:"status"` // 'Ongoing', 'Completed'
+	StartDate               *string             `json:"start_date,omitempty"`
+	EndDate                 *string             `json:"end_date,omitempty"`
+	Year                    int                 `json:"year"`
+	Month                   *int                `json:"month,omitempty"`
+	AcademicSession         *string             `json:"academic_session,omitempty"`
+	Duration                *string             `json:"duration,omitempty"`
+	PrincipalInvestigator   *string             `json:"principal_investigator,omitempty"`
+	CoPrincipalInvestigator *string             `json:"co_principal_investigator,omitempty"`
+	TotalSanctionedAmount   float64             `json:"total_sanctioned_amount"`
+	TotalAmountReceived     float64             `json:"total_amount_received"`
+	LeadDepartmentID        string              `json:"lead_department_id"`
+	LeadDepartmentName      string              `json:"lead_department_name,omitempty"`
+	RawInvestigators        *string             `json:"raw_investigators,omitempty"`
+	WorkflowStatus          string              `json:"workflow_status"`
+	CreatedAt               time.Time           `json:"created_at"`
+	UpdatedAt               time.Time           `json:"updated_at"`
+	Members                 []ProjectMember     `json:"members,omitempty"`
+	Departments             []ProjectDepartment `json:"departments,omitempty"`
+	Grants                  []Grant             `json:"grants,omitempty"`
 }
 
 type ProjectMember struct {
@@ -165,11 +175,12 @@ type Supervision struct {
 	ID               string                  `json:"id"`
 	DepartmentID     string                  `json:"department_id"`
 	DepartmentName   string                  `json:"department_name,omitempty"`
-	ProgrammeLevel   string                  `json:"programme_level"` // 'MTech', 'PhD'
+	ProgrammeLevel   string                  `json:"programme_level"` // 'MTech', 'PhD', 'BTech'
 	ScholarName      string                  `json:"scholar_name"`
 	RollNumber       *string                 `json:"roll_number,omitempty"`
 	ThesisTitle      string                  `json:"thesis_title"`
 	Status           string                  `json:"status"` // 'Ongoing', 'Submitted', 'Awarded'
+	AcademicSession  *string                 `json:"academic_session,omitempty"`
 	RegistrationDate *string                 `json:"registration_date,omitempty"`
 	SubmissionDate   *string                 `json:"submission_date,omitempty"`
 	AwardDate        *string                 `json:"award_date,omitempty"`
@@ -189,20 +200,22 @@ type SupervisionSupervisor struct {
 }
 
 type Event struct {
-	ID               string             `json:"id"`
-	DepartmentID     string             `json:"department_id"`
-	DepartmentName   string             `json:"department_name,omitempty"`
-	Title            string             `json:"title"`
-	EventType        string             `json:"event_type"` // 'STC', 'E-STC', 'Workshop', 'Conference', 'Seminar', 'FDP'
-	Venue            *string            `json:"venue,omitempty"`
-	Sponsor          *string            `json:"sponsor,omitempty"`
-	StartDate        string             `json:"start_date"`
-	EndDate          *string            `json:"end_date,omitempty"`
-	Year             int                `json:"year"`
-	RawCoordinators  *string            `json:"raw_coordinators,omitempty"`
-	CreatedAt        time.Time          `json:"created_at"`
-	UpdatedAt        time.Time          `json:"updated_at"`
-	Coordinators     []EventCoordinator `json:"coordinators,omitempty"`
+	ID              string             `json:"id"`
+	DepartmentID    string             `json:"department_id"`
+	DepartmentName  string             `json:"department_name,omitempty"`
+	Title           string             `json:"title"`
+	EventType       string             `json:"event_type"`         // 'STC', 'E-STC', 'Workshop', 'Conference', 'Seminar', 'FDP'
+	Category        *string            `json:"category,omitempty"` // 'organized', 'attended'
+	AcademicSession *string            `json:"academic_session,omitempty"`
+	Venue           *string            `json:"venue,omitempty"`
+	Sponsor         *string            `json:"sponsor,omitempty"`
+	StartDate       string             `json:"start_date"`
+	EndDate         *string            `json:"end_date,omitempty"`
+	Year            int                `json:"year"`
+	RawCoordinators *string            `json:"raw_coordinators,omitempty"`
+	CreatedAt       time.Time          `json:"created_at"`
+	UpdatedAt       time.Time          `json:"updated_at"`
+	Coordinators    []EventCoordinator `json:"coordinators,omitempty"`
 }
 
 type EventCoordinator struct {
@@ -342,11 +355,12 @@ type SupervisorInput struct {
 
 type CreateSupervisionRequest struct {
 	DepartmentID     string            `json:"department_id" validate:"required"`
-	ProgrammeLevel   string            `json:"programme_level" validate:"required,oneof=MTech PhD"`
+	ProgrammeLevel   string            `json:"programme_level" validate:"required,oneof=MTech PhD BTech"`
 	ScholarName      string            `json:"scholar_name" validate:"required"`
 	RollNumber       *string           `json:"roll_number"`
 	ThesisTitle      string            `json:"thesis_title" validate:"required"`
 	Status           string            `json:"status" validate:"required,oneof=Ongoing Submitted Awarded"`
+	AcademicSession  *string           `json:"academic_session"`
 	RegistrationDate *string           `json:"registration_date"`
 	SubmissionDate   *string           `json:"submission_date"`
 	AwardDate        *string           `json:"award_date"`
@@ -363,7 +377,9 @@ type CoordinatorInput struct {
 type CreateEventRequest struct {
 	DepartmentID    string             `json:"department_id" validate:"required"`
 	Title           string             `json:"title" validate:"required"`
-	EventType       string             `json:"event_type" validate:"required,oneof=STC E-STC Workshop Conference Seminar FDP"`
+	EventType       string             `json:"event_type" validate:"required"`
+	Category        *string            `json:"category"`
+	AcademicSession *string            `json:"academic_session"`
 	Venue           *string            `json:"venue"`
 	Sponsor         *string            `json:"sponsor"`
 	StartDate       string             `json:"start_date" validate:"required"`
