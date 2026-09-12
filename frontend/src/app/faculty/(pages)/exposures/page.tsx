@@ -1,14 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Trash2, Globe, X, MapPin, Plane, Building2, Sparkles, Calendar, CheckCircle2 } from "lucide-react";
+import { Plus, Trash2, Edit, Globe, X, MapPin, Plane, Building2, Sparkles, Calendar, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { MOCK_FACULTY } from "@/lib/mock-data";
-import { getStoredData, setStoredData } from "@/lib/faculty-storage";
+import { getStoredData, saveFacultyRecord } from "@/lib/faculty-storage";
+import { ACADEMIC_SESSIONS } from "@/lib/faculty-constants";
 
-interface Exposure {
+export interface Exposure {
+  id?: string;
   title: string;
-  description: string;
+  country?: string;
+  organization?: string;
+  year?: number | string;
+  academic_session?: string;
+  details?: string;
+  description?: string;
 }
 
 export default function ExposuresPage() {
@@ -16,10 +23,37 @@ export default function ExposuresPage() {
   const [faculty, setFaculty] = useState<any>(MOCK_FACULTY[0]);
   const [items, setItems] = useState<Exposure[]>([]);
   const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState<"add" | "edit">("add");
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   // Form states
   const [title, setTitle] = useState("");
+  const [country, setCountry] = useState("");
+  const [year, setYear] = useState<number | string>(new Date().getFullYear());
+  const [academicSession, setAcademicSession] = useState(ACADEMIC_SESSIONS[1] || "2024-2025");
   const [description, setDescription] = useState("");
+
+  const loadExposures = (activeFaculty: any) => {
+    const facultyExposures = (activeFaculty as any).exposures || [];
+    const fallback =
+      facultyExposures.length > 0
+        ? facultyExposures
+        : [
+            {
+              id: "exp-1",
+              title: "International Conference on Information Technology & Distributed Systems",
+              country: "United States",
+              organization: "IEEE Computer Society",
+              year: 2023,
+              academic_session: "2023-2024",
+              description: "Paper presentation and international collaborative research visit.",
+              details: "Paper presentation and international collaborative research visit.",
+            },
+          ];
+
+    const stored = getStoredData<Exposure>(activeFaculty, "exposures", fallback);
+    setItems(stored);
+  };
 
   useEffect(() => {
     let activeFaculty = MOCK_FACULTY[0];
@@ -41,44 +75,71 @@ export default function ExposuresPage() {
       } catch {}
     }
 
-    const facultyExposures = (activeFaculty as any).exposures || [];
-    const fallback =
-      facultyExposures.length > 0
-        ? facultyExposures
-        : [
-            {
-              title: "International Conference on Information Technology & Distributed Systems",
-              description: "Paper presentation and international collaborative research visit.",
-            },
-          ];
+    loadExposures(activeFaculty);
 
-    const stored = getStoredData<Exposure>(activeFaculty, "exposures", fallback);
-    setItems(stored);
+    const handleStorageUpdate = (e: any) => {
+      if (!e.detail?.section || e.detail.section === "exposures") {
+        loadExposures(activeFaculty);
+      }
+    };
+    window.addEventListener("nith_faculty_storage_update", handleStorageUpdate);
+    return () => window.removeEventListener("nith_faculty_storage_update", handleStorageUpdate);
   }, []);
 
-  const handleAdd = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!title.trim() || !description.trim()) {
-      toast.error("Please provide Visit Title and Description");
-      return;
-    }
-    const newExposure: Exposure = {
-      title: title.trim(),
-      description: description.trim(),
-    };
-    const updated = [newExposure, ...items];
-    setItems(updated);
-    setStoredData(faculty, "exposures", updated);
-    setShowModal(false);
+  const openAddModal = () => {
+    setModalMode("add");
+    setEditingId(null);
     setTitle("");
+    setCountry("");
+    setYear(new Date().getFullYear());
+    setAcademicSession(ACADEMIC_SESSIONS[1] || "2024-2025");
     setDescription("");
-    toast.success("Foreign visit & exposure record saved and persisted!");
+    setShowModal(true);
   };
 
-  const handleDelete = (index: number) => {
-    const updated = items.filter((_, idx) => idx !== index);
-    setItems(updated);
-    setStoredData(faculty, "exposures", updated);
+  const openEditModal = (exp: Exposure) => {
+    setModalMode("edit");
+    setEditingId(exp.id || exp.title);
+    setTitle(exp.title || "");
+    setCountry(exp.country || exp.organization || "");
+    setYear(exp.year || new Date().getFullYear());
+    setAcademicSession(exp.academic_session || ACADEMIC_SESSIONS[1]);
+    setDescription(exp.description || exp.details || "");
+    setShowModal(true);
+  };
+
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!title.trim()) {
+      toast.error("Please provide Visit Title / Purpose");
+      return;
+    }
+
+    const newExposure: Exposure = {
+      id: modalMode === "edit" && editingId ? editingId : `exp-${Date.now()}`,
+      title: title.trim(),
+      country: country.trim() || undefined,
+      organization: country.trim() || undefined,
+      year: year || new Date().getFullYear(),
+      academic_session: academicSession,
+      description: description.trim() || undefined,
+      details: description.trim() || undefined,
+    };
+
+    saveFacultyRecord(faculty, "exposures", newExposure, false);
+    loadExposures(faculty);
+    setShowModal(false);
+    toast.success(
+      modalMode === "edit"
+        ? "Academic exposure visit updated successfully!"
+        : "Academic exposure record saved and persisted!"
+    );
+  };
+
+  const handleDelete = (exp: Exposure) => {
+    if (!window.confirm(`Are you sure you want to delete "${exp.title}"?`)) return;
+    saveFacultyRecord(faculty, "exposures", exp, true);
+    loadExposures(faculty);
     toast.success("Exposure record removed and storage updated");
   };
 
@@ -90,57 +151,85 @@ export default function ExposuresPage() {
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-[#33110e] tracking-tight uppercase flex items-center gap-2">
               <Globe className="w-6 h-6 text-[#85261e]" />
-              Foreign Visits &amp; International Exposure
+              International &amp; National Exposure
             </h1>
             <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-xs font-bold px-2.5 py-0.5 rounded-full">
-              {items.length} Visits Recorded
+              {items.length} Visits Logged
             </span>
           </div>
           <p className="text-xs text-neutral-600 mt-1">
-            International conferences, foreign university visits, and cross-border research collaborations of{" "}
-            <strong>{faculty.full_name}</strong> ({faculty.employee_code || "Faculty"}).
+            Academic delegations, international conference visits, and collaborative research exposure for{" "}
+            <strong>{faculty.full_name}</strong>.
           </p>
         </div>
 
         <button
           type="button"
-          onClick={() => setShowModal(true)}
+          onClick={openAddModal}
           className="inline-flex items-center gap-2 rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-4 py-2.5 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
         >
           <Plus className="h-4 w-4 text-amber-300" />
-          <span>Add Visit / Exposure</span>
+          <span>Add Visit</span>
         </button>
       </div>
 
-      {/* Exposures Cards Grid */}
+      {/* List */}
       <div className="space-y-3">
-        {items.map((item, i) => (
+        {items.map((exp, idx) => (
           <div
-            key={i}
-            className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-xs hover:border-[#85261e]/40 transition duration-150 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+            key={exp.id || idx}
+            className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-2xs hover:shadow-md transition space-y-2 group"
           >
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-[#fff9f6] border border-[#eedfd8] flex items-center justify-center text-[#85261e] flex-shrink-0 shadow-2xs group-hover:bg-[#33110e] group-hover:text-white transition duration-200">
-                <Plane className="w-6 h-6" />
-              </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 uppercase">
+                <Plane className="w-3 h-3 text-indigo-600" />
+                Academic Travel
+              </span>
 
-              <div className="space-y-1.5">
-                <h3 className="font-bold text-sm sm:text-base text-[#1c110c] group-hover:text-[#85261e] transition leading-snug">
-                  {item.title}
-                </h3>
+              {exp.country && (
+                <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] px-2.5 py-0.5 rounded-full">
+                  <MapPin className="w-3 h-3 text-[#85261e]" />
+                  {exp.country}
+                </span>
+              )}
 
-                <p className="text-xs text-neutral-600 leading-relaxed bg-[#fff9f6] border border-[#eedfd8]/60 rounded-xl p-2.5 italic">
-                  &quot;{item.description}&quot;
-                </p>
-              </div>
+              {exp.academic_session && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-neutral-100 text-neutral-600">
+                  Session: {exp.academic_session}
+                </span>
+              )}
+
+              <span className="text-xs font-bold text-neutral-400 ml-auto font-mono">
+                {exp.year}
+              </span>
             </div>
 
-            <div className="flex items-center gap-2 self-end sm:self-center border-t sm:border-t-0 pt-2 sm:pt-0 border-[#eedfd8]/60 w-full sm:w-auto justify-end">
+            <h3 className="text-sm sm:text-base font-bold text-[#1c110c] leading-snug">
+              {exp.title}
+            </h3>
+
+            {(exp.description || exp.details) && (
+              <p className="text-xs text-neutral-600 leading-relaxed pt-1">
+                {exp.description || exp.details}
+              </p>
+            )}
+
+            {/* Actions Strip */}
+            <div className="flex items-center justify-end gap-1 pt-3 border-t border-[#eedfd8]/60 text-xs">
               <button
                 type="button"
-                onClick={() => handleDelete(i)}
-                className="p-2 text-neutral-400 hover:text-red-700 transition rounded-xl hover:bg-red-50 cursor-pointer"
-                title="Remove Visit"
+                onClick={() => openEditModal(exp)}
+                className="p-1.5 text-neutral-500 hover:text-[#85261e] transition rounded-lg hover:bg-[#fdf5f2] cursor-pointer"
+                title="Edit Exposure"
+              >
+                <Edit className="h-4 w-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleDelete(exp)}
+                className="p-1.5 text-neutral-400 hover:text-red-700 transition rounded-lg hover:bg-red-50 cursor-pointer"
+                title="Remove Exposure"
               >
                 <Trash2 className="h-4 w-4" />
               </button>
@@ -150,23 +239,23 @@ export default function ExposuresPage() {
 
         {items.length === 0 && (
           <div className="text-center py-16 text-neutral-500 text-xs bg-white rounded-2xl border border-[#eedfd8]">
-            No foreign visits or exposure records added yet. Click &quot;Add Visit / Exposure&quot; to log your international activities.
+            No academic visits or exposure records found. Click "Add Visit" to log your travel.
           </div>
         )}
       </div>
 
-      {/* Add Exposure Modal */}
+      {/* Add / Edit Exposure Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs font-sans">
           <div className="w-full max-w-lg rounded-3xl border border-[#eedfd8] bg-white p-6 sm:p-8 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-150">
             <div className="flex items-center justify-between border-b border-[#eedfd8]/60 pb-3">
               <div>
-                <h2 className="text-lg font-bold text-[#33110e]">
-                  Add Foreign Visit &amp; Exposure
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#85261e]">
+                  {modalMode === "edit" ? "Modify Travel Record" : "New Travel Record"}
+                </span>
+                <h2 className="text-xl font-extrabold text-[#33110e]">
+                  {modalMode === "edit" ? "Edit Academic Travel" : "Add Academic Travel / Exposure"}
                 </h2>
-                <p className="text-xs text-neutral-500">
-                  Log international conferences, keynote visits, and foreign university collaborations.
-                </p>
               </div>
               <button
                 type="button"
@@ -177,14 +266,14 @@ export default function ExposuresPage() {
               </button>
             </div>
 
-            <form onSubmit={handleAdd} className="space-y-4">
+            <form onSubmit={handleSave} className="space-y-4 text-xs">
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Visit Destination &amp; Event Title *
+                  Visit Purpose / Conference / Collaboration *
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. London, UK • Visited Oxford University for ICCIT 2014"
+                  placeholder="e.g. Keynote Address at IEEE CloudCom / Research Visit to NUS Singapore"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
@@ -194,31 +283,77 @@ export default function ExposuresPage() {
 
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Nature of Exposure / Funding / Details *
+                  Country / Host Organization
                 </label>
-                <textarea
-                  rows={4}
-                  placeholder="e.g. Paper presentation, Session Chair, Supported by Cisco Networking Academy & UNDP"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  required
-                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-3 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e] leading-relaxed"
+                <input
+                  type="text"
+                  placeholder="e.g. United States / Singapore / Germany / IIT Bombay"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 />
               </div>
 
-              <div className="flex justify-end gap-2.5 pt-4 border-t border-[#eedfd8]/60">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Year of Travel *
+                  </label>
+                  <input
+                    type="number"
+                    min={1970}
+                    max={2035}
+                    value={year}
+                    onChange={(e) => setYear(Number(e.target.value))}
+                    required
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Academic Session
+                  </label>
+                  <select
+                    value={academicSession}
+                    onChange={(e) => setAcademicSession(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  >
+                    {ACADEMIC_SESSIONS.map((sess) => (
+                      <option key={sess} value={sess}>
+                        {sess}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                  Visit Details / Outcomes
+                </label>
+                <textarea
+                  rows={2}
+                  placeholder="e.g. Delivered keynote lecture and conducted bilateral discussions on distributed sensor network security."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-3 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-[#eedfd8]">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2 text-xs font-bold text-neutral-700 hover:bg-[#fff9f6] transition cursor-pointer"
+                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2 text-xs font-bold text-neutral-600 hover:bg-neutral-50 transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-5 py-2 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+                  className="rounded-xl bg-[#85261e] hover:bg-[#33110e] px-5 py-2 text-xs font-bold text-white shadow-xs hover:shadow-md transition cursor-pointer"
                 >
-                  Save Exposure Record
+                  {modalMode === "edit" ? "Save Changes" : "Save Travel Record"}
                 </button>
               </div>
             </form>

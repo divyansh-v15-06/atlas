@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import {
   Plus,
   Trash2,
+  Edit,
   Lightbulb,
   X,
   Search,
@@ -14,11 +15,18 @@ import {
   Sparkles,
   Award,
   Layers,
+  Clock,
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatINR } from "@/lib/utils";
 import { MOCK_FACULTY, MOCK_PROJECTS } from "@/lib/mock-data";
-import { getStoredData, setStoredData } from "@/lib/faculty-storage";
+import { getStoredData, saveFacultyRecord } from "@/lib/faculty-storage";
+import AssociatedFacultyPicker from "@/components/faculty/AssociatedFacultyPicker";
+import {
+  ACADEMIC_SESSIONS,
+  MONTHS,
+  PROJECT_STATUSES,
+} from "@/lib/faculty-constants";
 
 export default function FacultyProjectsPage() {
   const [user, setUser] = useState<any>(null);
@@ -29,13 +37,35 @@ export default function FacultyProjectsPage() {
 
   // Modal State
   const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState<"add" | "edit">("add");
+  const [editingId, setEditingId] = useState<string | null>(null);
+
+  // Form Fields matching tempcsebase
   const [title, setTitle] = useState("");
   const [agency, setAgency] = useState("");
   const [refNo, setRefNo] = useState("");
-  const [budget, setBudget] = useState(2500000);
+  const [budget, setBudget] = useState<number | string>(2500000);
+  const [duration, setDuration] = useState("36 Months");
   const [status, setStatus] = useState("Ongoing");
+  const [projectType, setProjectType] = useState("Sponsored Research Project");
+  const [academicSession, setAcademicSession] = useState(ACADEMIC_SESSIONS[1] || "2024-2025");
+  const [month, setMonth] = useState(MONTHS[3] || "April");
   const [year, setYear] = useState(new Date().getFullYear());
   const [investigators, setInvestigators] = useState("");
+  const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
+
+  const loadProjects = (activeFaculty: any) => {
+    const lastName = activeFaculty.full_name?.toLowerCase().split(" ").pop() || "";
+    const userProjects = MOCK_PROJECTS.filter((p: any) => {
+      if (p.faculty_ids && p.faculty_ids.includes(activeFaculty.id)) return true;
+      if (p.raw_investigators && p.raw_investigators.toLowerCase().includes(lastName)) return true;
+      return false;
+    });
+
+    const fallback = userProjects.length > 0 ? userProjects : MOCK_PROJECTS;
+    const stored = getStoredData(activeFaculty, "projects", fallback);
+    setProjects(stored);
+  };
 
   useEffect(() => {
     let activeFaculty = MOCK_FACULTY[0];
@@ -57,16 +87,15 @@ export default function FacultyProjectsPage() {
       } catch {}
     }
 
-    const lastName = activeFaculty.full_name.toLowerCase().split(" ").pop() || "";
-    const userProjects = MOCK_PROJECTS.filter((p: any) => {
-      if (p.faculty_ids && p.faculty_ids.includes(activeFaculty.id)) return true;
-      if (p.raw_investigators && p.raw_investigators.toLowerCase().includes(lastName)) return true;
-      return false;
-    });
+    loadProjects(activeFaculty);
 
-    const fallback = userProjects.length > 0 ? userProjects : MOCK_PROJECTS;
-    const stored = getStoredData(activeFaculty, "projects", fallback);
-    setProjects(stored);
+    const handleStorageUpdate = (e: any) => {
+      if (!e.detail?.section || e.detail.section === "projects") {
+        loadProjects(activeFaculty);
+      }
+    };
+    window.addEventListener("nith_faculty_storage_update", handleStorageUpdate);
+    return () => window.removeEventListener("nith_faculty_storage_update", handleStorageUpdate);
   }, []);
 
   const filteredProjects = useMemo(() => {
@@ -74,13 +103,13 @@ export default function FacultyProjectsPage() {
       const q = search.toLowerCase();
       const matchesSearch =
         !search ||
-        p.title.toLowerCase().includes(q) ||
+        p.title?.toLowerCase().includes(q) ||
         (p.funding_agency && p.funding_agency.toLowerCase().includes(q)) ||
         (p.reference_number && p.reference_number.toLowerCase().includes(q)) ||
         (p.raw_investigators && p.raw_investigators.toLowerCase().includes(q));
 
       const matchesStatus =
-        statusFilter === "ALL" || p.status.toLowerCase() === statusFilter.toLowerCase();
+        statusFilter === "ALL" || p.status?.toLowerCase() === statusFilter.toLowerCase();
 
       return matchesSearch && matchesStatus;
     });
@@ -88,51 +117,100 @@ export default function FacultyProjectsPage() {
 
   const totalFunding = useMemo(() => {
     return filteredProjects.reduce(
-      (sum, p) => sum + (Number(p.total_sanctioned_amount) || 0),
+      (sum, p) => sum + (Number(p.total_sanctioned_amount || p.amount) || 0),
       0
     );
   }, [filteredProjects]);
 
-  const handleAdd = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!title.trim() || !agency.trim()) {
-      toast.error("Please provide Project Title and Funding Agency");
-      return;
-    }
-    const newPrj = {
-      id: `prj-${Date.now()}`,
-      title: title.trim(),
-      funding_agency: agency.trim(),
-      status: status,
-      project_type: "Sponsored R&D",
-      start_date: `${year}-04-01`,
-      end_date: `${Number(year) + 3}-03-31`,
-      year: Number(year) || new Date().getFullYear(),
-      total_sanctioned_amount: Number(budget),
-      total_amount_received: Number(budget),
-      scheme: "Core Research Grant",
-      reference_number: refNo.trim() || `CRG/${year}/${Math.floor(1000 + Math.random() * 9000)}`,
-      raw_investigators: investigators.trim() || faculty.full_name,
-      faculty_ids: [faculty.id],
-    };
-    const updated = [newPrj, ...projects];
-    setProjects(updated);
-    setStoredData(faculty, "projects", updated);
-    setShowModal(false);
+  const openAddModal = () => {
+    setModalMode("add");
+    setEditingId(null);
     setTitle("");
-    setAgency("");
-    setRefNo("");
-    setInvestigators("");
+    setAgency("DST-SERB");
+    setRefNo(`CRG/${new Date().getFullYear()}/${Math.floor(1000 + Math.random() * 9000)}`);
     setBudget(2500000);
+    setDuration("36 Months");
     setStatus("Ongoing");
-    toast.success("R&D Sponsored Project grant saved and persisted!");
+    setProjectType("Sponsored Research Project");
+    setAcademicSession(ACADEMIC_SESSIONS[1] || "2024-2025");
+    setMonth(MONTHS[3] || "April");
+    setYear(new Date().getFullYear());
+    setInvestigators(faculty.full_name || "");
+    setSelectedAssociatedFaculty([]);
+    setShowModal(true);
   };
 
-  const handleDelete = (id: string) => {
-    const updated = projects.filter((x) => x.id !== id);
-    setProjects(updated);
-    setStoredData(faculty, "projects", updated);
-    toast.success("Project record removed and storage updated");
+  const openEditModal = (prj: any) => {
+    setModalMode("edit");
+    setEditingId(prj.id);
+    setTitle(prj.title || "");
+    setAgency(prj.funding_agency || prj.agency || "");
+    setRefNo(prj.reference_number || prj.ref_no || "");
+    setBudget(prj.total_sanctioned_amount || prj.amount || 2500000);
+    setDuration(prj.duration || "36 Months");
+    setStatus(prj.status || "Ongoing");
+    setProjectType(prj.project_type || prj.category || "Sponsored Research Project");
+    setAcademicSession(prj.academic_session || ACADEMIC_SESSIONS[1]);
+    setMonth(prj.month || MONTHS[3]);
+    setYear(Number(prj.year) || new Date().getFullYear());
+    setInvestigators(prj.raw_investigators || prj.investigators || "");
+
+    const linked = Array.isArray(prj.associated_faculty)
+      ? prj.associated_faculty
+      : Array.isArray(prj.faculty_ids)
+      ? MOCK_FACULTY.filter((f) => prj.faculty_ids.includes(f.id))
+      : [];
+    setSelectedAssociatedFaculty(linked);
+    setShowModal(true);
+  };
+
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!title.trim() || !agency.trim()) {
+      toast.error("Please provide Project Title and Sponsoring Agency");
+      return;
+    }
+
+    const prjRecord: any = {
+      id: modalMode === "edit" && editingId ? editingId : `prj-${Date.now()}`,
+      title: title.trim(),
+      funding_agency: agency.trim(),
+      agency: agency.trim(),
+      reference_number: refNo.trim() || `CRG/${year}/${Math.floor(1000 + Math.random() * 9000)}`,
+      total_sanctioned_amount: Number(budget) || 0,
+      amount: Number(budget) || 0,
+      duration: duration.trim() || "36 Months",
+      status: status,
+      project_type: projectType,
+      category: projectType,
+      academic_session: academicSession,
+      month: month,
+      year: Number(year) || new Date().getFullYear(),
+      raw_investigators: investigators.trim() || faculty.full_name,
+      investigators: investigators.trim() || faculty.full_name,
+      associated_faculty: selectedAssociatedFaculty,
+      faculty_ids: [
+        faculty.id,
+        ...selectedAssociatedFaculty.map((f) => f.id || f.employee_code),
+      ],
+      updated_at: new Date().toISOString(),
+    };
+
+    saveFacultyRecord(faculty, "projects", prjRecord, false);
+    loadProjects(faculty);
+    setShowModal(false);
+    toast.success(
+      modalMode === "edit"
+        ? "Sponsored project updated and synchronized successfully!"
+        : "Sponsored research project recorded and synchronized with Co-PIs!"
+    );
+  };
+
+  const handleDelete = (prj: any) => {
+    if (!window.confirm(`Are you sure you want to delete "${prj.title}"?`)) return;
+    saveFacultyRecord(faculty, "projects", prj, true);
+    loadProjects(faculty);
+    toast.success("Sponsored project removed from portfolio and storage updated");
   };
 
   return (
@@ -143,164 +221,187 @@ export default function FacultyProjectsPage() {
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold text-[#33110e] tracking-tight uppercase flex items-center gap-2">
               <Lightbulb className="w-6 h-6 text-[#85261e]" />
-              Sponsored R&amp;D Projects &amp; Grants
+              Sponsored Research Projects
             </h1>
             <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-xs font-bold px-2.5 py-0.5 rounded-full">
-              {projects.length} Grants Tracked
+              {projects.length} Grants
             </span>
           </div>
           <p className="text-xs text-neutral-600 mt-1">
-            Externally sponsored research grants from DST, SERB, MeitY, and industry for{" "}
-            <strong>{faculty.full_name}</strong> ({faculty.employee_code || "Faculty"}).
+            External sponsored projects, funded R&amp;D grants, and consultancy projects for{" "}
+            <strong>{faculty.full_name}</strong>.
           </p>
         </div>
 
         <button
           type="button"
-          onClick={() => setShowModal(true)}
+          onClick={openAddModal}
           className="inline-flex items-center gap-2 rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-4 py-2.5 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
         >
           <Plus className="h-4 w-4 text-amber-300" />
-          <span>Add Project Grant</span>
+          <span>Add Project</span>
         </button>
       </div>
 
-      {/* Search, Status & Funding KPI */}
-      <div className="bg-white border border-[#eedfd8] rounded-2xl p-4 shadow-xs space-y-3">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-2.5" />
-            <input
-              type="text"
-              placeholder="Search project title, agency, ref no, investigators..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl border border-[#eedfd8] bg-[#fff9f6] text-[#33110e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
-            />
-          </div>
+      {/* Overview Stat Strip */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="bg-white rounded-2xl border border-[#eedfd8] p-4 shadow-2xs">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+            Total Sanctioned Capital
+          </span>
+          <p className="text-xl sm:text-2xl font-black text-[#85261e] mt-0.5">
+            {formatINR(totalFunding)}
+          </p>
+        </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="flex flex-wrap items-center gap-1.5 bg-[#fff9f6] p-1 rounded-xl border border-[#eedfd8]">
-              {[
-                { id: "ALL", label: "All Projects" },
-                { id: "Ongoing", label: "Ongoing" },
-                { id: "Completed", label: "Completed" },
-              ].map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setStatusFilter(tab.id)}
-                  className={`px-3 py-1 text-xs font-semibold rounded-lg transition cursor-pointer ${
-                    statusFilter === tab.id
-                      ? "bg-[#33110e] text-white shadow-xs"
-                      : "text-[#33110e] hover:bg-[#eedfd8]/50"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+        <div className="bg-white rounded-2xl border border-[#eedfd8] p-4 shadow-2xs">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+            Ongoing Grants
+          </span>
+          <p className="text-xl sm:text-2xl font-black text-emerald-700 mt-0.5">
+            {projects.filter((p) => p.status?.toLowerCase() === "ongoing").length} Projects
+          </p>
+        </div>
 
-            <div className="bg-[#33110e] text-white px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 shadow-2xs">
-              <span>Total Grants: </span>
-              <span className="text-amber-300 font-mono">{formatINR(totalFunding)}</span>
-            </div>
-          </div>
+        <div className="bg-white rounded-2xl border border-[#eedfd8] p-4 shadow-2xs">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+            Completed Projects
+          </span>
+          <p className="text-xl sm:text-2xl font-black text-neutral-700 mt-0.5">
+            {projects.filter((p) => p.status?.toLowerCase() === "completed").length} Delivered
+          </p>
         </div>
       </div>
 
-      {/* Project Cards Grid */}
-      <div className="space-y-3.5">
-        {filteredProjects.map((p) => {
-          const isOngoing = p.status.toLowerCase() === "ongoing";
-          return (
-            <div
-              key={p.id}
-              className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-xs hover:border-[#85261e]/40 transition duration-150 flex flex-col justify-between space-y-3 group"
-            >
-              <div className="space-y-2">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span
-                    className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
-                      isOngoing
-                        ? "bg-sky-50 text-sky-800 border-sky-300"
-                        : "bg-emerald-50 text-emerald-800 border-emerald-300"
-                    }`}
-                  >
-                    {p.status}
-                  </span>
+      {/* Search & Filter */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
+          <input
+            type="text"
+            placeholder="Search projects by title, funding agency, reference no, or investigator..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#eedfd8] bg-white text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e] shadow-2xs"
+          />
+        </div>
 
-                  <span className="bg-[#fff9f6] text-[#33110e] border border-[#eedfd8] text-[11px] font-mono font-bold px-2 py-0.5 rounded">
-                    {p.funding_agency}
-                  </span>
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="px-4 py-2.5 rounded-xl border border-[#eedfd8] bg-white text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e] shadow-2xs cursor-pointer"
+        >
+          <option value="ALL">All Statuses</option>
+          <option value="Ongoing">Ongoing</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
 
-                  {p.reference_number && (
-                    <span className="text-[11px] font-mono text-neutral-500">
-                      Ref: {p.reference_number}
-                    </span>
-                  )}
+      {/* Projects List */}
+      <div className="space-y-3">
+        {filteredProjects.map((prj: any) => (
+          <div
+            key={prj.id}
+            className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-2xs hover:shadow-md transition space-y-3 group"
+          >
+            <div className="flex flex-wrap items-center gap-2">
+              <span
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                  prj.status?.toLowerCase() === "ongoing"
+                    ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                    : "bg-neutral-100 text-neutral-700 border border-neutral-300"
+                }`}
+              >
+                {prj.status || "Ongoing"}
+              </span>
 
-                  <span className="text-sm font-extrabold font-mono text-[#85261e] ml-auto">
-                    {formatINR(p.total_sanctioned_amount)}
-                  </span>
-                </div>
+              <span className="inline-flex items-center gap-1 text-[10px] font-semibold bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] px-2.5 py-0.5 rounded-full">
+                <Building2 className="w-3 h-3 text-[#85261e]" />
+                {prj.funding_agency || prj.agency}
+              </span>
 
-                <h2 className="text-sm sm:text-base font-bold text-[#1c110c] group-hover:text-[#85261e] transition leading-snug">
-                  {p.title}
-                </h2>
+              {prj.academic_session && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-neutral-100 text-neutral-600">
+                  Session: {prj.academic_session}
+                </span>
+              )}
 
-                {p.raw_investigators && (
-                  <p className="text-xs text-neutral-600">
-                    <span className="font-semibold text-[#85261e]">Investigators: </span>
-                    {p.raw_investigators}
-                  </p>
-                )}
+              <span className="text-xs font-bold text-neutral-400 ml-auto font-mono">
+                {prj.month ? `${prj.month} ` : ""}{prj.year}
+              </span>
+            </div>
 
-                <div className="flex flex-wrap items-center gap-4 text-[11px] text-neutral-500 pt-1">
-                  <span className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3 text-[#85261e]" />
-                    <span>Duration: {p.year || 2023} – {Number(p.year || 2023) + 3}</span>
-                  </span>
-                  {p.total_amount_received && (
-                    <span className="text-neutral-600">
-                      Received: <strong className="text-neutral-800">{formatINR(p.total_amount_received)}</strong>
-                    </span>
-                  )}
-                </div>
+            <h3 className="text-sm sm:text-base font-bold text-[#1c110c] leading-snug">
+              {prj.title}
+            </h3>
+
+            <p className="text-xs text-neutral-600">
+              <span className="font-semibold text-neutral-800">Investigators:</span>{" "}
+              {prj.raw_investigators || prj.investigators || faculty.full_name}
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs pt-1">
+              <div className="p-2.5 rounded-xl bg-[#fff9f6] border border-[#eedfd8]/60 space-y-0.5">
+                <span className="text-[10px] font-bold text-neutral-400 uppercase">Sanction / Ref No.</span>
+                <p className="font-mono font-semibold text-neutral-800">{prj.reference_number || "Recorded"}</p>
               </div>
 
-              <div className="flex items-center justify-end pt-3 border-t border-[#eedfd8]/60">
-                <button
-                  type="button"
-                  onClick={() => handleDelete(p.id)}
-                  className="p-1.5 text-neutral-400 hover:text-red-700 transition rounded-lg hover:bg-red-50 cursor-pointer"
-                  title="Remove Project"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
+              <div className="p-2.5 rounded-xl bg-emerald-50/60 border border-emerald-200/70 space-y-0.5">
+                <span className="text-[10px] font-bold text-emerald-800 uppercase">Sanctioned Amount</span>
+                <p className="font-bold text-emerald-900">
+                  {formatINR(Number(prj.total_sanctioned_amount || prj.amount) || 0)}
+                </p>
+              </div>
+
+              <div className="p-2.5 rounded-xl bg-[#fff9f6] border border-[#eedfd8]/60 space-y-0.5">
+                <span className="text-[10px] font-bold text-neutral-400 uppercase">Duration</span>
+                <p className="font-semibold text-neutral-800">{prj.duration || "36 Months"}</p>
               </div>
             </div>
-          );
-        })}
+
+            {/* Actions Strip */}
+            <div className="flex items-center justify-end gap-1 pt-3 border-t border-[#eedfd8]/60 text-xs">
+              <button
+                type="button"
+                onClick={() => openEditModal(prj)}
+                className="p-1.5 text-neutral-500 hover:text-[#85261e] transition rounded-lg hover:bg-[#fdf5f2] cursor-pointer"
+                title="Edit Project"
+              >
+                <Edit className="h-4 w-4" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleDelete(prj)}
+                className="p-1.5 text-neutral-400 hover:text-red-700 transition rounded-lg hover:bg-red-50 cursor-pointer"
+                title="Remove Project"
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        ))}
 
         {filteredProjects.length === 0 && (
           <div className="text-center py-16 text-neutral-500 text-xs bg-white rounded-2xl border border-[#eedfd8]">
-            No R&amp;D project grants found matching your search.
+            No sponsored projects found matching your search.
           </div>
         )}
       </div>
 
-      {/* Add Project Modal */}
+      {/* Add / Edit Project Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs font-sans overflow-y-auto">
-          <div className="w-full max-w-xl rounded-3xl border border-[#eedfd8] bg-white p-6 sm:p-8 shadow-2xl space-y-5 my-8">
+          <div className="w-full max-w-2xl rounded-3xl border border-[#eedfd8] bg-white p-6 sm:p-8 shadow-2xl space-y-5 my-8 max-h-[90vh] flex flex-col overflow-hidden">
+            {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-[#eedfd8]/60 pb-3">
               <div>
-                <h2 className="text-lg font-bold text-[#33110e]">
-                  Add Sponsored R&amp;D Project
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#85261e]">
+                  {modalMode === "edit" ? "Modify Project Record" : "New Sponsored Grant"}
+                </span>
+                <h2 className="text-xl font-extrabold text-[#33110e]">
+                  {modalMode === "edit" ? "Edit Research Project" : "Register Sponsored Project"}
                 </h2>
-                <p className="text-xs text-neutral-500">
-                  Log government, institutional, or industry research grants.
-                </p>
               </div>
               <button
                 type="button"
@@ -311,7 +412,9 @@ export default function FacultyProjectsPage() {
               </button>
             </div>
 
-            <form onSubmit={handleAdd} className="space-y-4">
+            {/* Modal Body */}
+            <form onSubmit={handleSave} className="space-y-4 overflow-y-auto pr-1 flex-1 text-xs">
+              {/* Title */}
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
                   Project Title *
@@ -319,54 +422,140 @@ export default function FacultyProjectsPage() {
                 <textarea
                   rows={2}
                   required
-                  placeholder="e.g. Design and Implementation of Post-Disaster Ad-Hoc Mesh Communication System"
+                  placeholder="e.g. Design and Development of High-Performance Resilient Microgrid Architectures"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-3 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Sponsoring Agency & Reference No */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Funding Agency *
+                    Funding / Sponsoring Agency *
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. SERB, MeitY, DST, UP-CST, DRDO"
+                    placeholder="e.g. DST-SERB, MeitY, DRDO, CSIR, ISRO"
                     value={agency}
                     onChange={(e) => setAgency(e.target.value)}
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   />
                 </div>
 
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Sanction Reference Number
+                    Sanction / Reference Number *
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. CRG/2024/001928"
+                    required
+                    placeholder="e.g. CRG/2023/004812"
                     value={refNo}
                     onChange={(e) => setRefNo(e.target.value)}
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {/* Budget, Duration, Status */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Sanctioned Grant (INR) *
+                    Sanctioned Amount (INR) *
                   </label>
                   <input
                     type="number"
-                    value={budget}
-                    onChange={(e) => setBudget(Number(e.target.value))}
                     required
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    min={0}
+                    value={budget}
+                    onChange={(e) => setBudget(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Duration
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 36 Months / 3 Years"
+                    value={duration}
+                    onChange={(e) => setDuration(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Project Status *
+                  </label>
+                  <select
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  >
+                    {PROJECT_STATUSES.map((st) => (
+                      <option key={st} value={st}>
+                        {st}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Investigators */}
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                  Principal &amp; Co-Investigators in Order *
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder={`e.g. ${faculty.full_name} (PI), Dr. Co-PI Name (Co-PI)`}
+                  value={investigators}
+                  onChange={(e) => setInvestigators(e.target.value)}
+                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                />
+              </div>
+
+              {/* Academic Session, Month, Year */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Academic Session *
+                  </label>
+                  <select
+                    value={academicSession}
+                    onChange={(e) => setAcademicSession(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  >
+                    {ACADEMIC_SESSIONS.map((sess) => (
+                      <option key={sess} value={sess}>
+                        {sess}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Sanction Month
+                  </label>
+                  <select
+                    value={month}
+                    onChange={(e) => setMonth(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  >
+                    {MONTHS.map((m) => (
+                      <option key={m} value={m}>
+                        {m}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div>
@@ -375,54 +564,42 @@ export default function FacultyProjectsPage() {
                   </label>
                   <input
                     type="number"
+                    required
+                    min={1970}
+                    max={2035}
                     value={year}
                     onChange={(e) => setYear(Number(e.target.value))}
-                    required
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Status *
-                  </label>
-                  <select
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
-                  >
-                    <option value="Ongoing">Ongoing</option>
-                    <option value="Completed">Completed</option>
-                  </select>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Principal &amp; Co-Principal Investigators
-                </label>
-                <input
-                  type="text"
-                  placeholder={`e.g. ${faculty.full_name} (PI), Dr. Co-PI Name`}
-                  value={investigators}
-                  onChange={(e) => setInvestigators(e.target.value)}
-                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+              {/* Associated Faculty Picker for instant cross-sync */}
+              <div className="pt-2 border-t border-[#eedfd8]/60">
+                <AssociatedFacultyPicker
+                  selected={selectedAssociatedFaculty}
+                  onChange={setSelectedAssociatedFaculty}
+                  currentFaculty={faculty}
+                  label="Co-Principal Investigators / Associated Faculty (NIT Hamirpur)"
+                  placeholder="Link Co-PI colleagues to auto-sync to their profile..."
+                  helperText="Selected colleagues will automatically see this research grant on their faculty profile."
                 />
               </div>
 
-              <div className="flex justify-end gap-2.5 pt-4 border-t border-[#eedfd8]/60">
+              {/* Modal Actions */}
+              <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-[#eedfd8]">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2 text-xs font-bold text-neutral-700 hover:bg-[#fff9f6] transition cursor-pointer"
+                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2.5 text-xs font-bold text-neutral-600 hover:bg-neutral-50 transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-5 py-2 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+                  className="rounded-xl bg-[#85261e] hover:bg-[#33110e] px-5 py-2.5 text-xs font-bold text-white shadow-xs hover:shadow-md transition cursor-pointer"
                 >
-                  Save Project Grant
+                  {modalMode === "edit" ? "Save Changes" : "Register Project"}
                 </button>
               </div>
             </form>

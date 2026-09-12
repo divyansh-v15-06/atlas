@@ -21,7 +21,7 @@ export default function LoginPage() {
     const [showOverlay, setShowOverlay] = useState(false)
     const router = useRouter()
 
-    const getPasswordStrength = (password) => {
+    const getPasswordStrength = (password: string) => {
         if (!password) return ''
 
         const checks = [
@@ -39,7 +39,7 @@ export default function LoginPage() {
         return 'Strong'
     }
 
-    const handleSubmit = (formData) => {
+    const handleSubmit = (formData: any) => {
         const { oldPassword, newPassword, confirmPassword } = formData
 
         if (!oldPassword || !newPassword || !confirmPassword) {
@@ -90,7 +90,7 @@ export default function LoginPage() {
             })
     }
 
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target
         setFormData((prev) => ({ ...prev, [id]: value }))
 
@@ -99,7 +99,7 @@ export default function LoginPage() {
         }
     }
 
-    const getStrengthColor = (strength) => {
+    const getStrengthColor = (strength: string) => {
         switch (strength) {
             case 'Weak':
                 return 'text-red-500'

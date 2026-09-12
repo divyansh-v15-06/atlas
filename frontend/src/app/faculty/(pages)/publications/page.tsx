@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import {
   Plus,
   Trash2,
+  Edit,
   BookOpen,
   X,
   Copy,
@@ -18,7 +19,15 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { MOCK_FACULTY, MOCK_PUBLICATIONS } from "@/lib/mock-data";
-import { getStoredData, setStoredData } from "@/lib/faculty-storage";
+import { getStoredData, saveFacultyRecord } from "@/lib/faculty-storage";
+import AssociatedFacultyPicker from "@/components/faculty/AssociatedFacultyPicker";
+import {
+  ACADEMIC_SESSIONS,
+  MONTHS,
+  JOURNAL_QUARTILES,
+  INDEXING_OPTIONS,
+  PUBLICATION_TYPES,
+} from "@/lib/faculty-constants";
 
 export default function FacultyPublicationsPage() {
   const [user, setUser] = useState<any>(null);
@@ -28,19 +37,44 @@ export default function FacultyPublicationsPage() {
   const [typeFilter, setTypeFilter] = useState("ALL");
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  // Modal State
+  // Modal State (Add / Edit)
   const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState<"add" | "edit">("add");
+  const [editingId, setEditingId] = useState<string | null>(null);
+
+  // Form Fields matching tempcsebase
   const [title, setTitle] = useState("");
   const [pubType, setPubType] = useState("Journal");
   const [venue, setVenue] = useState("");
-  const [indexing, setIndexing] = useState("Scopus");
-  const [quartile, setQuartile] = useState("Q1");
-  const [year, setYear] = useState(new Date().getFullYear());
-  const [doi, setDoi] = useState("");
   const [authors, setAuthors] = useState("");
+  const [academicSession, setAcademicSession] = useState(ACADEMIC_SESSIONS[1] || "2024-2025");
+  const [month, setMonth] = useState(MONTHS[0]);
+  const [year, setYear] = useState(new Date().getFullYear());
+  const [indexing, setIndexing] = useState("Scopus");
+  const [customIndexing, setCustomIndexing] = useState("");
+  const [quartile, setQuartile] = useState("Q1");
+  const [isbn, setIsbn] = useState("");
   const [volume, setVolume] = useState("");
   const [issue, setIssue] = useState("");
   const [pages, setPages] = useState("");
+  const [doi, setDoi] = useState("");
+  const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
+
+  const loadPublications = (activeFaculty: any) => {
+    const legacyId = activeFaculty.legacy_id;
+    const lastName = activeFaculty.full_name?.toLowerCase().split(" ").pop() || "";
+
+    const userPapers = MOCK_PUBLICATIONS.filter((p: any) => {
+      if (legacyId && p.faculty_legacy_ids?.includes(legacyId)) return true;
+      if (p.author_text && typeof p.author_text === "string" && p.author_text.toLowerCase().includes(lastName)) return true;
+      if (Array.isArray(p.authors) && p.authors.some((a: any) => typeof a === "string" && a.toLowerCase().includes(lastName))) return true;
+      return false;
+    });
+
+    const fallback = userPapers.length > 0 ? userPapers : MOCK_PUBLICATIONS.slice(0, 15);
+    const stored = getStoredData(activeFaculty, "publications", fallback);
+    setPublications(stored);
+  };
 
   useEffect(() => {
     let activeFaculty = MOCK_FACULTY[0];
@@ -62,19 +96,15 @@ export default function FacultyPublicationsPage() {
       } catch {}
     }
 
-    const legacyId = activeFaculty.legacy_id;
-    const lastName = activeFaculty.full_name.toLowerCase().split(" ").pop() || "";
+    loadPublications(activeFaculty);
 
-    const userPapers = MOCK_PUBLICATIONS.filter((p: any) => {
-      if (legacyId && p.faculty_legacy_ids?.includes(legacyId)) return true;
-      if (p.author_text && typeof p.author_text === "string" && p.author_text.toLowerCase().includes(lastName)) return true;
-      if (Array.isArray(p.authors) && p.authors.some((a: any) => typeof a === "string" && a.toLowerCase().includes(lastName))) return true;
-      return false;
-    });
-
-    const fallback = userPapers.length > 0 ? userPapers : MOCK_PUBLICATIONS.slice(0, 15);
-    const stored = getStoredData(activeFaculty, "publications", fallback);
-    setPublications(stored);
+    const handleStorageUpdate = (e: any) => {
+      if (!e.detail?.section || e.detail.section === "publications") {
+        loadPublications(activeFaculty);
+      }
+    };
+    window.addEventListener("nith_faculty_storage_update", handleStorageUpdate);
+    return () => window.removeEventListener("nith_faculty_storage_update", handleStorageUpdate);
   }, []);
 
   const filteredPublications = useMemo(() => {
@@ -82,7 +112,7 @@ export default function FacultyPublicationsPage() {
       const q = search.toLowerCase();
       const matchesSearch =
         !search ||
-        p.title.toLowerCase().includes(q) ||
+        p.title?.toLowerCase().includes(q) ||
         (p.journal_or_conference_name && p.journal_or_conference_name.toLowerCase().includes(q)) ||
         (p.venue_name && p.venue_name.toLowerCase().includes(q)) ||
         (p.author_text && p.author_text.toLowerCase().includes(q)) ||
@@ -97,55 +127,119 @@ export default function FacultyPublicationsPage() {
   }, [publications, search, typeFilter]);
 
   const handleCopyCitation = (pub: any) => {
-    const authors = pub.author_text || faculty.full_name;
-    const citation = `${authors} (${pub.year}). "${pub.title}". ${pub.journal_or_conference_name || pub.venue_name}${pub.volume ? `, vol. ${pub.volume}` : ""}${pub.issue ? `, no. ${pub.issue}` : ""}${pub.page_range || pub.pages ? `, pp. ${pub.page_range || pub.pages}` : ""}.${pub.doi ? ` DOI: ${pub.doi}` : ""}`;
+    const pubAuthors = pub.author_text || faculty.full_name;
+    const citation = `${pubAuthors} (${pub.year}). "${pub.title}". ${pub.journal_or_conference_name || pub.venue_name}${pub.volume ? `, vol. ${pub.volume}` : ""}${pub.issue ? `, no. ${pub.issue}` : ""}${pub.page_range || pub.pages ? `, pp. ${pub.page_range || pub.pages}` : ""}.${pub.doi ? ` DOI: ${pub.doi}` : ""}`;
     navigator.clipboard.writeText(citation);
     setCopiedId(pub.id);
     toast.success("Citation copied in standard format!");
     setTimeout(() => setCopiedId(null), 2500);
   };
 
-  const handleAdd = (e: React.FormEvent) => {
+  const openAddModal = () => {
+    setModalMode("add");
+    setEditingId(null);
+    setTitle("");
+    setPubType("Journal");
+    setVenue("");
+    setAuthors(faculty.full_name || "");
+    setAcademicSession(ACADEMIC_SESSIONS[1] || "2024-2025");
+    setMonth(MONTHS[0]);
+    setYear(new Date().getFullYear());
+    setIndexing("Scopus");
+    setCustomIndexing("");
+    setQuartile("Q1");
+    setIsbn("");
+    setVolume("");
+    setIssue("");
+    setPages("");
+    setDoi("");
+    setSelectedAssociatedFaculty([]);
+    setShowModal(true);
+  };
+
+  const openEditModal = (pub: any) => {
+    setModalMode("edit");
+    setEditingId(pub.id);
+    setTitle(pub.title || "");
+    setPubType(pub.publication_type || "Journal");
+    setVenue(pub.journal_or_conference_name || pub.venue_name || "");
+    setAuthors(pub.author_text || "");
+    setAcademicSession(pub.academic_session || ACADEMIC_SESSIONS[1]);
+    setMonth(pub.publication_month || pub.month || MONTHS[0]);
+    setYear(Number(pub.year) || new Date().getFullYear());
+    setIndexing(pub.indexing || "Scopus");
+    setCustomIndexing(pub.custom_indexing || "");
+    setQuartile(pub.journal_quartile || "Q1");
+    setIsbn(pub.isbn || "");
+    setVolume(pub.volume || "");
+    setIssue(pub.issue || "");
+    setPages(pub.pages || pub.page_range || "");
+    setDoi(pub.doi || "");
+
+    // Resolve associated faculty
+    const linked = Array.isArray(pub.associated_faculty)
+      ? pub.associated_faculty
+      : Array.isArray(pub.faculty_ids)
+      ? MOCK_FACULTY.filter((f) => pub.faculty_ids.includes(f.id))
+      : [];
+    setSelectedAssociatedFaculty(linked);
+    setShowModal(true);
+  };
+
+  const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim() || !venue.trim()) {
-      toast.error("Please provide Publication Title and Journal/Conference Venue");
+      toast.error("Please provide Publication Title and Journal/Conference/Publisher Name");
       return;
     }
-    const newPub = {
-      id: `pub-${Date.now()}`,
+
+    const effectiveIndexing = indexing === "Other" && customIndexing.trim() ? customIndexing.trim() : indexing;
+
+    const pubRecord: any = {
+      id: modalMode === "edit" && editingId ? editingId : `pub-${Date.now()}`,
       title: title.trim(),
       publication_type: pubType,
+      type: pubType,
       journal_or_conference_name: venue.trim(),
       venue_name: venue.trim(),
+      publisher: venue.trim(),
       year: Number(year) || new Date().getFullYear(),
-      indexing: indexing,
-      journal_quartile: quartile !== "N/A" ? quartile : undefined,
+      month: month,
+      publication_month: month,
+      academic_session: academicSession,
+      indexing: effectiveIndexing,
+      custom_indexing: customIndexing.trim() || undefined,
+      journal_quartile: pubType === "Journal" && quartile !== "N/A" ? quartile : undefined,
+      isbn: (pubType === "Book" || pubType === "Book Chapter") && isbn.trim() ? isbn.trim() : undefined,
       doi: doi.trim() || undefined,
       author_text: authors.trim() || faculty.full_name,
       volume: volume.trim() || undefined,
       issue: issue.trim() || undefined,
       pages: pages.trim() || undefined,
       page_range: pages.trim() || undefined,
+      associated_faculty: selectedAssociatedFaculty,
+      faculty_ids: [
+        faculty.id,
+        ...selectedAssociatedFaculty.map((f) => f.id || f.employee_code),
+      ],
       faculty_legacy_ids: [faculty.legacy_id],
+      updated_at: new Date().toISOString(),
     };
-    const updated = [newPub, ...publications];
-    setPublications(updated);
-    setStoredData(faculty, "publications", updated);
+
+    saveFacultyRecord(faculty, "publications", pubRecord, false);
+    loadPublications(faculty);
     setShowModal(false);
-    setTitle("");
-    setVenue("");
-    setDoi("");
-    setAuthors("");
-    setVolume("");
-    setIssue("");
-    setPages("");
-    toast.success("Publication recorded and saved permanently in portfolio!");
+    toast.success(
+      modalMode === "edit"
+        ? "Publication updated successfully and synchronized!"
+        : "New publication recorded and synchronized with co-authors!"
+    );
   };
 
-  const handleDelete = (id: string) => {
-    const updated = publications.filter((p) => p.id !== id);
-    setPublications(updated);
-    setStoredData(faculty, "publications", updated);
+  const handleDelete = (pub: any) => {
+    if (!window.confirm(`Are you sure you want to delete "${pub.title}"?`)) return;
+    saveFacultyRecord(faculty, "publications", pub, true);
+    loadPublications(faculty);
     toast.success("Publication removed from portfolio and storage updated");
   };
 
@@ -171,7 +265,7 @@ export default function FacultyPublicationsPage() {
 
         <button
           type="button"
-          onClick={() => setShowModal(true)}
+          onClick={openAddModal}
           className="inline-flex items-center gap-2 rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-4 py-2.5 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
         >
           <Plus className="h-4 w-4 text-amber-300" />
@@ -179,104 +273,96 @@ export default function FacultyPublicationsPage() {
         </button>
       </div>
 
-      {/* Filter and Search Bar */}
-      <div className="bg-white border border-[#eedfd8] rounded-2xl p-4 shadow-xs space-y-3">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-          {/* Keyword Search */}
-          <div className="relative w-full sm:w-80">
-            <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-2.5" />
-            <input
-              type="text"
-              placeholder="Search paper title, journal, DOI, co-authors..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl border border-[#eedfd8] bg-[#fff9f6] text-[#33110e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
-            />
-          </div>
-
-          {/* Type Filter Pills */}
-          <div className="flex flex-wrap items-center gap-1.5 bg-[#fff9f6] p-1 rounded-xl border border-[#eedfd8]">
-            {[
-              { id: "ALL", label: "All Papers" },
-              { id: "Journal", label: "Journals" },
-              { id: "Conference", label: "Conferences" },
-              { id: "Book Chapter", label: "Book Chapters" },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setTypeFilter(tab.id)}
-                className={`px-3 py-1 text-xs font-semibold rounded-lg transition cursor-pointer ${
-                  typeFilter === tab.id
-                    ? "bg-[#33110e] text-white shadow-xs"
-                    : "text-[#33110e] hover:bg-[#eedfd8]/50"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+      {/* Filter & Search Controls */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
+          <input
+            type="text"
+            placeholder="Search papers by title, journal venue, author or DOI..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[#eedfd8] bg-white text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e] shadow-2xs"
+          />
         </div>
+
+        <select
+          value={typeFilter}
+          onChange={(e) => setTypeFilter(e.target.value)}
+          className="px-4 py-2.5 rounded-xl border border-[#eedfd8] bg-white text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e] shadow-2xs cursor-pointer"
+        >
+          <option value="ALL">All Categories</option>
+          <option value="Journal">Journals</option>
+          <option value="Conference">Conferences</option>
+          <option value="Book Chapter">Book Chapters</option>
+          <option value="Book">Authored Books</option>
+        </select>
       </div>
 
-      {/* Publications Cards Grid */}
-      <div className="space-y-3.5">
-        {filteredPublications.map((pub) => (
+      {/* Publications List */}
+      <div className="space-y-3">
+        {filteredPublications.map((pub: any) => (
           <div
             key={pub.id}
-            className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-xs hover:border-[#85261e]/40 transition duration-150 flex flex-col justify-between space-y-3 group"
+            className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-2xs hover:shadow-md transition space-y-3 group"
           >
-            <div className="space-y-2">
-              {/* Badges Header */}
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="bg-[#33110e] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase">
-                  {pub.publication_type}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-[#33110e] text-white">
+                {pub.publication_type || pub.type || "Publication"}
+              </span>
+
+              {pub.journal_quartile && (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-900 border border-amber-300">
+                  {pub.journal_quartile}
                 </span>
+              )}
 
-                {pub.indexing && (
-                  <span className="bg-[#85261e] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full">
-                    {pub.indexing}
-                  </span>
-                )}
-
-                {pub.journal_quartile && pub.journal_quartile !== "N/A" && (
-                  <span className="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2 py-0.5 rounded">
-                    {pub.journal_quartile}
-                  </span>
-                )}
-
-                <span className="bg-[#fff9f6] text-[#33110e] border border-[#eedfd8] text-[11px] font-mono font-bold px-2 py-0.5 rounded ml-auto">
-                  {pub.year}
+              {pub.indexing && (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-[#fdf5f2] text-[#85261e] border border-[#eedfd8]">
+                  {pub.indexing}
                 </span>
-              </div>
+              )}
 
-              {/* Title */}
-              <h2 className="text-sm sm:text-base font-bold text-[#1c110c] group-hover:text-[#85261e] transition leading-snug">
-                {pub.title}
-              </h2>
+              {pub.academic_session && (
+                <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-neutral-100 text-neutral-600">
+                  Session: {pub.academic_session}
+                </span>
+              )}
 
-              {/* Authors */}
-              {pub.author_text && (
-                <p className="text-xs text-neutral-600">
-                  <span className="font-semibold text-[#85261e]">Authors: </span>
-                  {pub.author_text}
+              <span className="text-xs font-bold text-neutral-400 ml-auto font-mono">
+                {pub.month ? `${pub.month} ` : ""}{pub.year}
+              </span>
+            </div>
+
+            <h3 className="text-sm sm:text-base font-bold text-[#1c110c] leading-snug">
+              {pub.title}
+            </h3>
+
+            <p className="text-xs text-neutral-600">
+              <span className="font-semibold text-neutral-800">Authors:</span>{" "}
+              {pub.author_text || faculty.full_name}
+            </p>
+
+            <div className="text-xs text-neutral-500 space-y-1">
+              <p className="italic text-[#85261e] font-medium">
+                {pub.journal_or_conference_name || pub.venue_name || pub.publisher}
+                {pub.volume && `, Vol. ${pub.volume}`}
+                {pub.issue && `, No. ${pub.issue}`}
+                {(pub.page_range || pub.pages) && `, pp. ${pub.page_range || pub.pages}`}
+              </p>
+
+              {pub.isbn && (
+                <p className="text-[11px] font-mono text-neutral-600">
+                  ISBN: {pub.isbn}
                 </p>
               )}
 
-              {/* Venue & Volume/Issue */}
-              <p className="text-xs text-neutral-700 italic font-medium">
-                {pub.journal_or_conference_name || pub.venue_name}
-                {pub.volume && <span> • Vol. {pub.volume}</span>}
-                {pub.issue && <span>, Issue {pub.issue}</span>}
-                {(pub.page_range || pub.pages) && <span>, pp. {pub.page_range || pub.pages}</span>}
-              </p>
-
-              {/* DOI */}
               {pub.doi && (
-                <div className="flex items-center gap-2 pt-0.5">
+                <div className="pt-1">
                   <a
                     href={pub.doi.startsWith("http") ? pub.doi : `https://doi.org/${pub.doi}`}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 font-mono text-[11px] text-[#85261e] hover:underline"
                   >
                     <span>DOI: {pub.doi}</span>
@@ -306,14 +392,25 @@ export default function FacultyPublicationsPage() {
                 )}
               </button>
 
-              <button
-                type="button"
-                onClick={() => handleDelete(pub.id)}
-                className="p-1.5 text-neutral-400 hover:text-red-700 transition rounded-lg hover:bg-red-50 cursor-pointer"
-                title="Remove Publication"
-              >
-                <Trash2 className="h-4 w-4" />
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => openEditModal(pub)}
+                  className="p-1.5 text-neutral-500 hover:text-[#85261e] transition rounded-lg hover:bg-[#fdf5f2] cursor-pointer"
+                  title="Edit Publication"
+                >
+                  <Edit className="h-4 w-4" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => handleDelete(pub)}
+                  className="p-1.5 text-neutral-400 hover:text-red-700 transition rounded-lg hover:bg-red-50 cursor-pointer"
+                  title="Remove Publication"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           </div>
         ))}
@@ -325,18 +422,19 @@ export default function FacultyPublicationsPage() {
         )}
       </div>
 
-      {/* Add Publication Modal */}
+      {/* Add / Edit Publication Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs font-sans overflow-y-auto">
-          <div className="w-full max-w-2xl rounded-3xl border border-[#eedfd8] bg-white p-6 sm:p-8 shadow-2xl space-y-5 my-8">
+          <div className="w-full max-w-2xl rounded-3xl border border-[#eedfd8] bg-white p-6 sm:p-8 shadow-2xl space-y-5 my-8 max-h-[90vh] flex flex-col overflow-hidden">
+            {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-[#eedfd8]/60 pb-3">
               <div>
-                <h2 className="text-lg font-bold text-[#33110e]">
-                  Add Research Publication
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#85261e]">
+                  {modalMode === "edit" ? "Modify Existing Record" : "New Scholarly Entry"}
+                </span>
+                <h2 className="text-xl font-extrabold text-[#33110e]">
+                  {modalMode === "edit" ? "Edit Publication Details" : "Add Research Publication"}
                 </h2>
-                <p className="text-xs text-neutral-500">
-                  Log a peer-reviewed journal paper, conference article, or book chapter.
-                </p>
               </div>
               <button
                 type="button"
@@ -347,7 +445,9 @@ export default function FacultyPublicationsPage() {
               </button>
             </div>
 
-            <form onSubmit={handleAdd} className="space-y-4">
+            {/* Modal Body */}
+            <form onSubmit={handleSave} className="space-y-4 overflow-y-auto pr-1 flex-1 text-xs">
+              {/* Title */}
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
                   Paper / Publication Title *
@@ -355,14 +455,15 @@ export default function FacultyPublicationsPage() {
                 <textarea
                   rows={2}
                   required
-                  placeholder="e.g. An Optimal Deep Learning Architecture for Edge Cloud Computing"
+                  placeholder="e.g. Deep Residual Learning for Image Recognition"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-3 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {/* Type, Indexing, Quartile */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
                     Publication Type *
@@ -372,10 +473,11 @@ export default function FacultyPublicationsPage() {
                     onChange={(e) => setPubType(e.target.value)}
                     className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   >
-                    <option value="Journal">Journal Article</option>
-                    <option value="Conference">Conference Proceeding</option>
-                    <option value="Book Chapter">Book Chapter</option>
-                    <option value="Book">Authored Book</option>
+                    {PUBLICATION_TYPES.map((pt) => (
+                      <option key={pt.value} value={pt.value}>
+                        {pt.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -388,138 +490,237 @@ export default function FacultyPublicationsPage() {
                     onChange={(e) => setIndexing(e.target.value)}
                     className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   >
-                    <option value="SCI(E)">SCI(E) / Web of Science</option>
-                    <option value="Scopus">Scopus</option>
-                    <option value="ESCI">ESCI</option>
-                    <option value="Peer-Reviewed">Peer-Reviewed / Other</option>
+                    {INDEXING_OPTIONS.map((opt) => (
+                      <option key={opt} value={opt}>
+                        {opt}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
-                <div>
-                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Journal Quartile
-                  </label>
-                  <select
-                    value={quartile}
-                    onChange={(e) => setQuartile(e.target.value)}
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
-                  >
-                    <option value="Q1">Q1 (Top 25%)</option>
-                    <option value="Q2">Q2</option>
-                    <option value="Q3">Q3</option>
-                    <option value="Q4">Q4</option>
-                    <option value="N/A">Not Applicable</option>
-                  </select>
-                </div>
+                {pubType === "Journal" ? (
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                      Journal Quartile
+                    </label>
+                    <select
+                      value={quartile}
+                      onChange={(e) => setQuartile(e.target.value)}
+                      className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    >
+                      {JOURNAL_QUARTILES.map((q) => (
+                        <option key={q} value={q}>
+                          {q}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  <div>
+                    <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                      ISBN (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. 978-3-16-148410-0"
+                      value={isbn}
+                      onChange={(e) => setIsbn(e.target.value)}
+                      className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    />
+                  </div>
+                )}
               </div>
 
+              {/* Custom Indexing Input (conditional) */}
+              {indexing === "Other" && (
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Specify Custom Indexing *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. DBLP, ACM Digital Library, Google Scholar"
+                    value={customIndexing}
+                    onChange={(e) => setCustomIndexing(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  />
+                </div>
+              )}
+
+              {/* Venue / Journal Name */}
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Journal / Conference / Publisher Name *
+                  {pubType === "Journal"
+                    ? "Journal Name *"
+                    : pubType === "Conference"
+                    ? "Conference Title / Proceedings *"
+                    : "Publisher / Book Title *"}
                 </label>
                 <input
                   type="text"
                   required
-                  placeholder="e.g. IEEE Transactions on Computers / ACM Computing Surveys"
+                  placeholder={
+                    pubType === "Journal"
+                      ? "e.g. IEEE Transactions on Neural Networks and Learning Systems"
+                      : pubType === "Conference"
+                      ? "e.g. 2024 IEEE International Conference on Computer Communications (INFOCOM)"
+                      : "e.g. Springer Nature / CRC Press"
+                  }
                   value={venue}
                   onChange={(e) => setVenue(e.target.value)}
                   className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 />
               </div>
 
+              {/* Authors */}
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  Author(s) in Order
+                  Author(s) in Exact Publication Order *
                 </label>
                 <input
                   type="text"
-                  placeholder={`e.g. ${faculty.full_name}, Co-Author 1, Co-Author 2`}
+                  required
+                  placeholder={`e.g. ${faculty.full_name}, Alice Smith, Bob Johnson`}
                   value={authors}
                   onChange={(e) => setAuthors(e.target.value)}
                   className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 />
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {/* Academic Session, Month, Year */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Year *
+                    Academic Session *
+                  </label>
+                  <select
+                    value={academicSession}
+                    onChange={(e) => setAcademicSession(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  >
+                    {ACADEMIC_SESSIONS.map((sess) => (
+                      <option key={sess} value={sess}>
+                        {sess}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Month
+                  </label>
+                  <select
+                    value={month}
+                    onChange={(e) => setMonth(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-semibold text-[#33110e] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  >
+                    {MONTHS.map((m) => (
+                      <option key={m} value={m}>
+                        {m}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    Publication Year *
                   </label>
                   <input
                     type="number"
+                    required
+                    min={1970}
+                    max={2035}
                     value={year}
                     onChange={(e) => setYear(Number(e.target.value))}
-                    required
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   />
                 </div>
+              </div>
 
+              {/* Volume, Issue, Pages, DOI */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
                     Volume
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. 52"
+                    placeholder="e.g. 42"
                     value={volume}
                     onChange={(e) => setVolume(e.target.value)}
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   />
                 </div>
 
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Issue
+                    Issue No.
                   </label>
                   <input
                     type="text"
                     placeholder="e.g. 4"
                     value={issue}
                     onChange={(e) => setIssue(e.target.value)}
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   />
                 </div>
 
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                    Pages
+                    Page Range
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. 100-115"
+                    placeholder="e.g. 102-115"
                     value={pages}
                     onChange={(e) => setPages(e.target.value)}
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs font-mono text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
+                    DOI / Document Link
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="10.1109/..."
+                    value={doi}
+                    onChange={(e) => setDoi(e.target.value)}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3 py-2 text-xs text-[#1c110c] focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#33110e] mb-1.5">
-                  DOI (Digital Object Identifier)
-                </label>
-                <input
-                  type="text"
-                  placeholder="e.g. 10.1109/TC.2024.1234567"
-                  value={doi}
-                  onChange={(e) => setDoi(e.target.value)}
-                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] px-3.5 py-2.5 text-xs font-mono text-[#1c110c] placeholder:text-neutral-400 focus:border-[#85261e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
+              {/* Associated Faculty Picker for instant cross-sync */}
+              <div className="pt-2 border-t border-[#eedfd8]/60">
+                <AssociatedFacultyPicker
+                  selected={selectedAssociatedFaculty}
+                  onChange={setSelectedAssociatedFaculty}
+                  currentFaculty={faculty}
+                  label="Co-Authors / Associated Faculty (NIT Hamirpur)"
+                  placeholder="Link co-author colleagues to auto-sync to their profile..."
+                  helperText="Selected colleagues will automatically see this paper in their portal and public portfolio."
                 />
               </div>
 
-              <div className="flex justify-end gap-2.5 pt-4 border-t border-[#eedfd8]/60">
+              {/* Modal Actions */}
+              <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-[#eedfd8]">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2 text-xs font-bold text-neutral-700 hover:bg-[#fff9f6] transition cursor-pointer"
+                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2.5 text-xs font-bold text-neutral-600 hover:bg-neutral-50 transition cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white px-5 py-2 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+                  className="rounded-xl bg-[#85261e] hover:bg-[#33110e] px-5 py-2.5 text-xs font-bold text-white shadow-xs hover:shadow-md transition cursor-pointer"
                 >
-                  Save Publication
+                  {modalMode === "edit" ? "Save Changes" : "Record Publication"}
                 </button>
               </div>
             </form>
