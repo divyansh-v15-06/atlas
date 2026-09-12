@@ -204,7 +204,7 @@ type Event struct {
 	DepartmentID    string             `json:"department_id"`
 	DepartmentName  string             `json:"department_name,omitempty"`
 	Title           string             `json:"title"`
-	EventType       string             `json:"event_type"` // 'STC', 'E-STC', 'Workshop', 'Conference', 'Seminar', 'FDP'
+	EventType       string             `json:"event_type"`         // 'STC', 'E-STC', 'Workshop', 'Conference', 'Seminar', 'FDP'
 	Category        *string            `json:"category,omitempty"` // 'organized', 'attended'
 	AcademicSession *string            `json:"academic_session,omitempty"`
 	Venue           *string            `json:"venue,omitempty"`

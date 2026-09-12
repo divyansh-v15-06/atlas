@@ -457,27 +457,27 @@ export default function FacultyPortfolioPage({
 
   // Reusable Associated Faculty Multi-select Picker
   const renderAssociatedFacultyPicker = (label: string = "Associated Faculty (Automatic Co-Author / Co-PI Sync)") => (
-    <div className="space-y-2 sm:col-span-2 border border-[#eedfd8]/80 bg-[#fff9f6] p-3.5 rounded-2xl">
+    <div className="space-y-2.5 sm:col-span-2 border border-[#eedfd8]/80 bg-[#fff9f6] p-4 rounded-2xl">
       <div className="flex items-center justify-between">
-        <label className="font-bold text-neutral-800 text-xs sm:text-sm flex items-center gap-1.5">
+        <label className="font-bold text-neutral-800 text-sm sm:text-base flex items-center gap-2">
           <Users className="w-4 h-4 text-[#85261e]" />
           <span>{label}</span>
         </label>
-        <span className="text-[11px] text-neutral-500 font-medium">
+        <span className="text-xs text-neutral-500 font-medium">
           Auto-syncs record to chosen colleagues
         </span>
       </div>
 
       {/* Selected Faculty Pills */}
       {selectedAssociatedFaculty.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 pt-1">
+        <div className="flex flex-wrap gap-2 pt-1">
           {selectedAssociatedFaculty.map((f: any) => (
             <span
               key={f.id || f.employee_code}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-semibold bg-[#85261e] text-white shadow-xs"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-sm font-semibold bg-[#85261e] text-white shadow-xs"
             >
               <span>{f.full_name}</span>
-              <span className="opacity-75 text-[10px]">({f.employee_code || "CSE"})</span>
+              <span className="opacity-80 text-xs">({f.employee_code || "CSE"})</span>
               <button
                 type="button"
                 onClick={() =>
@@ -485,7 +485,7 @@ export default function FacultyPortfolioPage({
                     prev.filter((item) => item.employee_code !== f.employee_code && item.id !== f.id)
                   )
                 }
-                className="ml-1 hover:text-red-200 cursor-pointer font-bold"
+                className="ml-1 hover:text-red-200 cursor-pointer font-bold text-base"
               >
                 ✕
               </button>
@@ -495,16 +495,16 @@ export default function FacultyPortfolioPage({
       )}
 
       {/* Search & Add Picker */}
-      <div className="space-y-1.5 pt-1">
+      <div className="space-y-2 pt-1">
         <input
           type="text"
           placeholder="Search colleague by name or employee code to associate..."
           value={facultySearchQuery}
           onChange={(e) => setFacultySearchQuery(e.target.value)}
-          className="w-full text-xs p-2 rounded-xl border border-[#eedfd8] bg-white focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+          className="w-full text-sm p-3 rounded-xl border border-[#eedfd8] bg-white focus:ring-1 focus:ring-[#85261e] focus:outline-none"
         />
         {facultySearchQuery.trim().length > 0 && (
-          <div className="max-h-36 overflow-y-auto border border-[#eedfd8] rounded-xl bg-white divide-y divide-neutral-100 shadow-sm">
+          <div className="max-h-48 overflow-y-auto border border-[#eedfd8] rounded-xl bg-white divide-y divide-neutral-100 shadow-md">
             {filteredColleagueOptions.length > 0 ? (
               filteredColleagueOptions.slice(0, 8).map((colleague: any) => {
                 const isSelected = selectedAssociatedFaculty.some(
@@ -527,24 +527,24 @@ export default function FacultyPortfolioPage({
                       }
                       setFacultySearchQuery("");
                     }}
-                    className={`w-full text-left px-3 py-1.5 text-xs flex items-center justify-between hover:bg-[#eedfd8]/30 transition ${
+                    className={`w-full text-left px-3.5 py-2.5 text-sm flex items-center justify-between hover:bg-[#eedfd8]/30 transition ${
                       isSelected ? "bg-[#eedfd8]/50 font-bold text-[#85261e]" : "text-neutral-700"
                     }`}
                   >
                     <div className="flex flex-col">
-                      <span className="font-semibold">{colleague.full_name}</span>
-                      <span className="text-[10px] text-neutral-500">
+                      <span className="font-semibold text-sm">{colleague.full_name}</span>
+                      <span className="text-xs text-neutral-500">
                         {colleague.designation} • {colleague.department_name || "CSE"}
                       </span>
                     </div>
-                    <span className="font-mono text-[10px] bg-neutral-100 px-1.5 py-0.5 rounded">
+                    <span className="font-mono text-xs bg-neutral-100 px-2 py-0.5 rounded font-medium">
                       {isSelected ? "Selected ✓" : colleague.employee_code}
                     </span>
                   </button>
                 );
               })
             ) : (
-              <div className="p-2 text-xs text-neutral-400 text-center">No colleagues found matching query</div>
+              <div className="p-3 text-sm text-neutral-400 text-center">No colleagues found matching query</div>
             )}
           </div>
         )}
@@ -1304,27 +1304,27 @@ export default function FacultyPortfolioPage({
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <div className="absolute -bottom-1.5 -right-1.5 bg-[#85261e] text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded-md border border-white/20 shadow-xs">
+                <div className="absolute -bottom-1.5 -right-1.5 bg-[#85261e] text-white font-mono text-xs font-bold px-2.5 py-0.5 rounded-md border border-white/20 shadow-xs">
                   {faculty.employee_code || "FACULTY"}
                 </div>
               </div>
 
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold tracking-wider uppercase text-amber-300 bg-amber-500/15 border border-amber-400/25 px-2.5 py-0.5 rounded-full">
-                    <Building2 className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider uppercase text-amber-300 bg-amber-500/15 border border-amber-400/25 px-3 py-1 rounded-full">
+                    <Building2 className="w-3.5 h-3.5" />
                     <span>Dept. of {facultyDeptCode}</span>
                   </span>
-                  <span className="text-xs text-neutral-300 bg-white/10 px-2 py-0.5 rounded-md font-medium">
+                  <span className="text-sm text-neutral-200 bg-white/15 px-3 py-1 rounded-md font-semibold">
                     {faculty.designation}
                   </span>
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white drop-shadow-xs">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white drop-shadow-xs">
                   {faculty.full_name}
                 </h1>
 
-                <div className="flex flex-wrap items-center gap-y-1.5 gap-x-4 text-xs text-neutral-300 pt-0.5">
+                <div className="flex flex-wrap items-center gap-y-1.5 gap-x-5 text-sm text-neutral-200 pt-0.5">
                   {faculty.email && (
                     <a
                       href={`mailto:${faculty.email}`}
@@ -1516,10 +1516,10 @@ export default function FacultyPortfolioPage({
                     <Icon className="w-5 h-5" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-lg sm:text-xl font-black text-neutral-900 leading-tight">
+                    <div className="text-xl sm:text-2xl font-black text-neutral-900 leading-tight">
                       {stat.count}
                     </div>
-                    <div className="text-[11px] font-semibold text-neutral-500 uppercase tracking-wider truncate">
+                    <div className="text-xs font-bold text-neutral-500 uppercase tracking-wider truncate">
                       {stat.label}
                     </div>
                   </div>
@@ -1537,16 +1537,16 @@ export default function FacultyPortfolioPage({
           {/* A. LEFT OPTIONS NAVIGATION SIDEBAR */}
           <aside className="lg:col-span-3 bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden lg:sticky lg:top-16">
             <div className="p-3.5 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
-              <span className="text-xs font-bold text-[#33110e] uppercase tracking-wider flex items-center gap-1.5">
+              <span className="text-xs sm:text-sm font-bold text-[#33110e] uppercase tracking-wider flex items-center gap-1.5">
                 <Compass className="w-4 h-4 text-[#85261e]" />
                 Portfolio Navigation
               </span>
-              <span className="text-[11px] font-mono text-[#85261e] font-semibold bg-white px-2 py-0.5 rounded-full border border-[#eedfd8]">
+              <span className="text-xs font-mono text-[#85261e] font-semibold bg-white px-2.5 py-0.5 rounded-full border border-[#eedfd8]">
                 14 Sections
               </span>
             </div>
 
-            <nav className="p-2 space-y-1 max-h-[75vh] overflow-y-auto no-scrollbar">
+            <nav className="p-2.5 space-y-1.5 max-h-[75vh] overflow-y-auto no-scrollbar">
               {sidebarItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.key;
@@ -1560,7 +1560,7 @@ export default function FacultyPortfolioPage({
                       setPubSearch("");
                       setCurrentPage(1);
                     }}
-                    className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition cursor-pointer text-left ${
+                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition cursor-pointer text-left ${
                       isActive
                         ? "bg-[#85261e] text-white shadow-xs"
                         : "text-neutral-700 hover:bg-[#fff9f6] hover:text-[#85261e]"
@@ -1572,7 +1572,7 @@ export default function FacultyPortfolioPage({
                     </div>
                     {typeof item.count === "number" && (
                       <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full shrink-0 ml-1.5 ${
+                        className={`text-xs font-bold px-2.5 py-0.5 rounded-full shrink-0 ml-1.5 ${
                           isActive
                             ? "bg-white/20 text-white"
                             : "bg-neutral-100 text-neutral-600 group-hover:bg-[#eedfd8]"
@@ -1593,7 +1593,7 @@ export default function FacultyPortfolioPage({
             {/* Top Action Bar for Current Tab: Title + Dynamic "+ Add / Edit" Button */}
             <div className="bg-white rounded-2xl border border-[#eedfd8] p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h2 className="text-lg sm:text-xl font-extrabold text-[#33110e] flex items-center gap-2">
+                <h2 className="text-xl sm:text-2xl font-extrabold text-[#33110e] flex items-center gap-2">
                   {activeTab === "facultyInfo" && "Faculty Information & Credentials"}
                   {activeTab === "journal" && "Journal Publications"}
                   {activeTab === "conference" && "Conference Proceedings"}
@@ -1609,7 +1609,7 @@ export default function FacultyPortfolioPage({
                   {activeTab === "honors" && "Honors & Recognitions Achieved"}
                   {activeTab === "internationalAndNationalExposure" && "International & National Exposure"}
                 </h2>
-                <p className="text-xs text-neutral-500">
+                <p className="text-sm text-neutral-500 mt-0.5">
                   {activeTab === "facultyInfo"
                     ? "Official profile details, verified credentials, and institutional information"
                     : `Active records verified for ${faculty.full_name}`}
@@ -1620,16 +1620,16 @@ export default function FacultyPortfolioPage({
                 <button
                   type="button"
                   onClick={openAddModal}
-                  className="inline-flex items-center gap-1.5 bg-[#85261e] hover:bg-[#33110e] text-white px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+                  className="inline-flex items-center gap-2 bg-[#85261e] hover:bg-[#33110e] text-white px-4 py-2.5 rounded-xl text-sm font-bold shadow-xs hover:shadow-md transition cursor-pointer"
                 >
                   {activeTab === "facultyInfo" ? (
                     <>
-                      <Edit className="w-3.5 h-3.5 text-amber-300" />
+                      <Edit className="w-4 h-4 text-amber-300" />
                       <span>Edit Profile</span>
                     </>
                   ) : (
                     <>
-                      <Plus className="w-3.5 h-3.5 text-amber-300" />
+                      <Plus className="w-4 h-4 text-amber-300" />
                       <span>Add {sidebarItems.find((i) => i.key === activeTab)?.label}</span>
                     </>
                   )}
@@ -1643,64 +1643,64 @@ export default function FacultyPortfolioPage({
                 <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs p-6">
                   <div className="flex items-center justify-between border-b border-[#eedfd8] pb-4 mb-5">
                     <div>
-                      <h3 className="text-base font-bold text-[#33110e]">Core Institutional Credentials</h3>
-                      <p className="text-xs text-neutral-500">Official academic appointment and contact channels</p>
+                      <h3 className="text-lg sm:text-xl font-bold text-[#33110e]">Core Institutional Credentials</h3>
+                      <p className="text-sm text-neutral-500">Official academic appointment and contact channels</p>
                     </div>
-                    <span className="inline-flex items-center gap-1.5 bg-[#fcf2ef] text-[#85261e] text-xs font-bold px-3 py-1 rounded-full border border-[#eedfd8]">
-                      <UserCheck className="w-3.5 h-3.5" />
+                    <span className="inline-flex items-center gap-1.5 bg-[#fcf2ef] text-[#85261e] text-sm font-bold px-3.5 py-1.5 rounded-full border border-[#eedfd8]">
+                      <UserCheck className="w-4 h-4" />
                       Verified
                     </span>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
-                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Full Name</span>
-                      <p className="text-sm font-semibold text-neutral-900">{faculty.full_name}</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Full Name</span>
+                      <p className="text-base font-semibold text-neutral-900">{faculty.full_name}</p>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
-                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Designation</span>
-                      <p className="text-sm font-semibold text-[#85261e]">{faculty.designation}</p>
+                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Designation</span>
+                      <p className="text-base font-semibold text-[#85261e]">{faculty.designation}</p>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
-                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Department</span>
-                      <p className="text-sm font-semibold text-neutral-900">{facultyDeptName} ({facultyDeptCode})</p>
+                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Department</span>
+                      <p className="text-base font-semibold text-neutral-900">{facultyDeptName} ({facultyDeptCode})</p>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
-                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Highest Qualification</span>
-                      <p className="text-sm font-semibold text-neutral-900">{highestQualification}</p>
+                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Highest Qualification</span>
+                      <p className="text-base font-semibold text-neutral-900">{highestQualification}</p>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
-                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Teaching Experience</span>
-                      <p className="text-sm font-semibold text-neutral-900">{netTeachingExpText}</p>
+                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Teaching Experience</span>
+                      <p className="text-base font-semibold text-neutral-900">{netTeachingExpText}</p>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
-                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Contact Phone</span>
-                      <p className="text-sm font-semibold text-neutral-900">{faculty.phone || "+91-1972-254400"}</p>
+                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1">
+                      <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Contact Phone</span>
+                      <p className="text-base font-semibold text-neutral-900">{faculty.phone || "+91-1972-254400"}</p>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1 md:col-span-2">
-                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider">Official Email Address</span>
-                      <p className="text-sm font-semibold text-[#85261e]">{faculty.email}</p>
+                    <div className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8]/70 space-y-1 md:col-span-2">
+                      <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Official Email Address</span>
+                      <p className="text-base font-semibold text-[#85261e]">{faculty.email}</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Specializations & Bio */}
                 <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs p-6">
-                  <h3 className="text-base font-bold text-[#33110e] mb-3 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-amber-500" />
+                  <h3 className="text-lg font-bold text-[#33110e] mb-3 flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-amber-500" />
                     Specialization &amp; Research Interests
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {(faculty.research_interests || ["Computer Science & Engineering"]).map((interest: string, idx: number) => (
                       <span
                         key={idx}
-                        className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-semibold bg-[#fff9f6] text-[#85261e] border border-[#eedfd8]"
+                        className="inline-flex items-center px-3.5 py-1.5 rounded-lg text-sm font-semibold bg-[#fff9f6] text-[#85261e] border border-[#eedfd8]"
                       >
                         {interest}
                       </span>
@@ -1709,8 +1709,8 @@ export default function FacultyPortfolioPage({
 
                   {faculty.bio && (
                     <div className="mt-5 pt-4 border-t border-neutral-100">
-                      <h4 className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-2">Faculty Biography</h4>
-                      <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed">{faculty.bio}</p>
+                      <h4 className="text-sm font-bold text-neutral-600 uppercase tracking-wider mb-2">Faculty Biography</h4>
+                      <p className="text-sm sm:text-base text-neutral-700 leading-relaxed">{faculty.bio}</p>
                     </div>
                   )}
                 </div>
@@ -1718,37 +1718,37 @@ export default function FacultyPortfolioPage({
                 {/* Educational Qualifications Table */}
                 <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
                   <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
-                    <h3 className="text-sm font-bold text-[#33110e] flex items-center gap-2">
-                      <GraduationCap className="w-4 h-4 text-[#85261e]" />
+                    <h3 className="text-base font-bold text-[#33110e] flex items-center gap-2">
+                      <GraduationCap className="w-5 h-5 text-[#85261e]" />
                       Educational Qualifications
                     </h3>
-                    <span className="text-xs text-neutral-500">{allQualifications.length} Degree(s)</span>
+                    <span className="text-sm font-semibold text-neutral-500">{allQualifications.length} Degree(s)</span>
                   </div>
                   {allQualifications.length > 0 ? (
                     <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs border-collapse">
+                      <table className="w-full text-left text-sm border-collapse">
                         <thead>
-                          <tr className="bg-neutral-50 border-b border-[#eedfd8] text-neutral-600 font-bold uppercase tracking-wider text-[11px]">
-                            <th className="p-3 w-16 text-center">Sr.</th>
-                            <th className="p-3">Degree</th>
-                            <th className="p-3">Institution / University</th>
-                            <th className="p-3 w-28 text-center">Year</th>
+                          <tr className="bg-neutral-50 border-b border-[#eedfd8] text-neutral-700 font-bold uppercase tracking-wider text-xs">
+                            <th className="p-3.5 w-16 text-center">Sr.</th>
+                            <th className="p-3.5">Degree</th>
+                            <th className="p-3.5">Institution / University</th>
+                            <th className="p-3.5 w-32 text-center">Year</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-neutral-100">
                           {allQualifications.map((q: any, idx: number) => (
                             <tr key={idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
-                              <td className="p-3 text-center text-neutral-400 font-mono">{idx + 1}</td>
-                              <td className="p-3 font-bold text-[#85261e]">{q.degree || q.nameOfDegree}</td>
-                              <td className="p-3 text-neutral-800 font-medium">{q.institute || q.university || "—"}</td>
-                              <td className="p-3 text-center text-neutral-600 font-semibold">{q.year || "—"}</td>
+                              <td className="p-3.5 text-center text-neutral-500 font-mono text-sm">{idx + 1}</td>
+                              <td className="p-3.5 font-bold text-[#85261e] text-base">{q.degree || q.nameOfDegree}</td>
+                              <td className="p-3.5 text-neutral-800 font-medium text-sm">{q.institute || q.university || "—"}</td>
+                              <td className="p-3.5 text-center text-neutral-700 font-semibold text-sm">{q.year || "—"}</td>
                             </tr>
                           ))}
                         </tbody>
                       </table>
                     </div>
                   ) : (
-                    <div className="p-8 text-center text-xs text-neutral-500">
+                    <div className="p-8 text-center text-sm text-neutral-500">
                       No qualification records added yet.
                     </div>
                   )}
@@ -1763,7 +1763,7 @@ export default function FacultyPortfolioPage({
                 <div className="bg-white rounded-2xl border border-[#eedfd8] p-4 shadow-xs space-y-3">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="relative w-full sm:w-80">
-                      <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                      <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
                       <input
                         type="text"
                         placeholder="Search publications by title, author, venue..."
@@ -1772,23 +1772,23 @@ export default function FacultyPortfolioPage({
                           setPubSearch(e.target.value);
                           setCurrentPage(1);
                         }}
-                        className="w-full pl-9 pr-3 py-1.5 text-xs rounded-xl border border-[#eedfd8] focus:outline-none focus:ring-1 focus:ring-[#85261e] bg-[#faf8f6]"
+                        className="w-full pl-9 pr-3.5 py-2 text-sm rounded-xl border border-[#eedfd8] focus:outline-none focus:ring-1 focus:ring-[#85261e] bg-[#faf8f6]"
                       />
                     </div>
-                    <span className="text-xs text-neutral-500">
+                    <span className="text-sm font-medium text-neutral-500">
                       {filteredPubs.length} publication(s) match
                     </span>
                   </div>
 
                   {pubYears.length > 0 && (
-                    <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-xs">
-                      <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
-                        <Filter className="w-3 h-3" /> Filter Year:
+                    <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-sm">
+                      <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider shrink-0 flex items-center gap-1">
+                        <Filter className="w-3.5 h-3.5" /> Filter Year:
                       </span>
                       <button
                         type="button"
                         onClick={() => { setSelectedYear("ALL"); setCurrentPage(1); }}
-                        className={`px-3 py-1 rounded-full font-semibold transition shrink-0 cursor-pointer ${
+                        className={`px-3.5 py-1 rounded-full text-xs font-bold transition shrink-0 cursor-pointer ${
                           selectedYear === "ALL"
                             ? "bg-[#33110e] text-white"
                             : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
@@ -1803,7 +1803,7 @@ export default function FacultyPortfolioPage({
                             key={year}
                             type="button"
                             onClick={() => { setSelectedYear(String(year)); setCurrentPage(1); }}
-                            className={`px-2.5 py-1 rounded-full font-semibold transition shrink-0 cursor-pointer ${
+                            className={`px-3 py-1 rounded-full text-xs font-bold transition shrink-0 cursor-pointer ${
                               selectedYear === String(year)
                                 ? "bg-[#85261e] text-white"
                                 : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
@@ -1821,14 +1821,14 @@ export default function FacultyPortfolioPage({
                 <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
                   {paginatedPubs.length > 0 ? (
                     <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs border-collapse">
+                      <table className="w-full text-left text-sm border-collapse">
                         <thead>
-                          <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
-                            <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
-                            <th className="p-3 border-r border-neutral-700 min-w-[320px]">Publication Details</th>
-                            <th className="p-3 w-20 text-center border-r border-neutral-700">Year</th>
-                            <th className="p-3 w-28 text-center border-r border-neutral-700">Indexing</th>
-                            <th className="p-3 w-32 text-center">Actions</th>
+                          <tr className="bg-[#1f1412] text-white uppercase text-xs font-bold tracking-wider">
+                            <th className="p-3.5 w-14 text-center border-r border-neutral-700">Sr.</th>
+                            <th className="p-3.5 border-r border-neutral-700 min-w-[320px]">Publication Details</th>
+                            <th className="p-3.5 w-24 text-center border-r border-neutral-700">Year</th>
+                            <th className="p-3.5 w-32 text-center border-r border-neutral-700">Indexing</th>
+                            <th className="p-3.5 w-36 text-center">Actions</th>
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-[#eedfd8]/60">
@@ -1838,25 +1838,25 @@ export default function FacultyPortfolioPage({
                             const serial = (currentPage - 1) * PUBS_PER_PAGE + idx + 1;
                             return (
                               <tr key={pub.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
-                                <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                                <td className="p-3.5 text-center text-neutral-500 font-mono font-bold align-top text-sm">
                                   {serial}
                                 </td>
 
-                                <td className="p-3 align-top space-y-1.5">
-                                  <div className="text-xs font-semibold text-[#800000] leading-snug">
+                                <td className="p-3.5 align-top space-y-1.5">
+                                  <div className="text-sm font-semibold text-[#800000] leading-snug">
                                     {pub.author_text || pub.raw_authors || faculty.full_name}
                                   </div>
 
                                   {Array.isArray(pub.associated_faculty) && pub.associated_faculty.length > 0 && (
-                                    <div className="flex flex-wrap items-center gap-1 pt-0.5">
-                                      <span className="text-[10px] font-bold text-[#85261e] flex items-center gap-0.5">
-                                        <Users className="w-2.5 h-2.5" /> Co-Authors:
+                                    <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                                      <span className="text-xs font-bold text-[#85261e] flex items-center gap-1">
+                                        <Users className="w-3 h-3" /> Co-Authors:
                                       </span>
                                       {pub.associated_faculty.map((co: any, ci: number) => (
                                         <Link
                                           key={ci}
                                           href={`/people/faculty/${co.employee_code || co.code || co.id}`}
-                                          className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[10px] font-semibold bg-[#eedfd8]/60 text-[#85261e] hover:bg-[#85261e] hover:text-white transition"
+                                          className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs font-semibold bg-[#eedfd8]/60 text-[#85261e] hover:bg-[#85261e] hover:text-white transition"
                                         >
                                           <span>{co.full_name || co.name}</span>
                                         </Link>
@@ -1864,11 +1864,11 @@ export default function FacultyPortfolioPage({
                                     </div>
                                   )}
 
-                                  <div className="text-xs font-bold text-neutral-900 leading-snug">
+                                  <div className="text-base font-bold text-neutral-900 leading-snug">
                                     "{pub.title}"
                                   </div>
 
-                                  <div className="text-xs text-[#0f376f] font-semibold italic">
+                                  <div className="text-sm text-[#0f376f] font-semibold italic">
                                     {pub.journal_or_conference_name || pub.venue_name || "Academic Publication"}
                                     {pub.volume && `, Vol: ${pub.volume}`}
                                     {pub.issue && `, Issue: ${pub.issue}`}
@@ -1877,7 +1877,7 @@ export default function FacultyPortfolioPage({
                                   </div>
 
                                   {pub.doi && (
-                                    <div className="text-[11px] text-neutral-500">
+                                    <div className="text-xs text-neutral-500">
                                       <a
                                         href={pub.doi.startsWith("http") ? pub.doi : `https://doi.org/${pub.doi}`}
                                         target="_blank"
@@ -1895,13 +1895,13 @@ export default function FacultyPortfolioPage({
                                       <button
                                         type="button"
                                         onClick={() => setExpandedAbstractId(isExpanded ? null : pub.id)}
-                                        className="text-[11px] font-semibold text-neutral-500 hover:text-neutral-900 inline-flex items-center gap-1"
+                                        className="text-xs font-semibold text-neutral-600 hover:text-neutral-900 inline-flex items-center gap-1"
                                       >
                                         {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
                                         <span>{isExpanded ? "Hide Abstract" : "View Abstract"}</span>
                                       </button>
                                       {isExpanded && (
-                                        <p className="mt-1.5 p-3 rounded-lg bg-neutral-50 border border-neutral-200 text-neutral-700 text-[11px] leading-relaxed">
+                                        <p className="mt-1.5 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 text-neutral-700 text-xs leading-relaxed">
                                           {pub.abstract_text}
                                         </p>
                                       )}
@@ -1909,86 +1909,86 @@ export default function FacultyPortfolioPage({
                                   )}
                                 </td>
 
-                                <td className="p-3 text-center align-top space-y-0.5">
-                                  <div className="font-bold text-neutral-800 text-xs">
+                                <td className="p-3.5 text-center align-top space-y-1">
+                                  <div className="font-bold text-neutral-800 text-sm">
                                     {pub.year || "—"}
                                   </div>
                                   {pub.month && (
-                                    <div className="text-[10px] text-neutral-500 font-semibold">
+                                    <div className="text-xs text-neutral-500 font-semibold">
                                       {MONTH_OPTIONS.find((m) => m.value === Number(pub.month))?.label || pub.month}
                                     </div>
                                   )}
                                   {pub.academic_session && (
-                                    <div className="inline-block px-1.5 py-0.5 rounded bg-neutral-100 text-neutral-600 text-[9px] font-mono">
+                                    <div className="inline-block px-2 py-0.5 rounded bg-neutral-100 text-neutral-600 text-xs font-mono font-medium">
                                       {pub.academic_session}
                                     </div>
                                   )}
                                 </td>
 
-                                <td className="p-3 text-center align-top space-y-1">
+                                <td className="p-3.5 text-center align-top space-y-1">
                                   {pub.indexing && (
-                                    <span className="inline-block px-2 py-0.5 rounded bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-bold">
+                                    <span className="inline-block px-2.5 py-1 rounded bg-blue-50 text-blue-800 border border-blue-200 text-xs font-bold">
                                       {pub.indexing}
                                     </span>
                                   )}
                                   {pub.is_scopus && pub.indexing !== "Scopus" && (
-                                    <span className="inline-block px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold">
+                                    <span className="inline-block px-2.5 py-1 rounded bg-amber-50 text-amber-800 border border-amber-200 text-xs font-bold">
                                       Scopus
                                     </span>
                                   )}
                                   {pub.is_sci && pub.indexing !== "SCI" && pub.indexing !== "SCI(E)" && (
-                                    <span className="inline-block px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold">
+                                    <span className="inline-block px-2.5 py-1 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold">
                                       SCI
                                     </span>
                                   )}
                                   {pub.journal_quartile && (
-                                    <span className="inline-block px-2 py-0.5 rounded bg-purple-50 text-purple-800 border border-purple-200 text-[10px] font-bold">
+                                    <span className="inline-block px-2.5 py-1 rounded bg-purple-50 text-purple-800 border border-purple-200 text-xs font-bold">
                                       {pub.journal_quartile === "T" ? "T (Temp)" : `Q${pub.journal_quartile}`}
                                     </span>
                                   )}
                                   {!pub.indexing && !pub.is_scopus && !pub.is_sci && (
-                                    <span className="text-neutral-400 text-[11px]">—</span>
+                                    <span className="text-neutral-400 text-xs">—</span>
                                   )}
                                 </td>
 
-                                <td className="p-3 text-center align-top space-y-1.5">
+                                <td className="p-3.5 text-center align-top space-y-1.5">
                                   {/* Details Button (tempcsebase PublicationsModal) */}
                                   <button
                                     type="button"
                                     onClick={() => openDetails(pub)}
-                                    className="w-full inline-flex items-center justify-center gap-1 px-2.5 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px] cursor-pointer"
+                                    className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-bold text-xs cursor-pointer"
                                   >
-                                    <Info className="w-3 h-3" />
+                                    <Info className="w-3.5 h-3.5" />
                                     <span>Details</span>
                                   </button>
 
-                                  <div className="flex items-center gap-1">
+                                  <div className="flex items-center gap-1.5">
                                     <button
                                       type="button"
                                       onClick={() => copyCitation(pub)}
-                                      className="flex-1 inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-neutral-100 hover:bg-[#85261e] hover:text-white text-neutral-700 transition font-semibold text-[10px] cursor-pointer"
+                                      className="flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-1.5 rounded-xl bg-neutral-100 hover:bg-[#85261e] hover:text-white text-neutral-700 transition font-bold text-xs cursor-pointer"
                                       title="Copy Citation"
                                     >
-                                      {isCopied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                                      {isCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                                       <span>Cite</span>
                                     </button>
 
                                     <button
                                       type="button"
                                       onClick={() => openEditModal(pub)}
-                                      className="p-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition"
+                                      className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
                                       title="Edit Record"
                                     >
-                                      <Edit className="w-3 h-3" />
+                                      <Edit className="w-3.5 h-3.5" />
                                     </button>
 
                                     <button
                                       type="button"
                                       onClick={() => handleDeleteRecord(pub)}
-                                      className="p-1 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 transition"
+                                      className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
                                       title="Delete Record"
                                     >
-                                      <Trash2 className="w-3 h-3" />
+                                      <Trash2 className="w-3.5 h-3.5" />
                                     </button>
                                   </div>
                                 </td>
@@ -2001,11 +2001,11 @@ export default function FacultyPortfolioPage({
                   ) : (
                     <div className="p-12 text-center space-y-2">
                       <BookOpen className="w-8 h-8 text-neutral-300 mx-auto" />
-                      <p className="text-xs font-bold text-neutral-600">No records found matching your filters</p>
+                      <p className="text-sm font-bold text-neutral-600">No records found matching your filters</p>
                       <button
                         type="button"
                         onClick={() => { setSelectedYear("ALL"); setPubSearch(""); }}
-                        className="text-xs text-[#85261e] font-semibold hover:underline"
+                        className="text-sm text-[#85261e] font-semibold hover:underline cursor-pointer"
                       >
                         Reset filters
                       </button>
@@ -2013,16 +2013,16 @@ export default function FacultyPortfolioPage({
                   )}
 
                   {totalPages > 1 && (
-                    <div className="p-3.5 bg-[#fdf5f2] border-t border-[#eedfd8] flex items-center justify-between text-xs">
-                      <span className="text-neutral-500 font-medium">
+                    <div className="p-4 bg-[#fdf5f2] border-t border-[#eedfd8] flex items-center justify-between text-sm">
+                      <span className="text-neutral-600 font-semibold text-sm">
                         Page {currentPage} of {totalPages} ({filteredPubs.length} items)
                       </span>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1.5">
                         <button
                           type="button"
                           disabled={currentPage === 1}
                           onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                          className="px-2.5 py-1 rounded-lg border border-[#eedfd8] bg-white text-neutral-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-50 font-semibold"
+                          className="px-3.5 py-1.5 rounded-xl border border-[#eedfd8] bg-white text-neutral-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-50 font-semibold text-sm cursor-pointer"
                         >
                           Prev
                         </button>
@@ -2030,7 +2030,7 @@ export default function FacultyPortfolioPage({
                           type="button"
                           disabled={currentPage === totalPages}
                           onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                          className="px-2.5 py-1 rounded-lg border border-[#eedfd8] bg-white text-neutral-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-50 font-semibold"
+                          className="px-3.5 py-1.5 rounded-xl border border-[#eedfd8] bg-white text-neutral-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-50 font-semibold text-sm cursor-pointer"
                         >
                           Next
                         </button>
@@ -2045,21 +2045,21 @@ export default function FacultyPortfolioPage({
             {activeTab === "patents" && (
               <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
                 <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
-                    <Lightbulb className="w-4 h-4 text-amber-600" />
+                  <span className="text-sm sm:text-base font-bold text-[#33110e] flex items-center gap-2">
+                    <Lightbulb className="w-5 h-5 text-amber-600" />
                     Intellectual Property Register ({allFacultyPatents.length})
                   </span>
                 </div>
                 {allFacultyPatents.length > 0 ? (
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs border-collapse">
+                    <table className="w-full text-left text-sm border-collapse">
                       <thead>
-                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
-                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
-                          <th className="p-3 border-r border-neutral-700">Patent Title</th>
-                          <th className="p-3 w-36 border-r border-neutral-700">Application No.</th>
-                          <th className="p-3 w-28 text-center border-r border-neutral-700">Status</th>
-                          <th className="p-3 w-24 text-center">Actions</th>
+                        <tr className="bg-[#1f1412] text-white uppercase text-xs font-bold tracking-wider">
+                          <th className="p-3.5 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3.5 border-r border-neutral-700">Patent Title</th>
+                          <th className="p-3.5 w-40 border-r border-neutral-700">Application No.</th>
+                          <th className="p-3.5 w-32 text-center border-r border-neutral-700">Status</th>
+                          <th className="p-3.5 w-28 text-center">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#eedfd8]/60">
@@ -2067,26 +2067,26 @@ export default function FacultyPortfolioPage({
                           const isGranted = (pat.status || "").toLowerCase().includes("grant");
                           return (
                             <tr key={pat.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
-                              <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                              <td className="p-3.5 text-center text-neutral-500 font-mono font-bold align-top text-sm">
                                 {idx + 1}
                               </td>
-                              <td className="p-3 align-top space-y-1">
-                                <div className="font-bold text-neutral-900 leading-snug">{pat.title}</div>
-                                <div className="text-[11px] text-neutral-500">
+                              <td className="p-3.5 align-top space-y-1.5">
+                                <div className="font-bold text-neutral-900 leading-snug text-base">{pat.title}</div>
+                                <div className="text-xs text-neutral-500">
                                   Inventors: {pat.raw_inventors || faculty.full_name}
                                 </div>
                                 {pat.patent_office && (
-                                  <div className="text-[10px] text-neutral-400">
+                                  <div className="text-xs text-neutral-400">
                                     Office: {pat.patent_office} ({pat.country || "India"})
                                   </div>
                                 )}
                               </td>
-                              <td className="p-3 align-top font-mono text-neutral-700 font-semibold">
+                              <td className="p-3.5 align-top font-mono text-neutral-700 font-semibold text-sm">
                                 {pat.application_number || pat.patent_number || "—"}
                               </td>
-                              <td className="p-3 text-center align-top">
+                              <td className="p-3.5 text-center align-top">
                                 <span
-                                  className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                  className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
                                     isGranted
                                       ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
                                       : "bg-amber-100 text-amber-800 border border-amber-300"
@@ -2095,28 +2095,28 @@ export default function FacultyPortfolioPage({
                                   {pat.status || "Published"}
                                 </span>
                               </td>
-                              <td className="p-3 text-center align-top space-y-1">
+                              <td className="p-3.5 text-center align-top space-y-1.5">
                                 <button
                                   type="button"
                                   onClick={() => openDetails(pat)}
-                                  className="w-full inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px]"
+                                  className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-bold text-xs cursor-pointer"
                                 >
-                                  <Info className="w-3 h-3" /> Details
+                                  <Info className="w-3.5 h-3.5" /> Details
                                 </button>
-                                <div className="flex items-center justify-center gap-1">
+                                <div className="flex items-center justify-center gap-1.5">
                                   <button
                                     type="button"
                                     onClick={() => openEditModal(pat)}
-                                    className="p-1 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                    className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
                                   >
-                                    <Edit className="w-3 h-3" />
+                                    <Edit className="w-3.5 h-3.5" />
                                   </button>
                                   <button
                                     type="button"
                                     onClick={() => handleDeleteRecord(pat)}
-                                    className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                    className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
                                   >
-                                    <Trash2 className="w-3 h-3" />
+                                    <Trash2 className="w-3.5 h-3.5" />
                                   </button>
                                 </div>
                               </td>
@@ -2127,7 +2127,7 @@ export default function FacultyPortfolioPage({
                     </table>
                   </div>
                 ) : (
-                  <div className="p-12 text-center text-neutral-500 text-xs">
+                  <div className="p-12 text-center text-neutral-500 text-sm">
                     No patent records listed. Click "+ Add Patents" to register a patent.
                   </div>
                 )}
@@ -2138,63 +2138,63 @@ export default function FacultyPortfolioPage({
             {activeTab === "projects" && (
               <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
                 <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
-                    <Briefcase className="w-4 h-4 text-emerald-700" />
+                  <span className="text-sm sm:text-base font-bold text-[#33110e] flex items-center gap-2">
+                    <Briefcase className="w-5 h-5 text-emerald-700" />
                     Sponsored Projects Register ({allFacultyProjects.length})
                   </span>
                 </div>
                 {allFacultyProjects.length > 0 ? (
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs border-collapse">
+                    <table className="w-full text-left text-sm border-collapse">
                       <thead>
-                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
-                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
-                          <th className="p-3 border-r border-neutral-700 min-w-[280px]">Project Title</th>
-                          <th className="p-3 border-r border-neutral-700">Sponsoring Agency</th>
-                          <th className="p-3 w-28 text-center border-r border-neutral-700">Amount (INR)</th>
-                          <th className="p-3 w-24 text-center">Actions</th>
+                        <tr className="bg-[#1f1412] text-white uppercase text-xs font-bold tracking-wider">
+                          <th className="p-3.5 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3.5 border-r border-neutral-700 min-w-[280px]">Project Title</th>
+                          <th className="p-3.5 border-r border-neutral-700">Sponsoring Agency</th>
+                          <th className="p-3.5 w-32 text-center border-r border-neutral-700">Amount (INR)</th>
+                          <th className="p-3.5 w-28 text-center">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#eedfd8]/60">
                         {allFacultyProjects.map((prj: any, idx: number) => (
                           <tr key={prj.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
-                            <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                            <td className="p-3.5 text-center text-neutral-500 font-mono font-bold align-top text-sm">
                               {idx + 1}
                             </td>
-                            <td className="p-3 align-top space-y-1">
-                              <div className="font-bold text-neutral-900 leading-snug">{prj.title}</div>
-                              <div className="text-[11px] text-neutral-500">
+                            <td className="p-3.5 align-top space-y-1.5">
+                              <div className="font-bold text-neutral-900 leading-snug text-base">{prj.title}</div>
+                              <div className="text-xs text-neutral-500">
                                 Investigators: {prj.raw_investigators || faculty.full_name}
                               </div>
                             </td>
-                            <td className="p-3 align-top font-semibold text-[#85261e]">
+                            <td className="p-3.5 align-top font-semibold text-[#85261e] text-sm">
                               {prj.funding_agency || "DST-SERB"}
                             </td>
-                            <td className="p-3 text-center align-top font-bold text-neutral-900">
+                            <td className="p-3.5 text-center align-top font-bold text-neutral-900 text-sm">
                               {prj.total_sanctioned_amount ? `₹ ${(prj.total_sanctioned_amount / 100000).toFixed(1)} L` : "—"}
                             </td>
-                            <td className="p-3 text-center align-top space-y-1">
+                            <td className="p-3.5 text-center align-top space-y-1.5">
                               <button
                                 type="button"
                                 onClick={() => openDetails(prj)}
-                                className="w-full inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px]"
+                                className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-bold text-xs cursor-pointer"
                               >
-                                <Info className="w-3 h-3" /> Details
+                                <Info className="w-3.5 h-3.5" /> Details
                               </button>
-                              <div className="flex items-center justify-center gap-1">
+                              <div className="flex items-center justify-center gap-1.5">
                                 <button
                                   type="button"
                                   onClick={() => openEditModal(prj)}
-                                  className="p-1 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                  className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
                                 >
-                                  <Edit className="w-3 h-3" />
+                                  <Edit className="w-3.5 h-3.5" />
                                 </button>
                                 <button
                                   type="button"
                                   onClick={() => handleDeleteRecord(prj)}
-                                  className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                  className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
                                 >
-                                  <Trash2 className="w-3 h-3" />
+                                  <Trash2 className="w-3.5 h-3.5" />
                                 </button>
                               </div>
                             </td>
@@ -2204,7 +2204,7 @@ export default function FacultyPortfolioPage({
                     </table>
                   </div>
                 ) : (
-                  <div className="p-12 text-center text-neutral-500 text-xs">
+                  <div className="p-12 text-center text-neutral-500 text-sm">
                     No sponsored projects listed. Click "+ Add Projects" to register one.
                   </div>
                 )}
@@ -2215,62 +2215,62 @@ export default function FacultyPortfolioPage({
             {activeTab === "events" && (
               <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
                 <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4 text-indigo-600" />
+                  <span className="text-sm sm:text-base font-bold text-[#33110e] flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-indigo-600" />
                     Organized Academic Events ({allEvents.length})
                   </span>
                 </div>
                 {allEvents.length > 0 ? (
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs border-collapse">
+                    <table className="w-full text-left text-sm border-collapse">
                       <thead>
-                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
-                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
-                          <th className="p-3 border-r border-neutral-700 min-w-[260px]">Event Title</th>
-                          <th className="p-3 w-28 border-r border-neutral-700">Role</th>
-                          <th className="p-3 border-r border-neutral-700">Venue &amp; Dates</th>
-                          <th className="p-3 w-24 text-center">Actions</th>
+                        <tr className="bg-[#1f1412] text-white uppercase text-xs font-bold tracking-wider">
+                          <th className="p-3.5 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3.5 border-r border-neutral-700 min-w-[260px]">Event Title</th>
+                          <th className="p-3.5 w-36 border-r border-neutral-700">Role</th>
+                          <th className="p-3.5 border-r border-neutral-700">Venue &amp; Dates</th>
+                          <th className="p-3.5 w-28 text-center">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#eedfd8]/60">
                         {allEvents.map((evt: any, idx: number) => (
                           <tr key={evt.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
-                            <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                            <td className="p-3.5 text-center text-neutral-500 font-mono font-bold align-top text-sm">
                               {idx + 1}
                             </td>
-                            <td className="p-3 align-top space-y-1">
-                              <div className="font-bold text-neutral-900 leading-snug">{evt.title}</div>
-                              <div className="text-[11px] text-neutral-500">Type: {evt.event_type || "FDP / STC"}</div>
+                            <td className="p-3.5 align-top space-y-1.5">
+                              <div className="font-bold text-neutral-900 leading-snug text-base">{evt.title}</div>
+                              <div className="text-xs text-neutral-500">Type: {evt.event_type || "FDP / STC"}</div>
                             </td>
-                            <td className="p-3 align-top font-bold text-[#85261e]">
+                            <td className="p-3.5 align-top font-bold text-[#85261e] text-sm">
                               {evt.convenor || "Convenor"}
                             </td>
-                            <td className="p-3 align-top text-neutral-700">
-                              <div>{evt.venue || "NIT Hamirpur"}</div>
-                              <div className="text-[11px] text-neutral-500">{evt.start_date} to {evt.end_date}</div>
+                            <td className="p-3.5 align-top text-neutral-700 text-sm">
+                              <div className="font-semibold text-neutral-900">{evt.venue || "NIT Hamirpur"}</div>
+                              <div className="text-xs text-neutral-500">{evt.start_date} to {evt.end_date}</div>
                             </td>
-                            <td className="p-3 text-center align-top space-y-1">
+                            <td className="p-3.5 text-center align-top space-y-1.5">
                               <button
                                 type="button"
                                 onClick={() => openDetails(evt)}
-                                className="w-full inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px]"
+                                className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-bold text-xs cursor-pointer"
                               >
-                                <Info className="w-3 h-3" /> Details
+                                <Info className="w-3.5 h-3.5" /> Details
                               </button>
-                              <div className="flex items-center justify-center gap-1">
+                              <div className="flex items-center justify-center gap-1.5">
                                 <button
                                   type="button"
                                   onClick={() => openEditModal(evt)}
-                                  className="p-1 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                  className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
                                 >
-                                  <Edit className="w-3 h-3" />
+                                  <Edit className="w-3.5 h-3.5" />
                                 </button>
                                 <button
                                   type="button"
                                   onClick={() => handleDeleteRecord(evt)}
-                                  className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                  className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
                                 >
-                                  <Trash2 className="w-3 h-3" />
+                                  <Trash2 className="w-3.5 h-3.5" />
                                 </button>
                               </div>
                             </td>
@@ -2280,7 +2280,7 @@ export default function FacultyPortfolioPage({
                     </table>
                   </div>
                 ) : (
-                  <div className="p-12 text-center text-neutral-500 text-xs">
+                  <div className="p-12 text-center text-neutral-500 text-sm">
                     No event records listed.
                   </div>
                 )}
@@ -2291,61 +2291,61 @@ export default function FacultyPortfolioPage({
             {activeTab === "consultancies" && (
               <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
                 <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
-                    <Building2 className="w-4 h-4 text-purple-700" />
+                  <span className="text-sm sm:text-base font-bold text-[#33110e] flex items-center gap-2">
+                    <Building2 className="w-5 h-5 text-purple-700" />
                     Industrial Consultancies ({allConsultancies.length})
                   </span>
                 </div>
                 {allConsultancies.length > 0 ? (
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs border-collapse">
+                    <table className="w-full text-left text-sm border-collapse">
                       <thead>
-                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
-                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
-                          <th className="p-3 border-r border-neutral-700 min-w-[260px]">Consultancy Title</th>
-                          <th className="p-3 border-r border-neutral-700">Client Organization</th>
-                          <th className="p-3 w-28 text-center border-r border-neutral-700">Amount (INR)</th>
-                          <th className="p-3 w-24 text-center">Actions</th>
+                        <tr className="bg-[#1f1412] text-white uppercase text-xs font-bold tracking-wider">
+                          <th className="p-3.5 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3.5 border-r border-neutral-700 min-w-[260px]">Consultancy Title</th>
+                          <th className="p-3.5 border-r border-neutral-700">Client Organization</th>
+                          <th className="p-3.5 w-36 text-center border-r border-neutral-700">Amount (INR)</th>
+                          <th className="p-3.5 w-28 text-center">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#eedfd8]/60">
                         {allConsultancies.map((c: any, idx: number) => (
                           <tr key={c.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
-                            <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                            <td className="p-3.5 text-center text-neutral-500 font-mono font-bold align-top text-sm">
                               {idx + 1}
                             </td>
-                            <td className="p-3 align-top space-y-1">
-                              <div className="font-bold text-neutral-900 leading-snug">{c.title}</div>
-                              <div className="text-[11px] text-neutral-500">Investigators: {c.author_text || faculty.full_name}</div>
+                            <td className="p-3.5 align-top space-y-1.5">
+                              <div className="font-bold text-neutral-900 leading-snug text-base">{c.title}</div>
+                              <div className="text-xs text-neutral-500">Investigators: {c.author_text || faculty.full_name}</div>
                             </td>
-                            <td className="p-3 align-top font-semibold text-[#85261e]">
+                            <td className="p-3.5 align-top font-semibold text-[#85261e] text-sm">
                               {c.client_organisation}
                             </td>
-                            <td className="p-3 text-center align-top font-bold text-neutral-900">
+                            <td className="p-3.5 text-center align-top font-bold text-neutral-900 text-sm">
                               {c.amount ? `₹ ${Number(c.amount).toLocaleString("en-IN")}` : "—"}
                             </td>
-                            <td className="p-3 text-center align-top space-y-1">
+                            <td className="p-3.5 text-center align-top space-y-1.5">
                               <button
                                 type="button"
                                 onClick={() => openDetails(c)}
-                                className="w-full inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px]"
+                                className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-bold text-xs cursor-pointer"
                               >
-                                <Info className="w-3 h-3" /> Details
+                                <Info className="w-3.5 h-3.5" /> Details
                               </button>
-                              <div className="flex items-center justify-center gap-1">
+                              <div className="flex items-center justify-center gap-1.5">
                                 <button
                                   type="button"
                                   onClick={() => openEditModal(c)}
-                                  className="p-1 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                  className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
                                 >
-                                  <Edit className="w-3 h-3" />
+                                  <Edit className="w-3.5 h-3.5" />
                                 </button>
                                 <button
                                   type="button"
                                   onClick={() => handleDeleteRecord(c)}
-                                  className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                  className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
                                 >
-                                  <Trash2 className="w-3 h-3" />
+                                  <Trash2 className="w-3.5 h-3.5" />
                                 </button>
                               </div>
                             </td>
@@ -2355,7 +2355,7 @@ export default function FacultyPortfolioPage({
                     </table>
                   </div>
                 ) : (
-                  <div className="p-12 text-center text-neutral-500 text-xs">
+                  <div className="p-12 text-center text-neutral-500 text-sm">
                     No consultancy projects listed.
                   </div>
                 )}
@@ -2366,8 +2366,8 @@ export default function FacultyPortfolioPage({
             {activeTab === "experttalk" && (
               <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
                 <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
-                    <Mic className="w-4 h-4 text-amber-600" />
+                  <span className="text-sm sm:text-base font-bold text-[#33110e] flex items-center gap-2">
+                    <Mic className="w-5 h-5 text-amber-600" />
                     Keynote &amp; Invited Expert Lectures ({allTalks.length})
                   </span>
                 </div>
@@ -2376,42 +2376,42 @@ export default function FacultyPortfolioPage({
                     {allTalks.map((talk: any, idx: number) => (
                       <div key={idx} className="p-4 sm:p-5 hover:bg-[#fffaf8] transition flex items-start justify-between gap-4">
                         <div className="flex items-start gap-4 min-w-0 flex-1">
-                          <div className="w-10 h-10 rounded-xl bg-[#fcf2ef] text-[#85261e] flex items-center justify-center shrink-0 border border-[#eedfd8]">
+                          <div className="w-11 h-11 rounded-xl bg-[#fcf2ef] text-[#85261e] flex items-center justify-center shrink-0 border border-[#eedfd8]">
                             <Mic className="w-5 h-5" />
                           </div>
                           <div className="space-y-1.5 min-w-0 flex-1">
-                            <h4 className="text-sm font-bold text-neutral-900 leading-snug">{talk.title}</h4>
-                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-neutral-600">
+                            <h4 className="text-base font-bold text-neutral-900 leading-snug">{talk.title}</h4>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-neutral-600">
                               <span className="font-semibold text-[#85261e]">{talk.venue || "Host Institution"}</span>
                               <span>•</span>
                               <span className="text-neutral-500">{talk.date}</span>
                             </div>
                             {talk.description && (
-                              <p className="text-xs text-neutral-600 leading-relaxed pt-0.5">{talk.description}</p>
+                              <p className="text-sm text-neutral-600 leading-relaxed pt-0.5">{talk.description}</p>
                             )}
                           </div>
                         </div>
-                        <div className="flex items-center gap-1 shrink-0">
+                        <div className="flex items-center gap-1.5 shrink-0">
                           <button
                             type="button"
                             onClick={() => openEditModal(talk)}
-                            className="p-1.5 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                            className="p-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
                           >
-                            <Edit className="w-3.5 h-3.5" />
+                            <Edit className="w-4 h-4" />
                           </button>
                           <button
                             type="button"
                             onClick={() => handleDeleteRecord(talk)}
-                            className="p-1.5 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                            className="p-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="p-12 text-center text-neutral-500 text-xs">
+                  <div className="p-12 text-center text-neutral-500 text-sm">
                     No expert talks recorded.
                   </div>
                 )}
@@ -2422,66 +2422,66 @@ export default function FacultyPortfolioPage({
             {activeTab === "researchSupervision" && (
               <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
                 <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
-                    <GraduationCap className="w-4 h-4 text-blue-700" />
+                  <span className="text-sm sm:text-base font-bold text-[#33110e] flex items-center gap-2">
+                    <GraduationCap className="w-5 h-5 text-blue-700" />
                     Doctoral &amp; Postgraduate Scholars Mentored ({combinedSupervisions.length})
                   </span>
                 </div>
                 {combinedSupervisions.length > 0 ? (
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs border-collapse">
+                    <table className="w-full text-left text-sm border-collapse">
                       <thead>
-                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
-                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
-                          <th className="p-3 border-r border-neutral-700">Scholar Name</th>
-                          <th className="p-3 border-r border-neutral-700 min-w-[240px]">Thesis / Research Title</th>
-                          <th className="p-3 w-24 text-center border-r border-neutral-700">Program</th>
-                          <th className="p-3 w-24 text-center">Actions</th>
+                        <tr className="bg-[#1f1412] text-white uppercase text-xs font-bold tracking-wider">
+                          <th className="p-3.5 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3.5 border-r border-neutral-700">Scholar Name</th>
+                          <th className="p-3.5 border-r border-neutral-700 min-w-[240px]">Thesis / Research Title</th>
+                          <th className="p-3.5 w-28 text-center border-r border-neutral-700">Program</th>
+                          <th className="p-3.5 w-28 text-center">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#eedfd8]/60">
                         {combinedSupervisions.map((s: any, idx: number) => (
                           <tr key={s.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
-                            <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                            <td className="p-3.5 text-center text-neutral-500 font-mono font-bold align-top text-sm">
                               {idx + 1}
                             </td>
-                            <td className="p-3 align-top space-y-0.5">
-                              <div className="font-bold text-neutral-900">{s.student_name}</div>
+                            <td className="p-3.5 align-top space-y-1">
+                              <div className="font-bold text-neutral-900 text-base">{s.student_name}</div>
                               {s.roll_number && (
-                                <div className="font-mono text-[11px] text-neutral-400">Roll: {s.roll_number}</div>
+                                <div className="font-mono text-xs text-neutral-500 font-medium">Roll: {s.roll_number}</div>
                               )}
                             </td>
-                            <td className="p-3 align-top space-y-1">
-                              <div className="text-neutral-800 font-medium leading-snug">{s.thesis_title}</div>
+                            <td className="p-3.5 align-top space-y-1">
+                              <div className="text-neutral-900 font-semibold leading-snug text-sm">{s.thesis_title}</div>
                               {s.co_supervisor && (
-                                <div className="text-[11px] text-neutral-500">Co-Supervisor: {s.co_supervisor}</div>
+                                <div className="text-xs text-neutral-500">Co-Supervisor: {s.co_supervisor}</div>
                               )}
                             </td>
-                            <td className="p-3 text-center align-top font-bold text-[#85261e]">
+                            <td className="p-3.5 text-center align-top font-bold text-[#85261e] text-sm">
                               {s.level || "Ph.D."}
                             </td>
-                            <td className="p-3 text-center align-top space-y-1">
+                            <td className="p-3.5 text-center align-top space-y-1.5">
                               <button
                                 type="button"
                                 onClick={() => openDetails(s)}
-                                className="w-full inline-flex items-center justify-center gap-1 px-2 py-1 rounded-lg bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-semibold text-[11px]"
+                                className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#00b84c]/10 text-[#008a38] border border-[#00b84c]/30 hover:bg-[#00b84c] hover:text-white transition font-bold text-xs cursor-pointer"
                               >
-                                <Info className="w-3 h-3" /> Details
+                                <Info className="w-3.5 h-3.5" /> Details
                               </button>
-                              <div className="flex items-center justify-center gap-1">
+                              <div className="flex items-center justify-center gap-1.5">
                                 <button
                                   type="button"
                                   onClick={() => openEditModal(s)}
-                                  className="p-1 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                  className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
                                 >
-                                  <Edit className="w-3 h-3" />
+                                  <Edit className="w-3.5 h-3.5" />
                                 </button>
                                 <button
                                   type="button"
                                   onClick={() => handleDeleteRecord(s)}
-                                  className="p-1 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                  className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
                                 >
-                                  <Trash2 className="w-3 h-3" />
+                                  <Trash2 className="w-3.5 h-3.5" />
                                 </button>
                               </div>
                             </td>
@@ -2491,7 +2491,7 @@ export default function FacultyPortfolioPage({
                     </table>
                   </div>
                 ) : (
-                  <div className="p-12 text-center text-neutral-500 text-xs">
+                  <div className="p-12 text-center text-neutral-500 text-sm">
                     No supervision records listed.
                   </div>
                 )}
@@ -2502,53 +2502,53 @@ export default function FacultyPortfolioPage({
             {activeTab === "administrativeexperience" && (
               <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
                 <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
-                    <Award className="w-4 h-4 text-[#85261e]" />
+                  <span className="text-sm sm:text-base font-bold text-[#33110e] flex items-center gap-2">
+                    <Award className="w-5 h-5 text-[#85261e]" />
                     Institutional Leadership Appointments ({allAdminExp.length})
                   </span>
                 </div>
                 {allAdminExp.length > 0 ? (
                   <div className="overflow-x-auto">
-                    <table className="w-full text-left text-xs border-collapse">
+                    <table className="w-full text-left text-sm border-collapse">
                       <thead>
-                        <tr className="bg-[#1f1412] text-white uppercase text-[11px] font-bold tracking-wider">
-                          <th className="p-3 w-14 text-center border-r border-neutral-700">Sr.</th>
-                          <th className="p-3 border-r border-neutral-700">Position / Designation</th>
-                          <th className="p-3 border-r border-neutral-700">Department / Organization</th>
-                          <th className="p-3 w-40 text-center border-r border-neutral-700">Duration</th>
-                          <th className="p-3 w-24 text-center">Actions</th>
+                        <tr className="bg-[#1f1412] text-white uppercase text-xs font-bold tracking-wider">
+                          <th className="p-3.5 w-14 text-center border-r border-neutral-700">Sr.</th>
+                          <th className="p-3.5 border-r border-neutral-700">Position / Designation</th>
+                          <th className="p-3.5 border-r border-neutral-700">Department / Organization</th>
+                          <th className="p-3.5 w-44 text-center border-r border-neutral-700">Duration</th>
+                          <th className="p-3.5 w-28 text-center">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#eedfd8]/60">
                         {allAdminExp.map((adm: any, idx: number) => (
                           <tr key={adm.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
-                            <td className="p-3 text-center text-neutral-500 font-mono font-bold align-top">
+                            <td className="p-3.5 text-center text-neutral-500 font-mono font-bold align-top text-sm">
                               {idx + 1}
                             </td>
-                            <td className="p-3 align-top font-bold text-[#85261e]">
+                            <td className="p-3.5 align-top font-bold text-[#85261e] text-base">
                               {adm.position || adm.role}
                             </td>
-                            <td className="p-3 align-top text-neutral-800 font-medium">
+                            <td className="p-3.5 align-top text-neutral-800 font-medium text-sm">
                               {adm.organization || "NIT Hamirpur"}
                             </td>
-                            <td className="p-3 text-center align-top text-neutral-600 font-semibold">
+                            <td className="p-3.5 text-center align-top text-neutral-700 font-semibold text-sm">
                               {adm.start_date ? `${adm.start_date} to ${adm.end_date || "Present"}` : "Completed"}
                             </td>
-                            <td className="p-3 text-center align-top">
-                              <div className="flex items-center justify-center gap-1">
+                            <td className="p-3.5 text-center align-top">
+                              <div className="flex items-center justify-center gap-1.5">
                                 <button
                                   type="button"
                                   onClick={() => openEditModal(adm)}
-                                  className="p-1.5 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                                  className="p-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
                                 >
-                                  <Edit className="w-3 h-3" />
+                                  <Edit className="w-3.5 h-3.5" />
                                 </button>
                                 <button
                                   type="button"
                                   onClick={() => handleDeleteRecord(adm)}
-                                  className="p-1.5 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                                  className="p-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
                                 >
-                                  <Trash2 className="w-3 h-3" />
+                                  <Trash2 className="w-3.5 h-3.5" />
                                 </button>
                               </div>
                             </td>
@@ -2558,7 +2558,7 @@ export default function FacultyPortfolioPage({
                     </table>
                   </div>
                 ) : (
-                  <div className="p-12 text-center text-neutral-500 text-xs">
+                  <div className="p-12 text-center text-neutral-500 text-sm">
                     No administrative experience records updated.
                   </div>
                 )}
@@ -2569,8 +2569,8 @@ export default function FacultyPortfolioPage({
             {activeTab === "honors" && (
               <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
                 <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
-                    <Trophy className="w-4 h-4 text-amber-600" />
+                  <span className="text-sm sm:text-base font-bold text-[#33110e] flex items-center gap-2">
+                    <Trophy className="w-5 h-5 text-amber-600" />
                     Honors &amp; Recognitions ({allHonors.length})
                   </span>
                 </div>
@@ -2579,12 +2579,12 @@ export default function FacultyPortfolioPage({
                     {allHonors.map((hnr: any, idx: number) => (
                       <div key={idx} className="p-4 sm:p-5 hover:bg-[#fffaf8] transition flex items-start justify-between gap-4">
                         <div className="flex items-start gap-4 min-w-0 flex-1">
-                          <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200">
+                          <div className="w-11 h-11 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200">
                             <Trophy className="w-5 h-5" />
                           </div>
                           <div className="space-y-1 min-w-0 flex-1">
-                            <h4 className="text-sm font-bold text-neutral-900 leading-snug">{hnr.title}</h4>
-                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-neutral-600">
+                            <h4 className="text-base font-bold text-neutral-900 leading-snug">{hnr.title}</h4>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-neutral-600">
                               <span className="font-semibold text-[#85261e]">{hnr.organization || "Awarding Body"}</span>
                               {hnr.year && (
                                 <>
@@ -2594,31 +2594,31 @@ export default function FacultyPortfolioPage({
                               )}
                             </div>
                             {hnr.description && (
-                              <p className="text-xs text-neutral-600 leading-relaxed pt-1">{hnr.description}</p>
+                              <p className="text-sm text-neutral-600 leading-relaxed pt-1">{hnr.description}</p>
                             )}
                           </div>
                         </div>
-                        <div className="flex items-center gap-1 shrink-0">
+                        <div className="flex items-center gap-1.5 shrink-0">
                           <button
                             type="button"
                             onClick={() => openEditModal(hnr)}
-                            className="p-1.5 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                            className="p-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
                           >
-                            <Edit className="w-3.5 h-3.5" />
+                            <Edit className="w-4 h-4" />
                           </button>
                           <button
                             type="button"
                             onClick={() => handleDeleteRecord(hnr)}
-                            className="p-1.5 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                            className="p-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="p-12 text-center text-neutral-500 text-xs">
+                  <div className="p-12 text-center text-neutral-500 text-sm">
                     No honors recorded.
                   </div>
                 )}
@@ -2629,8 +2629,8 @@ export default function FacultyPortfolioPage({
             {activeTab === "internationalAndNationalExposure" && (
               <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
                 <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#33110e] flex items-center gap-1.5">
-                    <Globe className="w-4 h-4 text-indigo-600" />
+                  <span className="text-sm sm:text-base font-bold text-[#33110e] flex items-center gap-2">
+                    <Globe className="w-5 h-5 text-indigo-600" />
                     Global &amp; National Academic Exposure ({allExposures.length})
                   </span>
                 </div>
@@ -2639,12 +2639,12 @@ export default function FacultyPortfolioPage({
                     {allExposures.map((exp: any, idx: number) => (
                       <div key={idx} className="p-4 sm:p-5 hover:bg-[#fffaf8] transition flex items-start justify-between gap-4">
                         <div className="flex items-start gap-4 min-w-0 flex-1">
-                          <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center shrink-0 border border-indigo-200">
+                          <div className="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-700 flex items-center justify-center shrink-0 border border-indigo-200">
                             <Globe className="w-5 h-5" />
                           </div>
                           <div className="space-y-1 min-w-0 flex-1">
-                            <h4 className="text-sm font-bold text-neutral-900 leading-snug">{exp.title || exp.purpose}</h4>
-                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-neutral-600">
+                            <h4 className="text-base font-bold text-neutral-900 leading-snug">{exp.title || exp.purpose}</h4>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-neutral-600">
                               <span className="font-semibold text-[#85261e]">{exp.organization || exp.country || "Host"}</span>
                               {exp.year && (
                                 <>
@@ -2654,31 +2654,31 @@ export default function FacultyPortfolioPage({
                               )}
                             </div>
                             {exp.details && (
-                              <p className="text-xs text-neutral-600 leading-relaxed pt-1">{exp.details}</p>
+                              <p className="text-sm text-neutral-600 leading-relaxed pt-1">{exp.details}</p>
                             )}
                           </div>
                         </div>
-                        <div className="flex items-center gap-1 shrink-0">
+                        <div className="flex items-center gap-1.5 shrink-0">
                           <button
                             type="button"
                             onClick={() => openEditModal(exp)}
-                            className="p-1.5 rounded bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                            className="p-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition cursor-pointer"
                           >
-                            <Edit className="w-3.5 h-3.5" />
+                            <Edit className="w-4 h-4" />
                           </button>
                           <button
                             type="button"
                             onClick={() => handleDeleteRecord(exp)}
-                            className="p-1.5 rounded bg-red-50 hover:bg-red-100 text-red-600"
+                            className="p-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition cursor-pointer"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="p-12 text-center text-neutral-500 text-xs">
+                  <div className="p-12 text-center text-neutral-500 text-sm">
                     No exposure records registered.
                   </div>
                 )}
@@ -2698,10 +2698,10 @@ export default function FacultyPortfolioPage({
             {/* Modal Header */}
             <div className="p-5 bg-[#fdf5f2] border-b border-[#eedfd8] flex items-center justify-between">
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#85261e]">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#85261e]">
                   {formMode === "edit" ? "Edit Entry" : "Add New Record"}
                 </span>
-                <h3 className="text-lg font-extrabold text-[#33110e]">
+                <h3 className="text-xl font-extrabold text-[#33110e]">
                   {sidebarItems.find((i) => i.key === activeTab)?.label}
                 </h3>
               </div>
@@ -2715,7 +2715,7 @@ export default function FacultyPortfolioPage({
             </div>
 
             {/* Modal Form Body */}
-            <form onSubmit={handleFormSubmit} className="p-6 overflow-y-auto space-y-4 text-xs flex-1">
+            <form onSubmit={handleFormSubmit} className="p-6 overflow-y-auto space-y-5 text-sm flex-1">
               
               {/* Form fields for FACULTY INFO */}
               {activeTab === "facultyInfo" && (
@@ -4072,17 +4072,17 @@ export default function FacultyPortfolioPage({
               )}
 
               {/* Modal Footer */}
-              <div className="pt-4 border-t border-neutral-100 flex items-center justify-end gap-2.5">
+              <div className="pt-4 border-t border-neutral-100 flex items-center justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setIsFormModalOpen(false)}
-                  className="px-4 py-2 rounded-xl border border-[#eedfd8] bg-white text-neutral-700 hover:bg-neutral-50 font-semibold cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl border border-[#eedfd8] bg-white text-neutral-700 hover:bg-neutral-50 font-semibold text-sm cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 rounded-xl bg-[#85261e] hover:bg-[#33110e] text-white font-bold shadow-xs hover:shadow-md transition cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl bg-[#85261e] hover:bg-[#33110e] text-white font-bold text-sm shadow-xs hover:shadow-md transition cursor-pointer"
                 >
                   {formMode === "edit" ? "Update Record" : "Save Record"}
                 </button>
@@ -4101,9 +4101,9 @@ export default function FacultyPortfolioPage({
           <div className="bg-white rounded-3xl border border-[#eedfd8] shadow-2xl w-full max-w-2xl max-h-[85vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header matching tempcsebase */}
             <div className="p-4 sm:p-5 bg-[#fcf2ef] border-b border-[#eedfd8] flex items-center justify-between">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2.5">
                 <Info className="w-5 h-5 text-[#85261e]" />
-                <h3 className="text-base sm:text-lg font-bold text-[#33110e]">
+                <h3 className="text-lg sm:text-xl font-bold text-[#33110e]">
                   Complete Record Details
                 </h3>
               </div>
@@ -4117,68 +4117,68 @@ export default function FacultyPortfolioPage({
             </div>
 
             {/* Details Content Table (tempcsebase tabular structure) */}
-            <div className="p-6 overflow-y-auto space-y-4 text-xs flex-1">
-              <table className="w-full border border-neutral-200 rounded-xl overflow-hidden divide-y divide-neutral-100">
+            <div className="p-6 overflow-y-auto space-y-4 text-sm flex-1">
+              <table className="w-full border border-neutral-200 rounded-xl overflow-hidden divide-y divide-neutral-100 text-sm">
                 <tbody className="divide-y divide-neutral-100">
                   {detailItem.title && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-[#85261e] bg-neutral-50/70">Title</td>
-                      <td className="p-3 font-semibold text-neutral-900">{detailItem.title}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-[#85261e] bg-neutral-50/80 text-sm">Title</td>
+                      <td className="p-3.5 font-bold text-neutral-900 text-base">{detailItem.title}</td>
                     </tr>
                   )}
                   {(detailItem.author_text || detailItem.authors || detailItem.student_name || detailItem.raw_inventors || detailItem.convenor) && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">
                         {detailItem.student_name ? "Scholar / Student" : detailItem.raw_inventors ? "Inventors" : "Authors / Investigators"}
                       </td>
-                      <td className="p-3 text-neutral-800">
+                      <td className="p-3.5 text-neutral-800 font-medium text-sm">
                         {detailItem.author_text || detailItem.authors || detailItem.student_name || detailItem.raw_inventors || detailItem.convenor}
                       </td>
                     </tr>
                   )}
                   {(detailItem.journal_or_conference_name || detailItem.venue_name || detailItem.venue) && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Venue / Journal</td>
-                      <td className="p-3 text-[#0f376f] font-semibold">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Venue / Journal</td>
+                      <td className="p-3.5 text-[#0f376f] font-semibold text-sm">
                         {detailItem.journal_or_conference_name || detailItem.venue_name || detailItem.venue}
                       </td>
                     </tr>
                   )}
                   {detailItem.funding_agency && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Sponsoring Agency</td>
-                      <td className="p-3 text-neutral-900 font-semibold">{detailItem.funding_agency}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Sponsoring Agency</td>
+                      <td className="p-3.5 text-neutral-900 font-semibold text-sm">{detailItem.funding_agency}</td>
                     </tr>
                   )}
                   {detailItem.client_organisation && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Client Organization</td>
-                      <td className="p-3 text-neutral-900 font-semibold">{detailItem.client_organisation}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Client Organization</td>
+                      <td className="p-3.5 text-neutral-900 font-semibold text-sm">{detailItem.client_organisation}</td>
                     </tr>
                   )}
                   {detailItem.total_sanctioned_amount && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Sanctioned Amount</td>
-                      <td className="p-3 text-neutral-900 font-bold">₹ {Number(detailItem.total_sanctioned_amount).toLocaleString("en-IN")}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Sanctioned Amount</td>
+                      <td className="p-3.5 text-neutral-900 font-bold text-sm">₹ {Number(detailItem.total_sanctioned_amount).toLocaleString("en-IN")}</td>
                     </tr>
                   )}
                   {detailItem.amount && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Consultancy Amount</td>
-                      <td className="p-3 text-neutral-900 font-bold">₹ {Number(detailItem.amount).toLocaleString("en-IN")}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Consultancy Amount</td>
+                      <td className="p-3.5 text-neutral-900 font-bold text-sm">₹ {Number(detailItem.amount).toLocaleString("en-IN")}</td>
                     </tr>
                   )}
                   {detailItem.application_number && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Application Number</td>
-                      <td className="p-3 font-mono text-neutral-800 font-bold">{detailItem.application_number}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Application Number</td>
+                      <td className="p-3.5 font-mono text-neutral-800 font-bold text-sm">{detailItem.application_number}</td>
                     </tr>
                   )}
                   {detailItem.status && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Status</td>
-                      <td className="p-3">
-                        <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Status</td>
+                      <td className="p-3.5">
+                        <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 border border-emerald-300">
                           {detailItem.status}
                         </span>
                       </td>
@@ -4186,29 +4186,29 @@ export default function FacultyPortfolioPage({
                   )}
                   {detailItem.year && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Year</td>
-                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.year}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Year</td>
+                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">{detailItem.year}</td>
                     </tr>
                   )}
                   {detailItem.month && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Month</td>
-                      <td className="p-3 text-neutral-800 font-semibold">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Month</td>
+                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">
                         {MONTH_OPTIONS.find((m) => m.value === Number(detailItem.month))?.label || detailItem.month}
                       </td>
                     </tr>
                   )}
                   {detailItem.academic_session && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Academic Session</td>
-                      <td className="p-3 font-mono font-bold text-neutral-800">{detailItem.academic_session}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Academic Session</td>
+                      <td className="p-3.5 font-mono font-bold text-neutral-800 text-sm">{detailItem.academic_session}</td>
                     </tr>
                   )}
                   {detailItem.indexing && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Indexing</td>
-                      <td className="p-3">
-                        <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 border border-blue-300">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Indexing</td>
+                      <td className="p-3.5">
+                        <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-800 border border-blue-300">
                           {detailItem.indexing}
                         </span>
                       </td>
@@ -4216,32 +4216,32 @@ export default function FacultyPortfolioPage({
                   )}
                   {detailItem.journal_quartile && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Journal Quartile</td>
-                      <td className="p-3 font-semibold text-purple-900">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Journal Quartile</td>
+                      <td className="p-3.5 font-semibold text-purple-900 text-sm">
                         {detailItem.journal_quartile === "T" ? "T (Temporary)" : `Q${detailItem.journal_quartile}`}
                       </td>
                     </tr>
                   )}
                   {detailItem.isbn && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">ISBN Number</td>
-                      <td className="p-3 font-mono font-semibold text-neutral-800">{detailItem.isbn}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">ISBN Number</td>
+                      <td className="p-3.5 font-mono font-semibold text-neutral-800 text-sm">{detailItem.isbn}</td>
                     </tr>
                   )}
                   {Array.isArray(detailItem.associated_faculty) && detailItem.associated_faculty.length > 0 && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-[#85261e] bg-neutral-50/70">Associated Faculty</td>
-                      <td className="p-3">
-                        <div className="flex flex-wrap gap-1.5">
+                      <td className="p-3.5 w-1/3 font-bold text-[#85261e] bg-neutral-50/80 text-sm">Associated Faculty</td>
+                      <td className="p-3.5">
+                        <div className="flex flex-wrap gap-2">
                           {detailItem.associated_faculty.map((co: any, ci: number) => (
                             <Link
                               key={ci}
                               href={`/people/faculty/${co.employee_code || co.code || co.id}`}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold bg-[#85261e]/10 text-[#85261e] hover:bg-[#85261e] hover:text-white transition"
+                              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold bg-[#85261e]/10 text-[#85261e] hover:bg-[#85261e] hover:text-white transition"
                             >
-                              <Users className="w-3 h-3" />
+                              <Users className="w-3.5 h-3.5" />
                               <span>{co.full_name || co.name}</span>
-                              <span className="text-[10px] opacity-70">({co.employee_code || co.code || "CSE"})</span>
+                              <span className="text-xs opacity-75 font-mono">({co.employee_code || co.code || "CSE"})</span>
                             </Link>
                           ))}
                         </div>
@@ -4250,106 +4250,106 @@ export default function FacultyPortfolioPage({
                   )}
                   {detailItem.doi && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">DOI Link</td>
-                      <td className="p-3">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">DOI Link</td>
+                      <td className="p-3.5">
                         <a
                           href={detailItem.doi.startsWith("http") ? detailItem.doi : `https://doi.org/${detailItem.doi}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[#85261e] hover:underline font-semibold inline-flex items-center gap-1"
+                          className="text-[#85261e] hover:underline font-semibold inline-flex items-center gap-1 text-sm"
                         >
-                          <ExternalLink className="w-3 h-3" /> {detailItem.doi}
+                          <ExternalLink className="w-3.5 h-3.5" /> {detailItem.doi}
                         </a>
                       </td>
                     </tr>
                   )}
                   {detailItem.place && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Awarding Agency / Place</td>
-                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.place}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Awarding Agency / Place</td>
+                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">{detailItem.place}</td>
                     </tr>
                   )}
                   {(detailItem.reference_number || detailItem.reference_no) && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Reference / Sanction No.</td>
-                      <td className="p-3 font-mono font-bold text-neutral-800">{detailItem.reference_number || detailItem.reference_no}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Reference / Sanction No.</td>
+                      <td className="p-3.5 font-mono font-bold text-neutral-800 text-sm">{detailItem.reference_number || detailItem.reference_no}</td>
                     </tr>
                   )}
                   {detailItem.duration && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Duration</td>
-                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.duration}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Duration</td>
+                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">{detailItem.duration}</td>
                     </tr>
                   )}
                   {detailItem.principal_investigator && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Principal Investigator (PI)</td>
-                      <td className="p-3 text-neutral-900 font-semibold">{detailItem.principal_investigator}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Principal Investigator (PI)</td>
+                      <td className="p-3.5 text-neutral-900 font-semibold text-sm">{detailItem.principal_investigator}</td>
                     </tr>
                   )}
                   {detailItem.co_principal_investigator && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Co-PI</td>
-                      <td className="p-3 text-neutral-800">{detailItem.co_principal_investigator}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Co-PI</td>
+                      <td className="p-3.5 text-neutral-800 text-sm">{detailItem.co_principal_investigator}</td>
                     </tr>
                   )}
                   {detailItem.co_supervisor && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Co-Supervisors</td>
-                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.co_supervisor}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Co-Supervisors</td>
+                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">{detailItem.co_supervisor}</td>
                     </tr>
                   )}
                   {detailItem.category && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Category</td>
-                      <td className="p-3 capitalize font-semibold text-neutral-800">{detailItem.category}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Category</td>
+                      <td className="p-3.5 capitalize font-semibold text-neutral-800 text-sm">{detailItem.category}</td>
                     </tr>
                   )}
                   {detailItem.host_organization && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Host Institution</td>
-                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.host_organization}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Host Institution</td>
+                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">{detailItem.host_organization}</td>
                     </tr>
                   )}
                   {(detailItem.start_date || detailItem.date || detailItem.talk_date) && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Start Date</td>
-                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.start_date || detailItem.date || detailItem.talk_date}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Start Date</td>
+                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">{detailItem.start_date || detailItem.date || detailItem.talk_date}</td>
                     </tr>
                   )}
                   {detailItem.end_date && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">End Date</td>
-                      <td className="p-3 text-neutral-800 font-semibold">{detailItem.end_date}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">End Date</td>
+                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">{detailItem.end_date}</td>
                     </tr>
                   )}
                   {detailItem.abstract_text && (
                     <tr className="bg-white">
-                      <td className="p-3 w-1/3 font-bold text-neutral-600 bg-neutral-50/70">Abstract / Summary</td>
-                      <td className="p-3 text-neutral-700 leading-relaxed">{detailItem.abstract_text}</td>
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Abstract / Summary</td>
+                      <td className="p-3.5 text-neutral-700 leading-relaxed text-sm">{detailItem.abstract_text}</td>
                     </tr>
                   )}
                 </tbody>
               </table>
 
               {/* Action Buttons */}
-              <div className="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-neutral-100">
+              <div className="pt-3 flex flex-wrap items-center justify-between gap-3 border-t border-neutral-100">
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => openEditModal(detailItem)}
-                    className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-semibold transition cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-800 font-bold text-sm transition cursor-pointer"
                   >
-                    <Edit className="w-3.5 h-3.5" />
+                    <Edit className="w-4 h-4" />
                     <span>Edit Entry</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => handleDeleteRecord(detailItem)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-semibold transition cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-bold text-sm transition cursor-pointer"
                   >
-                    <Trash2 className="w-3.5 h-3.5" />
+                    <Trash2 className="w-4 h-4" />
                     <span>Delete</span>
                   </button>
                 </div>
@@ -4360,9 +4360,9 @@ export default function FacultyPortfolioPage({
                       href={detailItem.doi.startsWith("http") ? detailItem.doi : `https://doi.org/${detailItem.doi}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#85261e] text-white hover:bg-[#33110e] font-semibold transition"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#85261e] text-white hover:bg-[#33110e] font-bold text-sm transition"
                     >
-                      <ExternalLink className="w-3.5 h-3.5" />
+                      <ExternalLink className="w-4 h-4" />
                       <span>Open Document</span>
                     </a>
                   )}
@@ -4370,7 +4370,7 @@ export default function FacultyPortfolioPage({
                   <button
                     type="button"
                     onClick={() => setIsDetailsModalOpen(false)}
-                    className="px-4 py-1.5 rounded-xl border border-[#eedfd8] text-neutral-700 hover:bg-neutral-50 font-semibold cursor-pointer"
+                    className="px-5 py-2 rounded-xl border border-[#eedfd8] text-neutral-700 hover:bg-neutral-50 font-bold text-sm cursor-pointer"
                   >
                     Close
                   </button>
