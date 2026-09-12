@@ -241,7 +241,14 @@ export default function FacultyPortfolioPage({
           const user = JSON.parse(raw);
           setCurrentUser(user);
           const roleUpper = (user?.role || "").toUpperCase();
-          const isAdmin = roleUpper === "ADMIN" || roleUpper === "SUPERADMIN";
+          const userRoles = Array.isArray(user?.roles) ? user.roles.map((r: any) => String(r).toUpperCase()) : [];
+          const isAdmin =
+            roleUpper === "ADMIN" ||
+            roleUpper === "SUPERADMIN" ||
+            userRoles.includes("ADMIN") ||
+            userRoles.includes("SUPERADMIN") ||
+            userRoles.includes("INSTITUTE_ADMIN") ||
+            userRoles.includes("DEPARTMENT_ADMIN");
           const isOwner = Boolean(
             (user?.employee_code && faculty?.employee_code && user.employee_code.trim().toUpperCase() === faculty.employee_code.trim().toUpperCase()) ||
             (user?.email && faculty?.email && user.email.trim().toLowerCase() === faculty.email.trim().toLowerCase()) ||

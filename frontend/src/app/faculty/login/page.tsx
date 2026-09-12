@@ -61,25 +61,36 @@ export default function FacultyLoginPage() {
         });
         const token = res.data?.data?.token || res.data?.data?.access_token;
         if (token) {
+          const userObj = res.data.data.user || { role: "FACULTY", email: data.identifier };
           localStorage.setItem("auth_token", token);
           localStorage.setItem(
             "auth_user",
-            JSON.stringify(res.data.data.user || { role: "FACULTY", email: data.identifier })
+            JSON.stringify({
+              ...userObj,
+              role: userObj.role || "FACULTY",
+              roles: userObj.roles || ["FACULTY"],
+            })
           );
+          if (typeof window !== "undefined") {
+            window.dispatchEvent(new Event("storage"));
+            window.dispatchEvent(new CustomEvent("nith_faculty_storage_update"));
+          }
           toast.success("Welcome to the Faculty Portal!");
           router.push("/faculty");
           return;
         }
       } catch (err) {
-        console.warn("Backend API unavailable, using client-side auth fallback:", err);
+        console.warn("Backend API unavailable or invalid credentials, using client-side auth fallback:", err);
       }
 
       // 2. Client-side authentication fallback against seeded faculty or department code
+      const idLower = data.identifier.trim().toLowerCase();
       const match = MOCK_FACULTY.find(
         (f) =>
-          f.employee_code.toLowerCase() === data.identifier.toLowerCase() ||
-          f.email.toLowerCase() === data.identifier.toLowerCase() ||
-          f.full_name.toLowerCase().includes(data.identifier.toLowerCase())
+          f.employee_code?.toLowerCase() === idLower ||
+          f.email?.toLowerCase() === idLower ||
+          f.id?.toLowerCase() === idLower ||
+          f.full_name?.toLowerCase().includes(idLower)
       );
 
       const resolvedDept = resolveFacultyDepartment(match, { employee_code: data.identifier, email: data.identifier });
@@ -105,22 +116,28 @@ export default function FacultyLoginPage() {
         roles: ["FACULTY"],
       };
 
+      const sessionUser = {
+        id: facultyUser.user_id || facultyUser.id,
+        faculty_id: facultyUser.id,
+        email: facultyUser.email,
+        full_name: facultyUser.full_name,
+        employee_code: facultyUser.employee_code,
+        department_name: resolvedDept.name,
+        department_code: resolvedDept.code,
+        department_slug: resolvedDept.slug,
+        role: "FACULTY",
+        roles: ["FACULTY"],
+      };
+
       localStorage.setItem("auth_token", `mock-faculty-jwt-${facultyUser.id}`);
       localStorage.setItem("active_department_slug", resolvedDept.slug);
-      localStorage.setItem(
-        "auth_user",
-        JSON.stringify({
-          id: facultyUser.user_id,
-          faculty_id: facultyUser.id,
-          email: facultyUser.email,
-          full_name: facultyUser.full_name,
-          employee_code: facultyUser.employee_code,
-          department_name: resolvedDept.name,
-          department_code: resolvedDept.code,
-          department_slug: resolvedDept.slug,
-          roles: ["FACULTY"],
-        })
-      );
+      localStorage.setItem("auth_user", JSON.stringify(sessionUser));
+
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(new Event("storage"));
+        window.dispatchEvent(new CustomEvent("nith_faculty_storage_update"));
+      }
+
       toast.success(`Welcome to the Department of ${resolvedDept.name} Portal!`);
       router.push("/faculty");
     } finally {
