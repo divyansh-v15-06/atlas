@@ -14,11 +14,11 @@ RUN npm ci --legacy-peer-deps
 COPY . .
 
 # Build-time environment variable for API gateway routing
-ARG NEXT_PUBLIC_API_URL=/api
+ARG NEXT_PUBLIC_API_URL=/api/v1
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 ENV NEXT_TELEMETRY_DISABLED=1
 
-ENV NODE_OPTIONS="--max-old-space-size=1024"
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 RUN npm run build
 
 # 2. Production Runner Stage
