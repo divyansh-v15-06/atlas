@@ -75,30 +75,34 @@ export default function AdminLoginPage() {
         return;
       }
 
-      if (
-        data.email === "admin@nith.ac.in" ||
-        data.email.toLowerCase().includes("admin") ||
-        data.email.toLowerCase() === "hod@nith.ac.in"
-      ) {
-        localStorage.setItem("auth_token", "mock-admin-jwt-token-2026");
+      const isHod = data.email.toLowerCase().includes("hod");
+      const isAdmin = data.email.toLowerCase().includes("admin") || data.email === "admin@nith.ac.in";
+
+      if (isHod || isAdmin) {
+        localStorage.setItem("auth_token", isHod ? "mock-hod-jwt-token-2026" : "mock-sysadmin-jwt-token-2026");
         localStorage.setItem(
           "auth_user",
           JSON.stringify({
-            id: "33333333-3333-3333-3333-333333333333",
+            id: isHod ? "44444444-4444-4444-4444-444444444444" : "33333333-3333-3333-3333-333333333333",
             email: data.email,
-            full_name: data.email.includes("hod") ? "Head of Department (Admin)" : "System Administrator",
-            role: "ADMIN",
-            roles: ["ADMIN", "INSTITUTE_ADMIN", "DEPARTMENT_ADMIN"],
+            full_name: isHod ? "Dr. Siddhartha Chauhan (Head of Department)" : "System Administrator",
+            role: isHod ? "HOD_ADMIN" : "SYSTEM_ADMIN",
+            roles: isHod ? ["HOD_ADMIN", "DEPARTMENT_ADMIN"] : ["SYSTEM_ADMIN", "INSTITUTE_ADMIN"],
+            department: isHod ? "CSE" : undefined,
           })
         );
         if (typeof window !== "undefined") {
           window.dispatchEvent(new Event("storage"));
           window.dispatchEvent(new CustomEvent("nith_faculty_storage_update"));
         }
-        toast.success("Welcome back, System Administrator!");
+        if (isHod) {
+          toast.success("Welcome back, Dr. Siddhartha Chauhan (Head of Department)!");
+        } else {
+          toast.success("Welcome back, System Administrator (Central IT Console)!");
+        }
         router.push("/admin");
       } else {
-        toast.error("Invalid admin email. Try admin@nith.ac.in with password admin*123");
+        toast.error("Invalid admin email. Use admin@nith.ac.in (System Admin) or hod@nith.ac.in (HOD Admin)");
       }
     } finally {
       setLoading(false);
@@ -131,52 +135,60 @@ export default function AdminLoginPage() {
 
           <div>
             <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-[9px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-              Department Control Console
+              NIT Hamirpur • Administrative Portal
             </span>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-[#33110e] tracking-tight mt-0.5">
-              Admin Portal Login
+            <h1 className="text-xl sm:text-2xl font-black tracking-tight text-[#33110e] mt-1">
+              Admin Console Login
             </h1>
-            <p className="text-[11px] text-neutral-600 max-w-xs mx-auto">
-              National Institute of Technology Hamirpur
+            <p className="text-[11px] text-[#6b5c58]">
+              Select System Administrator or Department HOD to proceed
             </p>
           </div>
         </div>
 
-        {/* Quick Demo Credentials Card */}
-        <div className="rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-3 space-y-1.5 text-xs">
+        {/* Quick Demo Credentials Panel */}
+        <div className="rounded-2xl border border-[#eedfd8] bg-[#fff9f6] p-3 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="font-bold text-[#33110e] flex items-center gap-1 text-[10px] uppercase tracking-wider">
-              <KeyRound className="w-3 h-3 text-[#85261e]" /> Quick Demo Admin Access:
+            <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#33110e]">
+              <Sparkles className="w-3 h-3 text-[#85261e]" /> Select Login Persona
             </span>
             <span className="text-[9px] text-[#85261e] font-mono font-bold bg-white px-1.5 py-0.5 rounded border border-[#eedfd8]">
               Password: admin*123
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-1.5 pt-0.5">
+          <div className="grid grid-cols-2 gap-2 pt-0.5">
             <button
               type="button"
-              onClick={() => handleQuickFill("admin@nith.ac.in", "admin*123", "Super Administrator")}
-              className="text-left rounded-lg border border-[#eedfd8] bg-white p-2 text-[#33110e] hover:bg-[#33110e] hover:text-white transition duration-150 shadow-2xs group cursor-pointer"
+              onClick={() => handleQuickFill("admin@nith.ac.in", "admin*123", "System Administrator")}
+              className="text-left rounded-xl border border-[#eedfd8] bg-white p-2.5 text-[#33110e] hover:bg-[#33110e] hover:text-white transition duration-150 shadow-2xs group cursor-pointer"
             >
-              <div className="font-bold text-[10px] truncate group-hover:text-amber-300">
-                System Admin
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-[10px] group-hover:text-amber-300">System Admin</span>
+                <span className="text-[8px] font-extrabold uppercase px-1 py-0.2 rounded bg-amber-100 text-amber-900 group-hover:bg-amber-400/30 group-hover:text-amber-200">Central IT</span>
               </div>
-              <div className="text-[9px] text-neutral-500 group-hover:text-neutral-200 truncate font-mono">
+              <div className="text-[9px] text-neutral-500 group-hover:text-neutral-200 truncate font-mono mt-0.5">
                 admin@nith.ac.in
+              </div>
+              <div className="text-[8px] text-neutral-400 group-hover:text-neutral-300 mt-1">
+                Multi-dept, users & audit logs
               </div>
             </button>
 
             <button
               type="button"
-              onClick={() => handleQuickFill("hod@nith.ac.in", "admin*123", "HOD Department Admin")}
-              className="text-left rounded-lg border border-[#eedfd8] bg-white p-2 text-[#33110e] hover:bg-[#33110e] hover:text-white transition duration-150 shadow-2xs group cursor-pointer"
+              onClick={() => handleQuickFill("hod@nith.ac.in", "admin*123", "HOD Admin (CSE)")}
+              className="text-left rounded-xl border border-[#eedfd8] bg-white p-2.5 text-[#33110e] hover:bg-[#33110e] hover:text-white transition duration-150 shadow-2xs group cursor-pointer"
             >
-              <div className="font-bold text-[10px] truncate group-hover:text-amber-300">
-                HOD Admin
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-[10px] group-hover:text-amber-300">HOD Admin</span>
+                <span className="text-[8px] font-extrabold uppercase px-1 py-0.2 rounded bg-rose-100 text-rose-900 group-hover:bg-rose-400/30 group-hover:text-rose-200">CSE Dept</span>
               </div>
-              <div className="text-[9px] text-neutral-500 group-hover:text-neutral-200 truncate font-mono">
+              <div className="text-[9px] text-neutral-500 group-hover:text-neutral-200 truncate font-mono mt-0.5">
                 hod@nith.ac.in
+              </div>
+              <div className="text-[8px] text-neutral-400 group-hover:text-neutral-300 mt-1">
+                HOD desk, courses & faculty
               </div>
             </button>
           </div>

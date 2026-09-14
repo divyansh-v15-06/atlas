@@ -36,6 +36,11 @@ import {
   FileSpreadsheet,
   Layers,
   Filter,
+  Server,
+  MessageSquare,
+  ExternalLink,
+  Lock,
+  Wrench,
 } from "lucide-react";
 import {
   MOCK_FACULTY,
@@ -51,9 +56,10 @@ import { toast } from "sonner";
 import Dashboard from "@/components/dashboard";
 
 export default function AdminDashboardPage() {
-  const { activeDepartment } = useDepartment();
+  const { activeDepartment, departments, setActiveDepartmentBySlug } = useDepartment();
   const [adminUser, setAdminUser] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<"overview" | "analytics">("overview");
+  const isHod = adminUser?.role === "HOD_ADMIN" || adminUser?.roles?.includes("HOD_ADMIN");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -359,72 +365,214 @@ export default function AdminDashboardPage() {
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
               <span className="rounded-full bg-white/20 px-3 py-0.5 font-mono text-xs font-bold text-amber-300 backdrop-blur-xs">
-                {activeDepartment?.code || "CSE"} ADMIN
+                {isHod ? `${activeDepartment?.code || "CSE"} HOD ADMIN` : "CENTRAL IT ROOT"}
               </span>
               <span className="text-xs text-neutral-300">
-                Department Control Console • NIT Hamirpur
+                {isHod
+                  ? "Departmental Academic & Research Governance • NIT Hamirpur"
+                  : "Central Campus IT & Systems Administration • NIT Hamirpur"}
               </span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Welcome, {adminUser?.full_name || "System Administrator"}
+              Welcome, {adminUser?.full_name || (isHod ? "Dr. Siddhartha Chauhan (Head of Department)" : "System Administrator")}
             </h1>
 
             <p className="text-xs text-neutral-300 max-w-lg">
-              Manage faculty rosters, students data, research records, and departmental CMS
-              for {activeDepartment?.name || "Department of Computer Science & Engineering"}.
+              {isHod
+                ? `Manage faculty course allocations, departmental labs, research publications, student rosters, and HOD desk for Department of ${activeDepartment?.name || "Computer Science & Engineering"}.`
+                : "Overseeing 13 academic departments, central user accounts & HOD roles, security audit trails, server infrastructure, and campus equipment."}
             </p>
           </div>
 
           <div className="flex flex-wrap gap-2.5">
-            <button
-              type="button"
-              onClick={() => setIsAddFacultyOpen(true)}
-              className="flex items-center gap-2 rounded-xl bg-white/15 border border-white/25 hover:bg-white/25 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
-            >
-              <UserPlus className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
-              Add Faculty
-            </button>
+            {isHod ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setIsAddFacultyOpen(true)}
+                  className="flex items-center gap-2 rounded-xl bg-white/15 border border-white/25 hover:bg-white/25 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
+                >
+                  <UserPlus className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+                  Add Faculty
+                </button>
 
-            <button
-              type="button"
-              onClick={() => setIsImportCsvOpen(true)}
-              className="flex items-center gap-2 rounded-xl bg-white/15 border border-white/25 hover:bg-white/25 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
-            >
-              <UploadCloud className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
-              Import CSV
-            </button>
+                <Link
+                  href="/admin/academics/courses"
+                  className="flex items-center gap-2 rounded-xl bg-white/15 border border-white/25 hover:bg-white/25 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
+                >
+                  <BookOpen className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+                  Course Allocations
+                </Link>
 
-            <button
-              type="button"
-              onClick={() => setIsNewAnnouncementOpen(true)}
-              className="flex items-center gap-2 rounded-xl bg-amber-500/30 border border-amber-400/40 hover:bg-amber-500/40 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
-            >
-              <Megaphone className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
-              Post Notice
-            </button>
+                <Link
+                  href="/admin/hod"
+                  className="flex items-center gap-2 rounded-xl bg-amber-500/30 border border-amber-400/40 hover:bg-amber-500/40 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
+                >
+                  <MessageSquare className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+                  HOD Message Desk
+                </Link>
 
-            <button
-              type="button"
-              onClick={() => setActiveTab(activeTab === "analytics" ? "overview" : "analytics")}
-              className="flex items-center gap-2 rounded-xl bg-amber-400/20 border border-amber-300/40 hover:bg-amber-400/30 px-3.5 py-2.5 text-xs font-bold text-amber-200 transition backdrop-blur-xs shadow-2xs cursor-pointer group"
-            >
-              <BarChart3 className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
-              {activeTab === "analytics" ? "Operational Console" : "Visual Analytics & Graphs"}
-            </button>
+                <button
+                  type="button"
+                  onClick={() => setIsNewAnnouncementOpen(true)}
+                  className="flex items-center gap-2 rounded-xl bg-white/15 border border-white/25 hover:bg-white/25 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
+                >
+                  <Megaphone className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+                  Post Notice
+                </button>
 
-            <button
-              type="button"
-              onClick={handleExportDepartmentReport}
-              className="flex items-center gap-2 rounded-xl bg-[#1c110c]/40 border border-white/20 hover:bg-[#1c110c]/70 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
-              title="Export complete departmental dossier"
-            >
-              <Download className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
-              Export Report
-            </button>
+                <button
+                  type="button"
+                  onClick={handleExportDepartmentReport}
+                  className="flex items-center gap-2 rounded-xl bg-[#1c110c]/40 border border-white/20 hover:bg-[#1c110c]/70 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
+                  title="Export complete departmental dossier"
+                >
+                  <Download className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+                  Export Dossier
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/admin/users"
+                  className="flex items-center gap-2 rounded-xl bg-white/15 border border-white/25 hover:bg-white/25 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
+                >
+                  <Users className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+                  User &amp; Role Governance
+                </Link>
+
+                <Link
+                  href="/admin/audit-logs"
+                  className="flex items-center gap-2 rounded-xl bg-white/15 border border-white/25 hover:bg-white/25 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
+                >
+                  <Shield className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+                  Audit Logs
+                </Link>
+
+                <Link
+                  href="/admin/departments"
+                  className="flex items-center gap-2 rounded-xl bg-white/15 border border-white/25 hover:bg-white/25 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
+                >
+                  <Building2 className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+                  Departments Master
+                </Link>
+
+                <Link
+                  href="/admin/system-settings"
+                  className="flex items-center gap-2 rounded-xl bg-amber-500/30 border border-amber-400/40 hover:bg-amber-500/40 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
+                >
+                  <Wrench className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+                  Diagnostics &amp; Cache
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={handleExportDepartmentReport}
+                  className="flex items-center gap-2 rounded-xl bg-[#1c110c]/40 border border-white/20 hover:bg-[#1c110c]/70 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
+                  title="Export complete system dossier"
+                >
+                  <Download className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+                  Export System Dossier
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
+
+      {/* HOD Desk Status Quick Preview (For HOD Admin) */}
+      {isHod && (
+        <div className="rounded-3xl border border-[#eedfd8] bg-white p-5 sm:p-6 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+          <div className="flex items-start sm:items-center gap-4">
+            <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#eedfd8] shadow-xs flex-shrink-0 bg-neutral-100">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://portfolios.nith.ac.in/uploads/member_details/62.jpg"
+                alt="Dr. Siddhartha Chauhan"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = "/hod.jpg";
+                }}
+              />
+            </div>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-rose-100 text-rose-900 border border-rose-300">
+                  Active HOD Desk
+                </span>
+                <span className="text-xs text-neutral-400 font-mono">Published on Public Website</span>
+              </div>
+              <h3 className="text-base font-bold text-[#33110e]">
+                Dr. Siddhartha Chauhan • Head of Department (CSE)
+              </h3>
+              <p className="text-xs text-[#6b5c58] max-w-2xl line-clamp-2 italic">
+                &ldquo;It is with great pleasure that I write this in the capacity of the Head of the Department of CSE at NIT Hamirpur. I thank all the faculty members, students, and staff for their continuous efforts in maintaining excellence...&rdquo;
+              </p>
+            </div>
+          </div>
+
+          <Link
+            href="/admin/hod"
+            className="flex items-center gap-1.5 rounded-xl bg-[#33110e] hover:bg-[#85261e] px-4 py-2.5 text-xs font-bold text-white transition shadow-2xs whitespace-nowrap cursor-pointer"
+          >
+            <MessageSquare className="w-4 h-4 text-amber-300" />
+            Edit HOD Message Desk →
+          </Link>
+        </div>
+      )}
+
+      {/* Central IT Multi-Department Status Grid (For System Admin) */}
+      {!isHod && (
+        <div className="rounded-3xl border border-[#eedfd8] bg-white p-5 sm:p-6 shadow-2xs space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#eedfd8] pb-3">
+            <div>
+              <h3 className="text-sm font-extrabold text-[#33110e] uppercase tracking-wider flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-[#85261e]" />
+                Multi-Department Institutional Nodes (13 Active)
+              </h3>
+              <p className="text-xs text-[#6b5c58]">
+                Centralized telemetry across all NIT Hamirpur academic departments. Click to switch active inspection.
+              </p>
+            </div>
+            <Link
+              href="/admin/departments"
+              className="text-xs font-bold text-[#85261e] hover:underline flex items-center gap-1"
+            >
+              Manage Department Registry →
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2">
+            {departments?.map((d) => {
+              const isCurrent = d.slug === (activeDepartment?.slug || "cse");
+              return (
+                <button
+                  key={d.code}
+                  type="button"
+                  onClick={() => {
+                    setActiveDepartmentBySlug(d.slug);
+                    toast.success(`Active department inspection set to ${d.name}`);
+                  }}
+                  className={`p-2.5 rounded-xl border text-left transition cursor-pointer ${
+                    isCurrent
+                      ? "bg-[#33110e] text-white border-[#33110e] shadow-xs"
+                      : "bg-[#fff9f6] text-[#33110e] border-[#eedfd8] hover:border-[#85261e]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono font-extrabold text-xs">{d.code}</span>
+                    <span className={`w-1.5 h-1.5 rounded-full ${isCurrent ? "bg-amber-300" : "bg-emerald-500"}`} />
+                  </div>
+                  <div className={`text-[10px] truncate mt-1 ${isCurrent ? "text-amber-200" : "text-[#6b5c58]"}`}>
+                    {d.name.split(" ")[0]}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Top View Selector: Operations Console vs Visual Analytics & Research Graphs */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#eedfd8] pb-3">

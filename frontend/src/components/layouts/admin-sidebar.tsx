@@ -30,6 +30,7 @@ import {
   ChevronDown,
   ChevronRight,
   Sparkles,
+  Building2,
 } from "lucide-react";
 import { useDepartment } from "@/context/department-context";
 
@@ -43,21 +44,40 @@ type SidebarItem =
   | { label: string; href: string; icon: any; badge?: string }
   | SidebarSection;
 
-const sidebarLinks: SidebarItem[] = [
-  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+// Menu for HOD Admin (focused on departmental academic governance & HOD desk)
+const hodSidebarLinks: SidebarItem[] = [
+  { label: "HOD Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Visual Analytics & Graphs", href: "/admin/analytics", icon: BarChart3, badge: "Charts" },
   {
-    section: "People Management",
-    id: "people",
+    section: "HOD Desk & Leadership",
+    id: "hod-desk",
     items: [
-      { label: "Faculty Members", href: "/admin/people/faculty", icon: Users },
-      { label: "Staff Members", href: "/admin/people/staff", icon: UserCog },
-      { label: "Students Roster", href: "/admin/people/students", icon: GraduationCap },
-      { label: "PhD Scholars", href: "/admin/people/phdscholars", icon: BookOpen },
+      { label: "HOD Message & Vision", href: "/admin/hod", icon: MessageSquare, badge: "Desk" },
+      { label: "About Us Content", href: "/admin/home/aboutus", icon: Info },
+      { label: "Hero Carousel", href: "/admin/home/carousel", icon: Image },
     ],
   },
   {
-    section: "Research & Output",
+    section: "Department People",
+    id: "people",
+    items: [
+      { label: "Faculty Roster", href: "/admin/people/faculty", icon: Users },
+      { label: "PhD Scholars", href: "/admin/people/phdscholars", icon: BookOpen },
+      { label: "Staff Members", href: "/admin/people/staff", icon: UserCog },
+      { label: "Students Roster", href: "/admin/people/students", icon: GraduationCap },
+    ],
+  },
+  {
+    section: "Academics & Curricula",
+    id: "academics",
+    items: [
+      { label: "Courses & Curricula", href: "/admin/academics/courses", icon: BookOpen },
+      { label: "Labs & Facilities", href: "/admin/academics/labs", icon: FlaskConical },
+      { label: "Placement Statistics", href: "/admin/placement", icon: BarChart3 },
+    ],
+  },
+  {
+    section: "Department Research",
     id: "research",
     items: [
       { label: "Publications", href: "/admin/research/publications", icon: FileText },
@@ -66,35 +86,73 @@ const sidebarLinks: SidebarItem[] = [
     ],
   },
   {
-    section: "CMS & Content",
+    section: "Communications & CMS",
     id: "cms",
     items: [
-      { label: "Announcements", href: "/admin/news/announcements", icon: Megaphone },
+      { label: "Announcements & Notices", href: "/admin/news/announcements", icon: Megaphone },
       { label: "Achievements", href: "/admin/news/achievements", icon: Newspaper },
-      { label: "Hero Carousel", href: "/admin/home/carousel", icon: Image },
-      { label: "About Us Content", href: "/admin/home/aboutus", icon: Info },
-      { label: "HOD Message", href: "/admin/hod", icon: MessageSquare },
+      { label: "Department Documents", href: "/admin/documents", icon: FolderOpen },
       { label: "FAQ / Q&A", href: "/admin/qna", icon: HelpCircle },
-      { label: "Documents & Files", href: "/admin/documents", icon: FolderOpen },
     ],
   },
   {
-    section: "Operations & Labs",
-    id: "operations",
-    items: [
-      { label: "Courses & Curricula", href: "/admin/academics/courses", icon: BookOpen },
-      { label: "Labs & Facilities", href: "/admin/academics/labs", icon: FlaskConical },
-      { label: "Equipment Inventory", href: "/admin/equipments", icon: MonitorSmartphone },
-      { label: "Placement Statistics", href: "/admin/placement", icon: BarChart3 },
-    ],
-  },
-  {
-    section: "Administration & System",
+    section: "Credentials & Reports",
     id: "system",
     items: [
       { label: "Faculty Credentials", href: "/admin/credentials/facultiescredentials", icon: Wrench },
       { label: "Generate Reports", href: "/admin/report", icon: ClipboardList },
-      { label: "Visual Analytics", href: "/admin/analytics", icon: BarChart3 },
+    ],
+  },
+];
+
+// Menu for System Administrator (focused on central IT, multi-department, user accounts & audit)
+const sysAdminSidebarLinks: SidebarItem[] = [
+  { label: "Central IT Dashboard", href: "/admin", icon: LayoutDashboard },
+  { label: "Visual Analytics & Graphs", href: "/admin/analytics", icon: BarChart3, badge: "Charts" },
+  {
+    section: "System & Access Governance",
+    id: "sys-governance",
+    items: [
+      { label: "User Accounts & Roles", href: "/admin/users", icon: Users, badge: "Admins/HODs" },
+      { label: "Security & Audit Logs", href: "/admin/audit-logs", icon: Shield, badge: "Logs" },
+      { label: "System Diagnostics & Cache", href: "/admin/system-settings", icon: Wrench },
+    ],
+  },
+  {
+    section: "Multi-Department Operations",
+    id: "departments",
+    items: [
+      { label: "Departments Registry", href: "/admin/departments", icon: Building2, badge: "13 Depts" },
+      { label: "Faculty Credentials", href: "/admin/credentials/facultiescredentials", icon: Wrench },
+      { label: "Institute Dossier & Reports", href: "/admin/report", icon: ClipboardList },
+    ],
+  },
+  {
+    section: "Campus Infrastructure",
+    id: "operations",
+    items: [
+      { label: "Equipment & Server Registry", href: "/admin/equipments", icon: MonitorSmartphone },
+      { label: "Labs & Compute Facilities", href: "/admin/academics/labs", icon: FlaskConical },
+      { label: "Placement Statistics", href: "/admin/placement", icon: BarChart3 },
+    ],
+  },
+  {
+    section: "Global Communications",
+    id: "cms",
+    items: [
+      { label: "Broadcast Announcements", href: "/admin/news/announcements", icon: Megaphone },
+      { label: "Central Documents", href: "/admin/documents", icon: FolderOpen },
+      { label: "Institute FAQ", href: "/admin/qna", icon: HelpCircle },
+    ],
+  },
+  {
+    section: "Inspect Department Portals",
+    id: "dept-inspect",
+    items: [
+      { label: "HOD Message CMS", href: "/admin/hod", icon: MessageSquare },
+      { label: "Course Catalogue", href: "/admin/academics/courses", icon: BookOpen },
+      { label: "Faculty Directory", href: "/admin/people/faculty", icon: Users },
+      { label: "Hero Carousel", href: "/admin/home/carousel", icon: Image },
     ],
   },
 ];
@@ -114,6 +172,9 @@ export function AdminSidebar() {
       } catch {}
     }
   }, []);
+
+  const isHod = adminUser?.role === "HOD_ADMIN" || adminUser?.roles?.includes("HOD_ADMIN");
+  const sidebarLinks = isHod ? hodSidebarLinks : sysAdminSidebarLinks;
 
   const toggleSection = (id: string) => {
     setCollapsedSections((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -138,11 +199,23 @@ export function AdminSidebar() {
           />
         </div>
         <div className="min-w-0">
-          <span className="text-xs font-extrabold text-[#33110e] tracking-tight block truncate uppercase">
-            Admin Control Panel
-          </span>
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs font-extrabold text-[#33110e] tracking-tight block truncate uppercase">
+              {isHod ? "HOD Admin Panel" : "System IT Console"}
+            </span>
+            <span
+              className={cn(
+                "text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded font-mono",
+                isHod ? "bg-rose-100 text-rose-800" : "bg-amber-100 text-amber-900"
+              )}
+            >
+              {isHod ? "HOD" : "ROOT"}
+            </span>
+          </div>
           <span className="text-[10px] font-semibold text-[#85261e] block truncate">
-            NIT Hamirpur • {activeDepartment?.code || "CSE"} Dept
+            {isHod
+              ? `NIT Hamirpur • ${activeDepartment?.code || "CSE"} Dept`
+              : "NIT Hamirpur • Central IT Console"}
           </span>
         </div>
       </div>
@@ -253,15 +326,22 @@ export function AdminSidebar() {
 
         {/* Admin Info Card */}
         <div className="flex items-center gap-2 rounded-xl bg-white border border-[#eedfd8] p-2 shadow-2xs">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#33110e] text-amber-300 text-[10px] font-extrabold flex-shrink-0">
-            {adminUser?.full_name?.charAt(0)?.toUpperCase() || "A"}
+          <div
+            className={cn(
+              "flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-extrabold flex-shrink-0",
+              isHod ? "bg-[#85261e] text-white" : "bg-[#33110e] text-amber-300"
+            )}
+          >
+            {isHod ? "H" : "A"}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-bold text-[#33110e] truncate leading-tight">
-              {adminUser?.full_name || "Department Admin"}
-            </p>
+            <div className="flex items-center gap-1">
+              <p className="text-[11px] font-bold text-[#33110e] truncate leading-tight">
+                {adminUser?.full_name || (isHod ? "Head of Department" : "System Administrator")}
+              </p>
+            </div>
             <p className="text-[9px] text-[#6b5c58] truncate font-mono leading-tight">
-              {adminUser?.email || "admin@nith.ac.in"}
+              {adminUser?.email || (isHod ? "hod@nith.ac.in" : "admin@nith.ac.in")}
             </p>
           </div>
         </div>

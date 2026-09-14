@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AdminSidebar } from "@/components/layouts/admin-sidebar";
 import Link from "next/link";
 import { Bell, ExternalLink, Settings, ShieldCheck } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 /**
  * Authenticated admin pages layout — sidebar + content area.
@@ -25,6 +26,9 @@ export default function AdminPagesLayout({ children }: { children: ReactNode }) 
     }
   }, []);
 
+  const isHod = adminUser?.role === "HOD_ADMIN" || adminUser?.roles?.includes("HOD_ADMIN");
+  const { departments, setActiveDepartmentBySlug } = useDepartment();
+
   return (
     <div className="flex min-h-screen bg-[#faf6f3] font-sans">
       <AdminSidebar />
@@ -32,32 +36,68 @@ export default function AdminPagesLayout({ children }: { children: ReactNode }) 
         {/* Top Header Bar */}
         <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-[#eedfd8] bg-white px-6 shadow-2xs">
           <div className="flex items-center gap-3">
-            <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-xs font-bold px-2 py-0.5 rounded uppercase">
-              <ShieldCheck className="w-3 h-3 inline -mt-0.5 mr-1" />
-              {activeDepartment?.code || "CSE"} Admin Console
+            <span
+              className={cn(
+                "border text-xs font-bold px-2.5 py-0.5 rounded-full uppercase flex items-center gap-1.5 shadow-2xs",
+                isHod
+                  ? "bg-[#fff9f6] text-[#85261e] border-[#eedfd8]"
+                  : "bg-[#1c110c] text-amber-300 border-[#33110e]"
+              )}
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              {isHod ? `${activeDepartment?.code || "CSE"} HOD Console` : "Central IT Console"}
             </span>
-            <span className="text-xs text-neutral-400 hidden sm:inline">•</span>
+
+            <span className="text-xs text-neutral-300 hidden sm:inline">•</span>
+
             <h2 className="text-xs sm:text-sm font-bold text-[#1c110c] hidden sm:block">
-              Department of {activeDepartment?.name || "Computer Science & Engineering"}
+              {isHod
+                ? `Department of ${activeDepartment?.name || "Computer Science & Engineering"}`
+                : "NIT Hamirpur Central Campus IT & Systems"}
             </h2>
+
+            {/* If System Admin, show quick active department switcher */}
+            {!isHod && departments && departments.length > 0 && (
+              <div className="hidden md:flex items-center gap-1.5 ml-2 pl-3 border-l border-[#eedfd8]">
+                <span className="text-[10px] uppercase font-bold text-neutral-400">Inspecting:</span>
+                <select
+                  value={activeDepartment?.slug || "cse"}
+                  onChange={(e) => setActiveDepartmentBySlug(e.target.value)}
+                  className="rounded-lg border border-[#eedfd8] bg-[#fff9f6] px-2 py-0.5 text-xs font-bold text-[#33110e] hover:border-[#85261e] focus:outline-hidden cursor-pointer"
+                >
+                  {departments.map((d) => (
+                    <option key={d.code} value={d.slug}>
+                      {d.code} — {d.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             {/* Notification Bell */}
             <button
-              onClick={() => toast.info("System Notice: 3 pending faculty qualification verification requests.")}
+              onClick={() =>
+                toast.info(
+                  isHod
+                    ? "HOD Notice: 2 pending faculty research supervision entries awaiting approval."
+                    : "System Notice: Database backup healthy, 13 departmental nodes online."
+                )
+              }
               className="relative flex h-8 w-8 items-center justify-center rounded-lg border border-[#eedfd8] bg-[#fff9f6] text-[#6b5c58] hover:bg-[#33110e] hover:text-white transition cursor-pointer"
             >
               <Bell className="w-3.5 h-3.5" />
               <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#85261e] text-[7px] font-bold text-white animate-pulse">
-                3
+                {isHod ? "2" : "1"}
               </span>
             </button>
 
             {/* Settings */}
             <Link
-              href="/admin/credentials/facultiescredentials"
+              href={isHod ? "/admin/credentials/facultiescredentials" : "/admin/system-settings"}
               className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#eedfd8] bg-[#fff9f6] text-[#6b5c58] hover:bg-[#33110e] hover:text-white transition cursor-pointer"
+              title={isHod ? "Faculty Credentials" : "System Settings"}
             >
               <Settings className="w-3.5 h-3.5" />
             </Link>
