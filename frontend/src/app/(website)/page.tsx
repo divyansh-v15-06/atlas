@@ -16,6 +16,7 @@ import {
   BookOpen,
   Building2,
   Calendar,
+  ChevronLeft,
   ChevronRight,
   GraduationCap,
   Sparkles,
@@ -35,36 +36,130 @@ import {
 } from "lucide-react";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
+import { useHodMessage } from "@/hooks/use-hod-message";
+
+// Canonical carousel images from old tempcsebase
+const TEMPCSE_HERO_SLIDES = [
+  {
+    src: "https://res.cloudinary.com/dtxjhtjv2/image/upload/v1726560953/1_vrhhbu.png",
+    alt: "Department of Computer Science & Engineering - NIT Hamirpur",
+  },
+  {
+    src: "https://res.cloudinary.com/dtxjhtjv2/image/upload/v1726560951/2_olfa2q.png",
+    alt: "Computing Infrastructure & Academic Excellence",
+  },
+  {
+    src: "https://res.cloudinary.com/dtxjhtjv2/image/upload/v1727629275/Departmental-Website-Inauguration_1_wxnswg.png",
+    alt: "Departmental Website Inauguration Ceremony",
+  },
+  {
+    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013579/luoszkppvjhxboiettqs.png",
+    alt: "Academic and Research Milestones",
+  },
+  {
+    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013596/qforn6yvutj2lquzltif.png",
+    alt: "Faculty & Student Scientific Achievements",
+  },
+  {
+    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013611/pd0v4cmnhjgixissttgl.png",
+    alt: "Innovations in Artificial Intelligence & Computing Systems",
+  },
+  {
+    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013697/uzflivcqzwx5zowzusbv.png",
+    alt: "Technical Workshops & Hands-on Laboratories",
+  },
+  {
+    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013709/gva8oahffjnnhrxy1yjj.png",
+    alt: "Industry Collaborations & Student Hackathons",
+  },
+  {
+    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749211054/z3hutohh0p6xro1vp7qm.png",
+    alt: "Conferences, Seminars and Expert Lectures",
+  },
+  {
+    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749468582/hpz76jipbtrc2zxrhzzh.png",
+    alt: "Departmental Campus Life & Student Activities",
+  },
+  {
+    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749468653/snbuwfwxpplfftowidmh.png",
+    alt: "National Institute of Technology Hamirpur Academic Community",
+  },
+];
+
+const DEFAULT_DEPARTMENT_SLIDES = (deptName: string, deptCode: string) => [
+  {
+    src: "/nithbg12.jpg",
+    alt: `Department of ${deptName} - National Institute of Technology Hamirpur`,
+    title: `Department of ${deptName}`,
+    subtitle: `National Institute of Technology Hamirpur (HP) • ${deptCode}`,
+  },
+  {
+    src: "/cseDepartmentPhoto.png",
+    alt: "Specialized Research Centers & Laboratories",
+    title: "Advanced Laboratories & Specialized Research Centers",
+    subtitle: "High-Performance Computing, Multidisciplinary Labs & Cyber-Physical Systems",
+  },
+  {
+    src: "/17059155995973.jpg",
+    alt: "Technical Education Excellence",
+    title: "Excellence in Technical Education & Industry Collaboration",
+    subtitle: "Top NIRF Ranking, Accredited Programmes, and Outstanding Global Placements",
+  },
+];
 
 export default function HomePage() {
   const { activeDepartment } = useDepartment();
+  const hod = useHodMessage();
   const hasData = activeDepartment.slug === "cse";
+  const isCse = activeDepartment.slug === "cse";
   const [activeSlide, setActiveSlide] = useState(0);
-
-  const heroSlides = [
-    {
-      src: "/nithbg12.jpg",
-      title: `Department of ${activeDepartment.name}`,
-      subtitle: `National Institute of Technology Hamirpur (HP) • ${activeDepartment.code}`,
-    },
-    {
-      src: "/cseDepartmentPhoto.png",
-      title: "Advanced Laboratories & Specialized Research Centers",
-      subtitle: "High-Performance Computing, AI/ML Clusters, IoT & Cyber-Physical Systems",
-    },
-    {
-      src: "/17059155995973.jpg",
-      title: "Excellence in Technical Education & Industry Collaboration",
-      subtitle: "Top NIRF Ranking, NBA Accredited Programmes, and Outstanding Global Placements",
-    },
-  ];
+  const [isHovered, setIsHovered] = useState(false);
+  const [slides, setSlides] = useState<{ src: string; alt?: string; title?: string; subtitle?: string }[]>(() =>
+    isCse ? TEMPCSE_HERO_SLIDES : DEFAULT_DEPARTMENT_SLIDES(activeDepartment.name, activeDepartment.code)
+  );
 
   useEffect(() => {
+    let isCancelled = false;
+    if (isCse) {
+      setSlides(TEMPCSE_HERO_SLIDES);
+    } else {
+      setSlides(DEFAULT_DEPARTMENT_SLIDES(activeDepartment.name, activeDepartment.code));
+    }
+    setActiveSlide(0);
+
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+    const deptParam = activeDepartment.id || activeDepartment.slug || activeDepartment.code;
+
+    fetch(`${apiUrl}/cms/home-slides?department_id=${encodeURIComponent(deptParam)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (isCancelled || !json) return;
+        const data = Array.isArray(json.data) ? json.data : Array.isArray(json) ? json : [];
+        if (data.length > 0) {
+          setSlides(
+            data.map((item: any, idx: number) => ({
+              src: item.image_url || item.photo || item.src,
+              alt: item.title || `Department Slide ${idx + 1}`,
+              title: item.title,
+              subtitle: item.subtitle,
+            }))
+          );
+        }
+      })
+      .catch(() => {});
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [activeDepartment.id, activeDepartment.slug, activeDepartment.name, activeDepartment.code, isCse]);
+
+  useEffect(() => {
+    if (isHovered || slides.length <= 1) return;
     const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length);
+      setActiveSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [heroSlides.length]);
+  }, [slides.length, isHovered]);
 
   // Department-specific announcements
   const departmentAnnouncements = [
@@ -277,47 +372,89 @@ export default function HomePage() {
               </div>
 
               {/* Center Column: Department Hero Carousel */}
-              <div className="lg:col-span-6 rounded-xl overflow-hidden border border-[#eedfd8] relative shadow-xs h-[430px] bg-neutral-900 group">
-                {heroSlides.map((slide, idx) => (
+              <div
+                className="lg:col-span-6 rounded-xl overflow-hidden border border-[#eedfd8] relative shadow-xs h-[430px] bg-[#f6f0ea] group select-none"
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+              >
+                {slides.map((slide, idx) => (
                   <div
-                    key={slide.src}
+                    key={slide.src + idx}
                     className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                      idx === activeSlide ? "opacity-100 z-10" : "opacity-0 z-0"
+                      idx === activeSlide ? "opacity-100 z-10 pointer-events-auto" : "opacity-0 z-0 pointer-events-none"
                     }`}
                   >
-                    <Image
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
                       src={slide.src}
-                      alt={slide.title}
-                      fill
-                      className="object-cover"
-                      priority={idx === 0}
+                      alt={slide.alt || `Carousel Banner ${idx + 1}`}
+                      className="w-full h-full object-cover object-center"
+                      loading={idx === 0 ? "eager" : "lazy"}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-6 sm:p-8 text-white">
-                      <span className="bg-[#85261e] text-white text-[10px] uppercase font-bold px-2.5 py-0.5 rounded w-fit mb-2 tracking-wider shadow-xs">
-                        Department of {activeDepartment.name}
-                      </span>
-                      <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-tight mb-1.5 text-white drop-shadow-xs">
-                        {slide.title}
-                      </h2>
-                      <p className="text-xs sm:text-sm text-neutral-200 line-clamp-2 leading-relaxed max-w-xl">
-                        {slide.subtitle}
-                      </p>
-                    </div>
+                    {slide.title && (
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-6 sm:p-8 text-white">
+                        <span className="bg-[#85261e] text-white text-[10px] uppercase font-bold px-2.5 py-0.5 rounded w-fit mb-2 tracking-wider shadow-xs">
+                          Department of {activeDepartment.name}
+                        </span>
+                        <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-tight mb-1.5 text-white drop-shadow-xs">
+                          {slide.title}
+                        </h2>
+                        {slide.subtitle && (
+                          <p className="text-xs sm:text-sm text-neutral-200 line-clamp-2 leading-relaxed max-w-xl">
+                            {slide.subtitle}
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ))}
 
+                {/* Previous Slide Arrow Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);
+                  }}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/45 hover:bg-[#85261e] text-white flex items-center justify-center backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-all cursor-pointer shadow-md"
+                  aria-label="Previous Slide"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+
+                {/* Next Slide Arrow Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveSlide((prev) => (prev + 1) % slides.length);
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/45 hover:bg-[#85261e] text-white flex items-center justify-center backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-all cursor-pointer shadow-md"
+                  aria-label="Next Slide"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+
+                {/* Slide Counter Badge */}
+                <div className="absolute top-3.5 right-3.5 z-20 bg-black/60 backdrop-blur-xs text-white text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full shadow-sm border border-white/20">
+                  {activeSlide + 1} / {slides.length}
+                </div>
+
                 {/* Carousel Indicators */}
-                <div className="absolute bottom-4 right-5 z-20 flex gap-1.5">
-                  {heroSlides.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveSlide(i)}
-                      className={`h-2 rounded-full transition-all cursor-pointer ${
-                        i === activeSlide ? "bg-amber-400 w-7" : "bg-white/50 w-2 hover:bg-white"
-                      }`}
-                      aria-label={`Slide ${i + 1}`}
-                    />
-                  ))}
+                <div className="absolute bottom-3 inset-x-0 z-20 flex justify-center items-center gap-1.5 px-4">
+                  <div className="flex items-center gap-1.5 bg-black/40 backdrop-blur-xs px-3 py-1 rounded-full border border-white/10 shadow-xs">
+                    {slides.map((_, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        onClick={() => setActiveSlide(i)}
+                        className={`h-1.5 rounded-full transition-all cursor-pointer ${
+                          i === activeSlide ? "bg-amber-400 w-5" : "bg-white/50 w-1.5 hover:bg-white"
+                        }`}
+                        aria-label={`Slide ${i + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -488,29 +625,32 @@ export default function HomePage() {
 
               {/* Head of Department (HOD) Message Card (4 Columns) */}
               <div className="lg:col-span-4 bg-[#fff9f6] rounded-xl border border-[#eedfd8] p-6 shadow-xs space-y-4 text-center">
-                <div className="relative w-28 h-28 mx-auto rounded-full overflow-hidden border-3 border-[#85261e] shadow-sm">
+                <div className="relative w-28 h-28 mx-auto rounded-full overflow-hidden border-3 border-[#85261e] shadow-sm bg-neutral-100">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/hod.jpg"
-                    alt={`Head of Department, ${activeDepartment.code}`}
+                    src={hod.imageUrl}
+                    alt={`${hod.name}, Head of Department`}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = "/hod.jpg";
+                    }}
                   />
                 </div>
 
                 <div>
                   <h4 className="font-extrabold text-base text-[#33110e]">
-                    {activeDepartment.hod_name}
+                    {hod.name}
                   </h4>
                   <p className="text-xs text-[#85261e] font-bold mt-0.5">
-                    Head of Department, {activeDepartment.code}
+                    {hod.designation}
                   </p>
                   <p className="text-[11px] text-neutral-500 font-medium mt-0.5">
-                    Department of {activeDepartment.name}
+                    {hod.department}
                   </p>
                 </div>
 
-                <div className="border-t border-[#eedfd8] pt-3 text-xs text-neutral-700 italic leading-relaxed text-justify px-1">
-                  &quot;Welcome to the Department of {activeDepartment.name} at NIT Hamirpur. We are dedicated to delivering transformative engineering education, fostering multidisciplinary scientific research, and nurturing ethical innovators equipped to solve global technological challenges.&quot;
+                <div className="border-t border-[#eedfd8] pt-3 text-xs text-neutral-700 italic leading-relaxed text-justify px-1 line-clamp-4">
+                  &ldquo;{hod.message}&rdquo;
                 </div>
 
                 <div className="pt-1">

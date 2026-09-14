@@ -42,6 +42,14 @@ func (h *Handler) RegisterRoutes(r chi.Router, authMiddleware func(http.Handler)
 		})
 	})
 
+	// Public alias for tempcse compatibility
+	r.Route("/api/v1/hod", func(r chi.Router) {
+		r.Get("/get", h.GetHODMessage)
+	})
+	r.Route("/api/v1/carousel", func(r chi.Router) {
+		r.Get("/get", h.ListHomeSlides)
+	})
+
 	// CMS Sections
 	r.Route("/api/v1/cms", func(r chi.Router) {
 		r.Get("/about-sections", h.ListAboutSections)
@@ -235,6 +243,15 @@ func (h *Handler) CreateQnA(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) GetHODMessage(w http.ResponseWriter, r *http.Request) {
 	deptID := r.URL.Query().Get("department_id")
+	if deptID == "" {
+		deptID = r.URL.Query().Get("dept")
+	}
+	if deptID == "" {
+		deptID = r.URL.Query().Get("dept_id")
+	}
+	if deptID == "" {
+		deptID = r.URL.Query().Get("slug")
+	}
 	msg, err := h.service.GetHODMessage(r.Context(), deptID)
 	if err != nil {
 		response.Error(w, r, err)
@@ -263,6 +280,15 @@ func (h *Handler) CreateHODMessage(w http.ResponseWriter, r *http.Request) {
 
 func (h *Handler) ListHomeSlides(w http.ResponseWriter, r *http.Request) {
 	deptID := r.URL.Query().Get("department_id")
+	if deptID == "" {
+		deptID = r.URL.Query().Get("dept")
+	}
+	if deptID == "" {
+		deptID = r.URL.Query().Get("dept_id")
+	}
+	if deptID == "" {
+		deptID = r.URL.Query().Get("slug")
+	}
 	list, err := h.service.ListHomeSlides(r.Context(), deptID)
 	if err != nil {
 		response.Error(w, r, err)

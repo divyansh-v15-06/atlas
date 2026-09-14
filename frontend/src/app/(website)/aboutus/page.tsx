@@ -29,9 +29,11 @@ import {
 } from "lucide-react";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
+import { useHodMessage } from "@/hooks/use-hod-message";
 
 export default function AboutUsPage() {
   const { activeDepartment } = useDepartment();
+  const hod = useHodMessage();
   const hasData = activeDepartment.slug === "cse";
   const [activeTab, setActiveTab] = useState<"overview" | "vision" | "timeline" | "pillars" | "labs">("overview");
   const [selectedMilestone, setSelectedMilestone] = useState(2);
@@ -773,8 +775,8 @@ export default function AboutUsPage() {
                 <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-neutral-100 flex-shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src="/hod_siddhartha.jpg"
-                    alt="Dr. Siddhartha Chauhan, HOD"
+                    src={hod.imageUrl}
+                    alt={`${hod.name}, HOD`}
                     className="w-full h-full object-cover"
                     onError={(e: any) => {
                       e.target.src = "/hod.jpg";
@@ -790,13 +792,13 @@ export default function AboutUsPage() {
                     Head of Department
                   </span>
                   <h3 className="text-lg sm:text-xl font-extrabold text-[#1c110c] mt-1">
-                    Dr. Siddhartha Chauhan
+                    {hod.name}
                   </h3>
                   <p className="text-xs text-[#85261e] font-semibold">
-                    Associate Professor &amp; Head
+                    {hod.designation}
                   </p>
                   <p className="text-[11px] text-neutral-500 font-mono mt-0.5">
-                    Ph.D. (NIT Hamirpur) • M.Tech (CSE)
+                    {hod.qualifications}
                   </p>
                 </div>
               </div>
@@ -809,16 +811,16 @@ export default function AboutUsPage() {
                 </div>
 
                 <p className="text-sm sm:text-base text-neutral-800 leading-relaxed italic font-serif">
-                  “It is with great pleasure and pride that I welcome you to the Department of {activeDepartment.name} at NIT Hamirpur. In an era characterized by rapid digital transformation, generative AI, and quantum breakthroughs, our mission is to cultivate an environment of intellectual curiosity, rigorous engineering disciplines, and innovative technological contributions.”
+                  &ldquo;{hod.message}&rdquo;
                 </p>
 
                 <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[#eedfd8]">
                   <div className="text-xs text-neutral-600">
-                    <span className="font-semibold text-[#1c110c]">Office:</span> Room 204, CSE Building • Phone: +91-1972-254424
+                    <span className="font-semibold text-[#1c110c]">Office:</span> {hod.office} • Phone: {hod.phone}
                   </div>
 
                   <Link
-                    href="/aboutus/hod"
+                    href={`/aboutus/hod?dept=${activeDepartment.slug}`}
                     className="inline-flex items-center gap-1.5 bg-[#33110e] hover:bg-[#85261e] text-white text-xs font-bold px-4 py-2 rounded-xl shadow-xs transition"
                   >
                     Read Full Official Address <ArrowRight className="w-3.5 h-3.5" />

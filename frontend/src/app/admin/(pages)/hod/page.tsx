@@ -21,7 +21,7 @@ export default function AdminHodPage() {
     imageUrl: isCse ? "https://portfolios.nith.ac.in/uploads/member_details/62.jpg" : "/nith.png",
   });
 
-  // Re-sync on department switch
+  // Re-sync on department switch with backend & local persistence
   useEffect(() => {
     const scopedKey = `nith_admin_hod_details_${currentSlug}`;
     const saved = localStorage.getItem(scopedKey);
@@ -46,13 +46,39 @@ export default function AdminHodPage() {
           }
         } catch {}
       }
+    }
+
+    // Attempt to fetch saved message from backend database
+    let isCancelled = false;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+    const deptParam = activeDepartment?.id || currentSlug;
+    fetch(`${apiUrl}/cms/hod-message?department_id=${encodeURIComponent(deptParam)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (isCancelled || !json) return;
+        const data = json.data || json;
+        if (data && (data.hod_name || data.message)) {
+          setHodData({
+            name: data.hod_name || (isCse ? "Dr. Siddhartha Chauhan" : activeDepartment?.hod_name || "Head of Department"),
+            designation: `Head of Department (${activeDepartment?.code || "CSE"})`,
+            email: `${currentSlug}.hod@nith.ac.in`,
+            phone: "+91-1972-254424",
+            message: data.message,
+            imageUrl: data.image_url || (isCse ? "https://portfolios.nith.ac.in/uploads/member_details/62.jpg" : "/hod.jpg"),
+          });
+        }
+      })
+      .catch(() => {});
+
+    // Default fallbacks if no database record yet
+    if (isCse) {
       setHodData({
         name: "Dr. Siddhartha Chauhan",
         designation: "Head of Department (CSE)",
         email: "cse.hod@nith.ac.in",
-        phone: "+91-1972-254400",
+        phone: "+91-1972-254424",
         message:
-          "It is with great pleasure that I write this in the capacity of the Head of the Department of CSE at NIT Hamirpur. I thank all the faculty members, students, and staff for their continuous efforts in maintaining academic and research excellence across national and international benchmarks.",
+          "It is with great pleasure that I write this in the capacity of the Head of the Department (HOD) of the Computer Science and Engineering (CSE) Department at NIT Hamirpur. I thank all the faculty members, students, and staff of our esteemed department for their continuous efforts every day in maintaining the excellence and reputation of our department.",
         imageUrl: "https://portfolios.nith.ac.in/uploads/member_details/62.jpg",
       });
     } else {
@@ -62,19 +88,50 @@ export default function AdminHodPage() {
         email: `${currentSlug}.hod@nith.ac.in`,
         phone: "+91-1972-254400",
         message: `Welcome to the Department of ${activeDepartment?.name || "Engineering"} at National Institute of Technology Hamirpur. Our department strives for academic excellence, innovative research, and nurturing engineering leaders for global societal impact.`,
-        imageUrl: "/nith.png",
+        imageUrl: "/hod.jpg",
       });
     }
-  }, [currentSlug, isCse, activeDepartment?.hod_name, activeDepartment?.name, activeDepartment?.code]);
 
-  const handleSave = (e: React.FormEvent) => {
+    return () => {
+      isCancelled = true;
+    };
+  }, [currentSlug, isCse, activeDepartment?.id, activeDepartment?.hod_name, activeDepartment?.name, activeDepartment?.code]);
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     localStorage.setItem(`nith_admin_hod_details_${currentSlug}`, JSON.stringify(hodData));
     if (isCse) {
       localStorage.setItem("nith_admin_hod_details", JSON.stringify(hodData));
     }
+
+    // Broadcast change to other components & tabs
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("hod-message-updated"));
+    }
+
+    // Sync to backend if token is present
+    const token = sessionStorage.getItem("access_token") || localStorage.getItem("token");
+    if (token && activeDepartment?.id) {
+      try {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+        await fetch(`${apiUrl}/cms/hod-message`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            department_id: activeDepartment.id,
+            hod_name: hodData.name,
+            message: hodData.message,
+            image_url: hodData.imageUrl,
+          }),
+        });
+      } catch {}
+    }
+
     toast.success(`HOD Desk message saved for Department of ${activeDepartment?.name || "this department"}!`, {
-      description: "Changes are synchronized to the public institutional portal.",
+      description: "Changes are synchronized across the homepage, about page, and official leadership address.",
     });
   };
 

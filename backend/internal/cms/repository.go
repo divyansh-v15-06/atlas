@@ -296,7 +296,7 @@ func (r *pgRepository) GetHODMessage(ctx context.Context, deptID string) (*HODMe
 		SELECT h.id, h.department_id, d.name, h.faculty_id, h.hod_name, h.message, h.image_url, h.publish_date::text, h.created_at, h.updated_at
 		FROM hod_messages h
 		JOIN departments d ON d.id = h.department_id
-		WHERE ($1 = '' OR h.department_id::text = $1) AND h.deleted_at IS NULL
+		WHERE ($1 = '' OR h.department_id::text = $1 OR d.code ILIKE $1 OR d.slug ILIKE $1) AND h.deleted_at IS NULL
 		ORDER BY h.publish_date DESC
 		LIMIT 1
 	`
@@ -331,10 +331,12 @@ func (r *pgRepository) CreateHODMessage(ctx context.Context, req *CreateHODMessa
 
 func (r *pgRepository) ListHomeSlides(ctx context.Context, deptID string) ([]HomeSlide, error) {
 	querySQL := `
-		SELECT id, department_id, title, link_url, image_url, sort_order, is_active, created_at, updated_at
-		FROM home_slides
-		WHERE (department_id::text = $1 OR department_id IS NULL OR $1 = '') AND deleted_at IS NULL AND is_active = TRUE
-		ORDER BY sort_order ASC
+		SELECT s.id, s.department_id, s.title, s.link_url, s.image_url, s.sort_order, s.is_active, s.created_at, s.updated_at
+		FROM home_slides s
+		LEFT JOIN departments d ON d.id = s.department_id
+		WHERE (s.department_id::text = $1 OR d.code ILIKE $1 OR d.slug ILIKE $1 OR s.department_id IS NULL OR $1 = '') 
+		  AND s.deleted_at IS NULL AND s.is_active = TRUE
+		ORDER BY s.sort_order ASC
 	`
 	rows, err := r.pool.Query(ctx, querySQL, deptID)
 	if err != nil {
