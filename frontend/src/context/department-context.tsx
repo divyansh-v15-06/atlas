@@ -21,6 +21,7 @@ interface DepartmentContextType {
   activeDepartment: DepartmentInfo;
   setActiveDepartment: (dept: DepartmentInfo) => void;
   selectDepartmentBySlug: (slug: string) => void;
+  setActiveDepartmentBySlug: (slug: string) => void;
   isAllInstitute: boolean;
   setIsAllInstitute: (val: boolean) => void;
 }
@@ -32,6 +33,7 @@ const DepartmentContext = createContext<DepartmentContextType>({
   activeDepartment: defaultDepartment,
   setActiveDepartment: () => {},
   selectDepartmentBySlug: () => {},
+  setActiveDepartmentBySlug: () => {},
   isAllInstitute: false,
   setIsAllInstitute: () => {},
 });
@@ -111,6 +113,7 @@ export function DepartmentProvider({ children }: { children: React.ReactNode }) 
         activeDepartment,
         setActiveDepartment,
         selectDepartmentBySlug,
+        setActiveDepartmentBySlug: selectDepartmentBySlug,
         isAllInstitute,
         setIsAllInstitute,
       }}

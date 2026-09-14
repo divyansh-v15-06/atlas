@@ -27,7 +27,14 @@ export default function AdminPagesLayout({ children }: { children: ReactNode }) 
   }, []);
 
   const isHod = adminUser?.role === "HOD_ADMIN" || adminUser?.roles?.includes("HOD_ADMIN");
-  const { departments, setActiveDepartmentBySlug } = useDepartment();
+  const { departments, selectDepartmentBySlug, setActiveDepartmentBySlug } = useDepartment();
+
+  const handleSelectDepartment = (slug: string) => {
+    const fn = selectDepartmentBySlug || setActiveDepartmentBySlug;
+    if (typeof fn === "function") {
+      fn(slug);
+    }
+  };
 
   return (
     <div className="flex min-h-screen bg-[#faf6f3] font-sans">
@@ -62,7 +69,7 @@ export default function AdminPagesLayout({ children }: { children: ReactNode }) 
                 <span className="text-[10px] uppercase font-bold text-neutral-400">Inspecting:</span>
                 <select
                   value={activeDepartment?.slug || "cse"}
-                  onChange={(e) => setActiveDepartmentBySlug(e.target.value)}
+                  onChange={(e) => handleSelectDepartment(e.target.value)}
                   className="rounded-lg border border-[#eedfd8] bg-[#fff9f6] px-2 py-0.5 text-xs font-bold text-[#33110e] hover:border-[#85261e] focus:outline-hidden cursor-pointer"
                 >
                   {departments.map((d) => (

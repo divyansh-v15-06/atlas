@@ -56,7 +56,7 @@ import { toast } from "sonner";
 import Dashboard from "@/components/dashboard";
 
 export default function AdminDashboardPage() {
-  const { activeDepartment, departments, setActiveDepartmentBySlug } = useDepartment();
+  const { activeDepartment, departments, selectDepartmentBySlug, setActiveDepartmentBySlug } = useDepartment();
   const [adminUser, setAdminUser] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<"overview" | "analytics">("overview");
   const isHod = adminUser?.role === "HOD_ADMIN" || adminUser?.roles?.includes("HOD_ADMIN");
@@ -70,13 +70,7 @@ export default function AdminDashboardPage() {
     }
   }, []);
 
-  // Faculty state (loaded from localStorage or mock data)
-  const [facultyList, setFacultyList] = useState<any[]>(MOCK_FACULTY);
-  const [searchFaculty, setSearchFaculty] = useState("");
-  const [facultyRoleFilter, setFacultyRoleFilter] = useState("all");
-
-  // Announcements state
-  const [announcements, setAnnouncements] = useState<any[]>([
+  const defaultCseAnnouncements = useMemo(() => [
     {
       id: "ann-1",
       title: "Call for PhD Admissions (Odd Semester 2026-27)",
@@ -101,7 +95,40 @@ export default function AdminDashboardPage() {
       urgent: false,
       target: "Final Year Students",
     },
-  ]);
+  ], []);
+
+  const currentSlug = activeDepartment?.slug || "cse";
+  const isCse = currentSlug === "cse";
+
+  // Faculty state (loaded dynamically based on active department)
+  const [facultyList, setFacultyList] = useState<any[]>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(`nith_admin_faculty_list_${currentSlug}`);
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) return parsed;
+        } catch {}
+      }
+      if (isCse) {
+        const legacy = localStorage.getItem("nith_admin_faculty_list");
+        if (legacy) {
+          try {
+            const parsed = JSON.parse(legacy);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          } catch {}
+        }
+        return MOCK_FACULTY;
+      }
+      return [];
+    }
+    return isCse ? MOCK_FACULTY : [];
+  });
+  const [searchFaculty, setSearchFaculty] = useState("");
+  const [facultyRoleFilter, setFacultyRoleFilter] = useState("all");
+
+  // Announcements state
+  const [announcements, setAnnouncements] = useState<any[]>(() => isCse ? defaultCseAnnouncements : []);
 
   // Modal States
   const [isAddFacultyOpen, setIsAddFacultyOpen] = useState(false);
@@ -135,7 +162,7 @@ export default function AdminDashboardPage() {
   const [importFileName, setImportFileName] = useState("");
   const [importedRowsCount, setImportedRowsCount] = useState<number | null>(null);
 
-  // Load persistent data
+  // Load persistent user data on mount
   useEffect(() => {
     const rawUser = localStorage.getItem("auth_user");
     if (rawUser) {
@@ -143,32 +170,95 @@ export default function AdminDashboardPage() {
         setAdminUser(JSON.parse(rawUser));
       } catch {}
     }
-
-    const savedFaculty = localStorage.getItem("nith_admin_faculty_list");
-    if (savedFaculty) {
-      try {
-        const parsed = JSON.parse(savedFaculty);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setFacultyList(parsed);
-        }
-      } catch {}
-    }
-
-    const savedAnnouncements = localStorage.getItem("nith_admin_announcements");
-    if (savedAnnouncements) {
-      try {
-        const parsed = JSON.parse(savedAnnouncements);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setAnnouncements(parsed);
-        }
-      } catch {}
-    }
   }, []);
 
-  // Save faculty list helper
+  // Department-scoped dynamic data sync
+  useEffect(() => {
+    // 1. Sync Faculty for this specific department
+    const scopedFacultyKey = `nith_admin_faculty_list_${currentSlug}`;
+    const savedScoped = localStorage.getItem(scopedFacultyKey);
+    if (savedScoped) {
+      try {
+        const parsed = JSON.parse(savedScoped);
+        if (Array.isArray(parsed)) {
+          setFacultyList(parsed);
+        } else {
+          setFacultyList(isCse ? MOCK_FACULTY : []);
+        }
+      } catch {
+        setFacultyList(isCse ? MOCK_FACULTY : []);
+      }
+    } else if (isCse) {
+      const legacy = localStorage.getItem("nith_admin_faculty_list");
+      if (legacy) {
+        try {
+          const parsed = JSON.parse(legacy);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setFacultyList(parsed);
+          } else {
+            setFacultyList(MOCK_FACULTY);
+          }
+        } catch {
+          setFacultyList(MOCK_FACULTY);
+        }
+      } else {
+        setFacultyList(MOCK_FACULTY);
+      }
+    } else {
+      setFacultyList([]);
+    }
+
+    // 2. Sync Announcements for this department
+    const scopedAnnKey = `nith_admin_announcements_${currentSlug}`;
+    const savedAnn = localStorage.getItem(scopedAnnKey);
+    if (savedAnn) {
+      try {
+        const parsed = JSON.parse(savedAnn);
+        if (Array.isArray(parsed)) {
+          setAnnouncements(parsed);
+        } else {
+          setAnnouncements(isCse ? defaultCseAnnouncements : []);
+        }
+      } catch {
+        setAnnouncements(isCse ? defaultCseAnnouncements : []);
+      }
+    } else if (isCse) {
+      const legacyAnn = localStorage.getItem("nith_admin_announcements");
+      if (legacyAnn) {
+        try {
+          const parsed = JSON.parse(legacyAnn);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setAnnouncements(parsed);
+          } else {
+            setAnnouncements(defaultCseAnnouncements);
+          }
+        } catch {
+          setAnnouncements(defaultCseAnnouncements);
+        }
+      } else {
+        setAnnouncements(defaultCseAnnouncements);
+      }
+    } else {
+      setAnnouncements([]);
+    }
+  }, [currentSlug, isCse, defaultCseAnnouncements]);
+
+  // Save faculty list helper scoped to active department
   const updateAndSaveFaculty = (updated: any[]) => {
     setFacultyList(updated);
-    localStorage.setItem("nith_admin_faculty_list", JSON.stringify(updated));
+    localStorage.setItem(`nith_admin_faculty_list_${currentSlug}`, JSON.stringify(updated));
+    if (isCse) {
+      localStorage.setItem("nith_admin_faculty_list", JSON.stringify(updated));
+    }
+  };
+
+  // Save announcements helper scoped to active department
+  const updateAndSaveAnnouncements = (updated: any[]) => {
+    setAnnouncements(updated);
+    localStorage.setItem(`nith_admin_announcements_${currentSlug}`, JSON.stringify(updated));
+    if (isCse) {
+      localStorage.setItem("nith_admin_announcements", JSON.stringify(updated));
+    }
   };
 
   // Filtered faculty
@@ -322,11 +412,11 @@ export default function AdminDashboardPage() {
       [],
       ["--- KPI METRICS SUMMARY ---"],
       ["Faculty Count", facultyList.length],
-      ["Total Students", MOCK_DEPARTMENT_KPIS.total_students],
-      ["Research Publications", MOCK_PUBLICATIONS.length],
-      ["Sanctioned R&D Amount (INR)", MOCK_DEPARTMENT_KPIS.total_sanctioned_amount],
-      ["Patents Filed/Granted", MOCK_PATENTS.length],
-      ["Sponsored Projects", MOCK_PROJECTS.length],
+      ["Total Students", isCse ? MOCK_DEPARTMENT_KPIS.total_students : 0],
+      ["Research Publications", isCse ? MOCK_PUBLICATIONS.length : 0],
+      ["Sanctioned R&D Amount (INR)", isCse ? MOCK_DEPARTMENT_KPIS.total_sanctioned_amount : 0],
+      ["Patents Filed/Granted", isCse ? MOCK_PATENTS.length : 0],
+      ["Sponsored Projects", isCse ? MOCK_PROJECTS.length : 0],
       [],
       ["--- FACULTY DIRECTORY ROSTER ---"],
       ["Employee Code", "Full Name", "Designation", "Email", "Status"],
@@ -481,46 +571,46 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* HOD Desk Status Quick Preview (For HOD Admin) */}
-      {isHod && (
-        <div className="rounded-3xl border border-[#eedfd8] bg-white p-5 sm:p-6 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-          <div className="flex items-start sm:items-center gap-4">
-            <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#eedfd8] shadow-xs flex-shrink-0 bg-neutral-100">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://portfolios.nith.ac.in/uploads/member_details/62.jpg"
-                alt="Dr. Siddhartha Chauhan"
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = "/hod.jpg";
-                }}
-              />
-            </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-rose-100 text-rose-900 border border-rose-300">
-                  Active HOD Desk
-                </span>
-                <span className="text-xs text-neutral-400 font-mono">Published on Public Website</span>
-              </div>
-              <h3 className="text-base font-bold text-[#33110e]">
-                Dr. Siddhartha Chauhan • Head of Department (CSE)
-              </h3>
-              <p className="text-xs text-[#6b5c58] max-w-2xl line-clamp-2 italic">
-                &ldquo;It is with great pleasure that I write this in the capacity of the Head of the Department of CSE at NIT Hamirpur. I thank all the faculty members, students, and staff for their continuous efforts in maintaining excellence...&rdquo;
-              </p>
-            </div>
+      {/* HOD Desk Status Quick Preview */}
+      <div className="rounded-3xl border border-[#eedfd8] bg-white p-5 sm:p-6 shadow-2xs flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+        <div className="flex items-start sm:items-center gap-4">
+          <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#eedfd8] shadow-xs flex-shrink-0 bg-neutral-100 flex items-center justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={isCse ? "https://portfolios.nith.ac.in/uploads/member_details/62.jpg" : "/nith.png"}
+              alt={activeDepartment?.hod_name || "Head of Department"}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = "/nith.png";
+              }}
+            />
           </div>
-
-          <Link
-            href="/admin/hod"
-            className="flex items-center gap-1.5 rounded-xl bg-[#33110e] hover:bg-[#85261e] px-4 py-2.5 text-xs font-bold text-white transition shadow-2xs whitespace-nowrap cursor-pointer"
-          >
-            <MessageSquare className="w-4 h-4 text-amber-300" />
-            Edit HOD Message Desk →
-          </Link>
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-rose-100 text-rose-900 border border-rose-300">
+                Active HOD Desk
+              </span>
+              <span className="text-xs text-neutral-400 font-mono">Department of {activeDepartment?.name || "Computer Science & Engineering"}</span>
+            </div>
+            <h3 className="text-base font-bold text-[#33110e]">
+              {activeDepartment?.hod_name || (isCse ? "Dr. Siddhartha Chauhan" : "Head of Department")} • Head of Department ({activeDepartment?.code || "CSE"})
+            </h3>
+            <p className="text-xs text-[#6b5c58] max-w-2xl line-clamp-2 italic">
+              {isCse
+                ? "“It is with great pleasure that I write this in the capacity of the Head of the Department of CSE at NIT Hamirpur. I thank all the faculty members, students, and staff for their continuous efforts in maintaining excellence...”"
+                : `Official departmental desk for Department of ${activeDepartment?.name || "Engineering"}. You can compose and publish the HOD statement for this department.`}
+            </p>
+          </div>
         </div>
-      )}
+
+        <Link
+          href="/admin/hod"
+          className="flex items-center gap-1.5 rounded-xl bg-[#33110e] hover:bg-[#85261e] px-4 py-2.5 text-xs font-bold text-white transition shadow-2xs whitespace-nowrap cursor-pointer"
+        >
+          <MessageSquare className="w-4 h-4 text-amber-300" />
+          Edit HOD Message Desk →
+        </Link>
+      </div>
 
       {/* Central IT Multi-Department Status Grid (For System Admin) */}
       {!isHod && (
@@ -551,7 +641,10 @@ export default function AdminDashboardPage() {
                   key={d.code}
                   type="button"
                   onClick={() => {
-                    setActiveDepartmentBySlug(d.slug);
+                    const fn = selectDepartmentBySlug || setActiveDepartmentBySlug;
+                    if (typeof fn === "function") {
+                      fn(d.slug);
+                    }
                     toast.success(`Active department inspection set to ${d.name}`);
                   }}
                   className={`p-2.5 rounded-xl border text-left transition cursor-pointer ${
@@ -658,29 +751,29 @@ export default function AdminDashboardPage() {
             },
             {
               label: "Enrolled Students",
-              value: MOCK_DEPARTMENT_KPIS.total_students,
+              value: isCse ? MOCK_DEPARTMENT_KPIS.total_students : 0,
               icon: GraduationCap,
               color: "text-emerald-600",
               bg: "bg-emerald-500/10",
-              trend: "UG, PG & PhD Scholars",
+              trend: isCse ? "UG, PG & PhD Scholars" : "No student records yet",
               href: "/admin/people/students",
             },
             {
               label: "Publications Output",
-              value: MOCK_PUBLICATIONS.length,
+              value: isCse ? MOCK_PUBLICATIONS.length : 0,
               icon: BookOpen,
               color: "text-blue-600",
               bg: "bg-blue-500/10",
-              trend: "SCI / Scopus Indexed",
+              trend: isCse ? "SCI / Scopus Indexed" : "No publications indexed",
               href: "/admin/research/publications",
             },
             {
               label: "Sanctioned Grants",
-              value: formatINR(MOCK_DEPARTMENT_KPIS.total_sanctioned_amount),
+              value: isCse ? formatINR(MOCK_DEPARTMENT_KPIS.total_sanctioned_amount) : "₹0",
               icon: Lightbulb,
               color: "text-amber-600",
               bg: "bg-amber-500/10",
-              trend: "Sponsored Projects",
+              trend: isCse ? "Sponsored Projects" : "No projects active",
               href: "/admin/research/projects",
             },
           ].map((kpi) => (
@@ -816,19 +909,51 @@ export default function AdminDashboardPage() {
           {/* Faculty List Table / Cards (Stretches to fill entire card height) */}
           <div className="divide-y divide-[#eedfd8] flex-1 min-h-[500px] max-h-[640px] overflow-y-auto pr-1.5 scrollbar-thin scrollbar-thumb-[#eedfd8] scrollbar-track-transparent">
             {filteredFaculty.length === 0 ? (
-              <div className="text-center py-16 space-y-2">
-                <Users className="w-8 h-8 text-neutral-300 mx-auto" />
-                <p className="text-xs font-bold text-[#6b5c58]">No faculty members matching &quot;{searchFaculty}&quot;</p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchFaculty("");
-                    setFacultyRoleFilter("all");
-                  }}
-                  className="text-xs font-bold text-[#85261e] hover:underline"
-                >
-                  Clear search filters
-                </button>
+              <div className="text-center py-16 space-y-3">
+                <div className="w-12 h-12 rounded-2xl bg-[#fff9f6] border border-[#eedfd8] mx-auto flex items-center justify-center text-neutral-400 shadow-2xs">
+                  <Users className="w-6 h-6" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-[#33110e]">
+                    {facultyList.length === 0
+                      ? `No faculty records found for Department of ${activeDepartment?.name || "this department"}`
+                      : `No faculty members matching "${searchFaculty}"`}
+                  </p>
+                  <p className="text-[11px] text-[#6b5c58] mt-0.5">
+                    {facultyList.length === 0
+                      ? `Department data for ${activeDepartment?.code || "this department"} is currently empty. You can onboard faculty or import roster.`
+                      : "Try checking spelling or resetting your filter criteria."}
+                  </p>
+                </div>
+                {facultyList.length === 0 ? (
+                  <div className="pt-2 flex justify-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsAddFacultyOpen(true)}
+                      className="px-3.5 py-2 rounded-xl bg-[#85261e] text-white text-xs font-bold hover:bg-[#a63026] transition shadow-xs cursor-pointer inline-flex items-center gap-1.5"
+                    >
+                      <Plus className="w-3.5 h-3.5" /> Add First Faculty
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsImportCsvOpen(true)}
+                      className="px-3.5 py-2 rounded-xl border border-[#eedfd8] bg-white text-[#33110e] text-xs font-bold hover:bg-[#fff9f6] transition shadow-xs cursor-pointer inline-flex items-center gap-1.5"
+                    >
+                      <UploadCloud className="w-3.5 h-3.5 text-[#85261e]" /> Import CSV Roster
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSearchFaculty("");
+                      setFacultyRoleFilter("all");
+                    }}
+                    className="text-xs font-bold text-[#85261e] hover:underline"
+                  >
+                    Clear search filters
+                  </button>
+                )}
               </div>
             ) : (
               filteredFaculty.map((f) => (
@@ -927,9 +1052,9 @@ export default function AdminDashboardPage() {
             <div className="grid gap-2">
               {[
                 { label: "Faculty Login Credentials", href: "/admin/credentials/facultiescredentials", icon: KeyRound, count: facultyList.length },
-                { label: "Research Publications DB", href: "/admin/research/publications", icon: FileText, count: MOCK_PUBLICATIONS.length },
-                { label: "Sponsored R&D Projects", href: "/admin/research/projects", icon: Lightbulb, count: MOCK_PROJECTS.length },
-                { label: "Student Roster Records", href: "/admin/people/students", icon: GraduationCap, count: MOCK_STUDENTS.length },
+                { label: "Research Publications DB", href: "/admin/research/publications", icon: FileText, count: isCse ? MOCK_PUBLICATIONS.length : 0 },
+                { label: "Sponsored R&D Projects", href: "/admin/research/projects", icon: Lightbulb, count: isCse ? MOCK_PROJECTS.length : 0 },
+                { label: "Student Roster Records", href: "/admin/people/students", icon: GraduationCap, count: isCse ? MOCK_STUDENTS.length : 0 },
                 { label: "HOD Message & Profile Editor", href: "/admin/hod", icon: Building2 },
                 { label: "Research Visual Analytics", href: "/admin/analytics", icon: Activity },
                 { label: "Courses & Curricula", href: "/admin/academics/courses", icon: BookOpen },

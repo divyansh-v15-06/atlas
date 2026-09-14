@@ -9,10 +9,13 @@ import { useRouter } from "next/navigation";
 
 export default function AdminDepartmentsPage() {
   const router = useRouter();
-  const { departments, activeDepartment, setActiveDepartmentBySlug } = useDepartment();
+  const { departments, activeDepartment, selectDepartmentBySlug, setActiveDepartmentBySlug } = useDepartment();
 
   const handleInspectDepartment = (slug: string, name: string) => {
-    setActiveDepartmentBySlug(slug);
+    const fn = selectDepartmentBySlug || setActiveDepartmentBySlug;
+    if (typeof fn === "function") {
+      fn(slug);
+    }
     toast.success(`Active inspection scope set to ${name}!`);
     router.push("/admin");
   };

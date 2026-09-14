@@ -33,7 +33,32 @@ import { useDepartment } from "@/context/department-context";
 
 export default function AdminFacultyPage() {
   const { activeDepartment } = useDepartment();
-  const [facultyList, setFacultyList] = useState<any[]>(MOCK_FACULTY);
+  const currentSlug = activeDepartment?.slug || "cse";
+  const isCse = currentSlug === "cse";
+
+  const [facultyList, setFacultyList] = useState<any[]>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(`nith_admin_faculty_list_${currentSlug}`);
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) return parsed;
+        } catch {}
+      }
+      if (isCse) {
+        const legacy = localStorage.getItem("nith_admin_faculty_list");
+        if (legacy) {
+          try {
+            const parsed = JSON.parse(legacy);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          } catch {}
+        }
+        return MOCK_FACULTY;
+      }
+      return [];
+    }
+    return isCse ? MOCK_FACULTY : [];
+  });
   const [search, setSearch] = useState("");
   const [designationFilter, setDesignationFilter] = useState("all");
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
@@ -54,8 +79,8 @@ export default function AdminFacultyPage() {
     phone: "+91-1972-254000",
     designation: "Assistant Professor",
     specialization: "Distributed Systems & Cloud Computing",
-    qualification: "Ph.D. in Computer Science",
-    room_no: "CSE Block, Room 204",
+    qualification: "Ph.D.",
+    room_no: `${activeDepartment?.code || "CSE"} Block, Room 204`,
     image_url: "/nith.png",
     status: "Active",
   });
@@ -63,23 +88,43 @@ export default function AdminFacultyPage() {
   // Form State: CSV Import
   const [importFileName, setImportFileName] = useState("");
 
-  // Load from persistent localStorage on mount
+  // Load from persistent localStorage on department change
   useEffect(() => {
-    const saved = localStorage.getItem("nith_admin_faculty_list");
+    const scopedKey = `nith_admin_faculty_list_${currentSlug}`;
+    const saved = localStorage.getItem(scopedKey);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
+        if (Array.isArray(parsed)) {
           setFacultyList(parsed);
+          return;
         }
       } catch {}
     }
-  }, []);
+    if (isCse) {
+      const legacy = localStorage.getItem("nith_admin_faculty_list");
+      if (legacy) {
+        try {
+          const parsed = JSON.parse(legacy);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setFacultyList(parsed);
+            return;
+          }
+        } catch {}
+      }
+      setFacultyList(MOCK_FACULTY);
+    } else {
+      setFacultyList([]);
+    }
+  }, [currentSlug, isCse]);
 
   // Save changes to localStorage and update state
   const updateAndSaveFaculty = (updated: any[]) => {
     setFacultyList(updated);
-    localStorage.setItem("nith_admin_faculty_list", JSON.stringify(updated));
+    localStorage.setItem(`nith_admin_faculty_list_${currentSlug}`, JSON.stringify(updated));
+    if (isCse) {
+      localStorage.setItem("nith_admin_faculty_list", JSON.stringify(updated));
+    }
   };
 
   // Metrics Counters
@@ -456,24 +501,51 @@ export default function AdminFacultyPage() {
             <tbody className="divide-y divide-[#eedfd8]">
               {filtered.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="px-6 py-14 text-center space-y-2">
-                    <Users className="w-10 h-10 text-neutral-300 mx-auto" />
-                    <p className="text-sm font-bold text-[#33110e]">
-                      No faculty members found matching &quot;{search}&quot;
-                    </p>
-                    <p className="text-xs text-[#6b5c58]">
-                      Try refining your search terms or clearing role filters.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSearch("");
-                        setDesignationFilter("all");
-                      }}
-                      className="text-xs font-bold text-[#85261e] hover:underline"
-                    >
-                      Reset All Filters
-                    </button>
+                  <td colSpan={7} className="px-6 py-14 text-center space-y-3">
+                    <div className="w-12 h-12 rounded-2xl bg-[#fff9f6] border border-[#eedfd8] mx-auto flex items-center justify-center text-neutral-400 shadow-2xs">
+                      <Users className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-[#33110e]">
+                        {facultyList.length === 0
+                          ? `No faculty records found for Department of ${activeDepartment?.name || "this department"}`
+                          : `No faculty members found matching "${search}"`}
+                      </p>
+                      <p className="text-xs text-[#6b5c58] mt-0.5">
+                        {facultyList.length === 0
+                          ? `Department records for ${activeDepartment?.code || "this department"} are not yet populated. Onboard faculty or import CSV roster below.`
+                          : "Try refining your search terms or clearing role filters."}
+                      </p>
+                    </div>
+                    {facultyList.length === 0 ? (
+                      <div className="pt-2 flex justify-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setIsAddModalOpen(true)}
+                          className="px-3.5 py-2 rounded-xl bg-[#85261e] text-white text-xs font-bold hover:bg-[#a63026] transition shadow-xs cursor-pointer inline-flex items-center gap-1.5"
+                        >
+                          <UserPlus className="w-3.5 h-3.5" /> Add Faculty Member
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setIsImportCsvOpen(true)}
+                          className="px-3.5 py-2 rounded-xl border border-[#eedfd8] bg-white text-[#33110e] text-xs font-bold hover:bg-[#fff9f6] transition shadow-xs cursor-pointer inline-flex items-center gap-1.5"
+                        >
+                          <UploadCloud className="w-3.5 h-3.5 text-[#85261e]" /> Import CSV Roster
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSearch("");
+                          setDesignationFilter("all");
+                        }}
+                        className="text-xs font-bold text-[#85261e] hover:underline"
+                      >
+                        Reset All Filters
+                      </button>
+                    )}
                   </td>
                 </tr>
               ) : (

@@ -22,12 +22,33 @@ import {
   MOCK_PHD_SCHOLARS,
 } from "@/lib/mock-data";
 
+import { useDepartment } from "@/context/department-context";
+
 export default function AdminReportPage() {
+  const { activeDepartment } = useDepartment();
+  const currentSlug = activeDepartment?.slug || "cse";
+  const isCse = currentSlug === "cse";
+
   const currentYear = new Date().getFullYear();
   const [startYear, setStartYear] = useState(currentYear - 3);
   const [endYear, setEndYear] = useState(currentYear);
   const [format, setFormat] = useState<"docx" | "csv" | "pdf">("csv");
   const [reportType, setReportType] = useState<"annual" | "nirf" | "naac" | "teaching">("annual");
+
+  const [facultyList, setFacultyList] = useState<any[]>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(`nith_admin_faculty_list_${currentSlug}`);
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) return parsed;
+        } catch {}
+      }
+      if (isCse) return MOCK_FACULTY;
+      return [];
+    }
+    return isCse ? MOCK_FACULTY : [];
+  });
 
   const yearOptions = Array.from({ length: 12 }, (_, i) => currentYear - 8 + i);
 
@@ -41,16 +62,21 @@ export default function AdminReportPage() {
       id: "report-toast",
     });
 
+    const publicationsData = isCse ? MOCK_PUBLICATIONS : [];
+    const patentsData = isCse ? MOCK_PATENTS : [];
+    const phdScholars = isCse ? MOCK_PHD_SCHOLARS : [];
+
     setTimeout(() => {
       if (format === "csv") {
         let csvData: any[] = [];
 
         if (reportType === "annual") {
-          csvData = MOCK_PUBLICATIONS.filter((p) => {
+          csvData = publicationsData.filter((p) => {
             const y = Number(p.year);
             return y >= startYear && y <= endYear;
           }).map((p) => ({
             "Academic Year Range": `${startYear}-${endYear}`,
+            Department: activeDepartment?.name || "Computer Science & Engineering",
             "Record Type": p.publication_type,
             Title: p.title,
             Journal: p.journal_or_conference_name,
@@ -61,41 +87,46 @@ export default function AdminReportPage() {
         } else if (reportType === "nirf") {
           csvData = [
             {
+              Criterion: "Department",
+              Metric: `${activeDepartment?.name || "Computer Science & Engineering"} (${activeDepartment?.code || "CSE"})`,
+              "Time Period": `${startYear}-${endYear}`,
+            },
+            {
               Criterion: "Faculty Headcount",
-              Metric: MOCK_FACULTY.length,
+              Metric: facultyList.length,
               "Time Period": `${startYear}-${endYear}`,
             },
             {
               Criterion: "Ph.D. Scholars Graduated",
-              Metric: MOCK_PHD_SCHOLARS.filter((s) => s.status === "passed").length,
+              Metric: phdScholars.filter((s) => s.status === "passed").length,
               "Time Period": `${startYear}-${endYear}`,
             },
             {
               Criterion: "Publications in Scopus / WoS",
-              Metric: MOCK_PUBLICATIONS.length,
+              Metric: publicationsData.length,
               "Time Period": `${startYear}-${endYear}`,
             },
             {
               Criterion: "Sponsored Projects Total Sanctioned (INR Lakhs)",
-              Metric: "₹ 248.50 Lakhs",
+              Metric: isCse ? "₹ 248.50 Lakhs" : "₹ 0.00 Lakhs",
               "Time Period": `${startYear}-${endYear}`,
             },
             {
               Criterion: "Industrial Consultancies Revenue",
-              Metric: "₹ 62.00 Lakhs",
+              Metric: isCse ? "₹ 62.00 Lakhs" : "₹ 0.00 Lakhs",
               "Time Period": `${startYear}-${endYear}`,
             },
             {
               Criterion: "Patents Granted / Published",
-              Metric: MOCK_PATENTS.length,
+              Metric: patentsData.length,
               "Time Period": `${startYear}-${endYear}`,
             },
           ];
         } else {
-          csvData = MOCK_FACULTY.map((f) => ({
+          csvData = facultyList.map((f) => ({
             Faculty: f.full_name,
             Designation: f.designation,
-            Department: "Computer Science & Engineering",
+            Department: activeDepartment?.name || "Computer Science & Engineering",
             "Publications (All)": f.publications?.length || 0,
             "Sponsored Projects": f.projects?.length || 0,
             "Ph.D. Guided": f.supervisions?.length || 0,
@@ -107,7 +138,7 @@ export default function AdminReportPage() {
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", `NITH_${reportType.toUpperCase()}_Report_${startYear}_${endYear}.csv`);
+        link.setAttribute("download", `NITH_${activeDepartment?.code || "CSE"}_${reportType.toUpperCase()}_Report_${startYear}_${endYear}.csv`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -120,12 +151,12 @@ export default function AdminReportPage() {
         const element = document.createElement("a");
         const file = new Blob(
           [
-            `NATIONAL INSTITUTE OF TECHNOLOGY HAMIRPUR\nDEPARTMENT OF COMPUTER SCIENCE & ENGINEERING\n${reportType.toUpperCase()} ACCREDITATION REPORT (${startYear} - ${endYear})\n\nGenerated on: ${new Date().toLocaleString()}\nFaculty Count: ${MOCK_FACULTY.length}\nPublications: ${MOCK_PUBLICATIONS.length}\nPatents: ${MOCK_PATENTS.length}`,
+            `NATIONAL INSTITUTE OF TECHNOLOGY HAMIRPUR\nDEPARTMENT OF ${activeDepartment?.name?.toUpperCase() || "COMPUTER SCIENCE & ENGINEERING"}\n${reportType.toUpperCase()} ACCREDITATION REPORT (${startYear} - ${endYear})\n\nGenerated on: ${new Date().toLocaleString()}\nFaculty Count: ${facultyList.length}\nPublications: ${publicationsData.length}\nPatents: ${patentsData.length}`,
           ],
           { type: "text/plain" }
         );
         element.href = URL.createObjectURL(file);
-        element.download = `NITH_${reportType.toUpperCase()}_Report_${startYear}_${endYear}.${format}`;
+        element.download = `NITH_${activeDepartment?.code || "CSE"}_${reportType.toUpperCase()}_Report_${startYear}_${endYear}.${format}`;
         document.body.appendChild(element);
         element.click();
         document.body.removeChild(element);

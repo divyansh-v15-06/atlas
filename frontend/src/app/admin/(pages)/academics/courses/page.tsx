@@ -24,44 +24,182 @@ import Papa from "papaparse";
 import { MOCK_COURSES, MOCK_COURSES_TAUGHT, MOCK_FACULTY } from "@/lib/mock-data";
 import { Course, CourseTaught } from "@/lib/types";
 import { getFacultyStorageKey } from "@/lib/faculty-storage";
+import { useDepartment } from "@/context/department-context";
 
 export default function AdminCoursesPage() {
+  const { activeDepartment } = useDepartment();
+  const currentSlug = activeDepartment?.slug || "cse";
+  const isCse = currentSlug === "cse";
+
   const [courses, setCourses] = useState<Course[]>(() => {
     if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("nith_admin_courses");
+      const stored = localStorage.getItem(`nith_admin_courses_${currentSlug}`);
       if (stored) {
         try {
-          return JSON.parse(stored);
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) return parsed;
         } catch {}
       }
+      if (isCse) {
+        const legacy = localStorage.getItem("nith_admin_courses");
+        if (legacy) {
+          try {
+            const parsed = JSON.parse(legacy);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          } catch {}
+        }
+        return MOCK_COURSES;
+      }
+      return [];
     }
-    return MOCK_COURSES;
+    return isCse ? MOCK_COURSES : [];
   });
 
   const [allocations, setAllocations] = useState<CourseTaught[]>(() => {
     if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("nith_admin_course_allocations");
+      const stored = localStorage.getItem(`nith_admin_course_allocations_${currentSlug}`);
       if (stored) {
         try {
-          return JSON.parse(stored);
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) return parsed;
         } catch {}
       }
+      if (isCse) {
+        const legacy = localStorage.getItem("nith_admin_course_allocations");
+        if (legacy) {
+          try {
+            const parsed = JSON.parse(legacy);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          } catch {}
+        }
+        return MOCK_COURSES_TAUGHT;
+      }
+      return [];
     }
-    return MOCK_COURSES_TAUGHT;
+    return isCse ? MOCK_COURSES_TAUGHT : [];
   });
+
+  const [facultyList, setFacultyList] = useState<any[]>(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(`nith_admin_faculty_list_${currentSlug}`);
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) return parsed;
+        } catch {}
+      }
+      if (isCse) return MOCK_FACULTY;
+      return [];
+    }
+    return isCse ? MOCK_FACULTY : [];
+  });
+
+  // Re-sync state dynamically on department switch
+  useEffect(() => {
+    // 1. Courses
+    const scopedCourses = localStorage.getItem(`nith_admin_courses_${currentSlug}`);
+    if (scopedCourses) {
+      try {
+        const parsed = JSON.parse(scopedCourses);
+        if (Array.isArray(parsed)) {
+          setCourses(parsed);
+        } else {
+          setCourses(isCse ? MOCK_COURSES : []);
+        }
+      } catch {
+        setCourses(isCse ? MOCK_COURSES : []);
+      }
+    } else if (isCse) {
+      const legacy = localStorage.getItem("nith_admin_courses");
+      if (legacy) {
+        try {
+          const parsed = JSON.parse(legacy);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setCourses(parsed);
+          } else {
+            setCourses(MOCK_COURSES);
+          }
+        } catch {
+          setCourses(MOCK_COURSES);
+        }
+      } else {
+        setCourses(MOCK_COURSES);
+      }
+    } else {
+      setCourses([]);
+    }
+
+    // 2. Allocations
+    const scopedAlloc = localStorage.getItem(`nith_admin_course_allocations_${currentSlug}`);
+    if (scopedAlloc) {
+      try {
+        const parsed = JSON.parse(scopedAlloc);
+        if (Array.isArray(parsed)) {
+          setAllocations(parsed);
+        } else {
+          setAllocations(isCse ? MOCK_COURSES_TAUGHT : []);
+        }
+      } catch {
+        setAllocations(isCse ? MOCK_COURSES_TAUGHT : []);
+      }
+    } else if (isCse) {
+      const legacy = localStorage.getItem("nith_admin_course_allocations");
+      if (legacy) {
+        try {
+          const parsed = JSON.parse(legacy);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setAllocations(parsed);
+          } else {
+            setAllocations(MOCK_COURSES_TAUGHT);
+          }
+        } catch {
+          setAllocations(MOCK_COURSES_TAUGHT);
+        }
+      } else {
+        setAllocations(MOCK_COURSES_TAUGHT);
+      }
+    } else {
+      setAllocations([]);
+    }
+
+    // 3. Faculty List
+    const scopedFac = localStorage.getItem(`nith_admin_faculty_list_${currentSlug}`);
+    if (scopedFac) {
+      try {
+        const parsed = JSON.parse(scopedFac);
+        if (Array.isArray(parsed)) {
+          setFacultyList(parsed);
+        } else {
+          setFacultyList(isCse ? MOCK_FACULTY : []);
+        }
+      } catch {
+        setFacultyList(isCse ? MOCK_FACULTY : []);
+      }
+    } else if (isCse) {
+      setFacultyList(MOCK_FACULTY);
+    } else {
+      setFacultyList([]);
+    }
+  }, [currentSlug, isCse]);
 
   // Persist admin courses and allocations
   useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem("nith_admin_courses", JSON.stringify(courses));
+      localStorage.setItem(`nith_admin_courses_${currentSlug}`, JSON.stringify(courses));
+      if (isCse) {
+        localStorage.setItem("nith_admin_courses", JSON.stringify(courses));
+      }
     }
-  }, [courses]);
+  }, [courses, currentSlug, isCse]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem("nith_admin_course_allocations", JSON.stringify(allocations));
+      localStorage.setItem(`nith_admin_course_allocations_${currentSlug}`, JSON.stringify(allocations));
+      if (isCse) {
+        localStorage.setItem("nith_admin_course_allocations", JSON.stringify(allocations));
+      }
     }
-  }, [allocations]);
+  }, [allocations, currentSlug, isCse]);
 
   // Filters
   const [search, setSearch] = useState("");
@@ -198,7 +336,7 @@ export default function AdminCoursesPage() {
   const handleOpenAssignModal = (courseCode?: string) => {
     setAssignForm({
       course_code: courseCode || (courses[0]?.code ?? ""),
-      faculty_id: MOCK_FACULTY[0]?.id || "",
+      faculty_id: facultyList[0]?.id || "",
       academic_year: "2024-2025",
       section: "B.Tech Sec A",
     });
@@ -208,7 +346,7 @@ export default function AdminCoursesPage() {
   const handleSaveAssignment = (e: React.FormEvent) => {
     e.preventDefault();
     const targetCourse = courses.find((c) => c.code === assignForm.course_code);
-    const targetFaculty = MOCK_FACULTY.find(
+    const targetFaculty = facultyList.find(
       (f) => f.id === assignForm.faculty_id || f.employee_code === assignForm.faculty_id
     );
 
@@ -367,14 +505,14 @@ export default function AdminCoursesPage() {
       {/* Top Banner & Actions */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-xs font-bold uppercase tracking-wider mb-2">
-            <BookOpen className="w-3.5 h-3.5" /> Academics &amp; Curricula
-          </div>
-          <h1 className="text-2xl md:text-3xl font-black text-[#1c110c] tracking-tight">
+          <span className="font-mono text-xs font-bold text-[#85261e] uppercase tracking-wider">
+            {activeDepartment?.code || "CSE"} ACADEMICS CMS
+          </span>
+          <h1 className="text-2xl font-bold tracking-tight text-[#1c110c] mt-0.5">
             Courses &amp; Faculty Allocations
           </h1>
           <p className="mt-1 text-sm text-[#5c4033]">
-            Manage department syllabus, courses catalog, and faculty teaching assignments.
+            Manage department syllabus, courses catalog, and faculty teaching assignments for Department of {activeDepartment?.name || "Computer Science & Engineering"}.
           </p>
         </div>
 
@@ -489,7 +627,7 @@ export default function AdminCoursesPage() {
               className="rounded-lg border border-[#eedfd8] bg-white px-3 py-1.5 text-xs font-bold text-[#1c110c] focus:outline-none focus:border-[#85261e] max-w-[180px] truncate"
             >
               <option value="ALL">All Faculty</option>
-              {MOCK_FACULTY.map((f) => (
+              {facultyList.map((f) => (
                 <option key={f.id} value={f.employee_code}>
                   {f.full_name}
                 </option>
@@ -610,10 +748,40 @@ export default function AdminCoursesPage() {
                 })
               ) : (
                 <tr>
-                  <td colSpan={8} className="px-6 py-12 text-center text-[#5c4033]">
-                    <BookOpen className="w-8 h-8 mx-auto text-[#85261e]/40 mb-2" />
-                    <p className="font-bold text-base">No courses found matching filters</p>
-                    <p className="text-xs text-neutral-400 mt-1">Try clearing your search query or level filters.</p>
+                  <td colSpan={8} className="px-6 py-14 text-center space-y-3">
+                    <div className="w-12 h-12 rounded-2xl bg-[#fff9f6] border border-[#eedfd8] mx-auto flex items-center justify-center text-neutral-400 shadow-2xs">
+                      <BookOpen className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-base text-[#1c110c]">
+                        {courses.length === 0
+                          ? `No courses in catalog for Department of ${activeDepartment?.name || "this department"}`
+                          : "No courses found matching filters"}
+                      </p>
+                      <p className="text-xs text-neutral-400 mt-1">
+                        {courses.length === 0
+                          ? `Curriculum catalog for ${activeDepartment?.code || "this department"} is currently empty. Add courses or import syllabus CSV below.`
+                          : "Try clearing your search query or level filters."}
+                      </p>
+                    </div>
+                    {courses.length === 0 && (
+                      <div className="pt-2 flex justify-center gap-2">
+                        <button
+                          type="button"
+                          onClick={handleOpenAddCourse}
+                          className="px-3.5 py-2 rounded-xl bg-[#85261e] text-white text-xs font-bold hover:bg-[#a63026] transition shadow-xs cursor-pointer inline-flex items-center gap-1.5"
+                        >
+                          <Plus className="w-3.5 h-3.5" /> Add Course
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setIsCsvModalOpen(true)}
+                          className="px-3.5 py-2 rounded-xl border border-[#eedfd8] bg-white text-[#33110e] text-xs font-bold hover:bg-[#fff9f6] transition shadow-xs cursor-pointer inline-flex items-center gap-1.5"
+                        >
+                          <UploadCloud className="w-3.5 h-3.5 text-[#85261e]" /> Import CSV
+                        </button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               )}
@@ -866,7 +1034,7 @@ export default function AdminCoursesPage() {
                   className="w-full rounded-lg border border-[#eedfd8] px-3 py-2 text-sm focus:border-[#85261e] focus:outline-none"
                 >
                   <option value="">-- Choose Faculty --</option>
-                  {MOCK_FACULTY.map((f) => (
+                  {facultyList.map((f) => (
                     <option key={f.id} value={f.id}>
                       {f.full_name} ({f.designation} • {f.employee_code})
                     </option>
