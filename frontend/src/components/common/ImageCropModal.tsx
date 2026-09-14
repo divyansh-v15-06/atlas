@@ -297,3 +297,4 @@ export default function ImageCropModal({
     </Dialog>
   );
 }
+

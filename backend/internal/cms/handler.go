@@ -67,6 +67,7 @@ func (h *Handler) RegisterRoutes(r chi.Router, authMiddleware func(http.Handler)
 			r.Post("/qna", h.CreateQnA)
 			r.Post("/hod-message", h.CreateHODMessage)
 			r.Post("/home-slides", h.CreateHomeSlide)
+			r.Delete("/home-slides/{id}", h.DeleteHomeSlide)
 		})
 	})
 }
@@ -313,6 +314,15 @@ func (h *Handler) CreateHomeSlide(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	response.JSON(w, http.StatusCreated, s)
+}
+
+func (h *Handler) DeleteHomeSlide(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	if err := h.service.DeleteHomeSlide(r.Context(), id); err != nil {
+		response.Error(w, r, err)
+		return
+	}
+	response.JSON(w, http.StatusOK, map[string]string{"message": "Home slide deleted successfully"})
 }
 
 func (h *Handler) ListSyllabusDocs(w http.ResponseWriter, r *http.Request) {
