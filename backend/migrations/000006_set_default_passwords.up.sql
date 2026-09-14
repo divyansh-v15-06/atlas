@@ -11,3 +11,4 @@ WHERE email = 'admin@nith.ac.in';
 UPDATE users 
 SET password_hash = '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC'
 WHERE email != 'admin@nith.ac.in';
+
