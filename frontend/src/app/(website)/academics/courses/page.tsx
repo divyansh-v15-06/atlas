@@ -524,6 +524,12 @@ export default function CoursesPage() {
                             Department Faculty Team
                           </span>
                         )}
+                        {course.coordinator && (
+                          <div className="text-[11px] text-[#5c4033] flex items-center gap-1.5 pt-1.5 border-t border-[#eedfd8]/50">
+                            <span className="font-bold text-[#33110e]">Coordinator:</span>
+                            <span className="font-semibold text-[#85261e]">{course.coordinator}</span>
+                          </div>
+                        )}
                       </div>
 
                       {/* Course Description / Outline */}
@@ -636,6 +642,12 @@ export default function CoursesPage() {
                       <p className="text-xs text-neutral-500 italic">
                         Department of {activeDepartment.name} Faculty Team
                       </p>
+                    )}
+                    {selectedCourse.coordinator && (
+                      <div className="bg-[#fff9f6] border border-[#eedfd8] p-3 rounded-xl flex items-center justify-between text-xs text-[#33110e]">
+                        <span className="font-bold uppercase tracking-wider text-[11px] text-neutral-600">Course Coordinator:</span>
+                        <span className="font-bold text-[#85261e]">{selectedCourse.coordinator}</span>
+                      </div>
                     )}
                   </div>
 

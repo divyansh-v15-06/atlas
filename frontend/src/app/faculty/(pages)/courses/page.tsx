@@ -668,6 +668,14 @@ export default function FacultyCoursesPage() {
                   </p>
                 </div>
               )}
+
+              {/* Course Coordinator */}
+              {selectedCourse.course_coordinator && (
+                <div className="rounded-xl border border-[#eedfd8] p-3.5 bg-[#fff9f6] flex items-center justify-between text-xs text-[#33110e]">
+                  <span className="font-bold uppercase tracking-wider text-[11px] text-neutral-600">Course Coordinator:</span>
+                  <span className="font-bold text-[#85261e]">{selectedCourse.course_coordinator}</span>
+                </div>
+              )}
             </div>
 
             {/* Modal Footer */}

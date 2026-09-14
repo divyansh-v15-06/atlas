@@ -335,6 +335,7 @@ export interface Course {
   department_id?: string;
   academic_year?: string;
   prerequisites?: string;
+  coordinator?: string;
   instructors?: {
     faculty_id?: string;
     faculty_code?: string;
@@ -361,6 +362,7 @@ export interface CourseTaught {
   section?: string;
   description?: string;
   department_id?: string;
+  course_coordinator?: string;
   created_at?: string;
   updated_at?: string;
 }
