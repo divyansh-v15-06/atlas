@@ -471,8 +471,8 @@ export default function FacultyPortfolioPage({
   const facultyCoursesFallback = useMemo(() => {
     return MOCK_COURSES_TAUGHT.filter(
       (c) =>
-        c.faculty_code === baseFaculty?.employee_code ||
-        c.faculty_name === baseFaculty?.full_name ||
+        c.faculty_code?.toLowerCase() === baseFaculty?.employee_code?.toLowerCase() ||
+        c.faculty_name?.toLowerCase() === baseFaculty?.full_name?.toLowerCase() ||
         c.faculty_id === baseFaculty?.id
     );
   }, [baseFaculty]);

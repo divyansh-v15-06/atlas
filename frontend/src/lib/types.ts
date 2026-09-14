@@ -333,6 +333,15 @@ export interface Course {
   practical_hours?: number;
   description?: string;
   department_id?: string;
+  academic_year?: string;
+  prerequisites?: string;
+  instructors?: {
+    faculty_id?: string;
+    faculty_code?: string;
+    faculty_name: string;
+    faculty_slug?: string;
+    designation?: string;
+  }[];
 }
 
 export interface CourseTaught {
