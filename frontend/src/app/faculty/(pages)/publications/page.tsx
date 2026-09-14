@@ -20,7 +20,7 @@ import {
 import { toast } from "sonner";
 import { MOCK_FACULTY, MOCK_PUBLICATIONS } from "@/lib/mock-data";
 import { getStoredData, saveFacultyRecord } from "@/lib/faculty-storage";
-import AssociatedFacultyPicker from "@/components/faculty/AssociatedFacultyPicker";
+import CoAuthorsInput, { CoAuthorInternal } from "@/components/faculty/CoAuthorsInput";
 import {
   ACADEMIC_SESSIONS,
   MONTHS,
@@ -59,6 +59,7 @@ export default function FacultyPublicationsPage() {
   const [pages, setPages] = useState("");
   const [doi, setDoi] = useState("");
   const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
+  const [externalAuthors, setExternalAuthors] = useState<string[]>([]);
 
   const loadPublications = (activeFaculty: any) => {
     const baseFaculty =
@@ -168,6 +169,7 @@ export default function FacultyPublicationsPage() {
     setPages("");
     setDoi("");
     setSelectedAssociatedFaculty([]);
+    setExternalAuthors([]);
     setShowModal(true);
   };
 
@@ -190,13 +192,16 @@ export default function FacultyPublicationsPage() {
     setPages(pub.pages || pub.page_range || "");
     setDoi(pub.doi || "");
 
-    // Resolve associated faculty
+    // Resolve associated internal faculty
     const linked = Array.isArray(pub.associated_faculty)
       ? pub.associated_faculty
+      : Array.isArray(pub.internal_authors)
+      ? pub.internal_authors
       : Array.isArray(pub.faculty_ids)
-      ? MOCK_FACULTY.filter((f) => pub.faculty_ids.includes(f.id))
+      ? MOCK_FACULTY.filter((f) => pub.faculty_ids.includes(f.id) && f.id !== faculty.id)
       : [];
     setSelectedAssociatedFaculty(linked);
+    setExternalAuthors(Array.isArray(pub.external_authors) ? pub.external_authors : []);
     setShowModal(true);
   };
 
@@ -208,6 +213,28 @@ export default function FacultyPublicationsPage() {
     }
 
     const effectiveIndexing = indexing === "Other" && customIndexing.trim() ? customIndexing.trim() : indexing;
+
+    // Structured authors list for PostgreSQL M:N join table (publication_authors)
+    const structuredAuthors = [
+      {
+        author_name: faculty.full_name,
+        author_order: 1,
+        faculty_id: faculty.id || null,
+        is_corresponding: true,
+      },
+      ...selectedAssociatedFaculty.map((f: any, idx: number) => ({
+        author_name: f.full_name,
+        author_order: idx + 2,
+        faculty_id: f.id || null,
+        is_corresponding: false,
+      })),
+      ...externalAuthors.map((ext: string, idx: number) => ({
+        author_name: ext,
+        author_order: idx + 2 + selectedAssociatedFaculty.length,
+        faculty_id: null,
+        is_corresponding: false,
+      })),
+    ];
 
     const pubRecord: any = {
       id: modalMode === "edit" && editingId ? editingId : `pub-${Date.now()}`,
@@ -232,21 +259,68 @@ export default function FacultyPublicationsPage() {
       pages: pages.trim() || undefined,
       page_range: pages.trim() || undefined,
       associated_faculty: selectedAssociatedFaculty,
+      internal_authors: selectedAssociatedFaculty,
+      external_authors: externalAuthors,
       faculty_ids: [
         faculty.id,
-        ...selectedAssociatedFaculty.map((f) => f.id || f.employee_code),
+        ...selectedAssociatedFaculty.map((f: any) => f.id || f.employee_code),
       ],
       faculty_legacy_ids: [faculty.legacy_id],
       updated_at: new Date().toISOString(),
     };
 
+    // 1. Client-side and local storage update with cross-faculty sync
     saveFacultyRecord(faculty, "publications", pubRecord, false);
     loadPublications(faculty);
     setShowModal(false);
+
+    // 2. Dispatch to Go Backend API to persist in PostgreSQL M:N tables
+    const token = typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+    const typeMapping: Record<string, string> = {
+      "Journal": "JOURNAL",
+      "Conference": "CONFERENCE",
+      "Book": "BOOK",
+      "Book Chapter": "BOOK_CHAPTER",
+    };
+
+    fetch(`${apiUrl}/publications`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({
+        title: title.trim(),
+        publication_type: typeMapping[pubType] || "JOURNAL",
+        doi: doi.trim() || undefined,
+        isbn: isbn.trim() || undefined,
+        venue: venue.trim(),
+        publisher: venue.trim(),
+        volume: volume.trim() || undefined,
+        issue: issue.trim() || undefined,
+        pages: pages.trim() || undefined,
+        year: Number(year) || new Date().getFullYear(),
+        indexing: effectiveIndexing,
+        quartile: pubType === "Journal" && quartile !== "N/A" ? quartile : undefined,
+        raw_authors: authors.trim() || faculty.full_name,
+        department_ids: [faculty.department_id || "22222222-2222-2222-2222-222222222222"],
+        authors: structuredAuthors,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          console.log("Publication persisted to PostgreSQL backend!");
+        }
+      })
+      .catch((err) => {
+        console.warn("Backend API sync offline or skipped:", err);
+      });
+
     toast.success(
       modalMode === "edit"
         ? "Publication updated successfully and synchronized!"
-        : "New publication recorded and synchronized with co-authors!"
+        : "New publication recorded and synchronized with internal colleagues & external co-authors!"
     );
   };
 
@@ -709,15 +783,19 @@ export default function FacultyPublicationsPage() {
                 </div>
               </div>
 
-              {/* Associated Faculty Picker for instant cross-sync */}
-              <div className="pt-2 border-t border-[#eedfd8]/60">
-                <AssociatedFacultyPicker
-                  selected={selectedAssociatedFaculty}
-                  onChange={setSelectedAssociatedFaculty}
+              {/* Dual Co-Authors Selection (NIT Hamirpur College Dropdown vs External Text Box) */}
+              <div className="pt-2">
+                <CoAuthorsInput
                   currentFaculty={faculty}
-                  label="Co-Authors / Associated Faculty (NIT Hamirpur)"
-                  placeholder="Link co-author colleagues to auto-sync to their profile..."
-                  helperText="Selected colleagues will automatically see this paper in their portal and public portfolio."
+                  internalAuthors={selectedAssociatedFaculty}
+                  externalAuthors={externalAuthors}
+                  onChange={({ internalAuthors, externalAuthors: extAuthors, combinedAuthorText }) => {
+                    setSelectedAssociatedFaculty(internalAuthors);
+                    setExternalAuthors(extAuthors);
+                    setAuthors(combinedAuthorText);
+                  }}
+                  label="Co-Authors & Academic Collaborators"
+                  helperText="Choose colleagues from NIT Hamirpur (Option 1) to auto-sync to their profile, and enter external authors outside the college (Option 2)."
                 />
               </div>
 
