@@ -6,6 +6,7 @@ import { Dialog, DialogOverlay, DialogContent } from '@reach/dialog'
 import '@reach/dialog/styles.css'
 import Select from 'react-select'
 import toast from 'react-hot-toast'
+import { uploadToCloudinary } from '@/lib/utils'
 
 const InputField = ({ label, value, onChange, id }) => (
     <div className='flex flex-col my-2'>
@@ -81,17 +82,19 @@ const AdminModalCarousel = ({ isOpen, onClose, onSubmit }) => {
         e.preventDefault()
         try {
             setIsLoading(true)
-            const data = new FormData();
-            data.append("file", image);
-            data.append("upload_preset", "trials");
-            const res = await axios.post("https://api.cloudinary.com/v1_1/dvnrlqqpq/image/upload", data)
-            const updatedFormData = { ...formData, photo: res.data.secure_url }
+            if (!image) {
+                toast.error('No image selected')
+                setIsLoading(false)
+                return
+            }
+            const secureUrl = await uploadToCloudinary(image)
+            const updatedFormData = { ...formData, photo: secureUrl }
             onSubmit(updatedFormData)
+            setFormData({})
         }
-        catch (error) {
-            toast.error(error.response?.data?.message || 'Error uploading image')
+        catch (error: any) {
+            toast.error(error?.message || 'Error uploading image')
         }
-        setFormData({})
         setIsLoading(false)
     }
 

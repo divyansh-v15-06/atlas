@@ -61,3 +61,30 @@ export function getInitials(name: string): string {
 export function academicSession(year: number): string {
   return `${year}-${year + 1}`;
 }
+
+/**
+ * Upload an image file directly to Cloudinary using unsigned preset.
+ * Returns the secure URL of the uploaded image.
+ */
+export async function uploadToCloudinary(file: File | Blob): Promise<string> {
+  const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "eqvhqx5q";
+  const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "faculty_nith";
+
+  const data = new FormData();
+  data.append("file", file);
+  data.append("upload_preset", uploadPreset);
+  data.append("asset_folder", "nith");
+
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+    method: "POST",
+    body: data,
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData?.error?.message || `Image upload failed with status ${res.status}`);
+  }
+
+  const result = await res.json();
+  return result.secure_url || result.url;
+}

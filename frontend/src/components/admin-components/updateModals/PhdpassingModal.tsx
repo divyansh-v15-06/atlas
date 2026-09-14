@@ -7,6 +7,7 @@ import axios from 'axios'
 import { Select } from '@radix-ui/react-select'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { uploadToCloudinary } from '@/lib/utils'
 const InputField = ({
     label,
     value,
@@ -110,19 +111,17 @@ function PhdUpdateStatusModal({
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const data = new FormData();
-        let updatedFormData = {}
+        let updatedFormData = { ...formData }
         if (image) {
-            data.append("file", image);
-            data.append("upload_preset", "trials");
-            setLoading(true);
-            const res = await axios.post("https://api.cloudinary.com/v1_1/dvnrlqqpq/image/upload", data)
-            setLoading(false);
-            updatedFormData = { ...formData, photo: res.data.secure_url }
-        }
-        else {
-
-            updatedFormData = { ...formData }
+            try {
+                setLoading(true);
+                const secureUrl = await uploadToCloudinary(image);
+                updatedFormData.photo = secureUrl;
+            } catch (err: any) {
+                console.error('Error uploading photo:', err);
+            } finally {
+                setLoading(false);
+            }
         }
 
         onSubmit(updatedFormData, initialData.id)

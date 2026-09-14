@@ -6,6 +6,7 @@ import { Dialog, DialogOverlay, DialogContent } from '@reach/dialog'
 import '@reach/dialog/styles.css'
 import Select from 'react-select'
 import Image from 'next/image'
+import { uploadToCloudinary } from '@/lib/utils'
 
 const InputField = ({ label, id, value, onChange ,required}) => (
     <div className='flex flex-col my-2'>
@@ -107,14 +108,14 @@ const AchievementsUpdateModal = ({
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        const data = new FormData();
-        let updatedFormData=formData
-        if(image){
-
-            data.append("file", image);
-            data.append("upload_preset", "trials");
-            const res = await axios.post("https://api.cloudinary.com/v1_1/dvnrlqqpq/image/upload", data)
-            updatedFormData = { ...formData, photo: res.data.secure_url,date:new Date()}
+        let updatedFormData = { ...formData }
+        if (image) {
+            try {
+                const secureUrl = await uploadToCloudinary(image)
+                updatedFormData = { ...formData, photo: secureUrl, date: new Date() }
+            } catch (err: any) {
+                console.error('Error uploading achievement photo:', err)
+            }
         }
         onSubmit(updatedFormData, initialData.id)
         onClose()

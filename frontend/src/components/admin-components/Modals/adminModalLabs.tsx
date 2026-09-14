@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogOverlay, DialogContent } from '@reach/dialog'
 import '@reach/dialog/styles.css'
 import Select from 'react-select'
-import { set } from 'react-datepicker/dist/date_utils'
+import { uploadToCloudinary } from '@/lib/utils'
 
 const InputField = ({ label, value, onChange, id, type, required = false }) => (
     <div className='flex flex-col my-2'>
@@ -56,21 +56,21 @@ const AdminModalLabs = ({ isOpen, onClose, onSubmit }) => {
         const { id, value } = e.target
         setFormData((prev) => ({ ...prev, [id]: value }))
     }
-    const  handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        let updatedFormData = { ...formData }
         if (formData.photo instanceof File) {
-            setIsLoading(true)
-            const data = new FormData();
-            data.append("file", formData.photo);
-            data.append("upload_preset", "trials");
-            const res = await axios.post("https://api.cloudinary.com/v1_1/dvnrlqqpq/image/upload", data)
-            setIsLoading(false)
-            const updatedFormData = { ...formData, photo: res.data.secure_url }
-            onSubmit(updatedFormData)
+            try {
+                setIsLoading(true)
+                const secureUrl = await uploadToCloudinary(formData.photo)
+                updatedFormData = { ...formData, photo: secureUrl }
+            } catch (err: any) {
+                console.error('Error uploading lab photo:', err)
+            } finally {
+                setIsLoading(false)
+            }
         }
-        else {
-            onSubmit(formData)
-        }
+        onSubmit(updatedFormData)
         setFormData({
             title: "",
             description: "",

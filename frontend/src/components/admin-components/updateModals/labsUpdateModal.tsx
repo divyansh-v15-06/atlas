@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogOverlay, DialogContent } from '@reach/dialog'
 import '@reach/dialog/styles.css'
 import Select from 'react-select'
-import { on } from 'events'
+import { uploadToCloudinary } from '@/lib/utils'
 
 const InputField = ({ label, value, onChange, id, type, required = false }) => (
     <div className='flex flex-col my-2'>
@@ -74,28 +74,23 @@ const LabsUpdateModal = ({
         setFormData((prev) => ({ ...prev, [id]: value }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        let updatedFormData = { ...formData }
         if (formData.image instanceof File) {
-            setIsLoading(true)
-            const data = new FormData();
-            data.append("file", formData.image);
-            data.append("upload_preset", "trials");
-            axios.post("https://api.cloudinary.com/v1_1/dvnrlqqpq/image/upload", data)
-                .then(res => {
-                    setIsLoading(false)
-                    const updatedFormData = { ...formData, photo: res.data.secure_url }
-                    onSubmit(updatedFormData,initialData.id,)
-                    onClose()
-                })
-                .catch(err => {
-                    setIsLoading(false)
-                    console.error('Error uploading image:', err)
-                })
-        } else {
-            onSubmit(formData,initialData.id)
-            onClose()
+            try {
+                setIsLoading(true)
+                const secureUrl = await uploadToCloudinary(formData.image)
+                updatedFormData = { ...formData, photo: secureUrl }
+            } catch (err: any) {
+                console.error('Error uploading lab image:', err)
+            } finally {
+                setIsLoading(false)
+            }
         }
+        onSubmit(updatedFormData, initialData.id)
+        onClose()
+    }
         setFormData({
             title: "",
             description: "",

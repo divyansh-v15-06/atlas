@@ -250,7 +250,7 @@ INSERT INTO user_roles (user_id, role_id)
 VALUES ('d55bcde5-9942-5320-b773-170dbb81a546', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('8f8cf312-11a9-55d1-b838-9fbb14edb2f4', 'd55bcde5-9942-5320-b773-170dbb81a546', 'TF042', 'pkdhiman@nith.ac.in', 'Dr. Pushpender Kumar', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730566751/pushpendra_j9zwft.jpg', 'fac-42', 0, 'Wireless sensor networks')
+VALUES ('8f8cf312-11a9-55d1-b838-9fbb14edb2f4', 'd55bcde5-9942-5320-b773-170dbb81a546', 'TF042', 'pkdhiman@nith.ac.in', 'Dr. Pushpender Kumar', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427469/g8lirzlgin9kliyeyzlt.jpg', 'fac-42', 0, 'Wireless sensor networks')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('8f8cf312-11a9-55d1-b838-9fbb14edb2f4', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
@@ -263,7 +263,7 @@ INSERT INTO user_roles (user_id, role_id)
 VALUES ('2f71f3e7-ed78-5f1f-9efe-e7ef8fa8d8b9', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('e0f136b4-3be3-52a4-8ae0-fbd435e22d98', '2f71f3e7-ed78-5f1f-9efe-e7ef8fa8d8b9', 'TF043', 'poojas@nith.ac.in', 'Dr. Pooja Sharma', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dha8atrgz/image/upload/v1730799923/WhatsApp_Image_2024-11-04_at_11.01.53_AM_rrb7hg.jpg', 'https://www.linkedin.com/in/pooja-sharma-91a6b9269', 0, 'Software Engineering, software process improvement, Fault prediction, Machine learning')
+VALUES ('e0f136b4-3be3-52a4-8ae0-fbd435e22d98', '2f71f3e7-ed78-5f1f-9efe-e7ef8fa8d8b9', 'TF043', 'poojas@nith.ac.in', 'Dr. Pooja Sharma', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427448/kfeceomwr0qalyzljzry.jpg', 'https://www.linkedin.com/in/pooja-sharma-91a6b9269', 0, 'Software Engineering, software process improvement, Fault prediction, Machine learning')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('e0f136b4-3be3-52a4-8ae0-fbd435e22d98', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
@@ -276,7 +276,7 @@ INSERT INTO user_roles (user_id, role_id)
 VALUES ('79568c4d-e456-54a1-b39c-bf38d6713a46', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('93a853b0-b5ce-5ed1-b715-f88f25ed9e76', '79568c4d-e456-54a1-b39c-bf38d6713a46', 'TF045', 'tanuj@nith.ac.in', 'Dr. Tanuj Wala', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563085/tanuj_wala_hjzkiq.jpg', 'http://linkedin.com/in/dr-tanuj-wala-380767114', 0, 'Wireless sensor networks, Efficient Data Handling in Internet of Things, Big Data.')
+VALUES ('93a853b0-b5ce-5ed1-b715-f88f25ed9e76', '79568c4d-e456-54a1-b39c-bf38d6713a46', 'TF045', 'tanuj@nith.ac.in', 'Dr. Tanuj Wala', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427457/wrnsymglkoeywzn8a2df.jpg', 'http://linkedin.com/in/dr-tanuj-wala-380767114', 0, 'Wireless sensor networks, Efficient Data Handling in Internet of Things, Big Data.')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('93a853b0-b5ce-5ed1-b715-f88f25ed9e76', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
@@ -289,7 +289,7 @@ INSERT INTO user_roles (user_id, role_id)
 VALUES ('d58a47c5-99d5-5db8-b861-838e336fa75a', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('02aa78ef-5966-5e7d-afd9-45f788cf1fdc', 'd58a47c5-99d5-5db8-b861-838e336fa75a', 'TF046', 'mukulkmajhi@gmail.com', 'Dr. Mukul Majhi', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563155/mukul_majhi_wb8okx.jpg', 'https://www.linkedin.com/in/dr-mukul-majhi-17b455130', 0, 'Content Based Image Retrieval, Image Security, AI&ML')
+VALUES ('02aa78ef-5966-5e7d-afd9-45f788cf1fdc', 'd58a47c5-99d5-5db8-b861-838e336fa75a', 'TF046', 'mukulkmajhi@gmail.com', 'Dr. Mukul Majhi', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427459/lvcxljuhrladsylnzno2.jpg', 'https://www.linkedin.com/in/dr-mukul-majhi-17b455130', 0, 'Content Based Image Retrieval, Image Security, AI&ML')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('02aa78ef-5966-5e7d-afd9-45f788cf1fdc', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
@@ -302,7 +302,7 @@ INSERT INTO user_roles (user_id, role_id)
 VALUES ('d2d7d0c6-5730-57d3-99a5-6a060afa078d', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('97ce26f7-28ab-5679-9876-215ac22d6cff', 'd2d7d0c6-5730-57d3-99a5-6a060afa078d', 'TF047', 'richa_cs@nith.ac.in', 'Dr. Richa', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563293/richa_shar_a_xz0fsl.jpg', 'www.linkedin.com/in/dr-richa-sharma-81a24b166', 0, 'Internet of things, Internet of vehicles, fault tolerance for data dissemination in Internet of vehicles, Wireless sensor network')
+VALUES ('97ce26f7-28ab-5679-9876-215ac22d6cff', 'd2d7d0c6-5730-57d3-99a5-6a060afa078d', 'TF047', 'richa_cs@nith.ac.in', 'Dr. Richa', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427461/vwgon5vpkycdpavdvo6i.jpg', 'www.linkedin.com/in/dr-richa-sharma-81a24b166', 0, 'Internet of things, Internet of vehicles, fault tolerance for data dissemination in Internet of vehicles, Wireless sensor network')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('97ce26f7-28ab-5679-9876-215ac22d6cff', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
@@ -315,7 +315,7 @@ INSERT INTO user_roles (user_id, role_id)
 VALUES ('5f4f3f9c-e550-5f6e-8408-a890923eab8a', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('8986b4f9-5c4c-5047-8e5f-cde02c59b83a', '5f4f3f9c-e550-5f6e-8408-a890923eab8a', 'TF048', 'pooja_phdcse@nith.ac.ini', 'Mrs. Pooja Rani', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563357/pooja_rani_xficdc.jpg', 'https://www.linkedin.com/in/pooja-rani-585b45ba', 0, 'AI, machine learning, deep learning, and image processing')
+VALUES ('8986b4f9-5c4c-5047-8e5f-cde02c59b83a', '5f4f3f9c-e550-5f6e-8408-a890923eab8a', 'TF048', 'pooja_phdcse@nith.ac.ini', 'Mrs. Pooja Rani', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427463/vef2u3xwjndf2orq8y6p.jpg', 'https://www.linkedin.com/in/pooja-rani-585b45ba', 0, 'AI, machine learning, deep learning, and image processing')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('8986b4f9-5c4c-5047-8e5f-cde02c59b83a', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
@@ -328,7 +328,7 @@ INSERT INTO user_roles (user_id, role_id)
 VALUES ('b095649f-6a68-5169-9143-4e85dd3fd6c7', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('0494529c-89b3-5038-9c24-c69fdd82942f', 'b095649f-6a68-5169-9143-4e85dd3fd6c7', 'TF049', 'pratibhasingh@nith.ac.in', 'Mrs. Pratibha Singh', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563421/pratibha_cytkck.jpg', 'https://www.linkedin.com/in/pratibha-singh-13a100231', 0, 'Artificial intelligence')
+VALUES ('0494529c-89b3-5038-9c24-c69fdd82942f', 'b095649f-6a68-5169-9143-4e85dd3fd6c7', 'TF049', 'pratibhasingh@nith.ac.in', 'Mrs. Pratibha Singh', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427465/gpskbf6mygopmtbnwfep.jpg', 'https://www.linkedin.com/in/pratibha-singh-13a100231', 0, 'Artificial intelligence')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('0494529c-89b3-5038-9c24-c69fdd82942f', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
@@ -341,7 +341,7 @@ INSERT INTO user_roles (user_id, role_id)
 VALUES ('a6dcead1-90de-5068-b4b7-a61c0ac20ec0', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('e0a19ad4-16dc-5113-8e43-588121443653', 'a6dcead1-90de-5068-b4b7-a61c0ac20ec0', 'TF050', 'keshavkaundal@nith.ac.in', 'Mr. Keshav Kaundal', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730566898/keshav_y1fmvr.jpg', 'http://linkedin.com/in/keshav-kaundal-18b2aa147', 0, 'Internet of Things')
+VALUES ('e0a19ad4-16dc-5113-8e43-588121443653', 'a6dcead1-90de-5068-b4b7-a61c0ac20ec0', 'TF050', 'keshavkaundal@nith.ac.in', 'Mr. Keshav Kaundal', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427471/dpdxco6obz2lgntw60hz.jpg', 'http://linkedin.com/in/keshav-kaundal-18b2aa147', 0, 'Internet of Things')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('e0a19ad4-16dc-5113-8e43-588121443653', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
@@ -354,7 +354,7 @@ INSERT INTO user_roles (user_id, role_id)
 VALUES ('acd8be77-9cbe-5e61-9f5e-e3643a8faaa3', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('94f282ed-eed6-5d94-b67c-e524cfb954fa', 'acd8be77-9cbe-5e61-9f5e-e3643a8faaa3', 'TF051', 'meenakshinayyer@nith.ac.in', 'Mrs. Meenakshi Nayyer', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563500/meenkashi_wiegxb.jpg', 'https://www.linkedin.com/in/meenakshi-nayyer-48251024', 0, 'WSN, Software Engineering and Testing')
+VALUES ('94f282ed-eed6-5d94-b67c-e524cfb954fa', 'acd8be77-9cbe-5e61-9f5e-e3643a8faaa3', 'TF051', 'meenakshinayyer@nith.ac.in', 'Mrs. Meenakshi Nayyer', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427467/wsxhohzunkerdwfjjpyv.jpg', 'https://www.linkedin.com/in/meenakshi-nayyer-48251024', 0, 'WSN, Software Engineering and Testing')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('94f282ed-eed6-5d94-b67c-e524cfb954fa', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
@@ -5844,13 +5844,13 @@ VALUES ('22222222-2222-2222-2222-222222222222', 'Umeshwar Singhg', '', '', 'Dr. 
 
 -- 18. Staff Registry
 INSERT INTO staff (department_id, full_name, designation, email, phone, photo_url, time_note)
-VALUES ('22222222-2222-2222-2222-222222222222', 'ANURAG DHIMAN', 'TECHNICIAN', 'anuragd@nith.ac.in', '7889075826', 'https://res.cloudinary.com/dha8atrgz/image/upload/v1722102504/289599C8-3365-4180-B5F0-D17ED36A6243_-_Mr._Anurag_Dhiman_bem8gs.jpg', '');
+VALUES ('22222222-2222-2222-2222-222222222222', 'ANURAG DHIMAN', 'TECHNICIAN', 'anuragd@nith.ac.in', '7889075826', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427384/jbrhj2lfyzeah8wsekdo.jpg', '');
 INSERT INTO staff (department_id, full_name, designation, email, phone, photo_url, time_note)
-VALUES ('22222222-2222-2222-2222-222222222222', 'Piyush Pathania', 'Junior Assistant', 'piyush@nith.ac.in', '9149598033', 'https://res.cloudinary.com/dha8atrgz/image/upload/v1722102594/IMG_20210506_132421_copy_212x292_-_Piyush_Pathania_pvhfef.jpg', '');
+VALUES ('22222222-2222-2222-2222-222222222222', 'Piyush Pathania', 'Junior Assistant', 'piyush@nith.ac.in', '9149598033', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427386/o0ivt6lj564ct70n815r.jpg', '');
 INSERT INTO staff (department_id, full_name, designation, email, phone, photo_url, time_note)
-VALUES ('22222222-2222-2222-2222-222222222222', 'Jiwan kumar', 'Technician SG II', 'jiwannit@gmail.com', '8894961433', 'https://res.cloudinary.com/dha8atrgz/image/upload/v1722102643/jeevan_sir_cse_-_Jiwan_Kumar_pfn3qt.jpg', '');
+VALUES ('22222222-2222-2222-2222-222222222222', 'Jiwan kumar', 'Technician SG II', 'jiwannit@gmail.com', '8894961433', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427388/td4slvfwp3w0vniqvrvu.jpg', '');
 INSERT INTO staff (department_id, full_name, designation, email, phone, photo_url, time_note)
-VALUES ('22222222-2222-2222-2222-222222222222', 'Sanjeev Kumar Thakur', 'Technical Assistant SG-I', 'sanjeev@nith.ac.in', '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1744802170/eml63kocxmmelbpw5c4v.jpg', '');
+VALUES ('22222222-2222-2222-2222-222222222222', 'Sanjeev Kumar Thakur', 'Technical Assistant SG-I', 'sanjeev@nith.ac.in', '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427492/m1cbcpvdgccqevqvldf3.jpg', '');
 
 -- 19. Labs & Equipment
 INSERT INTO equipment (department_id, name, quantity, stock_in_use, purchase_value, purchase_date, vendor_name, invoice_number, indenter_name, contact_details)
@@ -5922,27 +5922,27 @@ VALUES ('22222222-2222-2222-2222-222222222222', 'achievement', 'Bootcamp On Mobi
 INSERT INTO hod_messages (department_id, hod_name, message, image_url)
 VALUES ('22222222-2222-2222-2222-222222222222', 'Dr. Siddhartha Chauhan', 'It is with great pleasure that I write this in the capacity of the Head of the Department (HOD) of the Computer Science and Engineering (CSE) Department at NIT Hamirpur. I thank all the faculty members, students, and staff of our esteemed department for their continuous efforts every day in maintaining the excellence and reputation of our department', 'https://portfolios.nith.ac.in/uploads/member_details/62.jpg');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dtxjhtjv2/image/upload/v1726560953/1_vrhhbu.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427452/vhzurtmaxoray1q0oe6q.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dtxjhtjv2/image/upload/v1726560951/2_olfa2q.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427450/t1lfnxduqhnkj48oohoz.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dtxjhtjv2/image/upload/v1727629275/Departmental-Website-Inauguration_1_wxnswg.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427455/duizaz9gglgx3qkvmymb.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013579/luoszkppvjhxboiettqs.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427495/p5qtua1zvw6iozwpby9l.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013596/qforn6yvutj2lquzltif.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427498/alqnfjbp6qsdoaefudcm.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013611/pd0v4cmnhjgixissttgl.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427501/flnke4ag8rep0klteys8.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013697/uzflivcqzwx5zowzusbv.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427503/ozq8xoxrgyubfhqrnqgv.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013709/gva8oahffjnnhrxy1yjj.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427505/ylj8ljw3wpdcnjceuakn.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749211054/z3hutohh0p6xro1vp7qm.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427513/pe1xbnbukasxueyxsfkp.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749468582/hpz76jipbtrc2zxrhzzh.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427516/rkpiaicfz9jc94oozcpx.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749468653/snbuwfwxpplfftowidmh.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427518/ebekk51czvq3uk4lrhuq.png');
 
 -- 23. Refresh Materialized Views
 REFRESH MATERIALIZED VIEW v_faculty_kpis;

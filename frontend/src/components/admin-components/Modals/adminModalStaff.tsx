@@ -2,8 +2,8 @@
 import React, { useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogOverlay, DialogContent } from '@reach/dialog'
-import '@reach/dialog/styles.css'
 import axios from 'axios'
+import { uploadToCloudinary } from '@/lib/utils'
 
 const InputField = ({ label, value, onChange, id,required }) => (
     <div className='flex items-center my-2'>
@@ -44,20 +44,26 @@ const AdminModalStaff = ({ isOpen, onClose, onSubmit }) => {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        const data = new FormData();
-        data.append("file", image);
-        data.append("upload_preset", "trials");
-        setLoading(true);
-        const res = await axios.post("https://api.cloudinary.com/v1_1/dvnrlqqpq/image/upload", data)
-        const updatedFormData = { ...formData, photo: res.data.secure_url }
+        let photoUrl = formData.photo || '';
+        if (image) {
+            try {
+                setLoading(true);
+                photoUrl = await uploadToCloudinary(image);
+            } catch (err: any) {
+                console.error('Error uploading staff image:', err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        const updatedFormData = { ...formData, photo: photoUrl }
         onSubmit(updatedFormData)
-        setLoading(false);
         setImage(null);
-        setFormData({designation: '',
+        setFormData({
+            designation: '',
             name: '',
             email: '',
-            photo: '',})
-        
+            photo: '',
+        })
     }
 
     return (

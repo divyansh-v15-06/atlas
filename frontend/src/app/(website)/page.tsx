@@ -41,47 +41,47 @@ import { useHodMessage } from "@/hooks/use-hod-message";
 // Canonical carousel images from old tempcsebase
 const TEMPCSE_HERO_SLIDES = [
   {
-    src: "https://res.cloudinary.com/dtxjhtjv2/image/upload/v1726560953/1_vrhhbu.png",
+    src: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427452/vhzurtmaxoray1q0oe6q.png",
     alt: "Department of Computer Science & Engineering - NIT Hamirpur",
   },
   {
-    src: "https://res.cloudinary.com/dtxjhtjv2/image/upload/v1726560951/2_olfa2q.png",
+    src: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427450/t1lfnxduqhnkj48oohoz.png",
     alt: "Computing Infrastructure & Academic Excellence",
   },
   {
-    src: "https://res.cloudinary.com/dtxjhtjv2/image/upload/v1727629275/Departmental-Website-Inauguration_1_wxnswg.png",
+    src: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427455/duizaz9gglgx3qkvmymb.png",
     alt: "Departmental Website Inauguration Ceremony",
   },
   {
-    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013579/luoszkppvjhxboiettqs.png",
+    src: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427495/p5qtua1zvw6iozwpby9l.png",
     alt: "Academic and Research Milestones",
   },
   {
-    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013596/qforn6yvutj2lquzltif.png",
+    src: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427498/alqnfjbp6qsdoaefudcm.png",
     alt: "Faculty & Student Scientific Achievements",
   },
   {
-    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013611/pd0v4cmnhjgixissttgl.png",
+    src: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427501/flnke4ag8rep0klteys8.png",
     alt: "Innovations in Artificial Intelligence & Computing Systems",
   },
   {
-    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013697/uzflivcqzwx5zowzusbv.png",
+    src: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427503/ozq8xoxrgyubfhqrnqgv.png",
     alt: "Technical Workshops & Hands-on Laboratories",
   },
   {
-    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013709/gva8oahffjnnhrxy1yjj.png",
+    src: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427505/ylj8ljw3wpdcnjceuakn.png",
     alt: "Industry Collaborations & Student Hackathons",
   },
   {
-    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749211054/z3hutohh0p6xro1vp7qm.png",
+    src: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427513/pe1xbnbukasxueyxsfkp.png",
     alt: "Conferences, Seminars and Expert Lectures",
   },
   {
-    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749468582/hpz76jipbtrc2zxrhzzh.png",
+    src: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427516/rkpiaicfz9jc94oozcpx.png",
     alt: "Departmental Campus Life & Student Activities",
   },
   {
-    src: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749468653/snbuwfwxpplfftowidmh.png",
+    src: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427518/ebekk51czvq3uk4lrhuq.png",
     alt: "National Institute of Technology Hamirpur Academic Community",
   },
 ];
@@ -217,7 +217,7 @@ export default function HomePage() {
       category: "Conference & Research",
       title: "International Conference on AI & Intelligent Systems (ICAMS 2025)",
       description: "Organized by DoCSE with 300+ international researchers and technical proceedings published in Scopus/Springer series.",
-      photo_url: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749015564/clbtxoenukldqigdws1e.jpg",
+      photo_url: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427510/fqjszlj2lscybnisrf1m.jpg",
       publish_date: "2025-06-13",
       badgeColor: "bg-[#85261e]",
     },
@@ -226,7 +226,7 @@ export default function HomePage() {
       category: "Hackathon Victory",
       title: "CSE Student Team Wins 1st Prize at National Smart India Hackathon",
       description: "Undergraduate development team engineered an AI-powered automated medical triage system with offline edge sync.",
-      photo_url: "https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749014936/rgsiauf7yh1sy8aer5yo.jpg",
+      photo_url: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427508/taogigqizkcgpffyumzm.jpg",
       publish_date: "2025-05-20",
       badgeColor: "bg-emerald-700",
     },
@@ -235,7 +235,7 @@ export default function HomePage() {
       category: "Sponsored Grant",
       title: "Faculty Investigators Secure ₹1.85 Cr MeitY Sponsored Cyber-Physical Security Grant",
       description: "Project funded to develop lightweight cryptographic primitives for resource-constrained critical infrastructure.",
-      photo_url: "https://res.cloudinary.com/dha8atrgz/image/upload/v1725899222/Screenshot_from_2024-09-09_21-56-30_cy3pch.png",
+      photo_url: "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427391/ltuib6npvs5heukjpzo9.png",
       publish_date: "2025-05-15",
       badgeColor: "bg-blue-700",
     },
