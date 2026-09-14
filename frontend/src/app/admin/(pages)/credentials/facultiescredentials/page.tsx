@@ -12,7 +12,7 @@ export default function AdminCredentialsPage() {
     setResettingId(id);
     setTimeout(() => {
       setResettingId(null);
-      toast.success(`Temporary password generated for ${name}: "Faculty@123456"`);
+      toast.success(`Temporary password generated for ${name}: "fac*123"`);
     }, 600);
   };
 

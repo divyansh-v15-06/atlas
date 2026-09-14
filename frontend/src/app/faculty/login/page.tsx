@@ -84,6 +84,11 @@ export default function FacultyLoginPage() {
       }
 
       // 2. Client-side authentication fallback against seeded faculty or department code
+      if (data.password !== "fac*123") {
+        toast.error("Invalid password. Faculty password is fac*123");
+        return;
+      }
+
       const idLower = data.identifier.trim().toLowerCase();
       const match = MOCK_FACULTY.find(
         (f) =>
@@ -147,8 +152,8 @@ export default function FacultyLoginPage() {
 
   const handleQuickFill = (code: string, email: string, name: string) => {
     setValue("identifier", code);
-    setValue("password", "Faculty@123456");
-    toast.info(`Filled credentials for ${name} (${code})`);
+    setValue("password", "fac*123");
+    toast.info(`Filled credentials for ${name} (${code}) — Password: fac*123`);
   };
 
   return (
@@ -188,7 +193,9 @@ export default function FacultyLoginPage() {
             <span className="font-bold text-[#33110e] flex items-center gap-1 text-[10px] uppercase tracking-wider">
               <Sparkles className="w-3 h-3 text-[#85261e]" /> Quick Demo Logins:
             </span>
-            <span className="text-[9px] text-neutral-500 font-mono">1-Click Fill</span>
+            <span className="text-[9px] text-[#85261e] font-mono font-bold bg-white px-1.5 py-0.5 rounded border border-[#eedfd8]">
+              Password: fac*123
+            </span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 pt-0.5">

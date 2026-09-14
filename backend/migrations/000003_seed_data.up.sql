@@ -56,10 +56,10 @@ INSERT INTO programmes (id, department_id, code, name, level, duration_years) VA
 ('66666666-6666-6666-6666-666666666665', '22222222-2222-2222-2222-222222222222', 'PHD_CSE', 'Ph.D Computer Science & Engineering', 'PhD', 5)
 ON CONFLICT (id) DO NOTHING;
 
--- 7. Default Admin User (Password: Admin@123456)
+-- 7. Default Admin User (Password: admin*123)
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login) VALUES
-('33333333-3333-3333-3333-333333333333', 'admin@nith.ac.in', '$2a$10$Z5F9AlBKN6FwW3YYWspLPu0kINhx.TWTCkcrfEROvMBL9ERHeg2su', 'System Administrator', TRUE, FALSE)
-ON CONFLICT (id) DO NOTHING;
+('33333333-3333-3333-3333-333333333333', 'admin@nith.ac.in', '$2a$10$geepfLXbBOnpFmUh0FUqY.ozUtdj6B4y/G5N7qA59MeoUL2L0Rzoe', 'System Administrator', TRUE, FALSE)
+ON CONFLICT (id) DO UPDATE SET password_hash = EXCLUDED.password_hash;
 
 INSERT INTO user_roles (user_id, role_id) VALUES
 ('33333333-3333-3333-3333-333333333333', '00000000-0000-0000-0000-000000000001'),

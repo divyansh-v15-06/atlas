@@ -10,7 +10,7 @@ INSERT INTO metric_sources (id, code, name) VALUES ('44444444-4444-4444-4444-444
 
 -- 2. Faculty & User Accounts
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('af3db2f6-2cd3-587e-9762-0f94be8eb674', 'lalit@nith.ac.in', '$2b$08$B0m3H4lUCQDvrlND.oUu/uVtJ0dL99sjdz.e1cajVkcPMaoQzM41i', 'Prof. Lalit Kumar Awasthi', TRUE, TRUE)
+VALUES ('af3db2f6-2cd3-587e-9762-0f94be8eb674', 'lalit@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Prof. Lalit Kumar Awasthi', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('af3db2f6-2cd3-587e-9762-0f94be8eb674', '00000000-0000-0000-0000-000000000005')
@@ -23,7 +23,7 @@ VALUES ('bfb209c7-3e80-531b-ab07-7e9829b6f9be', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 1, 'faculty', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('bf67a867-677d-5795-b49a-59ca9b7f4708', 'kd@nith.ac.in', '$2b$08$fg0EFUcZh4Xx0GJvV8obROuKIfFiHoayUFKG3shWyU63tD5RcjnXa', 'Dr.(Mrs.) Kamlesh Dutta', TRUE, TRUE)
+VALUES ('bf67a867-677d-5795-b49a-59ca9b7f4708', 'kd@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr.(Mrs.) Kamlesh Dutta', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('bf67a867-677d-5795-b49a-59ca9b7f4708', '00000000-0000-0000-0000-000000000005')
@@ -36,7 +36,7 @@ VALUES ('33007428-2ecd-5b52-93aa-b6849142c098', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 2, 'faculty', '33007428-2ecd-5b52-93aa-b6849142c098') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('62bed2c9-f242-5555-ba4c-2497b12a30d2', 'teek@nith.ac.in', '$2b$08$/qe3UpfK2PdDOwF1BiPOFuD5oFGMgxug.uNDlfpJGvzIt3FvlphSC', 'Dr. T P Sharma', TRUE, TRUE)
+VALUES ('62bed2c9-f242-5555-ba4c-2497b12a30d2', 'teek@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. T P Sharma', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('62bed2c9-f242-5555-ba4c-2497b12a30d2', '00000000-0000-0000-0000-000000000005')
@@ -49,7 +49,7 @@ VALUES ('8f3440cb-d43b-5454-a7fd-9f9179831f9f', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 3, 'faculty', '8f3440cb-d43b-5454-a7fd-9f9179831f9f') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('cd1b6d9c-1170-58fa-aad0-dba1ef327a42', 'sid@nith.ac.in', '$2b$08$C92hXHuOA.Miwq2aBdVSluwoK6KwoKes/WbiyMURYoDqlr317FtPO', 'Dr. Siddhartha Chauhan', TRUE, TRUE)
+VALUES ('cd1b6d9c-1170-58fa-aad0-dba1ef327a42', 'sid@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Siddhartha Chauhan', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('cd1b6d9c-1170-58fa-aad0-dba1ef327a42', '00000000-0000-0000-0000-000000000005')
@@ -62,7 +62,7 @@ VALUES ('9cf82300-a051-548f-b5b1-f2dfd9a1f263', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 4, 'faculty', '9cf82300-a051-548f-b5b1-f2dfd9a1f263') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('cdc5ffcd-fae3-59c2-a146-10ef5299328b', 'naveen@nith.ac.in', '$2b$08$d33Q4RoYw/EPXBeZTp6mL.k5QKJeP1sWsSdCsynRMbP7dWIFnQ3cC', 'Dr. Naveen Chauhan', TRUE, TRUE)
+VALUES ('cdc5ffcd-fae3-59c2-a146-10ef5299328b', 'naveen@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Naveen Chauhan', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('cdc5ffcd-fae3-59c2-a146-10ef5299328b', '00000000-0000-0000-0000-000000000005')
@@ -75,7 +75,7 @@ VALUES ('3d84f2ba-e5ae-5995-90ed-576fc675f3e2', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 5, 'faculty', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('4a9619c2-2222-5925-b200-d08ef6cf287c', 'pardeep@nith.ac.in', '$2b$08$hi0oPS7g6p9VYmMogUgPr.Co3VeaoEZ9aZe3DWxGILYDJosUjjqk6', 'Dr. Pardeep Singh', TRUE, TRUE)
+VALUES ('4a9619c2-2222-5925-b200-d08ef6cf287c', 'pardeep@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Pardeep Singh', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('4a9619c2-2222-5925-b200-d08ef6cf287c', '00000000-0000-0000-0000-000000000005')
@@ -88,7 +88,7 @@ VALUES ('4a251956-1179-50e2-bf7e-f3be7d5574e2', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 7, 'faculty', '4a251956-1179-50e2-bf7e-f3be7d5574e2') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('43d5b4be-369a-5ed7-a68d-e79cbda8cfc7', 'rajeev@nith.ac.in', '$2b$08$5hDEu5Kul/Mzet2Ie1BhlON9b4MVuYhC5i6cPo4KdJo3a0ChebdbS', 'Dr. Rajeev Kumar', TRUE, TRUE)
+VALUES ('43d5b4be-369a-5ed7-a68d-e79cbda8cfc7', 'rajeev@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Rajeev Kumar', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('43d5b4be-369a-5ed7-a68d-e79cbda8cfc7', '00000000-0000-0000-0000-000000000005')
@@ -101,7 +101,7 @@ VALUES ('8baebe79-6e19-545b-a306-0d8b8ca2382b', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 9, 'faculty', '8baebe79-6e19-545b-a306-0d8b8ca2382b') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('74bc7fb8-fd39-541b-9bc6-b3773b778f9f', 'nitin@nith.ac.in', '$2b$08$vINihUmTOmKF.7bWTYSnnevKZKLnjotbefW8vhiKV9aKImG033Llm', 'Dr. Nitin Gupta', TRUE, TRUE)
+VALUES ('74bc7fb8-fd39-541b-9bc6-b3773b778f9f', 'nitin@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Nitin Gupta', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('74bc7fb8-fd39-541b-9bc6-b3773b778f9f', '00000000-0000-0000-0000-000000000005')
@@ -114,7 +114,7 @@ VALUES ('6ba9979b-078d-563a-ae15-44354e3c8fb0', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 10, 'faculty', '6ba9979b-078d-563a-ae15-44354e3c8fb0') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('8ae5458d-b4aa-59ec-8700-d7cde7f8dcf0', 'dpm@nith.ac.in', '$2b$08$qjahCSfBNgyrGCa3fQkYEOrPxdFHGhuFRKFh14aezRzgAybbEW.Ma', 'Dr. Dharmendra Prasad Mahato', TRUE, TRUE)
+VALUES ('8ae5458d-b4aa-59ec-8700-d7cde7f8dcf0', 'dpm@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Dharmendra Prasad Mahato', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('8ae5458d-b4aa-59ec-8700-d7cde7f8dcf0', '00000000-0000-0000-0000-000000000005')
@@ -127,7 +127,7 @@ VALUES ('6fca9444-24e9-5214-8602-158f38f353ec', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 11, 'faculty', '6fca9444-24e9-5214-8602-158f38f353ec') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('701ce252-d532-5dba-a4db-efbe95afbb43', 'ayadav@nith.ac.in', '$2b$08$wAXVtIILS7GinFHSu2js9uKGX6PMqNo58ffEo3q98u5ixF6Vy7/g2', 'Dr. Arun Kumar Yadav', TRUE, TRUE)
+VALUES ('701ce252-d532-5dba-a4db-efbe95afbb43', 'ayadav@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Arun Kumar Yadav', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('701ce252-d532-5dba-a4db-efbe95afbb43', '00000000-0000-0000-0000-000000000005')
@@ -140,7 +140,7 @@ VALUES ('bab88791-e99c-561e-986e-2a99c8c84b19', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 12, 'faculty', 'bab88791-e99c-561e-986e-2a99c8c84b19') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('a0b27644-4248-5b61-8859-ba7bacc5953a', 'mohit@nith.ac.in', '$2b$08$9RRhIV97RPcqByuRJTbQe.I6t5YIRUZzvEXR11URPVIXvmc4Wq77a', 'Dr. Mohit Kumar', TRUE, TRUE)
+VALUES ('a0b27644-4248-5b61-8859-ba7bacc5953a', 'mohit@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Mohit Kumar', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('a0b27644-4248-5b61-8859-ba7bacc5953a', '00000000-0000-0000-0000-000000000005')
@@ -153,7 +153,7 @@ VALUES ('88d09aab-214e-509e-8038-c6bd8ddb63c7', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 13, 'faculty', '88d09aab-214e-509e-8038-c6bd8ddb63c7') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('7ce25482-843e-518f-ba7a-0f1389cdbb10', 'jyoti.s@nith.ac.in', '$2b$08$9Qz1N8yzx96EkDaiFs.1QOPTWQ4Eiakxqj/3pYxuNaZZQ/gvX1AcK', 'Dr. Jyoti Srivastava', TRUE, TRUE)
+VALUES ('7ce25482-843e-518f-ba7a-0f1389cdbb10', 'jyoti.s@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Jyoti Srivastava', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('7ce25482-843e-518f-ba7a-0f1389cdbb10', '00000000-0000-0000-0000-000000000005')
@@ -166,7 +166,7 @@ VALUES ('e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 14, 'faculty', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('96be07b4-21c6-5b54-b351-40ce7ce6bd7a', 'dr.priyanka@nith.ac.in', '$2b$08$8dVf6xCjSE14Falp4wGiLuyWj4kptcqViqYQFP6rlbZMKamGPGfIK', 'Dr. Priyanka', TRUE, TRUE)
+VALUES ('96be07b4-21c6-5b54-b351-40ce7ce6bd7a', 'dr.priyanka@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Priyanka', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('96be07b4-21c6-5b54-b351-40ce7ce6bd7a', '00000000-0000-0000-0000-000000000005')
@@ -179,7 +179,7 @@ VALUES ('7ea23dd5-a666-543f-b04d-fdc4563b500c', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 15, 'faculty', '7ea23dd5-a666-543f-b04d-fdc4563b500c') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('29b6e7b6-3075-5862-ab9f-6155b18fec08', 'sangeetas@nith.ac.in', '$2b$08$Ws.qteyJhRGqYJc6tymHU.pAb.o4GGpCdIqyxJ0SUTrO6MXbE0KVu', 'Dr. Sangeeta Sharma', TRUE, TRUE)
+VALUES ('29b6e7b6-3075-5862-ab9f-6155b18fec08', 'sangeetas@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Sangeeta Sharma', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('29b6e7b6-3075-5862-ab9f-6155b18fec08', '00000000-0000-0000-0000-000000000005')
@@ -192,7 +192,7 @@ VALUES ('f78d864c-94e1-5cdf-9672-b2c891bb2abb', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 16, 'faculty', 'f78d864c-94e1-5cdf-9672-b2c891bb2abb') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('102119ea-79bc-56e7-831a-2ba9a57a0adf', 'mkhalid@nith.ac.in', '$2b$08$.pKetMgFcleqnuFc/82j0ejFdMzRyQsihSgAyCoT9CWgSXePlTAsG', 'Dr. Mohammad Khalid Pandit', TRUE, TRUE)
+VALUES ('102119ea-79bc-56e7-831a-2ba9a57a0adf', 'mkhalid@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Mohammad Khalid Pandit', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('102119ea-79bc-56e7-831a-2ba9a57a0adf', '00000000-0000-0000-0000-000000000005')
@@ -205,7 +205,7 @@ VALUES ('3d607ef3-b375-5ece-9f8b-84feb2ed4a16', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 17, 'faculty', '3d607ef3-b375-5ece-9f8b-84feb2ed4a16') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('f4f65c47-3b55-58c2-9f92-0e924244ec4c', 'ajaymallick@nith.ac.in', '$2b$08$28CAXqZrCDDNrWP.jfM1uu2DMw4G24rjVeVuFbZAgfkRxoyaAV0MG', 'Dr. Ajay Kumar Mallick', TRUE, TRUE)
+VALUES ('f4f65c47-3b55-58c2-9f92-0e924244ec4c', 'ajaymallick@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Ajay Kumar Mallick', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('f4f65c47-3b55-58c2-9f92-0e924244ec4c', '00000000-0000-0000-0000-000000000005')
@@ -218,7 +218,7 @@ VALUES ('0bdba158-8848-57a1-8223-ccdf001d9c5b', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 18, 'faculty', '0bdba158-8848-57a1-8223-ccdf001d9c5b') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('03b3b4aa-7e39-5b53-952e-6da1e6ff061b', 'robin.bhadoria@nith.ac.in', '$2b$08$Oa02bI7BEgZ6f91LJGWa8e24nFqnmiBz/Kg1Q.uS1AKceI3faFYWa', 'Dr. Robin Singh Bhadoria', TRUE, TRUE)
+VALUES ('03b3b4aa-7e39-5b53-952e-6da1e6ff061b', 'robin.bhadoria@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Robin Singh Bhadoria', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('03b3b4aa-7e39-5b53-952e-6da1e6ff061b', '00000000-0000-0000-0000-000000000005')
@@ -231,7 +231,7 @@ VALUES ('7f377458-de96-52a7-b8cf-04e50369469a', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 20, 'faculty', '7f377458-de96-52a7-b8cf-04e50369469a') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('5fd276c6-71bb-5513-9fed-b3ca64ea4db6', 'ram.sharma@nith.ac.in', '$2b$08$NptX98i0o0hhaRGAAqTJRO2DMJsGIJ8w.kxgug17pTjjM/1hbjBha', 'Dr. Ram Prakash Sharma', TRUE, TRUE)
+VALUES ('5fd276c6-71bb-5513-9fed-b3ca64ea4db6', 'ram.sharma@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Ram Prakash Sharma', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('5fd276c6-71bb-5513-9fed-b3ca64ea4db6', '00000000-0000-0000-0000-000000000005')
@@ -244,7 +244,7 @@ VALUES ('56b955eb-618e-5dcb-ac02-f8404a61a048', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 21, 'faculty', '56b955eb-618e-5dcb-ac02-f8404a61a048') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('d55bcde5-9942-5320-b773-170dbb81a546', 'pkdhiman@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Dr. Pushpender Kumar', TRUE, FALSE)
+VALUES ('d55bcde5-9942-5320-b773-170dbb81a546', 'pkdhiman@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Pushpender Kumar', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('d55bcde5-9942-5320-b773-170dbb81a546', '00000000-0000-0000-0000-000000000005')
@@ -257,7 +257,7 @@ VALUES ('8f8cf312-11a9-55d1-b838-9fbb14edb2f4', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 42, 'faculty', '8f8cf312-11a9-55d1-b838-9fbb14edb2f4') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('2f71f3e7-ed78-5f1f-9efe-e7ef8fa8d8b9', 'poojas@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Dr. Pooja Sharma', TRUE, FALSE)
+VALUES ('2f71f3e7-ed78-5f1f-9efe-e7ef8fa8d8b9', 'poojas@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Pooja Sharma', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('2f71f3e7-ed78-5f1f-9efe-e7ef8fa8d8b9', '00000000-0000-0000-0000-000000000005')
@@ -270,7 +270,7 @@ VALUES ('e0f136b4-3be3-52a4-8ae0-fbd435e22d98', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 43, 'faculty', 'e0f136b4-3be3-52a4-8ae0-fbd435e22d98') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('79568c4d-e456-54a1-b39c-bf38d6713a46', 'tanuj@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Dr. Tanuj Wala', TRUE, FALSE)
+VALUES ('79568c4d-e456-54a1-b39c-bf38d6713a46', 'tanuj@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Tanuj Wala', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('79568c4d-e456-54a1-b39c-bf38d6713a46', '00000000-0000-0000-0000-000000000005')
@@ -283,7 +283,7 @@ VALUES ('93a853b0-b5ce-5ed1-b715-f88f25ed9e76', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 45, 'faculty', '93a853b0-b5ce-5ed1-b715-f88f25ed9e76') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('d58a47c5-99d5-5db8-b861-838e336fa75a', 'mukulkmajhi@gmail.com', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Dr. Mukul Majhi', TRUE, FALSE)
+VALUES ('d58a47c5-99d5-5db8-b861-838e336fa75a', 'mukulkmajhi@gmail.com', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Mukul Majhi', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('d58a47c5-99d5-5db8-b861-838e336fa75a', '00000000-0000-0000-0000-000000000005')
@@ -296,7 +296,7 @@ VALUES ('02aa78ef-5966-5e7d-afd9-45f788cf1fdc', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 46, 'faculty', '02aa78ef-5966-5e7d-afd9-45f788cf1fdc') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('d2d7d0c6-5730-57d3-99a5-6a060afa078d', 'richa_cs@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Dr. Richa', TRUE, FALSE)
+VALUES ('d2d7d0c6-5730-57d3-99a5-6a060afa078d', 'richa_cs@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Richa', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('d2d7d0c6-5730-57d3-99a5-6a060afa078d', '00000000-0000-0000-0000-000000000005')
@@ -309,7 +309,7 @@ VALUES ('97ce26f7-28ab-5679-9876-215ac22d6cff', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 47, 'faculty', '97ce26f7-28ab-5679-9876-215ac22d6cff') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('5f4f3f9c-e550-5f6e-8408-a890923eab8a', 'pooja_phdcse@nith.ac.ini', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Mrs. Pooja Rani', TRUE, FALSE)
+VALUES ('5f4f3f9c-e550-5f6e-8408-a890923eab8a', 'pooja_phdcse@nith.ac.ini', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Mrs. Pooja Rani', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('5f4f3f9c-e550-5f6e-8408-a890923eab8a', '00000000-0000-0000-0000-000000000005')
@@ -322,7 +322,7 @@ VALUES ('8986b4f9-5c4c-5047-8e5f-cde02c59b83a', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 48, 'faculty', '8986b4f9-5c4c-5047-8e5f-cde02c59b83a') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('b095649f-6a68-5169-9143-4e85dd3fd6c7', 'pratibhasingh@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Mrs. Pratibha Singh', TRUE, FALSE)
+VALUES ('b095649f-6a68-5169-9143-4e85dd3fd6c7', 'pratibhasingh@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Mrs. Pratibha Singh', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('b095649f-6a68-5169-9143-4e85dd3fd6c7', '00000000-0000-0000-0000-000000000005')
@@ -335,7 +335,7 @@ VALUES ('0494529c-89b3-5038-9c24-c69fdd82942f', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 49, 'faculty', '0494529c-89b3-5038-9c24-c69fdd82942f') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('a6dcead1-90de-5068-b4b7-a61c0ac20ec0', 'keshavkaundal@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Mr. Keshav Kaundal', TRUE, FALSE)
+VALUES ('a6dcead1-90de-5068-b4b7-a61c0ac20ec0', 'keshavkaundal@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Mr. Keshav Kaundal', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('a6dcead1-90de-5068-b4b7-a61c0ac20ec0', '00000000-0000-0000-0000-000000000005')
@@ -348,7 +348,7 @@ VALUES ('e0a19ad4-16dc-5113-8e43-588121443653', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 50, 'faculty', 'e0a19ad4-16dc-5113-8e43-588121443653') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('acd8be77-9cbe-5e61-9f5e-e3643a8faaa3', 'meenakshinayyer@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Mrs. Meenakshi Nayyer', TRUE, FALSE)
+VALUES ('acd8be77-9cbe-5e61-9f5e-e3643a8faaa3', 'meenakshinayyer@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Mrs. Meenakshi Nayyer', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('acd8be77-9cbe-5e61-9f5e-e3643a8faaa3', '00000000-0000-0000-0000-000000000005')

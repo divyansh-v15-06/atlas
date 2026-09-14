@@ -646,8 +646,8 @@ npm run dev
 | :--- | :--- | :--- |
 | **Public Institute Website** | [http://localhost:3000](http://localhost:3000) | Public Access |
 | **Department Portal (e.g. CSE)** | [http://localhost:3000/?dept=cse](http://localhost:3000/?dept=cse) | Public Access |
-| **Faculty Portal** | [http://localhost:3000/faculty/login](http://localhost:3000/faculty/login) | Faculty Email / Password |
-| **Admin Portal** | [http://localhost:3000/admin/login](http://localhost:3000/admin/login) | `admin@nith.ac.in` / `Admin@123` |
+| **Faculty Portal** | [http://localhost:3000/faculty/login](http://localhost:3000/faculty/login) | Any Faculty Code/Email (e.g. `CS01`, `CS04`) / `fac*123` |
+| **Admin Portal** | [http://localhost:3000/admin/login](http://localhost:3000/admin/login) | `admin@nith.ac.in` / `admin*123` |
 | **Go Backend Health** | [http://localhost:8080/health](http://localhost:8080/health) | API Status |
 
 ---

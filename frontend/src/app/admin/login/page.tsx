@@ -70,8 +70,13 @@ export default function AdminLoginPage() {
       }
 
       // 2. Client-side authentication fallback for admin console
+      if (data.password !== "admin*123") {
+        toast.error("Invalid credentials. Admin password is admin*123");
+        return;
+      }
+
       if (
-        (data.email === "admin@nith.ac.in" && data.password === "Admin@123456") ||
+        data.email === "admin@nith.ac.in" ||
         data.email.toLowerCase().includes("admin") ||
         data.email.toLowerCase() === "hod@nith.ac.in"
       ) {
@@ -93,7 +98,7 @@ export default function AdminLoginPage() {
         toast.success("Welcome back, System Administrator!");
         router.push("/admin");
       } else {
-        toast.error("Invalid credentials. Try admin@nith.ac.in / Admin@123456");
+        toast.error("Invalid admin email. Try admin@nith.ac.in with password admin*123");
       }
     } finally {
       setLoading(false);
@@ -103,7 +108,7 @@ export default function AdminLoginPage() {
   const handleQuickFill = (email: string, pass: string, roleName: string) => {
     setValue("email", email);
     setValue("password", pass);
-    toast.info(`Filled credentials for ${roleName}`);
+    toast.info(`Filled credentials for ${roleName} — Password: admin*123`);
   };
 
   return (
@@ -143,13 +148,15 @@ export default function AdminLoginPage() {
             <span className="font-bold text-[#33110e] flex items-center gap-1 text-[10px] uppercase tracking-wider">
               <KeyRound className="w-3 h-3 text-[#85261e]" /> Quick Demo Admin Access:
             </span>
-            <span className="text-[9px] text-neutral-500 font-mono">1-Click Fill</span>
+            <span className="text-[9px] text-[#85261e] font-mono font-bold bg-white px-1.5 py-0.5 rounded border border-[#eedfd8]">
+              Password: admin*123
+            </span>
           </div>
 
           <div className="grid grid-cols-2 gap-1.5 pt-0.5">
             <button
               type="button"
-              onClick={() => handleQuickFill("admin@nith.ac.in", "Admin@123456", "Super Administrator")}
+              onClick={() => handleQuickFill("admin@nith.ac.in", "admin*123", "Super Administrator")}
               className="text-left rounded-lg border border-[#eedfd8] bg-white p-2 text-[#33110e] hover:bg-[#33110e] hover:text-white transition duration-150 shadow-2xs group cursor-pointer"
             >
               <div className="font-bold text-[10px] truncate group-hover:text-amber-300">
@@ -162,7 +169,7 @@ export default function AdminLoginPage() {
 
             <button
               type="button"
-              onClick={() => handleQuickFill("hod@nith.ac.in", "Admin@123456", "HOD Department Admin")}
+              onClick={() => handleQuickFill("hod@nith.ac.in", "admin*123", "HOD Department Admin")}
               className="text-left rounded-lg border border-[#eedfd8] bg-white p-2 text-[#33110e] hover:bg-[#33110e] hover:text-white transition duration-150 shadow-2xs group cursor-pointer"
             >
               <div className="font-bold text-[10px] truncate group-hover:text-amber-300">
