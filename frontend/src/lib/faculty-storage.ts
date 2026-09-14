@@ -14,6 +14,7 @@ import {
   MOCK_PROJECTS,
   MOCK_CONSULTANCIES,
   MOCK_EVENTS,
+  MOCK_COURSES_TAUGHT,
 } from "./mock-data";
 import departmentsRegistry from "@/lib/departments-registry.json";
 
@@ -86,6 +87,27 @@ export function isMatchingRecord(a: any, b: any): boolean {
 
   // Legacy ID match
   if (a.legacy_id && b.legacy_id && String(a.legacy_id) === String(b.legacy_id)) return true;
+
+  // Course code & session match (for CourseTaught)
+  if (a.course_code && b.course_code) {
+    const codeA = (a.course_code || "").trim().toLowerCase();
+    const codeB = (b.course_code || "").trim().toLowerCase();
+    if (codeA === codeB) {
+      const yearA = (a.academic_year || "").trim().toLowerCase();
+      const yearB = (b.academic_year || "").trim().toLowerCase();
+      const semA = String(a.semester ?? "").trim();
+      const semB = String(b.semester ?? "").trim();
+      const secA = (a.section || "").trim().toLowerCase();
+      const secB = (b.section || "").trim().toLowerCase();
+      if (
+        (!yearA || !yearB || yearA === yearB) &&
+        (!semA || !semB || semA === semB) &&
+        (!secA || !secB || secA === secB)
+      ) {
+        return true;
+      }
+    }
+  }
 
   // Title match fallback (strip punctuation for robust matching)
   const titleA = (a.title || "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -223,6 +245,40 @@ export function resolveFacultyBaseline(faculty: any, section: string): any[] {
   if (section === "honors") return baseFaculty.honors || [];
   if (section === "expert_talks") return baseFaculty.expert_talks || [];
   if (section === "exposures") return baseFaculty.exposures || [];
+
+  if (section === "courses") {
+    const canonicalCode = getFacultyCanonicalCode(faculty);
+    const facCode = (baseFaculty.employee_code || "").trim().toLowerCase();
+    const facId = String(baseFaculty.id || "").trim().toLowerCase();
+    const facName = (baseFaculty.full_name || "").trim().toLowerCase();
+
+    // Check if admin has set custom allocations
+    let sourceAllocations = MOCK_COURSES_TAUGHT;
+    if (typeof window !== "undefined") {
+      try {
+        const adminAllocRaw = localStorage.getItem("nith_admin_course_allocations");
+        if (adminAllocRaw) {
+          const parsed = JSON.parse(adminAllocRaw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            sourceAllocations = parsed;
+          }
+        }
+      } catch {}
+    }
+
+    return sourceAllocations.filter((c: any) => {
+      const cCode = (c.faculty_code || "").trim().toLowerCase();
+      const cId = String(c.faculty_id || "").trim().toLowerCase();
+      const cName = (c.faculty_name || "").trim().toLowerCase();
+
+      return Boolean(
+        (canonicalCode && canonicalCode !== "default" && cCode === canonicalCode) ||
+        (facCode && cCode === facCode) ||
+        (facId && cId === facId) ||
+        (facName && cName === facName)
+      );
+    });
+  }
 
   return [];
 }
