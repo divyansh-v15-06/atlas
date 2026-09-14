@@ -148,11 +148,11 @@ export default function CoursesPage() {
   // Statistics Summary
   const stats = useMemo(() => {
     const total = enrichedCourses.length;
-    const core = enrichedCourses.filter((c) => c.type?.toLowerCase().includes("core")).length;
-    const electives = enrichedCourses.filter((c) => c.type?.toLowerCase().includes("elective")).length;
+    const ug = enrichedCourses.filter((c) => c.level === "UG").length;
+    const pg = enrichedCourses.filter((c) => c.level === "PG").length;
+    const doctoral = enrichedCourses.filter((c) => c.level === "Doctoral").length;
     const labs = enrichedCourses.filter((c) => c.type?.toLowerCase().includes("lab")).length;
-    const pg = enrichedCourses.filter((c) => c.level === "PG" || c.level === "Doctoral").length;
-    return { total, core, electives, labs, pg };
+    return { total, ug, pg, doctoral, labs };
   }, [enrichedCourses]);
 
   const semesters = [1, 2, 3, 4, 5, 6, 7, 8];
@@ -186,8 +186,8 @@ export default function CoursesPage() {
           </div>
           <p className="text-xs text-neutral-600 mt-1 max-w-3xl leading-relaxed">
             Authoritative curriculum database of core theory courses, discipline &amp; stream electives,
-            practical computing laboratories, and capstone research modules offered by the Department of{" "}
-            {activeDepartment.name}.
+            practical computing laboratories, and capstone research modules offered across Undergraduate (UG),
+            Postgraduate (PG), and Doctoral (Ph.D.) levels by the Department of {activeDepartment.name}.
           </p>
         </div>
 
@@ -214,27 +214,30 @@ export default function CoursesPage() {
             <div className="bg-[#fff9f6] border border-[#eedfd8] rounded-xl p-3.5 shadow-2xs">
               <span className="text-[10px] uppercase font-bold text-neutral-500 tracking-wider">Total Courses</span>
               <p className="text-xl font-extrabold text-[#33110e] mt-0.5">{stats.total}</p>
-              <span className="text-[10px] text-neutral-500">Across UG, PG &amp; Ph.D.</span>
+              <span className="text-[10px] text-neutral-500">Across All Programs</span>
             </div>
             <div className="bg-[#fff9f6] border border-[#eedfd8] rounded-xl p-3.5 shadow-2xs">
-              <span className="text-[10px] uppercase font-bold text-neutral-500 tracking-wider">Core Theory</span>
-              <p className="text-xl font-extrabold text-[#85261e] mt-0.5">{stats.core}</p>
-              <span className="text-[10px] text-neutral-500">Essential Engineering Core</span>
+              <span className="text-[10px] uppercase font-bold text-neutral-500 tracking-wider">Undergraduate</span>
+              <p className="text-xl font-extrabold text-[#85261e] mt-0.5">{stats.ug}</p>
+              <span className="text-[10px] text-neutral-500">B.Tech &amp; Dual Degree</span>
             </div>
             <div className="bg-[#fff9f6] border border-[#eedfd8] rounded-xl p-3.5 shadow-2xs">
-              <span className="text-[10px] uppercase font-bold text-neutral-500 tracking-wider">Specialized Electives</span>
-              <p className="text-xl font-extrabold text-amber-700 mt-0.5">{stats.electives}</p>
-              <span className="text-[10px] text-neutral-500">Discipline &amp; Stream Tracks</span>
+              <span className="text-[10px] uppercase font-bold text-neutral-500 tracking-wider">Postgraduate</span>
+              <p className="text-xl font-extrabold text-amber-700 mt-0.5">{stats.pg}</p>
+              <span className="text-[10px] text-neutral-500">M.Tech AI &amp; Computing</span>
             </div>
-            <div className="bg-[#fff9f6] border border-[#eedfd8] rounded-xl p-3.5 shadow-2xs">
-              <span className="text-[10px] uppercase font-bold text-neutral-500 tracking-wider">Computing Labs</span>
-              <p className="text-xl font-extrabold text-emerald-800 mt-0.5">{stats.labs}</p>
-              <span className="text-[10px] text-neutral-500">Practical &amp; Software Labs</span>
+            <div className="bg-[#fff9f6] border border-purple-200 rounded-xl p-3.5 shadow-2xs bg-gradient-to-br from-purple-50/50 to-white">
+              <span className="text-[10px] uppercase font-bold text-purple-800 tracking-wider flex items-center gap-1">
+                <GraduationCap className="w-3 h-3 text-purple-700" />
+                Doctoral (Ph.D.)
+              </span>
+              <p className="text-xl font-extrabold text-purple-950 mt-0.5">{stats.doctoral}</p>
+              <span className="text-[10px] text-purple-700 font-medium">Advanced Research Modules</span>
             </div>
             <div className="bg-[#fff9f6] border border-[#eedfd8] rounded-xl p-3.5 shadow-2xs col-span-2 sm:col-span-1">
-              <span className="text-[10px] uppercase font-bold text-neutral-500 tracking-wider">PG &amp; Doctoral</span>
-              <p className="text-xl font-extrabold text-indigo-900 mt-0.5">{stats.pg}</p>
-              <span className="text-[10px] text-neutral-500">Advanced Master &amp; Ph.D.</span>
+              <span className="text-[10px] uppercase font-bold text-neutral-500 tracking-wider">Computing Labs</span>
+              <p className="text-xl font-extrabold text-emerald-800 mt-0.5">{stats.labs}</p>
+              <span className="text-[10px] text-neutral-500">Software &amp; Systems Labs</span>
             </div>
           </div>
 
@@ -355,7 +358,11 @@ export default function CoursesPage() {
                   setLevelFilter("PG");
                   setSemesterFilter("1");
                 }}
-                className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-white text-neutral-700 border border-[#eedfd8] hover:bg-neutral-100 cursor-pointer"
+                className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition cursor-pointer ${
+                  levelFilter === "PG" && semesterFilter === "1"
+                    ? "bg-[#85261e] text-white font-bold shadow-2xs"
+                    : "bg-white text-neutral-700 border border-[#eedfd8] hover:bg-neutral-100"
+                }`}
               >
                 PG Sem 1
               </button>
@@ -364,9 +371,27 @@ export default function CoursesPage() {
                   setLevelFilter("PG");
                   setSemesterFilter("2");
                 }}
-                className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-white text-neutral-700 border border-[#eedfd8] hover:bg-neutral-100 cursor-pointer"
+                className={`px-2.5 py-1 text-xs font-semibold rounded-lg transition cursor-pointer ${
+                  levelFilter === "PG" && semesterFilter === "2"
+                    ? "bg-[#85261e] text-white font-bold shadow-2xs"
+                    : "bg-white text-neutral-700 border border-[#eedfd8] hover:bg-neutral-100"
+                }`}
               >
                 PG Sem 2
+              </button>
+              <button
+                onClick={() => {
+                  setLevelFilter("Doctoral");
+                  setSemesterFilter("ALL");
+                }}
+                className={`px-3 py-1 text-xs font-semibold rounded-lg transition cursor-pointer flex items-center gap-1.5 ${
+                  levelFilter === "Doctoral"
+                    ? "bg-purple-900 text-white font-bold shadow-xs"
+                    : "bg-purple-50 text-purple-950 border border-purple-200 hover:bg-purple-100"
+                }`}
+              >
+                <GraduationCap className="w-3.5 h-3.5 text-purple-700" />
+                <span>Doctoral (Ph.D.)</span>
               </button>
             </div>
           </div>
@@ -403,6 +428,7 @@ export default function CoursesPage() {
           ) : (
             <div className="grid gap-5 md:grid-cols-2">
               {filtered.map((course) => {
+                const isDoctoral = course.level === "Doctoral";
                 const isLab = course.type?.toLowerCase().includes("lab");
                 const isCore = course.type?.toLowerCase().includes("core");
                 const isElective = course.type?.toLowerCase().includes("elective");
@@ -410,21 +436,39 @@ export default function CoursesPage() {
                 return (
                   <div
                     key={course.id || course.code}
-                    className="bg-white border border-[#eedfd8] rounded-2xl p-5 shadow-xs hover:shadow-md hover:border-[#85261e]/40 transition flex flex-col justify-between space-y-4 group"
+                    className={`bg-white border rounded-2xl p-5 shadow-xs hover:shadow-md transition flex flex-col justify-between space-y-4 group ${
+                      isDoctoral
+                        ? "border-purple-200/80 hover:border-purple-400"
+                        : "border-[#eedfd8] hover:border-[#85261e]/40"
+                    }`}
                   >
                     <div className="space-y-3">
                       {/* Top Badges & Credits */}
                       <div className="flex items-start justify-between gap-2 border-b border-[#eedfd8]/60 pb-3">
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-mono font-extrabold text-sm text-[#85261e] bg-[#fff9f6] border border-[#eedfd8] px-2.5 py-0.5 rounded-lg">
+                          <span
+                            className={`font-mono font-extrabold text-sm px-2.5 py-0.5 rounded-lg border ${
+                              isDoctoral
+                                ? "text-purple-900 bg-purple-50 border-purple-200"
+                                : "text-[#85261e] bg-[#fff9f6] border-[#eedfd8]"
+                            }`}
+                          >
                             {course.code}
                           </span>
-                          <span className="bg-[#fff9f6] text-[#33110e] border border-[#eedfd8] text-[10px] font-bold px-2 py-0.5 rounded uppercase">
-                            {course.level} • Sem {course.semester}
+                          <span
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase border ${
+                              isDoctoral
+                                ? "bg-purple-50 text-purple-900 border-purple-200"
+                                : "bg-[#fff9f6] text-[#33110e] border-[#eedfd8]"
+                            }`}
+                          >
+                            {course.level} • {course.level === "Doctoral" ? "Ph.D. Research" : `Sem ${course.semester}`}
                           </span>
                           <span
-                            className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
-                              isLab
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded uppercase flex items-center gap-1 ${
+                              isDoctoral
+                                ? "bg-purple-100 text-purple-950 border border-purple-300 font-extrabold"
+                                : isLab
                                 ? "bg-teal-50 text-teal-800 border border-teal-200"
                                 : isCore
                                 ? "bg-rose-50 text-rose-900 border border-rose-200"
@@ -433,7 +477,8 @@ export default function CoursesPage() {
                                 : "bg-neutral-100 text-neutral-800 border border-neutral-200"
                             }`}
                           >
-                            {course.type || "Course"}
+                            {isDoctoral && <GraduationCap className="w-3 h-3 text-purple-700" />}
+                            <span>{course.type || (isDoctoral ? "Doctoral Coursework" : "Course")}</span>
                           </span>
                         </div>
 
@@ -520,7 +565,7 @@ export default function CoursesPage() {
                         {selectedCourse.code}
                       </span>
                       <span className="bg-white/10 text-white text-[11px] font-semibold px-2 py-0.5 rounded">
-                        {selectedCourse.level} • Semester {selectedCourse.semester}
+                        {selectedCourse.level} • {selectedCourse.level === "Doctoral" ? "Ph.D. Research" : `Semester ${selectedCourse.semester}`}
                       </span>
                       <span className="bg-white/10 text-white text-[11px] font-semibold px-2 py-0.5 rounded">
                         {selectedCourse.type}
