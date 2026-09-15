@@ -92,26 +92,76 @@ const FALLBACK_EQUIPMENT: EquipmentAsset[] = [
 
 export default function PublicEquipmentPage() {
   const { activeDepartment } = useDepartment();
-  const isCse = activeDepartment.slug === "cse";
   const [equipments, setEquipments] = useState<EquipmentAsset[]>([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [labFilter, setLabFilter] = useState("ALL");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("nith_admin_equipments");
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setEquipments(isCse ? parsed : []);
-            return;
+    let isMounted = true;
+    async function loadEquipments() {
+      setLoading(true);
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+      try {
+        const res = await fetch(`${apiUrl}/equipment?department_id=${activeDepartment.id}`);
+        if (res.ok) {
+          const json = await res.json();
+          const items = Array.isArray(json) ? json : json.data;
+          if (Array.isArray(items) && items.length > 0) {
+            const mapped: EquipmentAsset[] = items.map((d: any) => ({
+              id: d.id,
+              name: (d.name || "").replace(/^"|"$/g, ""),
+              lab: d.lab_name || "Department Computing & Hardware Facility",
+              model: d.asset_tag || "Institutional Asset",
+              serial_number: d.invoice_number || `AST-${d.id.slice(0, 8)}`,
+              invoice_number: d.invoice_number || "",
+              indenter: d.indenter_name || "Department In-Charge",
+              vendor: d.vendor_name || "Authorized Supplier",
+              cost: Number(d.purchase_value) || 0,
+              purchase_date: d.purchase_date || "",
+              academic_session: "2023-2024",
+              status: "Operational",
+            }));
+            if (isMounted) {
+              setEquipments(mapped);
+              setLoading(false);
+              return;
+            }
           }
-        } catch {}
+        }
+      } catch (err) {
+        console.warn("Could not fetch equipment from API, using fallback store", err);
+      }
+
+      // Check localStorage scoped by department
+      if (typeof window !== "undefined") {
+        const savedDept = localStorage.getItem(`nith_admin_equipments_${activeDepartment.slug}`);
+        if (savedDept) {
+          try {
+            const parsed = JSON.parse(savedDept);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              if (isMounted) {
+                setEquipments(parsed);
+                setLoading(false);
+                return;
+              }
+            }
+          } catch {}
+        }
+      }
+
+      // Fallback for CSE if offline / demo
+      if (isMounted) {
+        setEquipments(activeDepartment.slug === "cse" ? FALLBACK_EQUIPMENT : []);
+        setLoading(false);
       }
     }
-    setEquipments(isCse ? FALLBACK_EQUIPMENT : []);
-  }, [isCse]);
+
+    loadEquipments();
+    return () => {
+      isMounted = false;
+    };
+  }, [activeDepartment]);
 
   // Unique lab options
   const labOptions = useMemo(() => {
@@ -144,11 +194,15 @@ export default function PublicEquipmentPage() {
     return equipments.reduce((sum, item) => sum + (item.cost || 0), 0);
   }, [equipments]);
 
-  if (!isCse && equipments.length === 0) {
+  if (!loading && equipments.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-12">
         <DepartmentEmptyState
           sectionTitle={`Department of ${activeDepartment.name} Computing Infrastructure & Equipment`}
+          title={`No Equipment Registered for ${activeDepartment.name}`}
+          description={`The department currently has not cataloged any laboratory equipment or high-performance computing assets yet.`}
+          actionHref="/aboutus/labs"
+          actionLabel="View Laboratory Facilities"
         />
       </div>
     );
@@ -303,3 +357,4 @@ export default function PublicEquipmentPage() {
     </div>
   );
 }
+

@@ -27,6 +27,7 @@ type Repository interface {
 	CreateLab(ctx context.Context, req *CreateLabRequest) (*Lab, error)
 	ListEquipment(ctx context.Context, deptID, labID string) ([]Equipment, error)
 	CreateEquipment(ctx context.Context, req *CreateEquipmentRequest) (*Equipment, error)
+	DeleteEquipment(ctx context.Context, id string) error
 
 	// Placement Stats
 	ListPlacementStats(ctx context.Context, deptID string, year *int) ([]PlacementStat, error)
@@ -291,6 +292,12 @@ func (r *pgRepository) CreateEquipment(ctx context.Context, req *CreateEquipment
 		return nil, err
 	}
 	return &e, nil
+}
+
+func (r *pgRepository) DeleteEquipment(ctx context.Context, id string) error {
+	querySQL := `UPDATE equipment SET deleted_at = NOW() WHERE id = $1`
+	_, err := r.pool.Exec(ctx, querySQL, id)
+	return err
 }
 
 func (r *pgRepository) ListPlacementStats(ctx context.Context, deptID string, year *int) ([]PlacementStat, error) {

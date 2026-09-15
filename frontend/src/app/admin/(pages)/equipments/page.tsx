@@ -37,6 +37,24 @@ interface EquipmentAsset {
   status: "Operational" | "Under Maintenance" | "Decommissioned";
 }
 
+interface Department {
+  id: string;
+  name: string;
+  code: string;
+  slug: string;
+}
+
+const DEFAULT_DEPARTMENTS: Department[] = [
+  { id: "22222222-2222-2222-2222-222222222222", name: "Computer Science & Engineering", code: "CSE", slug: "cse" },
+  { id: "22222222-2222-2222-2222-222222222223", name: "Electronics & Communication Engineering", code: "ECE", slug: "ece" },
+  { id: "22222222-2222-2222-2222-222222222224", name: "Electrical Engineering", code: "EE", slug: "ee" },
+  { id: "22222222-2222-2222-2222-222222222225", name: "Mechanical Engineering", code: "ME", slug: "me" },
+  { id: "22222222-2222-2222-2222-222222222226", name: "Civil Engineering", code: "CE", slug: "ce" },
+  { id: "22222222-2222-2222-2222-222222222227", name: "Chemical Engineering", code: "CHE", slug: "che" },
+  { id: "22222222-2222-2222-2222-222222222228", name: "Material Science & Engineering", code: "MSE", slug: "mse" },
+  { id: "22222222-2222-2222-2222-222222222229", name: "Department of Architecture", code: "ARCH", slug: "arch" },
+];
+
 const INITIAL_EQUIPMENT: EquipmentAsset[] = [
   {
     id: "eq-1",
@@ -101,23 +119,106 @@ const INITIAL_EQUIPMENT: EquipmentAsset[] = [
 ];
 
 export default function AdminEquipmentsPage() {
-  const [equipments, setEquipments] = useState<EquipmentAsset[]>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("nith_admin_equipments");
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch {}
+  const [departments, setDepartments] = useState<Department[]>(DEFAULT_DEPARTMENTS);
+  const [selectedDeptId, setSelectedDeptId] = useState<string>("22222222-2222-2222-2222-222222222222");
+  const [equipments, setEquipments] = useState<EquipmentAsset[]>(INITIAL_EQUIPMENT);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch departments list from API if available
+  useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+    fetch(`${apiUrl}/departments`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (json && Array.isArray(json.data) && json.data.length > 0) {
+          setDepartments(
+            json.data.map((d: any) => ({
+              id: d.id,
+              name: d.name,
+              code: d.code,
+              slug: d.slug,
+            }))
+          );
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  // Fetch equipment for selected department
+  useEffect(() => {
+    let isMounted = true;
+    async function loadEquipmentForDept() {
+      setIsLoading(true);
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+      try {
+        const res = await fetch(`${apiUrl}/equipment?department_id=${selectedDeptId}`);
+        if (res.ok) {
+          const json = await res.json();
+          const items = Array.isArray(json) ? json : json.data;
+          if (Array.isArray(items) && items.length > 0) {
+            const mapped: EquipmentAsset[] = items.map((d: any) => ({
+              id: d.id,
+              name: (d.name || "").replace(/^"|"$/g, ""),
+              lab: d.lab_name || "Department Computing & Hardware Facility",
+              model: d.asset_tag || "Institutional Asset",
+              serial_number: d.invoice_number || `AST-${d.id.slice(0, 8)}`,
+              invoice_number: d.invoice_number || "",
+              indenter: d.indenter_name || "Department In-Charge",
+              vendor: d.vendor_name || "Authorized Supplier",
+              cost: Number(d.purchase_value) || 0,
+              purchase_date: d.purchase_date || "",
+              academic_session: "2023-2024",
+              status: "Operational",
+            }));
+            if (isMounted) {
+              setEquipments(mapped);
+              setIsLoading(false);
+              return;
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch equipment from API, using fallback store", err);
+      }
+
+      // Check localStorage scoped by department
+      if (typeof window !== "undefined") {
+        const savedDept = localStorage.getItem(`nith_admin_equipments_${selectedDeptId}`);
+        if (savedDept) {
+          try {
+            const parsed = JSON.parse(savedDept);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              if (isMounted) {
+                setEquipments(parsed);
+                setIsLoading(false);
+                return;
+              }
+            }
+          } catch {}
+        }
+      }
+
+      // Fallback: Initial equipment if CSE, else empty array
+      if (isMounted) {
+        const isCse = selectedDeptId === "22222222-2222-2222-2222-222222222222";
+        setEquipments(isCse ? INITIAL_EQUIPMENT : []);
+        setIsLoading(false);
       }
     }
-    return INITIAL_EQUIPMENT;
-  });
 
-  useEffect(() => {
+    loadEquipmentForDept();
+    return () => {
+      isMounted = false;
+    };
+  }, [selectedDeptId]);
+
+  // Persist local changes per department
+  const saveEquipments = (updated: EquipmentAsset[]) => {
+    setEquipments(updated);
     if (typeof window !== "undefined") {
-      localStorage.setItem("nith_admin_equipments", JSON.stringify(equipments));
+      localStorage.setItem(`nith_admin_equipments_${selectedDeptId}`, JSON.stringify(updated));
     }
-  }, [equipments]);
+  };
 
   // Filters & Search
   const [search, setSearch] = useState("");
@@ -207,10 +308,34 @@ export default function AdminEquipmentsPage() {
         academic_session: formData.academic_session,
         status: formData.status,
       };
-      setEquipments([newAsset, ...equipments]);
+      saveEquipments([newAsset, ...equipments]);
       toast.success("Equipment logged in asset registry successfully");
+
+      // Save to PostgreSQL via Go API
+      const token = typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+      fetch(`${apiUrl}/equipment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({
+          department_id: selectedDeptId,
+          name: formData.name.trim(),
+          asset_tag: formData.model.trim() || undefined,
+          quantity: 1,
+          stock_in_use: 1,
+          purchase_value: Number(formData.cost) || 0,
+          purchase_date: formData.purchase_date,
+          vendor_name: formData.vendor.trim() || undefined,
+          invoice_number: formData.invoice_number.trim() || undefined,
+          indenter_name: formData.indenter.trim() || undefined,
+          contact_details: formData.vendor_address.trim() || undefined,
+        }),
+      }).catch((err) => console.warn("Backend API save skipped", err));
     } else if (editingItem) {
-      setEquipments(
+      saveEquipments(
         equipments.map((item) =>
           item.id === editingItem.id
             ? {
@@ -238,8 +363,17 @@ export default function AdminEquipmentsPage() {
 
   const handleDelete = (id: string, name: string) => {
     if (confirm(`Are you sure you want to remove "${name}" from the asset inventory?`)) {
-      setEquipments(equipments.filter((x) => x.id !== id));
+      saveEquipments(equipments.filter((x) => x.id !== id));
       toast.success("Asset record removed");
+
+      const token = typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+      fetch(`${apiUrl}/equipment/${id}`, {
+        method: "DELETE",
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      }).catch((err) => console.warn("Backend delete skipped", err));
     }
   };
 
@@ -308,7 +442,23 @@ export default function AdminEquipmentsPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <div className="flex items-center gap-2 bg-white border border-[#eedfd8] rounded-xl px-3 py-1.5 shadow-2xs">
+            <Building2 className="w-4 h-4 text-[#85261e]" />
+            <span className="text-xs font-bold text-neutral-500 hidden sm:inline">Dept:</span>
+            <select
+              value={selectedDeptId}
+              onChange={(e) => setSelectedDeptId(e.target.value)}
+              className="bg-transparent text-xs font-bold text-[#33110e] focus:outline-none cursor-pointer"
+            >
+              {departments.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.code} — {d.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <button
             type="button"
             onClick={handleExportCsv}

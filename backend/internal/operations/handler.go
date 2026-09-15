@@ -69,6 +69,7 @@ func (h *Handler) RegisterRoutes(r chi.Router, authMiddleware func(http.Handler)
 		r.Group(func(r chi.Router) {
 			r.Use(authMiddleware)
 			r.Post("/", h.CreateEquipment)
+			r.Delete("/{id}", h.DeleteEquipment)
 		})
 	})
 
@@ -266,6 +267,15 @@ func (h *Handler) CreateEquipment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	response.JSON(w, http.StatusCreated, e)
+}
+
+func (h *Handler) DeleteEquipment(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	if err := h.service.DeleteEquipment(r.Context(), id); err != nil {
+		response.Error(w, r, err)
+		return
+	}
+	response.JSON(w, http.StatusOK, map[string]string{"message": "Equipment record deleted successfully"})
 }
 
 func (h *Handler) ListPlacementStats(w http.ResponseWriter, r *http.Request) {

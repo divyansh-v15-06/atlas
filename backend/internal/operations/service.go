@@ -19,6 +19,7 @@ type Service interface {
 	CreateLab(ctx context.Context, req *CreateLabRequest) (*Lab, error)
 	ListEquipment(ctx context.Context, deptID, labID string) ([]Equipment, error)
 	CreateEquipment(ctx context.Context, req *CreateEquipmentRequest) (*Equipment, error)
+	DeleteEquipment(ctx context.Context, id string) error
 
 	ListPlacementStats(ctx context.Context, deptID string, year *int) ([]PlacementStat, error)
 	CreatePlacementStat(ctx context.Context, req *CreatePlacementStatRequest) (*PlacementStat, error)
@@ -82,6 +83,10 @@ func (s *service) ListEquipment(ctx context.Context, deptID, labID string) ([]Eq
 
 func (s *service) CreateEquipment(ctx context.Context, req *CreateEquipmentRequest) (*Equipment, error) {
 	return s.repo.CreateEquipment(ctx, req)
+}
+
+func (s *service) DeleteEquipment(ctx context.Context, id string) error {
+	return s.repo.DeleteEquipment(ctx, id)
 }
 
 func (s *service) ListPlacementStats(ctx context.Context, deptID string, year *int) ([]PlacementStat, error) {
