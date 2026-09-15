@@ -10,6 +10,7 @@ type Faculty struct {
 	FullName          string    `json:"full_name"`
 	Designation       string    `json:"designation"`
 	IsPermanent       bool      `json:"is_permanent"`
+	IsVisible         bool      `json:"is_visible"`
 	Phone             *string   `json:"phone,omitempty"`
 	PhotoDocumentID   *string   `json:"photo_document_id,omitempty"`
 	PhotoURL          *string   `json:"photo_url,omitempty"`
@@ -143,6 +144,7 @@ type CreateFacultyRequest struct {
 	FullName          string  `json:"full_name" validate:"required"`
 	Designation       string  `json:"designation" validate:"required"`
 	IsPermanent       bool    `json:"is_permanent"`
+	IsVisible         *bool   `json:"is_visible"`
 	Phone             *string `json:"phone"`
 	PortfolioSlug     *string `json:"portfolio_slug"`
 	SortOrder         int     `json:"sort_order"`
@@ -154,6 +156,7 @@ type UpdateFacultyRequest struct {
 	FullName          *string `json:"full_name"`
 	Designation       *string `json:"designation"`
 	IsPermanent       *bool   `json:"is_permanent"`
+	IsVisible         *bool   `json:"is_visible"`
 	Phone             *string `json:"phone"`
 	PhotoURL          *string `json:"photo_url"`
 	PortfolioSlug     *string `json:"portfolio_slug"`

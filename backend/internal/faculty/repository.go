@@ -9,7 +9,7 @@ import (
 )
 
 type Repository interface {
-	ListFaculty(ctx context.Context, departmentID string, isPermanent *bool, query string) ([]Faculty, error)
+	ListFaculty(ctx context.Context, departmentID string, isPermanent *bool, query string, isVisible *bool) ([]Faculty, error)
 	GetFacultyByID(ctx context.Context, id string) (*Faculty, error)
 	GetFacultyBySlug(ctx context.Context, slug string) (*Faculty, error)
 	CreateFaculty(ctx context.Context, req *CreateFacultyRequest) (*Faculty, error)
@@ -54,18 +54,19 @@ func NewRepository(pool *pgxpool.Pool) Repository {
 	return &pgRepository{pool: pool}
 }
 
-func (r *pgRepository) ListFaculty(ctx context.Context, departmentID string, isPermanent *bool, search string) ([]Faculty, error) {
+func (r *pgRepository) ListFaculty(ctx context.Context, departmentID string, isPermanent *bool, search string, isVisible *bool) ([]Faculty, error) {
 	querySQL := `
-		SELECT DISTINCT f.id, f.user_id, f.employee_code, f.official_email, f.full_name, f.designation, f.is_permanent, f.phone, f.photo_document_id, f.photo_url, f.portfolio_slug, f.sort_order, f.research_interests, f.created_at, f.updated_at
+		SELECT DISTINCT f.id, f.user_id, f.employee_code, f.official_email, f.full_name, f.designation, f.is_permanent, f.is_visible, f.phone, f.photo_document_id, f.photo_url, f.portfolio_slug, f.sort_order, f.research_interests, f.created_at, f.updated_at
 		FROM faculty f
 		LEFT JOIN faculty_appointments fa ON fa.faculty_id = f.id AND fa.end_date IS NULL AND fa.deleted_at IS NULL
 		WHERE f.deleted_at IS NULL
 		  AND (fa.department_id::text = $1 OR $1 = '')
 		  AND ($2::boolean IS NULL OR f.is_permanent = $2)
 		  AND ($3 = '' OR f.full_name ILIKE '%' || $3 || '%' OR f.research_interests ILIKE '%' || $3 || '%')
+		  AND ($4::boolean IS NULL OR f.is_visible = $4)
 		ORDER BY f.sort_order ASC, f.full_name ASC
 	`
-	rows, err := r.pool.Query(ctx, querySQL, departmentID, isPermanent, search)
+	rows, err := r.pool.Query(ctx, querySQL, departmentID, isPermanent, search, isVisible)
 	if err != nil {
 		return nil, err
 	}
@@ -75,7 +76,7 @@ func (r *pgRepository) ListFaculty(ctx context.Context, departmentID string, isP
 	for rows.Next() {
 		var f Faculty
 		if err := rows.Scan(
-			&f.ID, &f.UserID, &f.EmployeeCode, &f.OfficialEmail, &f.FullName, &f.Designation, &f.IsPermanent,
+			&f.ID, &f.UserID, &f.EmployeeCode, &f.OfficialEmail, &f.FullName, &f.Designation, &f.IsPermanent, &f.IsVisible,
 			&f.Phone, &f.PhotoDocumentID, &f.PhotoURL, &f.PortfolioSlug, &f.SortOrder, &f.ResearchInterests,
 			&f.CreatedAt, &f.UpdatedAt,
 		); err != nil {
@@ -88,13 +89,13 @@ func (r *pgRepository) ListFaculty(ctx context.Context, departmentID string, isP
 
 func (r *pgRepository) GetFacultyByID(ctx context.Context, id string) (*Faculty, error) {
 	querySQL := `
-		SELECT id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_document_id, photo_url, portfolio_slug, sort_order, research_interests, created_at, updated_at
+		SELECT id, user_id, employee_code, official_email, full_name, designation, is_permanent, is_visible, phone, photo_document_id, photo_url, portfolio_slug, sort_order, research_interests, created_at, updated_at
 		FROM faculty
 		WHERE id::text = $1 AND deleted_at IS NULL
 	`
 	var f Faculty
 	err := r.pool.QueryRow(ctx, querySQL, id).Scan(
-		&f.ID, &f.UserID, &f.EmployeeCode, &f.OfficialEmail, &f.FullName, &f.Designation, &f.IsPermanent,
+		&f.ID, &f.UserID, &f.EmployeeCode, &f.OfficialEmail, &f.FullName, &f.Designation, &f.IsPermanent, &f.IsVisible,
 		&f.Phone, &f.PhotoDocumentID, &f.PhotoURL, &f.PortfolioSlug, &f.SortOrder, &f.ResearchInterests,
 		&f.CreatedAt, &f.UpdatedAt,
 	)
@@ -109,13 +110,13 @@ func (r *pgRepository) GetFacultyByID(ctx context.Context, id string) (*Faculty,
 
 func (r *pgRepository) GetFacultyBySlug(ctx context.Context, slug string) (*Faculty, error) {
 	querySQL := `
-		SELECT id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_document_id, photo_url, portfolio_slug, sort_order, research_interests, created_at, updated_at
+		SELECT id, user_id, employee_code, official_email, full_name, designation, is_permanent, is_visible, phone, photo_document_id, photo_url, portfolio_slug, sort_order, research_interests, created_at, updated_at
 		FROM faculty
 		WHERE (LOWER(portfolio_slug) = LOWER($1) OR LOWER(employee_code) = LOWER($1)) AND deleted_at IS NULL
 	`
 	var f Faculty
 	err := r.pool.QueryRow(ctx, querySQL, slug).Scan(
-		&f.ID, &f.UserID, &f.EmployeeCode, &f.OfficialEmail, &f.FullName, &f.Designation, &f.IsPermanent,
+		&f.ID, &f.UserID, &f.EmployeeCode, &f.OfficialEmail, &f.FullName, &f.Designation, &f.IsPermanent, &f.IsVisible,
 		&f.Phone, &f.PhotoDocumentID, &f.PhotoURL, &f.PortfolioSlug, &f.SortOrder, &f.ResearchInterests,
 		&f.CreatedAt, &f.UpdatedAt,
 	)
@@ -135,14 +136,19 @@ func (r *pgRepository) CreateFaculty(ctx context.Context, req *CreateFacultyRequ
 	}
 	defer func() { _ = tx.Rollback(ctx) }()
 
+	defaultVisible := true
+	if req.IsVisible != nil {
+		defaultVisible = *req.IsVisible
+	}
+
 	querySQL := `
-		INSERT INTO faculty (employee_code, official_email, full_name, designation, is_permanent, phone, portfolio_slug, sort_order, research_interests)
-		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-		RETURNING id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_document_id, photo_url, portfolio_slug, sort_order, research_interests, created_at, updated_at
+		INSERT INTO faculty (employee_code, official_email, full_name, designation, is_permanent, is_visible, phone, portfolio_slug, sort_order, research_interests)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+		RETURNING id, user_id, employee_code, official_email, full_name, designation, is_permanent, is_visible, phone, photo_document_id, photo_url, portfolio_slug, sort_order, research_interests, created_at, updated_at
 	`
 	var f Faculty
-	err = tx.QueryRow(ctx, querySQL, req.EmployeeCode, req.OfficialEmail, req.FullName, req.Designation, req.IsPermanent, req.Phone, req.PortfolioSlug, req.SortOrder, req.ResearchInterests).Scan(
-		&f.ID, &f.UserID, &f.EmployeeCode, &f.OfficialEmail, &f.FullName, &f.Designation, &f.IsPermanent,
+	err = tx.QueryRow(ctx, querySQL, req.EmployeeCode, req.OfficialEmail, req.FullName, req.Designation, req.IsPermanent, defaultVisible, req.Phone, req.PortfolioSlug, req.SortOrder, req.ResearchInterests).Scan(
+		&f.ID, &f.UserID, &f.EmployeeCode, &f.OfficialEmail, &f.FullName, &f.Designation, &f.IsPermanent, &f.IsVisible,
 		&f.Phone, &f.PhotoDocumentID, &f.PhotoURL, &f.PortfolioSlug, &f.SortOrder, &f.ResearchInterests,
 		&f.CreatedAt, &f.UpdatedAt,
 	)
@@ -171,18 +177,19 @@ func (r *pgRepository) UpdateFaculty(ctx context.Context, id string, req *Update
 		SET full_name = COALESCE($2, full_name),
 		    designation = COALESCE($3, designation),
 		    is_permanent = COALESCE($4, is_permanent),
-		    phone = COALESCE($5, phone),
-		    photo_url = COALESCE($6, photo_url),
-		    portfolio_slug = COALESCE($7, portfolio_slug),
-		    sort_order = COALESCE($8, sort_order),
-		    research_interests = COALESCE($9, research_interests),
+		    is_visible = COALESCE($5, is_visible),
+		    phone = COALESCE($6, phone),
+		    photo_url = COALESCE($7, photo_url),
+		    portfolio_slug = COALESCE($8, portfolio_slug),
+		    sort_order = COALESCE($9, sort_order),
+		    research_interests = COALESCE($10, research_interests),
 		    updated_at = NOW()
 		WHERE id = $1 AND deleted_at IS NULL
-		RETURNING id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_document_id, photo_url, portfolio_slug, sort_order, research_interests, created_at, updated_at
+		RETURNING id, user_id, employee_code, official_email, full_name, designation, is_permanent, is_visible, phone, photo_document_id, photo_url, portfolio_slug, sort_order, research_interests, created_at, updated_at
 	`
 	var f Faculty
-	err := r.pool.QueryRow(ctx, querySQL, id, req.FullName, req.Designation, req.IsPermanent, req.Phone, req.PhotoURL, req.PortfolioSlug, req.SortOrder, req.ResearchInterests).Scan(
-		&f.ID, &f.UserID, &f.EmployeeCode, &f.OfficialEmail, &f.FullName, &f.Designation, &f.IsPermanent,
+	err := r.pool.QueryRow(ctx, querySQL, id, req.FullName, req.Designation, req.IsPermanent, req.IsVisible, req.Phone, req.PhotoURL, req.PortfolioSlug, req.SortOrder, req.ResearchInterests).Scan(
+		&f.ID, &f.UserID, &f.EmployeeCode, &f.OfficialEmail, &f.FullName, &f.Designation, &f.IsPermanent, &f.IsVisible,
 		&f.Phone, &f.PhotoDocumentID, &f.PhotoURL, &f.PortfolioSlug, &f.SortOrder, &f.ResearchInterests,
 		&f.CreatedAt, &f.UpdatedAt,
 	)

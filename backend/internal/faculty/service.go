@@ -7,7 +7,7 @@ import (
 )
 
 type Service interface {
-	ListFaculty(ctx context.Context, departmentID string, isPermanent *bool, query string) ([]Faculty, error)
+	ListFaculty(ctx context.Context, departmentID string, isPermanent *bool, query string, isVisible *bool) ([]Faculty, error)
 	GetFaculty(ctx context.Context, idOrSlug string) (*Faculty, error)
 	GetPortfolio(ctx context.Context, idOrSlug string) (*FacultyPortfolioResponse, error)
 	CreateFaculty(ctx context.Context, req *CreateFacultyRequest) (*Faculty, error)
@@ -50,8 +50,8 @@ func NewService(repo Repository) Service {
 	return &service{repo: repo}
 }
 
-func (s *service) ListFaculty(ctx context.Context, departmentID string, isPermanent *bool, query string) ([]Faculty, error) {
-	return s.repo.ListFaculty(ctx, departmentID, isPermanent, query)
+func (s *service) ListFaculty(ctx context.Context, departmentID string, isPermanent *bool, query string, isVisible *bool) ([]Faculty, error) {
+	return s.repo.ListFaculty(ctx, departmentID, isPermanent, query, isVisible)
 }
 
 func (s *service) GetFaculty(ctx context.Context, idOrSlug string) (*Faculty, error) {

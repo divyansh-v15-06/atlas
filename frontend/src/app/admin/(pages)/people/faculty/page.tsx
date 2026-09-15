@@ -10,6 +10,7 @@ import {
   Edit,
   KeyRound,
   Eye,
+  EyeOff,
   Download,
   UploadCloud,
   X,
@@ -85,6 +86,7 @@ function normalizeFaculty(f: any, deptCode = "CSE") {
     qualification: f.qualification || "Ph.D.",
     room_no: f.room_no || `${deptCode} Academic Block`,
     status: f.status || "Active",
+    is_visible: f.is_visible !== undefined ? Boolean(f.is_visible) : true,
     image_url: f.photo_url || f.image_url || "/nith.png",
   };
 }
@@ -98,6 +100,7 @@ export default function AdminFacultyPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [designationFilter, setDesignationFilter] = useState("all");
+  const [visibilityFilter, setVisibilityFilter] = useState("all");
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
 
   // Modal States
@@ -120,6 +123,7 @@ export default function AdminFacultyPage() {
     room_no: `${activeDepartment?.code || "CSE"} Block, Room 204`,
     image_url: "/nith.png",
     status: "Active",
+    is_visible: true,
   });
 
   // Form State: CSV Import
@@ -199,6 +203,8 @@ export default function AdminFacultyPage() {
   // Metrics Counters: Sums up 100% accurately without omitting any staff
   const counts = useMemo(() => {
     const total = facultyList.length;
+    const visible = facultyList.filter((f) => f.is_visible !== false).length;
+    const hidden = facultyList.filter((f) => f.is_visible === false).length;
     const profs = facultyList.filter(
       (f) =>
         f.designation?.toLowerCase().includes("professor") &&
@@ -213,12 +219,16 @@ export default function AdminFacultyPage() {
       f.designation?.toLowerCase().includes("faculty") ||
       f.designation?.toLowerCase().includes("lecturer")
     ).length;
-    return { total, profs, associates, assistants };
+    return { total, visible, hidden, profs, associates, assistants };
   }, [facultyList]);
 
   // Filtered List
   const filtered = useMemo(() => {
     return facultyList.filter((f) => {
+      // Visibility Filter
+      if (visibilityFilter === "visible" && f.is_visible === false) return false;
+      if (visibilityFilter === "hidden" && f.is_visible !== false) return false;
+
       const q = search.toLowerCase();
       const spec = (
         f.specialization ||
@@ -258,7 +268,7 @@ export default function AdminFacultyPage() {
         );
       return true;
     });
-  }, [facultyList, search, designationFilter]);
+  }, [facultyList, search, designationFilter, visibilityFilter]);
 
   // Copy email helper
   const handleCopyEmail = (email: string) => {
@@ -289,8 +299,44 @@ export default function AdminFacultyPage() {
       room_no: f.room_no || `${activeDepartment?.code || "CSE"} Academic Block`,
       image_url: f.image_url || "/nith.png",
       status: f.status || "Active",
+      is_visible: f.is_visible !== false,
     });
     setIsEditModalOpen(true);
+  };
+
+  // Quick Visibility Toggle
+  const handleToggleVisibility = async (f: any) => {
+    const nextVisibility = !(f.is_visible !== false);
+    const updated = facultyList.map((item) =>
+      item.id === f.id || item.employee_code === f.employee_code
+        ? { ...item, is_visible: nextVisibility }
+        : item
+    );
+    updateAndSaveFaculty(updated);
+
+    // Sync to PostgreSQL backend
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+    const token = typeof window !== "undefined" ? (localStorage.getItem("token") || localStorage.getItem("auth_token")) : null;
+    if (f.id && !f.id.startsWith("fac-")) {
+      try {
+        await fetch(`${apiUrl}/faculty/${f.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify({ is_visible: nextVisibility }),
+        });
+      } catch (err) {
+        console.warn("Could not patch visibility to backend:", err);
+      }
+    }
+
+    toast.success(
+      nextVisibility
+        ? `Visible on website: ${f.full_name}'s profile is now public.`
+        : `Hidden from website: ${f.full_name}'s profile is now hidden from public directory.`
+    );
   };
 
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
@@ -349,6 +395,7 @@ export default function AdminFacultyPage() {
       room_no: facultyForm.room_no,
       image_url: facultyForm.image_url || "/nith.png",
       status: facultyForm.status || "Active",
+      is_visible: facultyForm.is_visible !== false,
       department_id: activeDepartment?.id || "22222222-2222-2222-2222-222222222222",
       department_slug: currentSlug,
       department_name: activeDepartment?.name || "Computer Science & Engineering",
@@ -383,12 +430,35 @@ export default function AdminFacultyPage() {
           room_no: facultyForm.room_no,
           image_url: facultyForm.image_url || f.image_url || "/nith.png",
           status: facultyForm.status,
+          is_visible: facultyForm.is_visible !== false,
         };
       }
       return f;
     });
 
     updateAndSaveFaculty(updated);
+
+    // Sync to backend if valid ID
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+    const token = typeof window !== "undefined" ? (localStorage.getItem("token") || localStorage.getItem("auth_token")) : null;
+    if (selectedFaculty.id && !selectedFaculty.id.startsWith("fac-")) {
+      fetch(`${apiUrl}/faculty/${selectedFaculty.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({
+          full_name: facultyForm.full_name,
+          designation: facultyForm.designation,
+          phone: facultyForm.phone,
+          photo_url: facultyForm.image_url,
+          research_interests: facultyForm.specialization,
+          is_visible: facultyForm.is_visible !== false,
+        }),
+      }).catch((e) => console.warn("Could not patch edit to backend:", e));
+    }
+
     toast.success(`Updated profile for ${facultyForm.full_name}!`);
     setIsEditModalOpen(false);
     setSelectedFaculty(null);
@@ -602,27 +672,71 @@ export default function AdminFacultyPage() {
             )}
           </div>
 
-          {/* Designation Filter Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
-            {[
-              { id: "all", label: `All (${facultyList.length})` },
-              { id: "professor", label: `Professors (${counts.profs})` },
-              { id: "associate", label: `Associate (${counts.associates})` },
-              { id: "assistant", label: `Assistant (${counts.assistants})` },
-            ].map((tab) => (
+          {/* Filter Tabs Container */}
+          <div className="flex flex-wrap items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+            {/* Visibility Filter Tabs */}
+            <div className="flex items-center gap-1 bg-white border border-[#eedfd8] p-1 rounded-xl shadow-2xs">
               <button
-                key={tab.id}
                 type="button"
-                onClick={() => setDesignationFilter(tab.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer whitespace-nowrap ${
-                  designationFilter === tab.id
+                onClick={() => setVisibilityFilter("all")}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer ${
+                  visibilityFilter === "all"
                     ? "bg-[#33110e] text-white shadow-xs"
-                    : "bg-white border border-[#eedfd8] text-[#6b5c58] hover:bg-[#fff9f6]"
+                    : "text-[#6b5c58] hover:bg-[#fff9f6]"
                 }`}
               >
-                {tab.label}
+                All Visibility
               </button>
-            ))}
+              <button
+                type="button"
+                onClick={() => setVisibilityFilter("visible")}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer flex items-center gap-1 ${
+                  visibilityFilter === "visible"
+                    ? "bg-emerald-700 text-white shadow-xs"
+                    : "text-emerald-700 hover:bg-emerald-50"
+                }`}
+                title="Filter profiles visible on website"
+              >
+                <Eye className="w-3 h-3" />
+                <span>Visible ({counts.visible})</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setVisibilityFilter("hidden")}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer flex items-center gap-1 ${
+                  visibilityFilter === "hidden"
+                    ? "bg-rose-700 text-white shadow-xs"
+                    : "text-rose-700 hover:bg-rose-50"
+                }`}
+                title="Filter profiles hidden from website"
+              >
+                <EyeOff className="w-3 h-3" />
+                <span>Hidden ({counts.hidden})</span>
+              </button>
+            </div>
+
+            {/* Designation Filter Tabs */}
+            <div className="flex items-center gap-1">
+              {[
+                { id: "all", label: `All Desig.` },
+                { id: "professor", label: `Professors (${counts.profs})` },
+                { id: "associate", label: `Associate (${counts.associates})` },
+                { id: "assistant", label: `Assistant (${counts.assistants})` },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setDesignationFilter(tab.id)}
+                  className={`px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer whitespace-nowrap ${
+                    designationFilter === tab.id
+                      ? "bg-[#33110e] text-white shadow-xs"
+                      : "bg-white border border-[#eedfd8] text-[#6b5c58] hover:bg-[#fff9f6]"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -638,6 +752,7 @@ export default function AdminFacultyPage() {
                 <th className="px-4 py-3.5">Specialization</th>
                 <th className="px-4 py-3.5">Research Specialization</th>
                 <th className="px-3 py-3.5 text-center">Status</th>
+                <th className="px-3 py-3.5 text-center">Website</th>
                 <th className="px-5 py-3.5 text-right">Actions</th>
               </tr>
             </thead>
@@ -846,9 +961,53 @@ export default function AdminFacultyPage() {
                       </span>
                     </td>
 
+                    {/* Website Visibility Interactive Toggle Pill */}
+                    <td className="px-3 py-3.5 text-center">
+                      <button
+                        type="button"
+                        onClick={() => handleToggleVisibility(f)}
+                        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-extrabold transition cursor-pointer shadow-2xs border ${
+                          f.is_visible !== false
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-600 hover:text-white"
+                            : "bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-600 hover:text-white"
+                        }`}
+                        title={
+                          f.is_visible !== false
+                            ? "Currently published on website. Click to hide from public."
+                            : "Currently hidden from website. Click to publish/unhide."
+                        }
+                      >
+                        {f.is_visible !== false ? (
+                          <>
+                            <Eye className="w-3.5 h-3.5" />
+                            <span>Visible</span>
+                          </>
+                        ) : (
+                          <>
+                            <EyeOff className="w-3.5 h-3.5" />
+                            <span>Hidden</span>
+                          </>
+                        )}
+                      </button>
+                    </td>
+
                     {/* Action Controls */}
                     <td className="px-5 py-3.5 text-right">
                       <div className="flex items-center justify-end gap-1.5">
+                        {/* Quick Hide/Unhide Toggle in Actions */}
+                        <button
+                          type="button"
+                          onClick={() => handleToggleVisibility(f)}
+                          className={`p-1.5 rounded-lg border transition shadow-2xs cursor-pointer ${
+                            f.is_visible !== false
+                              ? "border-emerald-200 bg-white text-emerald-700 hover:bg-emerald-600 hover:text-white"
+                              : "border-rose-200 bg-white text-rose-600 hover:bg-rose-600 hover:text-white"
+                          }`}
+                          title={f.is_visible !== false ? "Hide from Public Directory" : "Unhide / Publish to Public Directory"}
+                        >
+                          {f.is_visible !== false ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+                        </button>
+
                         {/* Edit Profile */}
                         <button
                           type="button"
@@ -1192,7 +1351,7 @@ export default function AdminFacultyPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-[10px] font-extrabold uppercase text-[#33110e] mb-1">
                     Academic Designation
@@ -1223,6 +1382,20 @@ export default function AdminFacultyPage() {
                     <option value="Active">Active Duty</option>
                     <option value="On Leave">On Leave / Sabbatical</option>
                     <option value="Deputation">On Deputation</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-extrabold uppercase text-[#33110e] mb-1">
+                    Website Visibility
+                  </label>
+                  <select
+                    value={facultyForm.is_visible ? "true" : "false"}
+                    onChange={(e) => setFacultyForm({ ...facultyForm, is_visible: e.target.value === "true" })}
+                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-2 text-xs text-[#33110e] focus:bg-white focus:border-[#85261e] focus:outline-hidden font-bold"
+                  >
+                    <option value="true">🟢 Visible (Public)</option>
+                    <option value="false">🔴 Hidden (Private)</option>
                   </select>
                 </div>
               </div>

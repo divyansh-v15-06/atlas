@@ -79,7 +79,14 @@ func (h *Handler) ListFaculty(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	list, err := h.service.ListFaculty(r.Context(), deptID, isPermanent, search)
+	var isVisible *bool
+	if visStr := r.URL.Query().Get("visible"); visStr != "" {
+		if val, err := strconv.ParseBool(visStr); err == nil {
+			isVisible = &val
+		}
+	}
+
+	list, err := h.service.ListFaculty(r.Context(), deptID, isPermanent, search, isVisible)
 	if err != nil {
 		response.Error(w, r, err)
 		return

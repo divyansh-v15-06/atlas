@@ -45,6 +45,7 @@ import {
   CheckCircle2,
   AlertTriangle,
   Eye,
+  EyeOff,
   BookOpenCheck,
   BarChart2,
   TrendingUp,
@@ -201,6 +202,64 @@ export default function FacultyPortfolioPage({
         )
       : []
   );
+
+  const [isProfileHidden, setIsProfileHidden] = useState<boolean>(false);
+  const [isAdminOrSelf, setIsAdminOrSelf] = useState<boolean>(false);
+
+  // Synchronize visibility state and authorization
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const adminToken = localStorage.getItem("token") || localStorage.getItem("auth_token") || localStorage.getItem("admin_token");
+      const activeFac = localStorage.getItem("active_faculty") || localStorage.getItem("auth_user");
+      if (adminToken) {
+        setIsAdminOrSelf(true);
+      } else if (activeFac) {
+        try {
+          const parsed = JSON.parse(activeFac);
+          if (parsed.employee_code?.toUpperCase() === code || parsed.id === baseFaculty?.id) {
+            setIsAdminOrSelf(true);
+          }
+        } catch {}
+      }
+
+      // Check localStorage cached visibility
+      const currentSlug = queryDept || activeDepartment?.slug || "cse";
+      const saved =
+        localStorage.getItem(`nith_admin_faculty_list_${currentSlug}`) ||
+        (currentSlug === "cse" ? localStorage.getItem("nith_admin_faculty_list") : null);
+      if (saved) {
+        try {
+          const list = JSON.parse(saved);
+          const match = list.find(
+            (item: any) =>
+              (item.employee_code && item.employee_code.toUpperCase() === code) ||
+              (item.id && item.id.toLowerCase() === resolvedParams.slug.toLowerCase())
+          );
+          if (match && match.is_visible === false) {
+            setIsProfileHidden(true);
+          } else if (match && match.is_visible === true) {
+            setIsProfileHidden(false);
+          }
+        } catch {}
+      }
+    }
+
+    // Live API check
+    const checkApiVisibility = async () => {
+      const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || "/backend/api/v1";
+      const apiUrl = rawApiUrl.endsWith("/") ? rawApiUrl.slice(0, -1) : rawApiUrl;
+      try {
+        const res = await fetch(`${apiUrl}/faculty/${resolvedParams.slug}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.is_visible !== undefined) {
+            setIsProfileHidden(data.is_visible === false);
+          }
+        }
+      } catch {}
+    };
+    checkApiVisibility();
+  }, [code, resolvedParams.slug, queryDept, activeDepartment?.slug, baseFaculty]);
 
   // Load and synchronize stored data
   useEffect(() => {
@@ -1505,6 +1564,50 @@ export default function FacultyPortfolioPage({
     );
   }
 
+  if (isProfileHidden && !isAdminOrSelf) {
+    return (
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 py-16 space-y-6 bg-white min-h-[80vh] font-sans">
+        <Link
+          href={`/people/faculty?dept=${effectiveDeptSlug}`}
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-neutral-600 hover:text-[#33110e] transition"
+        >
+          <ArrowLeft className="h-4 w-4 text-[#85261e]" /> Back to Faculty Directory
+        </Link>
+
+        <div className="rounded-3xl border border-[#eedfd8] bg-[#fff9f6] p-8 sm:p-12 text-center space-y-5 shadow-xs my-8 max-w-2xl mx-auto">
+          <div className="mx-auto w-16 h-16 rounded-3xl bg-white border border-[#eedfd8] flex items-center justify-center text-[#85261e] shadow-xs">
+            <EyeOff className="w-8 h-8 opacity-80" />
+          </div>
+
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+              <span>Profile Hidden by Administration</span>
+            </div>
+
+            <h2 className="text-xl sm:text-2xl font-extrabold text-[#33110e] tracking-tight">
+              Faculty Profile Currently Unpublished
+            </h2>
+
+            <p className="text-xs sm:text-sm text-neutral-600 max-w-md mx-auto leading-relaxed">
+              This academic profile has been temporarily hidden from public view by department administration.
+            </p>
+          </div>
+
+          <div className="pt-2">
+            <Link
+              href={`/people/faculty?dept=${effectiveDeptSlug}`}
+              className="inline-flex items-center gap-2 bg-[#33110e] hover:bg-[#85261e] text-white px-5 py-2.5 rounded-xl text-xs font-bold shadow-xs hover:shadow-md transition"
+            >
+              <span>Return to Faculty Directory</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   if (isDeptMismatch) {
     return (
       <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 space-y-6 bg-white min-h-[85vh] font-sans">
@@ -1574,6 +1677,15 @@ export default function FacultyPortfolioPage({
 
   return (
     <div className="min-h-screen bg-[#faf8f6] font-sans pb-16">
+      {/* ADMINISTRATIVE PREVIEW BANNER */}
+      {isProfileHidden && (
+        <div className="bg-amber-600 text-white px-4 py-2.5 text-center text-xs font-bold flex items-center justify-center gap-2 shadow-xs sticky top-0 z-40">
+          <ShieldCheck className="w-4 h-4 text-amber-200 shrink-0" />
+          <span>
+            🔒 Administrative Preview: This faculty profile is currently <u>hidden from public view</u> on the department website.
+          </span>
+        </div>
+      )}
       {/* 1. TOP BREADCRUMB & CONTEXT BAR */}
       <div className="bg-white border-b border-[#ebdcd5] sticky top-0 z-30 shadow-2xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between">
