@@ -55,6 +55,7 @@ export default function AdminPhdPage() {
     status: "pursuing" as "pursuing" | "passed",
     supervisor: MOCK_FACULTY[0]?.full_name || "Prof. Lalit Kumar Awasthi",
     co_supervisor: "",
+    last_qualification: "M.Tech",
     research_area: "Distributed Systems & Cloud Computing",
     topic: "",
     email: "",
@@ -64,6 +65,7 @@ export default function AdminPhdPage() {
     google_scholar: "",
     scopus: "",
     linkedin: "",
+    portfolio_url: "",
   });
 
   const handleOpenAdd = () => {
@@ -75,6 +77,7 @@ export default function AdminPhdPage() {
       status: "pursuing",
       supervisor: MOCK_FACULTY[0]?.full_name || "Prof. Lalit Kumar Awasthi",
       co_supervisor: "",
+      last_qualification: "M.Tech",
       research_area: "Distributed Systems & Cloud Computing",
       topic: "",
       email: "",
@@ -84,6 +87,7 @@ export default function AdminPhdPage() {
       google_scholar: "",
       scopus: "",
       linkedin: "",
+      portfolio_url: "",
     });
     setIsModalOpen(true);
   };
@@ -92,20 +96,22 @@ export default function AdminPhdPage() {
     setModalMode("edit");
     setEditingScholar(sch);
     setFormData({
-      enrollment_number: sch.enrollment_number || "",
+      enrollment_number: sch.enrollment_number || sch.roll_no || "",
       name: sch.name || sch.full_name || "",
       status: sch.status === "passed" ? "passed" : "pursuing",
       supervisor: sch.supervisor || MOCK_FACULTY[0]?.full_name || "",
       co_supervisor: sch.co_supervisor || "",
+      last_qualification: sch.last_qualification || "M.Tech",
       research_area: sch.research_area || sch.topic || "",
-      topic: sch.topic || sch.thesis_title || "",
+      topic: sch.topic || sch.dissertation_title || sch.thesis_title || "",
       email: sch.email || "",
       photo_url: sch.photo_url || sch.image_url || sch.photo || "",
-      registration_date: sch.registration_date || "2022-08-01",
-      defense_date: sch.defense_date || "",
-      google_scholar: sch.google_scholar || "",
-      scopus: sch.scopus || "",
-      linkedin: sch.linkedin || "",
+      registration_date: sch.registration_date || (sch.registration_year ? `${sch.registration_year}-08-01` : "2022-08-01"),
+      defense_date: sch.defense_date || sch.end_date || "",
+      google_scholar: sch.google_scholar || sch.google_scholar_url || "",
+      scopus: sch.scopus || sch.scopus_url || "",
+      linkedin: sch.linkedin || sch.linkedin_url || "",
+      portfolio_url: sch.portfolio_url || "",
     });
     setIsModalOpen(true);
   };
@@ -121,22 +127,31 @@ export default function AdminPhdPage() {
       const newScholar = {
         id: `phd-${Date.now()}`,
         enrollment_number: formData.enrollment_number.trim().toUpperCase(),
+        roll_no: formData.enrollment_number.trim().toUpperCase(),
         name: formData.name.trim(),
         status: formData.status,
         supervisor: formData.supervisor,
         co_supervisor: formData.co_supervisor.trim() || undefined,
+        last_qualification: formData.last_qualification.trim(),
         research_area: formData.research_area.trim(),
         topic: formData.topic.trim() || formData.research_area.trim(),
+        dissertation_title: formData.topic.trim(),
         thesis_title: formData.topic.trim(),
         email: formData.email.trim(),
         photo_url: formData.photo_url.trim(),
         image_url: formData.photo_url.trim(),
         photo: formData.photo_url.trim(),
         registration_date: formData.registration_date,
+        registration_year: formData.registration_date ? parseInt(formData.registration_date.slice(0, 4)) : undefined,
         defense_date: formData.status === "passed" ? formData.defense_date : undefined,
+        end_date: formData.status === "passed" ? formData.defense_date : undefined,
         google_scholar: formData.google_scholar.trim(),
+        google_scholar_url: formData.google_scholar.trim(),
         scopus: formData.scopus.trim(),
+        scopus_url: formData.scopus.trim(),
         linkedin: formData.linkedin.trim(),
+        linkedin_url: formData.linkedin.trim(),
+        portfolio_url: formData.portfolio_url.trim(),
       };
       setScholars([newScholar, ...scholars]);
       toast.success(`Ph.D. Scholar ${newScholar.name} registered successfully`);
@@ -147,22 +162,31 @@ export default function AdminPhdPage() {
             ? {
                 ...sch,
                 enrollment_number: formData.enrollment_number.trim().toUpperCase(),
+                roll_no: formData.enrollment_number.trim().toUpperCase(),
                 name: formData.name.trim(),
                 status: formData.status,
                 supervisor: formData.supervisor,
                 co_supervisor: formData.co_supervisor.trim() || undefined,
+                last_qualification: formData.last_qualification.trim(),
                 research_area: formData.research_area.trim(),
                 topic: formData.topic.trim() || formData.research_area.trim(),
+                dissertation_title: formData.topic.trim(),
                 thesis_title: formData.topic.trim(),
                 email: formData.email.trim(),
                 photo_url: formData.photo_url.trim(),
                 image_url: formData.photo_url.trim(),
                 photo: formData.photo_url.trim(),
                 registration_date: formData.registration_date,
+                registration_year: formData.registration_date ? parseInt(formData.registration_date.slice(0, 4)) : sch.registration_year,
                 defense_date: formData.status === "passed" ? formData.defense_date : undefined,
+                end_date: formData.status === "passed" ? formData.defense_date : undefined,
                 google_scholar: formData.google_scholar.trim(),
+                google_scholar_url: formData.google_scholar.trim(),
                 scopus: formData.scopus.trim(),
+                scopus_url: formData.scopus.trim(),
                 linkedin: formData.linkedin.trim(),
+                linkedin_url: formData.linkedin.trim(),
+                portfolio_url: formData.portfolio_url.trim(),
               }
             : sch
         )
@@ -589,17 +613,32 @@ export default function AdminPhdPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-[#33110e] uppercase mb-1">
-                  Research Area / Specialization
-                </label>
-                <input
-                  type="text"
-                  value={formData.research_area}
-                  onChange={(e) => setFormData({ ...formData, research_area: e.target.value })}
-                  placeholder="e.g. Deep Learning, Network Security, Cloud Orchestration"
-                  className="w-full rounded-lg border border-[#eedfd8] px-3 py-2 text-sm focus:border-[#85261e] focus:outline-none"
-                />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-[#33110e] uppercase mb-1">
+                    Prior Qualification
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.last_qualification}
+                    onChange={(e) => setFormData({ ...formData, last_qualification: e.target.value })}
+                    placeholder="e.g. M.Tech (CSE), MCA, M.Sc"
+                    className="w-full rounded-lg border border-[#eedfd8] px-3 py-2 text-sm focus:border-[#85261e] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#33110e] uppercase mb-1">
+                    Research Area / Specialization
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.research_area}
+                    onChange={(e) => setFormData({ ...formData, research_area: e.target.value })}
+                    placeholder="e.g. Deep Learning, Network Security, Cloud Orchestration"
+                    className="w-full rounded-lg border border-[#eedfd8] px-3 py-2 text-sm focus:border-[#85261e] focus:outline-none"
+                  />
+                </div>
               </div>
 
               <div>
@@ -646,10 +685,10 @@ export default function AdminPhdPage() {
               </div>
 
               {/* Social / Scholar Profile URLs */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
                 <div>
                   <label className="block text-xs font-bold text-[#33110e] uppercase mb-1">
-                    Google Scholar Link
+                    Google Scholar
                   </label>
                   <input
                     type="url"
@@ -662,13 +701,13 @@ export default function AdminPhdPage() {
 
                 <div>
                   <label className="block text-xs font-bold text-[#33110e] uppercase mb-1">
-                    Scopus Author ID
+                    Scopus ID / URL
                   </label>
                   <input
                     type="text"
                     value={formData.scopus}
                     onChange={(e) => setFormData({ ...formData, scopus: e.target.value })}
-                    placeholder="Scopus ID"
+                    placeholder="Scopus ID / Link"
                     className="w-full rounded-lg border border-[#eedfd8] px-3 py-1.5 text-xs focus:border-[#85261e] focus:outline-none"
                   />
                 </div>
@@ -682,6 +721,19 @@ export default function AdminPhdPage() {
                     value={formData.linkedin}
                     onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
                     placeholder="https://linkedin.com/in/..."
+                    className="w-full rounded-lg border border-[#eedfd8] px-3 py-1.5 text-xs focus:border-[#85261e] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#33110e] uppercase mb-1">
+                    Portfolio / Website
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.portfolio_url}
+                    onChange={(e) => setFormData({ ...formData, portfolio_url: e.target.value })}
+                    placeholder="https://..."
                     className="w-full rounded-lg border border-[#eedfd8] px-3 py-1.5 text-xs focus:border-[#85261e] focus:outline-none"
                   />
                 </div>
