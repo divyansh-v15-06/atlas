@@ -258,6 +258,21 @@ export interface PhdScholar {
   status: "pursuing" | "passed";
   joining_date: string;
   completion_date: string;
+  photo_url?: string;
+  image_url?: string;
+  photo?: string;
+  email?: string;
+  supervisor?: string;
+  co_supervisor?: string;
+  last_qualification?: string;
+  research_area?: string;
+  dissertation_title?: string;
+  registration_year?: string;
+  end_date?: string;
+  linkedin_url?: string;
+  google_scholar_url?: string;
+  scopus_url?: string;
+  portfolio_url?: string;
 }
 
 // ─── CMS ──────────────────────────────────────────────────────────────────

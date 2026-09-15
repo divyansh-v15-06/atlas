@@ -193,12 +193,17 @@ export const MOCK_PHD_SCHOLARS: (PhdScholar & {
   linkedin_url?: string;
   google_scholar_url?: string;
   scopus_url?: string;
+  portfolio_url?: string;
+  photo_url?: string;
+  image_url?: string;
+  photo?: string;
+  email?: string;
 })[] = (databaseSeed.phd_scholars || []).map((phd: any) => ({
   id: phd.id,
   department_id: phd.department_id,
   name: phd.name,
-  enrollment_number: phd.roll_number,
-  topic: phd.topic || phd.dissertation_title || "Computer Science & Engineering",
+  enrollment_number: phd.roll_no || phd.enrollment_number || phd.roll_number || "",
+  topic: phd.topic || phd.dissertation_title || phd.research_area || "Computer Science & Engineering",
   dissertation_title: phd.dissertation_title || phd.topic || "Computer Science & Engineering",
   supervisor_faculty_id: "f1",
   supervisor: phd.supervisor || "Faculty Supervisor",
@@ -210,9 +215,14 @@ export const MOCK_PHD_SCHOLARS: (PhdScholar & {
   last_qualification: phd.last_qualification || "M.Tech",
   research_area: phd.research_area || phd.topic || "Computer Science",
   end_date: phd.end_date || "",
+  email: phd.email || "",
+  photo_url: phd.photo_url || phd.image_url || phd.photo || "",
+  image_url: phd.photo_url || phd.image_url || phd.photo || "",
+  photo: phd.photo_url || phd.image_url || phd.photo || "",
   linkedin_url: phd.linkedin_url || "",
   google_scholar_url: phd.google_scholar_url || "",
   scopus_url: phd.scopus_url || "",
+  portfolio_url: phd.portfolio_url || "",
 }));
 
 export const MOCK_ANNOUNCEMENTS: (Announcement & { category?: string; link_url?: string; is_new?: boolean })[] =

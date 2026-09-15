@@ -58,6 +58,7 @@ export default function AdminPhdPage() {
     research_area: "Distributed Systems & Cloud Computing",
     topic: "",
     email: "",
+    photo_url: "",
     registration_date: "2022-08-01",
     defense_date: "",
     google_scholar: "",
@@ -77,6 +78,7 @@ export default function AdminPhdPage() {
       research_area: "Distributed Systems & Cloud Computing",
       topic: "",
       email: "",
+      photo_url: "",
       registration_date: new Date().toISOString().split("T")[0],
       defense_date: "",
       google_scholar: "",
@@ -98,6 +100,7 @@ export default function AdminPhdPage() {
       research_area: sch.research_area || sch.topic || "",
       topic: sch.topic || sch.thesis_title || "",
       email: sch.email || "",
+      photo_url: sch.photo_url || sch.image_url || sch.photo || "",
       registration_date: sch.registration_date || "2022-08-01",
       defense_date: sch.defense_date || "",
       google_scholar: sch.google_scholar || "",
@@ -126,6 +129,9 @@ export default function AdminPhdPage() {
         topic: formData.topic.trim() || formData.research_area.trim(),
         thesis_title: formData.topic.trim(),
         email: formData.email.trim(),
+        photo_url: formData.photo_url.trim(),
+        image_url: formData.photo_url.trim(),
+        photo: formData.photo_url.trim(),
         registration_date: formData.registration_date,
         defense_date: formData.status === "passed" ? formData.defense_date : undefined,
         google_scholar: formData.google_scholar.trim(),
@@ -149,6 +155,9 @@ export default function AdminPhdPage() {
                 topic: formData.topic.trim() || formData.research_area.trim(),
                 thesis_title: formData.topic.trim(),
                 email: formData.email.trim(),
+                photo_url: formData.photo_url.trim(),
+                image_url: formData.photo_url.trim(),
+                photo: formData.photo_url.trim(),
                 registration_date: formData.registration_date,
                 defense_date: formData.status === "passed" ? formData.defense_date : undefined,
                 google_scholar: formData.google_scholar.trim(),
@@ -354,11 +363,24 @@ export default function AdminPhdPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 font-bold text-sm text-[#1c110c]">
-                      <div>
-                        {sch.name}
-                        {sch.email && (
-                          <p className="text-xs font-normal text-neutral-400 mt-0.5">{sch.email}</p>
+                      <div className="flex items-center gap-3">
+                        {sch.photo_url || sch.image_url || sch.photo ? (
+                          <img
+                            src={sch.photo_url || sch.image_url || sch.photo}
+                            alt={sch.name}
+                            className="w-10 h-10 object-cover object-top rounded-xl border border-[#eedfd8] shadow-2xs flex-shrink-0"
+                          />
+                        ) : (
+                          <div className="w-10 h-10 rounded-xl bg-[#fff9f6] border border-[#eedfd8] flex items-center justify-center text-[#85261e] font-bold text-xs flex-shrink-0">
+                            {sch.name?.charAt(0) || "S"}
+                          </div>
                         )}
+                        <div>
+                          <div>{sch.name}</div>
+                          {sch.email && (
+                            <p className="text-xs font-normal text-neutral-400 mt-0.5">{sch.email}</p>
+                          )}
+                        </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 max-w-sm">
@@ -503,6 +525,34 @@ export default function AdminPhdPage() {
                   >
                     <Award className="w-4 h-4" /> Graduated (Doctorate Awarded)
                   </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-[#33110e] uppercase mb-1">
+                    Scholar Institute / Personal Email
+                  </label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="scholar@nith.ac.in"
+                    className="w-full rounded-lg border border-[#eedfd8] px-3 py-2 text-sm focus:border-[#85261e] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-[#33110e] uppercase mb-1">
+                    Profile Photo URL (Cloudinary / Image Link)
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.photo_url}
+                    onChange={(e) => setFormData({ ...formData, photo_url: e.target.value })}
+                    placeholder="https://res.cloudinary.com/..."
+                    className="w-full rounded-lg border border-[#eedfd8] px-3 py-2 text-sm focus:border-[#85261e] focus:outline-none"
+                  />
                 </div>
               </div>
 

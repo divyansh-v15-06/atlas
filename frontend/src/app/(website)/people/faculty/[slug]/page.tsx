@@ -63,6 +63,8 @@ import {
   Pie as RechartsPie,
   Cell as RechartsCell,
 } from "recharts";
+import { FaLinkedin, FaGoogle } from "react-icons/fa";
+import { SiScopus } from "react-icons/si";
 import { toast } from "sonner";
 import {
   MOCK_FACULTY,
@@ -381,32 +383,51 @@ export default function FacultyPortfolioPage({
 
   // Combined Research Supervisions
   const combinedSupervisions = useMemo(() => {
-    if (allSupervisions && allSupervisions.length > 0) {
-      return allSupervisions;
-    }
-    const cleanName = (faculty?.full_name || "")
-      .replace(/^(Dr\.|Prof\.|Mr\.|Mrs\.|Ms\.)\s*/i, "")
-      .replace(/\(Mrs\.\)/i, "")
-      .trim()
-      .toLowerCase();
+    let list = allSupervisions && allSupervisions.length > 0 ? allSupervisions : [];
+    if (list.length === 0) {
+      const cleanName = (faculty?.full_name || "")
+        .replace(/^(Dr\.|Prof\.|Mr\.|Mrs\.|Ms\.)\s*/i, "")
+        .replace(/\(Mrs\.\)/i, "")
+        .trim()
+        .toLowerCase();
 
-    if (cleanName && cleanName.length > 3) {
-      const matched = MOCK_PHD_SCHOLARS.filter((s: any) =>
-        s.supervisor?.toLowerCase().includes(cleanName) ||
-        s.co_supervisor?.toLowerCase().includes(cleanName)
-      ).map((s: any) => ({
-        id: s.id,
-        level: "Ph.D.",
-        student_name: s.full_name || s.scholar_name,
-        roll_number: s.roll_number || "",
-        thesis_title: s.research_topic || s.title || "Doctoral Research",
-        status: s.status === "passed" ? "Awarded" : "Ongoing",
-        year: s.registration_year || s.batch_year || 2023,
-        co_supervisor: s.co_supervisor || null,
-      }));
-      return matched;
+      if (cleanName && cleanName.length > 3) {
+        list = MOCK_PHD_SCHOLARS.filter((s: any) =>
+          s.supervisor?.toLowerCase().includes(cleanName) ||
+          s.co_supervisor?.toLowerCase().includes(cleanName)
+        ).map((s: any) => ({
+          id: s.id,
+          level: "Ph.D.",
+          student_name: s.name || s.full_name || s.scholar_name,
+          roll_number: s.enrollment_number || s.roll_no || s.roll_number || "",
+          thesis_title: s.topic || s.dissertation_title || s.research_topic || s.title || "Doctoral Research",
+          status: s.status === "passed" ? "Awarded" : "Ongoing",
+          year: s.registration_year || s.batch_year || 2023,
+          co_supervisor: s.co_supervisor || null,
+          photo_url: s.photo_url || s.image_url || s.photo || "",
+          linkedin_url: s.linkedin_url || "",
+          google_scholar_url: s.google_scholar_url || "",
+          scopus_url: s.scopus_url || "",
+        }));
+      }
     }
-    return [];
+
+    return list.map((s: any) => {
+      const sName = (s.student_name || s.name || "").trim().toLowerCase();
+      const sRoll = String(s.roll_number || s.roll_no || "").trim().toLowerCase();
+      const match = MOCK_PHD_SCHOLARS.find((p: any) => {
+        const pName = (p.name || "").trim().toLowerCase();
+        const pRoll = String(p.enrollment_number || p.roll_no || "").trim().toLowerCase();
+        return (sRoll && pRoll && sRoll === pRoll) || (sName && pName && sName === pName);
+      });
+      return {
+        ...s,
+        photo_url: s.photo_url || match?.photo_url || match?.image_url || match?.photo || "",
+        linkedin_url: s.linkedin_url || match?.linkedin_url || "",
+        google_scholar_url: s.google_scholar_url || match?.google_scholar_url || "",
+        scopus_url: s.scopus_url || match?.scopus_url || "",
+      };
+    });
   }, [allSupervisions, faculty]);
 
   // Categorized Publications
@@ -2810,11 +2831,63 @@ export default function FacultyPortfolioPage({
                             <td className="p-3.5 text-center text-neutral-500 font-mono font-bold align-top text-sm">
                               {idx + 1}
                             </td>
-                            <td className="p-3.5 align-top space-y-1">
-                              <div className="font-bold text-neutral-900 text-base">{s.student_name}</div>
-                              {s.roll_number && (
-                                <div className="font-mono text-xs text-neutral-500 font-medium">Roll: {s.roll_number}</div>
-                              )}
+                            <td className="p-3.5 align-top">
+                              <div className="flex items-center gap-3">
+                                {s.photo_url ? (
+                                  <img
+                                    src={s.photo_url}
+                                    alt={s.student_name}
+                                    className="w-10 h-10 object-cover object-top rounded-xl border border-[#eedfd8] shadow-2xs flex-shrink-0"
+                                  />
+                                ) : (
+                                  <div className="w-10 h-10 rounded-xl bg-[#fff9f6] border border-[#eedfd8] flex items-center justify-center text-[#85261e] font-bold text-xs flex-shrink-0">
+                                    {s.student_name?.charAt(0) || "S"}
+                                  </div>
+                                )}
+                                <div className="space-y-0.5 min-w-0">
+                                  <div className="font-bold text-neutral-900 text-sm leading-snug">{s.student_name}</div>
+                                  {s.roll_number && (
+                                    <div className="font-mono text-xs text-[#85261e] font-medium">Roll: {s.roll_number}</div>
+                                  )}
+                                  {(s.linkedin_url || s.google_scholar_url || s.scopus_url) && (
+                                    <div className="flex items-center gap-2 pt-0.5">
+                                      {s.linkedin_url && (
+                                        <a
+                                          href={s.linkedin_url.startsWith("http") ? s.linkedin_url : `https://${s.linkedin_url}`}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-[#0077b5] hover:opacity-80 transition"
+                                          title="LinkedIn"
+                                        >
+                                          <FaLinkedin className="w-3 h-3" />
+                                        </a>
+                                      )}
+                                      {s.google_scholar_url && (
+                                        <a
+                                          href={s.google_scholar_url.startsWith("http") ? s.google_scholar_url : `https://${s.google_scholar_url}`}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-[#4285F4] hover:opacity-80 transition"
+                                          title="Google Scholar"
+                                        >
+                                          <FaGoogle className="w-3 h-3" />
+                                        </a>
+                                      )}
+                                      {s.scopus_url && (
+                                        <a
+                                          href={s.scopus_url.startsWith("http") ? s.scopus_url : `https://${s.scopus_url}`}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-[#ff671b] hover:opacity-80 transition"
+                                          title="Scopus"
+                                        >
+                                          <SiScopus className="w-3 h-3" />
+                                        </a>
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
                             </td>
                             <td className="p-3.5 align-top space-y-1">
                               <div className="text-neutral-900 font-semibold leading-snug text-sm">{s.thesis_title}</div>
