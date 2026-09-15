@@ -26,7 +26,11 @@ import {
   GraduationCap,
   ArrowUpDown,
   RefreshCw,
+  Upload,
+  Loader2,
+  ImageIcon,
 } from "lucide-react";
+import axios from "axios";
 import { toast } from "sonner";
 import { MOCK_FACULTY } from "@/lib/mock-data";
 import { useDepartment } from "@/context/department-context";
@@ -287,6 +291,39 @@ export default function AdminFacultyPage() {
       status: f.status || "Active",
     });
     setIsEditModalOpen(true);
+  };
+
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image file size should be less than 5MB");
+      return;
+    }
+
+    try {
+      setUploadingPhoto(true);
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "trials");
+
+      const res = await axios.post("https://api.cloudinary.com/v1_1/dvnrlqqpq/image/upload", data);
+      if (res.data && res.data.secure_url) {
+        setFacultyForm((prev) => ({
+          ...prev,
+          image_url: res.data.secure_url,
+        }));
+        toast.success("Profile photo uploaded to Cloudinary successfully!");
+      }
+    } catch (err) {
+      console.error("Cloudinary upload error:", err);
+      toast.error("Failed to upload image to Cloudinary. You can paste the URL directly.");
+    } finally {
+      setUploadingPhoto(false);
+    }
   };
 
   // Submit Add Faculty
@@ -1020,6 +1057,54 @@ export default function AdminFacultyPage() {
                 />
               </div>
 
+              <div>
+                <label className="block text-[10px] font-extrabold uppercase text-[#33110e] mb-1">
+                  Profile Photo (Upload from Local Device or Paste URL)
+                </label>
+                <div className="flex items-center gap-2">
+                  <div className="relative w-9 h-9 rounded-lg bg-neutral-100 border border-[#eedfd8] overflow-hidden flex items-center justify-center shrink-0">
+                    {facultyForm.image_url ? (
+                      <img
+                        src={facultyForm.image_url}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLElement).style.display = "none";
+                        }}
+                      />
+                    ) : (
+                      <ImageIcon className="w-4 h-4 text-neutral-400" />
+                    )}
+                    {uploadingPhoto && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                        <Loader2 className="w-3.5 h-3.5 text-white animate-spin" />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex-1 flex gap-2">
+                    <input
+                      type="url"
+                      value={facultyForm.image_url}
+                      onChange={(e) => setFacultyForm({ ...facultyForm, image_url: e.target.value })}
+                      placeholder="https://... or click upload"
+                      className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-2 text-xs text-[#33110e] focus:bg-white focus:border-[#85261e] focus:outline-hidden"
+                    />
+                    <label className={`px-3 py-2 rounded-xl bg-[#fff9f6] hover:bg-[#eedfd8] text-[#85261e] border border-[#eedfd8] text-xs font-bold flex items-center gap-1 cursor-pointer transition shrink-0 ${uploadingPhoto ? "opacity-50 pointer-events-none" : ""}`}>
+                      {uploadingPhoto ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                      <span>{uploadingPhoto ? "..." : "Upload"}</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                        className="hidden"
+                        disabled={uploadingPhoto}
+                      />
+                    </label>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-[#eedfd8]">
                 <button
                   type="button"
@@ -1152,6 +1237,54 @@ export default function AdminFacultyPage() {
                   onChange={(e) => setFacultyForm({ ...facultyForm, specialization: e.target.value })}
                   className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-2 text-xs text-[#33110e] focus:bg-white focus:border-[#85261e] focus:outline-hidden"
                 />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-extrabold uppercase text-[#33110e] mb-1">
+                  Profile Photo (Upload from Local Device or Paste URL)
+                </label>
+                <div className="flex items-center gap-2">
+                  <div className="relative w-9 h-9 rounded-lg bg-neutral-100 border border-[#eedfd8] overflow-hidden flex items-center justify-center shrink-0">
+                    {facultyForm.image_url ? (
+                      <img
+                        src={facultyForm.image_url}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLElement).style.display = "none";
+                        }}
+                      />
+                    ) : (
+                      <ImageIcon className="w-4 h-4 text-neutral-400" />
+                    )}
+                    {uploadingPhoto && (
+                      <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                        <Loader2 className="w-3.5 h-3.5 text-white animate-spin" />
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex-1 flex gap-2">
+                    <input
+                      type="url"
+                      value={facultyForm.image_url}
+                      onChange={(e) => setFacultyForm({ ...facultyForm, image_url: e.target.value })}
+                      placeholder="https://... or click upload"
+                      className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-2 text-xs text-[#33110e] focus:bg-white focus:border-[#85261e] focus:outline-hidden"
+                    />
+                    <label className={`px-3 py-2 rounded-xl bg-[#fff9f6] hover:bg-[#eedfd8] text-[#85261e] border border-[#eedfd8] text-xs font-bold flex items-center gap-1 cursor-pointer transition shrink-0 ${uploadingPhoto ? "opacity-50 pointer-events-none" : ""}`}>
+                      {uploadingPhoto ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                      <span>{uploadingPhoto ? "..." : "Upload"}</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                        className="hidden"
+                        disabled={uploadingPhoto}
+                      />
+                    </label>
+                  </div>
+                </div>
               </div>
 
               <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-[#eedfd8]">
