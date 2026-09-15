@@ -16,7 +16,7 @@ A standardized, full-stack institutional web portal, research discovery engine, 
 ## 📑 Table of Contents
 
 - [Live Production Deployment (tempcse.nith.ac.in)](#-live-production-deployment-tempcsenithacin)
-- [Credential & Access Roster](#-credential--access-roster)
+- [Access & Authentication Architecture](#-access--authentication-architecture)
 - [Overview & Architectural Vision](#-overview--architectural-vision)
 - [System Architecture](#-system-architecture)
 - [Key Features Breakdown](#-key-features-breakdown)
@@ -86,51 +86,11 @@ The server hosts multiple institute web properties. The deployment operates in s
 
 ---
 
-## 🔐 Credential & Access Roster
+## 🔐 Access & Authentication Architecture
 
-> [!IMPORTANT]
-> For security, all public demo autofill options have been **completely removed** from the login UI. Authentication is strictly processed by the Go backend using salted bcrypt password hashes.
+Authentication is strictly processed by the Go backend using salted bcrypt password hashes and signed JWT session tokens. In accordance with security best practices, all public autofill and demo credentials have been completely removed from the user interface and repository documentation.
 
-### Administrator Accounts
 
-| Role | Username / Email | Initial Password | Notes |
-|---|---|---|---|
-| **Central System Administrator** | `admin@nith.ac.in` | `admin*123` | Multi-department administrative control, audit logs, and user management. |
-| **HOD Admin (CSE)** | `hod@nith.ac.in` | `admin*123` | Departmental administration, HOD desk, notices, and faculty curation. |
-
-### Faculty Accounts Roster (All 27 Active Faculty)
-
-All faculty accounts are initialized with default password **`fac*123`**. Faculty can sign in at [`/faculty/login`](https://tempcse.nith.ac.in/faculty/login) using either their **Employee Code** OR their **Registered Email**.
-
-| # | Code | Faculty Name | Registered Email | Initial Password |
-|---|---|---|---|---|
-| 1 | `CS01` | Prof. Lalit Kumar Awasthi | `lalit@nith.ac.in` | `fac*123` |
-| 2 | `CS02` | Dr.(Mrs.) Kamlesh Dutta | `kd@nith.ac.in` | `fac*123` |
-| 3 | `CS03` | Dr. T P Sharma | `teek@nith.ac.in` | `fac*123` |
-| 4 | `CS04` | Dr. Siddhartha Chauhan (HOD) | `sid@nith.ac.in` | `fac*123` |
-| 5 | `CS05` | Dr. Naveen Chauhan | `naveen@nith.ac.in` | `fac*123` |
-| 6 | `CS07` | Dr. Pardeep Singh | `pardeep@nith.ac.in` | `fac*123` |
-| 7 | `CS09` | Dr. Rajeev Kumar | `rajeev@nith.ac.in` | `fac*123` |
-| 8 | `CS010` | Dr. Nitin Gupta | `nitin@nith.ac.in` | `fac*123` |
-| 9 | `CS011` | Dr. Dharmendra Prasad Mahato | `dpm@nith.ac.in` | `fac*123` |
-| 10 | `CS012` | Dr. Arun Kumar Yadav | `ayadav@nith.ac.in` | `fac*123` |
-| 11 | `CS013` | Dr. Mohit Kumar | `mohit@nith.ac.in` | `fac*123` |
-| 12 | `CS014` | Dr. Jyoti Srivastava | `jyoti.s@nith.ac.in` | `fac*123` |
-| 13 | `CS015` | Dr. Priyanka | `dr.priyanka@nith.ac.in` | `fac*123` |
-| 14 | `CS016` | Dr. Sangeeta Sharma | `sangeetas@nith.ac.in` | `fac*123` |
-| 15 | `CS017` | Dr. Mohammad Khalid Pandit | `mkhalid@nith.ac.in` | `fac*123` |
-| 16 | `CS018` | Dr. Ajay Kumar Mallick | `ajaymallick@nith.ac.in` | `fac*123` |
-| 17 | `CS020` | Dr. Robin Singh Bhadoria | `robin.bhadoria@nith.ac.in` | `fac*123` |
-| 18 | `CS021` | Dr. Ram Prakash Sharma | `ram.sharma@nith.ac.in` | `fac*123` |
-| 19 | `TF042` | Dr. Pushpender Kumar | `pkdhiman@nith.ac.in` | `fac*123` |
-| 20 | `TF043` | Dr. Pooja Sharma | `poojas@nith.ac.in` | `fac*123` |
-| 21 | `TF045` | Dr. Tanuj Wala | `tanuj@nith.ac.in` | `fac*123` |
-| 22 | `TF046` | Dr. Mukul Majhi | `mukulkmajhi@gmail.com` | `fac*123` |
-| 23 | `TF047` | Dr. Richa | `richa_cs@nith.ac.in` | `fac*123` |
-| 24 | `TF048` | Mrs. Pooja Rani | `pooja_phdcse@nith.ac.in` | `fac*123` |
-| 25 | `TF049` | Mrs. Pratibha Singh | `pratibhasingh@nith.ac.in` | `fac*123` |
-| 26 | `TF050` | Mr. Keshav Kaundal | `keshavkaundal@nith.ac.in` | `fac*123` |
-| 27 | `TF051` | Mrs. Meenakshi Nayyer | `meenakshinayyer@nith.ac.in` | `fac*123` |
 
 ### Automated Password Reset Flow
 
@@ -744,17 +704,17 @@ npm run dev
 
 ### 🌐 Access URLs Reference
 
-| Environment | Portal | URL | Access Mode / Credentials |
+| Environment | Portal | URL | Access Mode |
 | :--- | :--- | :--- | :--- |
 | **Production** | **Public Website** | [https://tempcse.nith.ac.in](https://tempcse.nith.ac.in) | Public Access |
-| **Production** | **Faculty Workspace** | [https://tempcse.nith.ac.in/faculty/login](https://tempcse.nith.ac.in/faculty/login) | Faculty Code (e.g. `CS04`) or Email / `fac*123` |
-| **Production** | **Administrator Console** | [https://tempcse.nith.ac.in/admin/login](https://tempcse.nith.ac.in/admin/login) | `admin@nith.ac.in` or `hod@nith.ac.in` / `admin*123` |
+| **Production** | **Faculty Workspace** | [https://tempcse.nith.ac.in/faculty/login](https://tempcse.nith.ac.in/faculty/login) | Faculty Code or Institute Email |
+| **Production** | **Administrator Console** | [https://tempcse.nith.ac.in/admin/login](https://tempcse.nith.ac.in/admin/login) | Administrator Email |
 | **Production** | **Password Reset** | [https://tempcse.nith.ac.in/forgot-password](https://tempcse.nith.ac.in/forgot-password) | Transactional OTP/Link via Gmail SMTP |
 | **Production** | **Backend API** | [https://tempcse.nith.ac.in/backend/api/v1](https://tempcse.nith.ac.in/backend/api/v1) | JWT Protected (`/backend/` Nginx proxy) |
 | **Production** | **Backend Health** | [https://tempcse.nith.ac.in/backend/health](https://tempcse.nith.ac.in/backend/health) | `{"status":"healthy","version":"1.0.0"}` |
 | **Local Dev** | **Public Website** | [http://localhost:3000](http://localhost:3000) | Public Access |
-| **Local Dev** | **Faculty Workspace** | [http://localhost:3000/faculty/login](http://localhost:3000/faculty/login) | Faculty Code / `fac*123` |
-| **Local Dev** | **Administrator Console** | [http://localhost:3000/admin/login](http://localhost:3000/admin/login) | `admin@nith.ac.in` / `admin*123` |
+| **Local Dev** | **Faculty Workspace** | [http://localhost:3000/faculty/login](http://localhost:3000/faculty/login) | Faculty Code / Password |
+| **Local Dev** | **Administrator Console** | [http://localhost:3000/admin/login](http://localhost:3000/admin/login) | Admin Email / Password |
 | **Local Dev** | **Backend API Health** | [http://localhost:8080/health](http://localhost:8080/health) | API Status |
 
 ---
