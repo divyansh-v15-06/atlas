@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import CountUp from "react-countup";
 import {
   MOCK_FACULTY,
   MOCK_PUBLICATIONS,
@@ -117,6 +118,95 @@ export default function HomePage() {
   const [slides, setSlides] = useState<{ src: string; alt?: string; title?: string; subtitle?: string }[]>(() =>
     isCse ? TEMPCSE_HERO_SLIDES : DEFAULT_DEPARTMENT_SLIDES(activeDepartment.name, activeDepartment.code)
   );
+  const [metrics, setMetrics] = useState({
+    faculty: isCse ? 27 : 0,
+    publications: isCse ? 113 : 0,
+    students: isCse ? 621 : 0,
+    highestPackage: isCse ? 1.51 : 0,
+    patents: isCse ? 17 : 0,
+    projects: isCse ? 8 : 0,
+  });
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Fetch dynamic department stats from backend
+  useEffect(() => {
+    let isCancelled = false;
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+
+    async function loadDepartmentMetrics() {
+      try {
+        const res = await fetch(`${apiUrl}/aggregates/count?department_id=${encodeURIComponent(activeDepartment.id)}`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json && json.data && !isCancelled) {
+            const d = json.data;
+            const totalStudents =
+              (d.bachelorStudent || 0) +
+              (d.dualdegreeStudent || 0) +
+              (d.masterStudent || 0) +
+              (d.pursuingPhdScholar || 0);
+
+            const pubCount = typeof d.publication === "number" ? d.publication : 0;
+            const facCount = typeof d.faculty === "number" ? d.faculty : 0;
+            const stuCount = totalStudents;
+            const patentCount = typeof d.Patent === "number" ? d.Patent : 0;
+            const projectCount = typeof d.Project === "number" ? d.Project : 0;
+
+            let highestPkg = isCse ? 1.51 : 0;
+            try {
+              const pRes = await fetch(`${apiUrl}/placement-stats?department_id=${encodeURIComponent(activeDepartment.id)}`);
+              if (pRes.ok) {
+                const pJson = await pRes.json();
+                if (pJson && Array.isArray(pJson.data) && pJson.data.length > 0) {
+                  const maxPkg = Math.max(...pJson.data.map((p: any) => p.highest_package_lpa || 0));
+                  if (maxPkg > 0) {
+                    highestPkg = Number((maxPkg / 100).toFixed(2));
+                  }
+                }
+              }
+            } catch {
+              // fallback
+            }
+
+            if (!isCancelled) {
+              setMetrics({
+                faculty: facCount,
+                publications: pubCount,
+                students: stuCount,
+                highestPackage: highestPkg,
+                patents: patentCount,
+                projects: projectCount,
+              });
+            }
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch KPI metrics from backend", err);
+      }
+
+      if (!isCancelled) {
+        setMetrics({
+          faculty: isCse ? 27 : 0,
+          publications: isCse ? 113 : 0,
+          students: isCse ? 621 : 0,
+          highestPackage: isCse ? 1.51 : 0,
+          patents: isCse ? 17 : 0,
+          projects: isCse ? 8 : 0,
+        });
+      }
+    }
+
+    loadDepartmentMetrics();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [activeDepartment.id, isCse]);
 
   useEffect(() => {
     let isCancelled = false;
@@ -469,7 +559,7 @@ export default function HomePage() {
                   <div className="bg-white p-3 rounded-lg border border-[#eedfd8] shadow-2xs hover:border-[#85261e]/40 transition">
                     <div className="flex items-center gap-2 text-[#85261e] font-extrabold text-xs mb-1">
                       <BookOpen className="w-4 h-4" />
-                      <span>340+ Publications</span>
+                      <span>{metrics.publications > 0 ? `${metrics.publications}+` : "0"} Publications</span>
                     </div>
                     <p className="text-[11px] text-neutral-600 leading-relaxed">
                       Peer-reviewed journal articles in IEEE Transactions, ACM, Elsevier, and top CORE A/A* international conferences.
@@ -479,7 +569,7 @@ export default function HomePage() {
                   <div className="bg-white p-3 rounded-lg border border-[#eedfd8] shadow-2xs hover:border-[#85261e]/40 transition">
                     <div className="flex items-center gap-2 text-[#85261e] font-extrabold text-xs mb-1">
                       <Lightbulb className="w-4 h-4" />
-                      <span>28+ Patents Filed &amp; Granted</span>
+                      <span>{metrics.patents > 0 ? `${metrics.patents}+` : "17+"} Patents Filed &amp; Granted</span>
                     </div>
                     <p className="text-[11px] text-neutral-600 leading-relaxed">
                       Intellectual property spanning edge computing, cyber-physical security, neural systems, and intelligent sensing.
@@ -514,8 +604,19 @@ export default function HomePage() {
             <div className="bg-[#1c110c] text-white rounded-xl p-6 shadow-md border border-[#33110e]">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-neutral-800">
                 <div className="pt-3 md:pt-0">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400">
-                    {MOCK_FACULTY.length}
+                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                    {isClient ? (
+                      <CountUp
+                        key={`fac-${activeDepartment.id}-${metrics.faculty}`}
+                        start={0}
+                        end={metrics.faculty}
+                        duration={2}
+                        enableScrollSpy={true}
+                        scrollSpyOnce={false}
+                      />
+                    ) : (
+                      metrics.faculty
+                    )}
                   </div>
                   <p className="text-xs text-neutral-300 uppercase tracking-wider font-bold mt-1">
                     Faculty Members
@@ -524,8 +625,22 @@ export default function HomePage() {
                 </div>
 
                 <div className="pt-3 md:pt-0">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400">
-                    340+
+                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                    {isClient ? (
+                      <>
+                        <CountUp
+                          key={`pub-${activeDepartment.id}-${metrics.publications}`}
+                          start={0}
+                          end={metrics.publications}
+                          duration={2.2}
+                          enableScrollSpy={true}
+                          scrollSpyOnce={false}
+                        />
+                        {metrics.publications > 0 && "+"}
+                      </>
+                    ) : (
+                      `${metrics.publications}${metrics.publications > 0 ? "+" : ""}`
+                    )}
                   </div>
                   <p className="text-xs text-neutral-300 uppercase tracking-wider font-bold mt-1">
                     Publications
@@ -534,8 +649,22 @@ export default function HomePage() {
                 </div>
 
                 <div className="pt-3 md:pt-0">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400">
-                    650+
+                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                    {isClient ? (
+                      <>
+                        <CountUp
+                          key={`stu-${activeDepartment.id}-${metrics.students}`}
+                          start={0}
+                          end={metrics.students}
+                          duration={2.4}
+                          enableScrollSpy={true}
+                          scrollSpyOnce={false}
+                        />
+                        {metrics.students > 0 && "+"}
+                      </>
+                    ) : (
+                      `${metrics.students}${metrics.students > 0 ? "+" : ""}`
+                    )}
                   </div>
                   <p className="text-xs text-neutral-300 uppercase tracking-wider font-bold mt-1">
                     Enrolled Students
@@ -544,8 +673,28 @@ export default function HomePage() {
                 </div>
 
                 <div className="pt-3 md:pt-0">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400">
-                    ₹1.51 Cr
+                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                    {isClient ? (
+                      metrics.highestPackage > 0 ? (
+                        <>
+                          ₹
+                          <CountUp
+                            key={`pkg-${activeDepartment.id}-${metrics.highestPackage}`}
+                            start={0}
+                            end={metrics.highestPackage}
+                            decimals={2}
+                            duration={2.5}
+                            enableScrollSpy={true}
+                            scrollSpyOnce={false}
+                          />
+                          {" "}Cr
+                        </>
+                      ) : (
+                        "—"
+                      )
+                    ) : (
+                      metrics.highestPackage > 0 ? `₹${metrics.highestPackage} Cr` : "—"
+                    )}
                   </div>
                   <p className="text-xs text-neutral-300 uppercase tracking-wider font-bold mt-1">
                     Highest Package
