@@ -146,12 +146,15 @@ const sysAdminSidebarLinks: SidebarItem[] = [
     ],
   },
   {
-    section: "Inspect Department Portals",
+    section: "Department Portals & People",
     id: "dept-inspect",
     items: [
-      { label: "HOD Message CMS", href: "/admin/hod", icon: MessageSquare },
-      { label: "Course Catalogue", href: "/admin/academics/courses", icon: BookOpen },
       { label: "Faculty Directory", href: "/admin/people/faculty", icon: Users },
+      { label: "PhD Scholars", href: "/admin/people/phdscholars", icon: BookOpen },
+      { label: "Students Roster", href: "/admin/people/students", icon: GraduationCap },
+      { label: "Staff Members", href: "/admin/people/staff", icon: UserCog },
+      { label: "Course Catalogue", href: "/admin/academics/courses", icon: BookOpen },
+      { label: "HOD Message CMS", href: "/admin/hod", icon: MessageSquare },
       { label: "Hero Carousel", href: "/admin/home/carousel", icon: Image },
     ],
   },
