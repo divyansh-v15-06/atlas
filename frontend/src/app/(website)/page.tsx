@@ -365,9 +365,9 @@ export default function HomePage() {
     <div className="space-y-6 pb-16 bg-[#ffffff]">
       {/* 1. Symmetrical Department Announcement Tape */}
       <div className="bg-[#fff9f6] border-y border-[#eedfd8] shadow-2xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center h-10 gap-3">
+        <div className="max-w-[1560px] 2xl:max-w-[1640px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-11 gap-3">
           {/* Department Code & Title Badge */}
-          <div className="flex items-center gap-1.5 bg-[#33110e] text-white px-3 py-1 rounded-md text-[11px] font-bold tracking-wider uppercase flex-shrink-0 shadow-xs">
+          <div className="flex items-center gap-1.5 bg-[#33110e] text-white px-3 py-1 rounded-md text-xs font-bold tracking-wider uppercase flex-shrink-0 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping mr-0.5 inline-block"></span>
             <span>Announcements</span>
             <span className="bg-[#85261e] text-amber-300 text-[10px] px-1.5 py-0.2 rounded font-mono ml-1">
@@ -434,34 +434,37 @@ export default function HomePage() {
           <div className="flex-shrink-0 border-l border-[#eedfd8] pl-3 hidden sm:flex items-center">
             <Link
               href={`/news/announcements?dept=${activeDepartment.slug}`}
-              className="text-[11px] font-bold text-[#85261e] hover:text-[#33110e] transition flex items-center gap-1"
+              className="text-xs font-bold text-[#85261e] hover:text-[#33110e] transition flex items-center gap-1"
             >
-              View All <ChevronRight className="w-3 h-3" />
+              View All <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
       </div>
 
       {!hasData ? (
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-10">
+        <div className="max-w-[1560px] 2xl:max-w-[1640px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <DepartmentEmptyState sectionTitle={`Department of ${activeDepartment.name} Portal`} />
         </div>
       ) : (
         <>
           {/* 2. Signature 3-Column Hero Section */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-8">
+          <div className="max-w-[1560px] 2xl:max-w-[1640px] mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
               
               {/* Left Column: Department News & Updates Box */}
-              <div className="lg:col-span-3 bg-white rounded-xl border border-[#eedfd8] shadow-xs flex flex-col overflow-hidden h-[430px]">
-                <div className="bg-[#33110e] text-white p-3 text-center font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-amber-400" />
-                  <span>{activeDepartment.code} News &amp; Updates</span>
+              <div className="lg:col-span-3 bg-white rounded-2xl border border-[#eedfd8] shadow-sm flex flex-col overflow-hidden h-[475px]">
+                <div className="bg-[#33110e] text-white px-4 py-3 font-bold text-xs uppercase tracking-wider flex items-center justify-between border-b border-[#4a1814] flex-shrink-0">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-amber-400" />
+                    <span className="font-extrabold">{activeDepartment.code} News &amp; Updates</span>
+                  </div>
+                  <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded font-mono">LATEST</span>
                 </div>
                 
-                <div className="p-3 divide-y divide-[#eedfd8]/60 overflow-y-auto no-scrollbar flex-1 space-y-2.5">
+                <div className="p-3.5 divide-y divide-[#eedfd8]/70 overflow-y-auto no-scrollbar flex-1 space-y-2.5">
                   {departmentAnnouncements.map((ann) => (
-                    <div key={ann.id} className="pt-2 first:pt-0">
+                    <div key={ann.id} className="pt-2.5 first:pt-0">
                       <div className="flex items-center justify-between text-[10px] text-[#85261e] font-semibold mb-1">
                         <span className="flex items-center gap-1">
                           <Calendar className="w-3 h-3 text-[#85261e]" />
@@ -481,18 +484,18 @@ export default function HomePage() {
                   ))}
                 </div>
 
-                <div className="p-2.5 bg-[#fff9f6] border-t border-[#eedfd8] text-center">
+                <div className="p-2.5 bg-[#fff9f6] border-t border-[#eedfd8] text-center flex-shrink-0">
                   <Link
                     href={`/news/announcements?dept=${activeDepartment.slug}`}
-                    className="text-[11px] text-[#33110e] font-bold hover:underline flex items-center justify-center gap-1"
+                    className="text-xs text-[#33110e] font-bold hover:underline flex items-center justify-center gap-1"
                   >
-                    View All Notices &amp; Circulars <ChevronRight className="w-3 h-3 text-[#85261e]" />
+                    View All Notices &amp; Circulars <ChevronRight className="w-3.5 h-3.5 text-[#85261e]" />
                   </Link>
                 </div>
               </div>
 
               {/* Center Column: Department Hero Carousel */}
-              <div className="lg:col-span-6 rounded-xl overflow-hidden border border-[#eedfd8] relative shadow-xs h-[430px] bg-[#f6f0ea] group select-none">
+              <div className="lg:col-span-6 rounded-2xl overflow-hidden border border-[#eedfd8] relative shadow-sm h-[475px] bg-[#f6f0ea] group select-none">
                 {/* Auto-advance progress indicator line */}
                 <div className="absolute top-0 left-0 right-0 h-1 z-30 bg-black/25 overflow-hidden">
                   <div
@@ -541,7 +544,7 @@ export default function HomePage() {
                     e.stopPropagation();
                     setActiveSlide((prev) => (prev - 1 + slides.length) % slides.length);
                   }}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/45 hover:bg-[#85261e] text-white flex items-center justify-center backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-all cursor-pointer shadow-md"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/45 hover:bg-[#85261e] text-white flex items-center justify-center backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-all cursor-pointer shadow-md"
                   aria-label="Previous Slide"
                 >
                   <ChevronLeft className="w-5 h-5" />
@@ -554,14 +557,14 @@ export default function HomePage() {
                     e.stopPropagation();
                     setActiveSlide((prev) => (prev + 1) % slides.length);
                   }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-black/45 hover:bg-[#85261e] text-white flex items-center justify-center backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-all cursor-pointer shadow-md"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/45 hover:bg-[#85261e] text-white flex items-center justify-center backdrop-blur-xs opacity-0 group-hover:opacity-100 transition-all cursor-pointer shadow-md"
                   aria-label="Next Slide"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>
 
                 {/* Slide Counter Badge */}
-                <div className="absolute top-3.5 right-3.5 z-20 bg-black/60 backdrop-blur-xs text-white text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full shadow-sm border border-white/20">
+                <div className="absolute top-3.5 right-3.5 z-20 bg-black/60 backdrop-blur-xs text-white text-xs font-mono font-bold px-3 py-1 rounded-full shadow-sm border border-white/20">
                   {activeSlide + 1} / {slides.length}
                 </div>
 
@@ -574,7 +577,7 @@ export default function HomePage() {
                         type="button"
                         onClick={() => setActiveSlide(i)}
                         className={`h-1.5 rounded-full transition-all cursor-pointer ${
-                          i === activeSlide ? "bg-amber-400 w-5" : "bg-white/50 w-1.5 hover:bg-white"
+                          i === activeSlide ? "bg-amber-400 w-6" : "bg-white/50 w-2 hover:bg-white"
                         }`}
                         aria-label={`Slide ${i + 1}`}
                       />
@@ -584,14 +587,17 @@ export default function HomePage() {
               </div>
 
               {/* Right Column: Research Highlights Box */}
-              <div className="lg:col-span-3 bg-white rounded-xl border border-[#eedfd8] shadow-xs flex flex-col overflow-hidden h-[430px]">
-                <div className="bg-[#33110e] text-white p-3 text-center font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Research Highlights</span>
+              <div className="lg:col-span-3 bg-white rounded-2xl border border-[#eedfd8] shadow-sm flex flex-col overflow-hidden h-[475px]">
+                <div className="bg-[#33110e] text-white px-4 py-3 font-bold text-xs uppercase tracking-wider flex items-center justify-between border-b border-[#4a1814] flex-shrink-0">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-400" />
+                    <span className="font-extrabold">Research Highlights</span>
+                  </div>
+                  <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded font-mono">IMPACT</span>
                 </div>
 
-                <div className="p-4 space-y-3.5 overflow-y-auto no-scrollbar flex-1 bg-[#fff9f6]/40">
-                  <div className="bg-white p-3 rounded-lg border border-[#eedfd8] shadow-2xs hover:border-[#85261e]/40 transition">
+                <div className="p-3.5 space-y-3 overflow-y-auto no-scrollbar flex-1 bg-[#fff9f6]/40">
+                  <div className="bg-white p-3 rounded-xl border border-[#eedfd8] shadow-2xs hover:border-[#85261e]/40 transition">
                     <div className="flex items-center gap-2 text-[#85261e] font-extrabold text-xs mb-1">
                       <BookOpen className="w-4 h-4" />
                       <span>{metrics.publications} Publications</span>
@@ -601,7 +607,7 @@ export default function HomePage() {
                     </p>
                   </div>
 
-                  <div className="bg-white p-3 rounded-lg border border-[#eedfd8] shadow-2xs hover:border-[#85261e]/40 transition">
+                  <div className="bg-white p-3 rounded-xl border border-[#eedfd8] shadow-2xs hover:border-[#85261e]/40 transition">
                     <div className="flex items-center gap-2 text-[#85261e] font-extrabold text-xs mb-1">
                       <Lightbulb className="w-4 h-4" />
                       <span>{metrics.patents} Patents Filed &amp; Granted</span>
@@ -611,7 +617,7 @@ export default function HomePage() {
                     </p>
                   </div>
 
-                  <div className="bg-white p-3 rounded-lg border border-[#eedfd8] shadow-2xs hover:border-[#85261e]/40 transition">
+                  <div className="bg-white p-3 rounded-xl border border-[#eedfd8] shadow-2xs hover:border-[#85261e]/40 transition">
                     <div className="flex items-center gap-2 text-[#85261e] font-extrabold text-xs mb-1">
                       <Award className="w-4 h-4" />
                       <span>₹3.85+ Cr R&amp;D Grants</span>
@@ -622,12 +628,12 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                <div className="p-2.5 bg-[#fff9f6] border-t border-[#eedfd8] text-center">
+                <div className="p-2.5 bg-[#fff9f6] border-t border-[#eedfd8] text-center flex-shrink-0">
                   <Link
                     href={`/research/publications?dept=${activeDepartment.slug}`}
-                    className="text-[11px] text-[#33110e] font-bold hover:underline flex items-center justify-center gap-1"
+                    className="text-xs text-[#33110e] font-bold hover:underline flex items-center justify-center gap-1"
                   >
-                    Explore Research Catalogue <ChevronRight className="w-3 h-3 text-[#85261e]" />
+                    Explore Research Catalogue <ChevronRight className="w-3.5 h-3.5 text-[#85261e]" />
                   </Link>
                 </div>
               </div>
@@ -635,12 +641,12 @@ export default function HomePage() {
           </div>
 
           {/* 3. Department Analytics & Metric Numbers Strip */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-2">
-            <div className="bg-[#1c110c] text-white rounded-xl p-6 sm:p-8 shadow-md border border-[#33110e]">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
+          <div className="max-w-[1560px] 2xl:max-w-[1640px] mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+            <div className="bg-[#1c110c] text-white rounded-2xl p-5 sm:p-6 shadow-md border border-[#33110e]">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 lg:gap-0 lg:divide-x divide-neutral-800 text-center items-center">
                 {/* 1. Faculty */}
-                <div className="pt-2">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                <div className="px-2 py-1">
+                  <div className="text-3xl xl:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
                     {isClient ? (
                       <CountUp
                         key={`fac-${activeDepartment.id}-${metrics.faculty}`}
@@ -654,17 +660,17 @@ export default function HomePage() {
                       metrics.faculty
                     )}
                   </div>
-                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
+                  <p className="text-xs font-bold uppercase tracking-wider text-neutral-200 mt-1">
                     Faculty Members
                   </p>
-                  <span className="text-[11px] text-neutral-400 font-medium">
-                    {metrics.staff > 0 ? `27 Faculty • ${metrics.staff} Staff Members` : "Distinguished Professors & Scholars"}
+                  <span className="text-[11px] text-neutral-400 font-medium truncate block">
+                    {metrics.staff > 0 ? `27 Faculty • ${metrics.staff} Staff` : "Distinguished Scholars"}
                   </span>
                 </div>
 
                 {/* 2. Publications */}
-                <div className="pt-2">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                <div className="px-2 py-1">
+                  <div className="text-3xl xl:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
                     {isClient ? (
                       <CountUp
                         key={`pub-${activeDepartment.id}-${metrics.publications}`}
@@ -678,15 +684,41 @@ export default function HomePage() {
                       metrics.publications
                     )}
                   </div>
-                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
+                  <p className="text-xs font-bold uppercase tracking-wider text-neutral-200 mt-1">
                     Publications
                   </p>
-                  <span className="text-[11px] text-neutral-400 font-medium">Scopus / SCI Indexed Papers</span>
+                  <span className="text-[11px] text-neutral-400 font-medium truncate block">
+                    Scopus / SCI Indexed
+                  </span>
                 </div>
 
-                {/* 3. Ph.D. Scholars */}
-                <div className="pt-2">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                {/* 3. Merged UG & PG Students */}
+                <div className="px-2 py-1">
+                  <div className="text-3xl xl:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                    {isClient ? (
+                      <CountUp
+                        key={`students-${activeDepartment.id}-${metrics.ugStudents + metrics.pgStudents}`}
+                        start={0}
+                        end={metrics.ugStudents + metrics.pgStudents}
+                        duration={2.4}
+                        enableScrollSpy={true}
+                        scrollSpyOnce={false}
+                      />
+                    ) : (
+                      metrics.ugStudents + metrics.pgStudents
+                    )}
+                  </div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-neutral-200 mt-1">
+                    UG &amp; PG Students
+                  </p>
+                  <span className="text-[11px] text-neutral-400 font-medium truncate block">
+                    {metrics.ugStudents} UG • {metrics.pgStudents} M.Tech
+                  </span>
+                </div>
+
+                {/* 4. Ph.D. Scholars */}
+                <div className="px-2 py-1">
+                  <div className="text-3xl xl:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
                     {isClient ? (
                       <CountUp
                         key={`phd-${activeDepartment.id}-${metrics.phdScholars}`}
@@ -700,17 +732,65 @@ export default function HomePage() {
                       metrics.phdScholars
                     )}
                   </div>
-                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
+                  <p className="text-xs font-bold uppercase tracking-wider text-neutral-200 mt-1">
                     Ph.D. Scholars
                   </p>
-                  <span className="text-[11px] text-neutral-400 font-medium">
-                    {metrics.pursuingPhd > 0 ? `${metrics.pursuingPhd} Pursuing • ${metrics.passedPhd} Conferred` : "Doctoral Research Scholars"}
+                  <span className="text-[11px] text-neutral-400 font-medium truncate block">
+                    {metrics.pursuingPhd > 0 ? `${metrics.pursuingPhd} Pursuing • ${metrics.passedPhd} Conferred` : "Doctoral Researchers"}
                   </span>
                 </div>
 
-                {/* 4. Highest Package */}
-                <div className="pt-2">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                {/* 5. Patents */}
+                <div className="px-2 py-1">
+                  <div className="text-3xl xl:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                    {isClient ? (
+                      <CountUp
+                        key={`pat-${activeDepartment.id}-${metrics.patents}`}
+                        start={0}
+                        end={metrics.patents}
+                        duration={2.3}
+                        enableScrollSpy={true}
+                        scrollSpyOnce={false}
+                      />
+                    ) : (
+                      metrics.patents
+                    )}
+                  </div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-neutral-200 mt-1">
+                    Patents
+                  </p>
+                  <span className="text-[11px] text-neutral-400 font-medium truncate block">
+                    Granted &amp; Published
+                  </span>
+                </div>
+
+                {/* 6. Sponsored Projects */}
+                <div className="px-2 py-1">
+                  <div className="text-3xl xl:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                    {isClient ? (
+                      <CountUp
+                        key={`prj-${activeDepartment.id}-${metrics.projects}`}
+                        start={0}
+                        end={metrics.projects}
+                        duration={2.1}
+                        enableScrollSpy={true}
+                        scrollSpyOnce={false}
+                      />
+                    ) : (
+                      metrics.projects
+                    )}
+                  </div>
+                  <p className="text-xs font-bold uppercase tracking-wider text-neutral-200 mt-1">
+                    R&amp;D Projects
+                  </p>
+                  <span className="text-[11px] text-neutral-400 font-medium truncate block">
+                    Active Sponsored Grants
+                  </span>
+                </div>
+
+                {/* 7. Highest Package */}
+                <div className="px-2 py-1">
+                  <div className="text-3xl xl:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
                     {isClient ? (
                       metrics.highestPackage > 0 ? (
                         <>
@@ -733,105 +813,19 @@ export default function HomePage() {
                       metrics.highestPackage > 0 ? `₹${metrics.highestPackage} Cr` : "—"
                     )}
                   </div>
-                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
+                  <p className="text-xs font-bold uppercase tracking-wider text-neutral-200 mt-1">
                     Highest Package
                   </p>
-                  <span className="text-[11px] text-neutral-400 font-medium">100% Core Placement Record</span>
-                </div>
-
-                {/* 5. Undergraduate & Dual Degree */}
-                <div className="pt-6 border-t border-neutral-800">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
-                    {isClient ? (
-                      <CountUp
-                        key={`ug-${activeDepartment.id}-${metrics.ugStudents}`}
-                        start={0}
-                        end={metrics.ugStudents}
-                        duration={2.4}
-                        enableScrollSpy={true}
-                        scrollSpyOnce={false}
-                      />
-                    ) : (
-                      metrics.ugStudents
-                    )}
-                  </div>
-                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
-                    Undergraduate Students
-                  </p>
-                  <span className="text-[11px] text-neutral-400 font-medium">B.Tech &amp; Dual Degree Programmes</span>
-                </div>
-
-                {/* 6. Postgraduate Students */}
-                <div className="pt-6 border-t border-neutral-800">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
-                    {isClient ? (
-                      <CountUp
-                        key={`pg-${activeDepartment.id}-${metrics.pgStudents}`}
-                        start={0}
-                        end={metrics.pgStudents}
-                        duration={2.2}
-                        enableScrollSpy={true}
-                        scrollSpyOnce={false}
-                      />
-                    ) : (
-                      metrics.pgStudents
-                    )}
-                  </div>
-                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
-                    Postgraduate Students
-                  </p>
-                  <span className="text-[11px] text-neutral-400 font-medium">M.Tech Specializations</span>
-                </div>
-
-                {/* 7. Patents */}
-                <div className="pt-6 border-t border-neutral-800">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
-                    {isClient ? (
-                      <CountUp
-                        key={`pat-${activeDepartment.id}-${metrics.patents}`}
-                        start={0}
-                        end={metrics.patents}
-                        duration={2.3}
-                        enableScrollSpy={true}
-                        scrollSpyOnce={false}
-                      />
-                    ) : (
-                      metrics.patents
-                    )}
-                  </div>
-                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
-                    Patents
-                  </p>
-                  <span className="text-[11px] text-neutral-400 font-medium">Granted &amp; Published Inventions</span>
-                </div>
-
-                {/* 8. Sponsored Projects */}
-                <div className="pt-6 border-t border-neutral-800">
-                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
-                    {isClient ? (
-                      <CountUp
-                        key={`prj-${activeDepartment.id}-${metrics.projects}`}
-                        start={0}
-                        end={metrics.projects}
-                        duration={2.1}
-                        enableScrollSpy={true}
-                        scrollSpyOnce={false}
-                      />
-                    ) : (
-                      metrics.projects
-                    )}
-                  </div>
-                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
-                    Ongoing R&amp;D Projects
-                  </p>
-                  <span className="text-[11px] text-neutral-400 font-medium">Sponsored by MeitY, DST &amp; DRDO</span>
+                  <span className="text-[11px] text-neutral-400 font-medium truncate block">
+                    100% Core Placement
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* 4. About Department & HOD Welcome Message Section */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-2">
+          <div className="max-w-[1560px] 2xl:max-w-[1640px] mx-auto px-4 sm:px-6 lg:px-8 pt-2">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               
               {/* Department Overview (8 Columns) */}
@@ -941,7 +935,7 @@ export default function HomePage() {
           </div>
 
           {/* 5. Department Academic Programmes Grid */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-2">
+          <div className="max-w-[1560px] 2xl:max-w-[1640px] mx-auto px-4 sm:px-6 lg:px-8 pt-2">
             <div className="border-b border-[#eedfd8] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <h3 className="text-lg font-bold text-[#33110e] uppercase tracking-tight flex items-center gap-2">
@@ -1018,7 +1012,7 @@ export default function HomePage() {
           </div>
 
           {/* 6. Recent Departmental Achievements & Innovations */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-2">
+          <div className="max-w-[1560px] 2xl:max-w-[1640px] mx-auto px-4 sm:px-6 lg:px-8 pt-2">
             <div className="border-b border-[#eedfd8] pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <h3 className="text-lg font-bold text-[#33110e] uppercase tracking-tight flex items-center gap-2">
