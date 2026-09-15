@@ -219,7 +219,6 @@ export default function AdminFacultyPage() {
       f.designation?.toLowerCase().includes("faculty") ||
       f.designation?.toLowerCase().includes("lecturer")
     ).length;
-    return { total, profs, associates, assistants };
     return { total, visible, hidden, profs, associates, assistants };
   }, [facultyList]);
 
@@ -269,7 +268,6 @@ export default function AdminFacultyPage() {
         );
       return true;
     });
-  }, [facultyList, search, designationFilter]);
   }, [facultyList, search, designationFilter, visibilityFilter]);
 
   // Copy email helper
@@ -674,36 +672,21 @@ export default function AdminFacultyPage() {
             )}
           </div>
 
-          {/* Designation Filter Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
-            {[
-              { id: "all", label: `All (${facultyList.length})` },
-              { id: "professor", label: `Professors (${counts.profs})` },
-              { id: "associate", label: `Associate (${counts.associates})` },
-              { id: "assistant", label: `Assistant (${counts.assistants})` },
-            ].map((tab) => (
           {/* Filter Tabs Container */}
           <div className="flex flex-wrap items-center gap-2 overflow-x-auto pb-1 md:pb-0">
             {/* Visibility Filter Tabs */}
             <div className="flex items-center gap-1 bg-white border border-[#eedfd8] p-1 rounded-xl shadow-2xs">
               <button
-                key={tab.id}
                 type="button"
-                onClick={() => setDesignationFilter(tab.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer whitespace-nowrap ${
-                  designationFilter === tab.id
                 onClick={() => setVisibilityFilter("all")}
                 className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition cursor-pointer ${
                   visibilityFilter === "all"
                     ? "bg-[#33110e] text-white shadow-xs"
-                    : "bg-white border border-[#eedfd8] text-[#6b5c58] hover:bg-[#fff9f6]"
                     : "text-[#6b5c58] hover:bg-[#fff9f6]"
                 }`}
               >
-                {tab.label}
                 All Visibility
               </button>
-            ))}
               <button
                 type="button"
                 onClick={() => setVisibilityFilter("visible")}
@@ -1368,7 +1351,6 @@ export default function AdminFacultyPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-[10px] font-extrabold uppercase text-[#33110e] mb-1">

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useMemo } from "react";
 import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -86,7 +85,6 @@ export default function FacultyDirectoryPage() {
 
   const filteredFaculty = useMemo(() => {
     if (!hasData) return [];
-    return MOCK_FACULTY.filter((f) => {
     return facultyList.filter((f) => {
       const searchLower = search.toLowerCase();
       const rawInterests = f.research_interests || f.specialization;
@@ -98,9 +96,6 @@ export default function FacultyDirectoryPage() {
 
       const matchesSearch =
         !search ||
-        f.full_name.toLowerCase().includes(searchLower) ||
-        f.research_interests?.some((r: string) => r.toLowerCase().includes(searchLower)) ||
-        f.email.toLowerCase().includes(searchLower);
         (f.full_name && f.full_name.toLowerCase().includes(searchLower)) ||
         (f.employee_code && f.employee_code.toLowerCase().includes(searchLower)) ||
         interests.some((r: string) => r.toLowerCase().includes(searchLower)) ||
@@ -108,42 +103,30 @@ export default function FacultyDirectoryPage() {
 
       const matchesDesignation =
         designationFilter === "ALL" ||
-        f.designation.toLowerCase().includes(designationFilter.toLowerCase());
         (f.designation && f.designation.toLowerCase().includes(designationFilter.toLowerCase()));
 
       return matchesSearch && matchesDesignation;
     });
-  }, [search, designationFilter, hasData]);
   }, [search, designationFilter, hasData, facultyList]);
 
   const countByDesignation = useMemo(() => {
     if (!hasData) return { total: 0, profs: 0, assoc: 0, assist: 0 };
-    const total = MOCK_FACULTY.length;
-    const profs = MOCK_FACULTY.filter(
     const total = facultyList.length;
     const profs = facultyList.filter(
       (f) =>
-        f.designation.toLowerCase().includes("professor") &&
-        !f.designation.toLowerCase().includes("associate") &&
-        !f.designation.toLowerCase().includes("assistant")
         f.designation?.toLowerCase().includes("professor") &&
         !f.designation?.toLowerCase().includes("associate") &&
         !f.designation?.toLowerCase().includes("assistant")
     ).length;
-    const assoc = MOCK_FACULTY.filter((f) =>
-      f.designation.toLowerCase().includes("associate")
     const assoc = facultyList.filter((f) =>
       f.designation?.toLowerCase().includes("associate")
     ).length;
-    const assist = MOCK_FACULTY.filter((f) =>
-      f.designation.toLowerCase().includes("assistant")
     const assist = facultyList.filter((f) =>
       f.designation?.toLowerCase().includes("assistant") ||
       f.designation?.toLowerCase().includes("faculty") ||
       f.designation?.toLowerCase().includes("lecturer")
     ).length;
     return { total, profs, assoc, assist };
-  }, [hasData]);
   }, [hasData, facultyList]);
 
   const getDesignationBadge = (designation: string) => {
@@ -274,25 +257,6 @@ export default function FacultyDirectoryPage() {
                 </div>
 
                 {/* Research Interests Tags */}
-                {faculty.research_interests && faculty.research_interests.length > 0 && (
-                  <div className="space-y-1">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
-                      Research Interests
-                    </p>
-                    <div className="flex flex-wrap gap-1">
-                      {faculty.research_interests.slice(0, 3).map((r: string, i: number) => (
-                        <span
-                          key={i}
-                          className="bg-[#fff9f6] text-[#33110e] border border-[#eedfd8] text-[10px] font-medium px-2 py-0.5 rounded"
-                        >
-                          {r}
-                        </span>
-                      ))}
-                      {faculty.research_interests.length > 3 && (
-                        <span className="text-[10px] text-neutral-400 font-semibold self-center">
-                          +{faculty.research_interests.length - 3} more
-                        </span>
-                      )}
                 {(() => {
                   const rawInterests = faculty.research_interests || faculty.specialization;
                   const interests: string[] = Array.isArray(rawInterests)
@@ -324,8 +288,6 @@ export default function FacultyDirectoryPage() {
                         )}
                       </div>
                     </div>
-                  </div>
-                )}
                   );
                 })()}
 
@@ -333,7 +295,6 @@ export default function FacultyDirectoryPage() {
                 <div className="pt-2 border-t border-[#eedfd8]/60 space-y-1 text-xs text-neutral-600">
                   <p className="flex items-center gap-1.5 truncate">
                     <Mail className="w-3.5 h-3.5 text-[#85261e] flex-shrink-0" />
-                    <span className="truncate">{faculty.email}</span>
                     <span className="truncate">{faculty.official_email || faculty.email}</span>
                   </p>
                   {faculty.phone && (
