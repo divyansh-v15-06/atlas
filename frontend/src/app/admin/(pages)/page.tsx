@@ -131,22 +131,11 @@ export default function AdminDashboardPage() {
   const [announcements, setAnnouncements] = useState<any[]>(() => isCse ? defaultCseAnnouncements : []);
 
   // Modal States
-  const [isAddFacultyOpen, setIsAddFacultyOpen] = useState(false);
   const [isImportCsvOpen, setIsImportCsvOpen] = useState(false);
   const [isNewAnnouncementOpen, setIsNewAnnouncementOpen] = useState(false);
   const [isResetPasswordOpen, setIsResetPasswordOpen] = useState(false);
   const [selectedFacultyForReset, setSelectedFacultyForReset] = useState<any>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
-
-  // Form State: Add Faculty
-  const [newFaculty, setNewFaculty] = useState({
-    full_name: "",
-    employee_code: "",
-    email: "",
-    designation: "Assistant Professor",
-    specialization: "Artificial Intelligence & Distributed Systems",
-    image_url: "/nith.png",
-  });
 
   // Form State: New Announcement
   const [newAnnouncement, setNewAnnouncement] = useState({
@@ -280,40 +269,6 @@ export default function AdminDashboardPage() {
       return true;
     });
   }, [facultyList, searchFaculty, facultyRoleFilter]);
-
-  // Handle Add Faculty Submit
-  const handleAddFaculty = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newFaculty.full_name || !newFaculty.employee_code || !newFaculty.email) {
-      toast.error("Please fill all required fields: Name, Code, and Email.");
-      return;
-    }
-
-    const created = {
-      id: `fac-${Date.now()}`,
-      user_id: `usr-${Date.now()}`,
-      full_name: newFaculty.full_name,
-      employee_code: newFaculty.employee_code.toUpperCase(),
-      email: newFaculty.email.toLowerCase(),
-      designation: newFaculty.designation,
-      specialization: newFaculty.specialization,
-      image_url: newFaculty.image_url || "/nith.png",
-      status: "Active",
-    };
-
-    const updated = [created, ...facultyList];
-    updateAndSaveFaculty(updated);
-    toast.success(`Faculty member ${created.full_name} (${created.employee_code}) added successfully!`);
-    setIsAddFacultyOpen(false);
-    setNewFaculty({
-      full_name: "",
-      employee_code: "",
-      email: "",
-      designation: "Assistant Professor",
-      specialization: "Artificial Intelligence & Distributed Systems",
-      image_url: "/nith.png",
-    });
-  };
 
   // Handle Delete Faculty
   const handleDeleteFaculty = (id: string, name: string) => {
@@ -478,14 +433,13 @@ export default function AdminDashboardPage() {
           <div className="flex flex-wrap gap-2.5">
             {isHod ? (
               <>
-                <button
-                  type="button"
-                  onClick={() => setIsAddFacultyOpen(true)}
+                <Link
+                  href="/admin/people/faculty"
                   className="flex items-center gap-2 rounded-xl bg-white/15 border border-white/25 hover:bg-white/25 px-3.5 py-2.5 text-xs font-bold text-white transition backdrop-blur-xs shadow-2xs cursor-pointer group"
                 >
-                  <UserPlus className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
-                  Add Faculty
-                </button>
+                  <Users className="h-4 w-4 text-amber-300 group-hover:scale-110 transition" />
+                  Faculty Directory
+                </Link>
 
                 <Link
                   href="/admin/academics/courses"
@@ -851,13 +805,12 @@ export default function AdminDashboardPage() {
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={() => setIsAddFacultyOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#85261e] hover:bg-[#a63026] text-white text-xs font-bold transition shadow-xs cursor-pointer self-start sm:self-auto"
+            <Link
+              href="/admin/people/faculty"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-xs font-bold transition shadow-xs cursor-pointer self-start sm:self-auto"
             >
-              <Plus className="w-3.5 h-3.5" /> Add Faculty
-            </button>
+              <Users className="w-3.5 h-3.5" /> Manage Faculty
+            </Link>
           </div>
 
           {/* Search & Filter Tabs */}
@@ -921,26 +874,18 @@ export default function AdminDashboardPage() {
                   </p>
                   <p className="text-[11px] text-[#6b5c58] mt-0.5">
                     {facultyList.length === 0
-                      ? `Department data for ${activeDepartment?.code || "this department"} is currently empty. You can onboard faculty or import roster.`
+                      ? `Department data for ${activeDepartment?.code || "this department"} is currently empty. You can onboard faculty in Faculty Directory.`
                       : "Try checking spelling or resetting your filter criteria."}
                   </p>
                 </div>
                 {facultyList.length === 0 ? (
                   <div className="pt-2 flex justify-center gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setIsAddFacultyOpen(true)}
+                    <Link
+                      href="/admin/people/faculty"
                       className="px-3.5 py-2 rounded-xl bg-[#85261e] text-white text-xs font-bold hover:bg-[#a63026] transition shadow-xs cursor-pointer inline-flex items-center gap-1.5"
                     >
-                      <Plus className="w-3.5 h-3.5" /> Add First Faculty
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setIsImportCsvOpen(true)}
-                      className="px-3.5 py-2 rounded-xl border border-[#eedfd8] bg-white text-[#33110e] text-xs font-bold hover:bg-[#fff9f6] transition shadow-xs cursor-pointer inline-flex items-center gap-1.5"
-                    >
-                      <UploadCloud className="w-3.5 h-3.5 text-[#85261e]" /> Import CSV Roster
-                    </button>
+                      <Users className="w-3.5 h-3.5" /> Go to Faculty Directory
+                    </Link>
                   </div>
                 ) : (
                   <button
@@ -1132,141 +1077,7 @@ export default function AdminDashboardPage() {
       )}
 
       {/* ========================================================================= */}
-      {/* MODAL 1: ADD FACULTY MEMBER */}
-      {/* ========================================================================= */}
-      {isAddFacultyOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-          <div className="relative w-full max-w-lg rounded-3xl border border-[#eedfd8] bg-white p-6 shadow-2xl space-y-4 animate-in fade-in zoom-in duration-150">
-            <div className="flex items-center justify-between border-b border-[#eedfd8] pb-3">
-              <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#fff9f6] border border-[#eedfd8] text-[#85261e]">
-                  <UserPlus className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className="text-base font-extrabold text-[#33110e]">Add New Faculty Member</h3>
-                  <p className="text-[11px] text-[#6b5c58]">Create official faculty profile & portal account</p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsAddFacultyOpen(false)}
-                className="rounded-full p-1 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleAddFaculty} className="space-y-3">
-              <div>
-                <label className="block text-[10px] font-extrabold uppercase text-[#33110e] mb-1">
-                  Full Name with Title *
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={newFaculty.full_name}
-                  onChange={(e) => setNewFaculty({ ...newFaculty, full_name: e.target.value })}
-                  placeholder="e.g. Dr. Rajesh Kumar Sharma"
-                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-2 text-xs text-[#33110e] focus:bg-white focus:border-[#85261e] focus:outline-hidden"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[10px] font-extrabold uppercase text-[#33110e] mb-1">
-                    Employee Code *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={newFaculty.employee_code}
-                    onChange={(e) => setNewFaculty({ ...newFaculty, employee_code: e.target.value })}
-                    placeholder="e.g. CS25"
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-2 text-xs font-mono text-[#33110e] focus:bg-white focus:border-[#85261e] focus:outline-hidden uppercase"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[10px] font-extrabold uppercase text-[#33110e] mb-1">
-                    Official Email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={newFaculty.email}
-                    onChange={(e) => setNewFaculty({ ...newFaculty, email: e.target.value })}
-                    placeholder="e.g. rajesh@nith.ac.in"
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-2 text-xs font-mono text-[#33110e] focus:bg-white focus:border-[#85261e] focus:outline-hidden"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[10px] font-extrabold uppercase text-[#33110e] mb-1">
-                    Academic Designation
-                  </label>
-                  <select
-                    value={newFaculty.designation}
-                    onChange={(e) => setNewFaculty({ ...newFaculty, designation: e.target.value })}
-                    className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-2 text-xs text-[#33110e] focus:bg-white focus:border-[#85261e] focus:outline-hidden"
-                  >
-                    <option value="Professor">Professor (HAG / Senior)</option>
-                    <option value="Associate Professor">Associate Professor</option>
-                    <option value="Assistant Professor Grade-I">Assistant Professor Grade-I</option>
-                    <option value="Assistant Professor Grade-II">Assistant Professor Grade-II</option>
-                    <option value="Visiting Faculty">Visiting / Adjunct Faculty</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block text-[10px] font-extrabold uppercase text-[#33110e] mb-1">
-                    Department Scope
-                  </label>
-                  <input
-                    type="text"
-                    disabled
-                    value={`${activeDepartment?.name || "Computer Science & Engineering"} (${activeDepartment?.code || "CSE"})`}
-                    className="w-full rounded-xl border border-[#eedfd8] bg-neutral-100 p-2 text-xs text-neutral-600 font-semibold"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-[10px] font-extrabold uppercase text-[#33110e] mb-1">
-                  Primary Research Area / Specialization
-                </label>
-                <input
-                  type="text"
-                  value={newFaculty.specialization}
-                  onChange={(e) => setNewFaculty({ ...newFaculty, specialization: e.target.value })}
-                  placeholder="e.g. Machine Learning, Distributed Systems, VLSI"
-                  className="w-full rounded-xl border border-[#eedfd8] bg-[#fff9f6] p-2 text-xs text-[#33110e] focus:bg-white focus:border-[#85261e] focus:outline-hidden"
-                />
-              </div>
-
-              <div className="flex items-center justify-end gap-2.5 pt-2 border-t border-[#eedfd8]">
-                <button
-                  type="button"
-                  onClick={() => setIsAddFacultyOpen(false)}
-                  className="rounded-xl border border-[#eedfd8] bg-white px-4 py-2 text-xs font-bold text-[#6b5c58] hover:bg-neutral-50 transition cursor-pointer"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="flex items-center gap-1.5 rounded-xl bg-[#33110e] hover:bg-[#85261e] px-4 py-2 text-xs font-bold text-white transition shadow-md cursor-pointer"
-                >
-                  <Check className="w-3.5 h-3.5 text-amber-300" /> Add to Directory
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* ========================================================================= */}
-      {/* MODAL 2: CSV IMPORT WIZARD */}
+      {/* MODAL 1: CSV IMPORT WIZARD */}
       {/* ========================================================================= */}
       {isImportCsvOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
