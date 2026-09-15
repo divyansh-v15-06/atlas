@@ -14,8 +14,12 @@ import {
   CheckCircle2,
   Clock,
   BookOpen,
+  Upload,
+  Loader2,
+  ImageIcon,
 } from "lucide-react";
 import { toast } from "sonner";
+import axios from "axios";
 import Papa from "papaparse";
 import { MOCK_PHD_SCHOLARS, MOCK_FACULTY } from "@/lib/mock-data";
 import { PhdScholar } from "@/lib/types";
@@ -114,6 +118,39 @@ export default function AdminPhdPage() {
       portfolio_url: sch.portfolio_url || "",
     });
     setIsModalOpen(true);
+  };
+
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image file size should be less than 5MB");
+      return;
+    }
+
+    try {
+      setUploadingPhoto(true);
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "trials");
+
+      const res = await axios.post("https://api.cloudinary.com/v1_1/dvnrlqqpq/image/upload", data);
+      if (res.data && res.data.secure_url) {
+        setFormData((prev) => ({
+          ...prev,
+          photo_url: res.data.secure_url,
+        }));
+        toast.success("Profile photo uploaded to Cloudinary successfully!");
+      }
+    } catch (err) {
+      console.error("Cloudinary upload error:", err);
+      toast.error("Failed to upload image to Cloudinary. You can paste the image URL directly.");
+    } finally {
+      setUploadingPhoto(false);
+    }
   };
 
   const handleSave = (e: React.FormEvent) => {
@@ -568,15 +605,50 @@ export default function AdminPhdPage() {
 
                 <div>
                   <label className="block text-xs font-bold text-[#33110e] uppercase mb-1">
-                    Profile Photo URL (Cloudinary / Image Link)
+                    Profile Photo (Upload or Paste URL)
                   </label>
-                  <input
-                    type="url"
-                    value={formData.photo_url}
-                    onChange={(e) => setFormData({ ...formData, photo_url: e.target.value })}
-                    placeholder="https://res.cloudinary.com/..."
-                    className="w-full rounded-lg border border-[#eedfd8] px-3 py-2 text-sm focus:border-[#85261e] focus:outline-none"
-                  />
+                  <div className="flex items-center gap-2">
+                    <div className="relative w-9 h-9 rounded-lg bg-neutral-100 border border-[#eedfd8] overflow-hidden flex items-center justify-center shrink-0">
+                      {formData.photo_url ? (
+                        <img
+                          src={formData.photo_url}
+                          alt="Preview"
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            (e.currentTarget as HTMLElement).style.display = "none";
+                          }}
+                        />
+                      ) : (
+                        <ImageIcon className="w-4 h-4 text-neutral-400" />
+                      )}
+                      {uploadingPhoto && (
+                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                          <Loader2 className="w-3.5 h-3.5 text-white animate-spin" />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="flex-1 flex gap-2">
+                      <input
+                        type="url"
+                        value={formData.photo_url}
+                        onChange={(e) => setFormData({ ...formData, photo_url: e.target.value })}
+                        placeholder="https://res.cloudinary.com/... or paste link"
+                        className="w-full rounded-lg border border-[#eedfd8] px-3 py-2 text-xs focus:border-[#85261e] focus:outline-none"
+                      />
+                      <label className={`px-2.5 py-2 rounded-lg bg-[#fff9f6] hover:bg-[#eedfd8] text-[#85261e] border border-[#eedfd8] text-xs font-bold flex items-center gap-1 cursor-pointer transition shrink-0 ${uploadingPhoto ? "opacity-50 pointer-events-none" : ""}`}>
+                        {uploadingPhoto ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                        <span>{uploadingPhoto ? "Uploading..." : "Upload"}</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handlePhotoUpload}
+                          className="hidden"
+                          disabled={uploadingPhoto}
+                        />
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
 
