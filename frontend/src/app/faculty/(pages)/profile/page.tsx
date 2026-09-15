@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import {
   Save,
@@ -16,9 +16,13 @@ import {
   ShieldCheck,
   CheckCircle2,
   Building2,
+  Camera,
+  Loader2,
 } from "lucide-react";
 import { MOCK_FACULTY } from "@/lib/mock-data";
 import { getStoredObject, setStoredObject } from "@/lib/faculty-storage";
+import { uploadToCloudinary } from "@/lib/utils";
+import ImageCropModal from "@/components/common/ImageCropModal";
 
 export default function FacultyProfilePage() {
   const [user, setUser] = useState<any>(null);
@@ -62,6 +66,79 @@ export default function FacultyProfilePage() {
     setFaculty(stored);
   }, []);
 
+  const [cropImageSrc, setCropImageSrc] = useState<string | null>(null);
+  const [isCropModalOpen, setIsCropModalOpen] = useState(false);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select a valid image file");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setCropImageSrc(reader.result as string);
+      setIsCropModalOpen(true);
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  };
+
+  const handleCropComplete = async (croppedBlob: Blob) => {
+    try {
+      setIsUploadingPhoto(true);
+      const file = new File([croppedBlob], "profile-photo.jpg", { type: "image/jpeg" });
+      const secureUrl = await uploadToCloudinary(file);
+
+      const updated = {
+        ...faculty,
+        image_url: secureUrl,
+        photo_url: secureUrl,
+      };
+      setFaculty(updated);
+      setStoredObject(updated, "profile", updated);
+
+      if (user) {
+        const updatedUser = {
+          ...user,
+          photo_url: secureUrl,
+          image_url: secureUrl,
+        };
+        localStorage.setItem("auth_user", JSON.stringify(updatedUser));
+      }
+
+      // Sync with backend if logged in
+      const token = localStorage.getItem("token") || localStorage.getItem("auth_token");
+      if (faculty.id) {
+        try {
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+          await fetch(`${apiUrl}/faculty/${faculty.id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
+            body: JSON.stringify({ photo_url: secureUrl }),
+          });
+        } catch (err) {
+          console.warn("Backend sync skipped:", err);
+        }
+      }
+
+      setIsCropModalOpen(false);
+      toast.success("Profile photo cropped and updated successfully!");
+    } catch (err: any) {
+      toast.error(err?.message || "Failed to upload cropped photo");
+    } finally {
+      setIsUploadingPhoto(false);
+    }
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setStoredObject(faculty, "profile", faculty);
@@ -81,15 +158,56 @@ export default function FacultyProfilePage() {
     <div className="max-w-5xl mx-auto space-y-6 font-sans">
       {/* Top Banner Card */}
       <div className="rounded-3xl border border-[#eedfd8] bg-white p-6 shadow-xs flex flex-col md:flex-row items-center md:items-start gap-6">
-        <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-[#eedfd8] shadow-sm bg-[#fff9f6] flex items-center justify-center flex-shrink-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={faculty.image_url || "/hod.jpg"}
-            alt={faculty.full_name}
-            className="w-full h-full object-cover"
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = "/hod.jpg";
-            }}
+        <div className="relative flex-shrink-0">
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            className="group relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-4 border-[#eedfd8] shadow-sm bg-[#fff9f6] flex items-center justify-center cursor-pointer transition-all duration-200 hover:border-[#85261e]"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={faculty.image_url || faculty.photo_url || "/hod.jpg"}
+              alt={faculty.full_name}
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = "/hod.jpg";
+              }}
+            />
+
+            {/* Hover Camera Overlay */}
+            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center text-white gap-1 select-none">
+              {isUploadingPhoto ? (
+                <Loader2 className="w-6 h-6 animate-spin text-white" />
+              ) : (
+                <>
+                  <Camera className="w-6 h-6" />
+                  <span className="text-[10px] font-bold tracking-wider uppercase">Change</span>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Floating Action Badge for Touch/Mobile Devices */}
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isUploadingPhoto}
+            title="Upload new profile photo"
+            className="absolute bottom-0 right-0 bg-[#85261e] hover:bg-[#681c15] active:scale-90 text-white p-2.5 rounded-full shadow-md border-2 border-white transition-all cursor-pointer"
+          >
+            {isUploadingPhoto ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <Camera className="w-3.5 h-3.5" />
+            )}
+          </button>
+
+          {/* Hidden File Input */}
+          <input
+            type="file"
+            ref={fileInputRef}
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileSelect}
           />
         </div>
 
@@ -331,6 +449,14 @@ export default function FacultyProfilePage() {
           </button>
         </div>
       </form>
+
+      {/* Interactive Profile Photo Cropper Modal */}
+      <ImageCropModal
+        isOpen={isCropModalOpen}
+        imageSrc={cropImageSrc}
+        onClose={() => setIsCropModalOpen(false)}
+        onCropComplete={handleCropComplete}
+      />
     </div>
   );
 }

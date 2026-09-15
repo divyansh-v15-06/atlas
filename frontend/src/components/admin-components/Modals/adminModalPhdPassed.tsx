@@ -5,8 +5,8 @@ import { Dialog, DialogOverlay, DialogContent } from '@reach/dialog'
 import '@reach/dialog/styles.css'
 import axios from 'axios'
 import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
 import Select from 'react-select'
+import { uploadToCloudinary } from '@/lib/utils'
 
 const InputField = ({
     label,
@@ -148,20 +148,19 @@ const AdminModalPhdPassedScholar = ({ isOpen, onClose, onSubmit }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        let updatedFormData = { ...formData }
         if (image) {
-
-        const data = new FormData();
-        data.append("file", image);
-        data.append("upload_preset", "trials");
-        setLoading(true)
-        const res = await axios.post("https://api.cloudinary.com/v1_1/dvnrlqqpq/image/upload", data)
-        
-        const updatedFormData = { ...formData, photo: res.data.secure_url }
+            try {
+                setLoading(true)
+                const secureUrl = await uploadToCloudinary(image)
+                updatedFormData = { ...formData, photo: secureUrl }
+            } catch (err: any) {
+                console.error('Error uploading passed PhD photo:', err)
+            } finally {
+                setLoading(false)
+            }
+        }
         onSubmit(updatedFormData)
-        }
-        else {
-            onSubmit(formData)
-        }
         setFormData({
             rollNo: '',
             title: '',

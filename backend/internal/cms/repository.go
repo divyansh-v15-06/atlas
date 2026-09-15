@@ -38,6 +38,7 @@ type Repository interface {
 	// Home Slides
 	ListHomeSlides(ctx context.Context, deptID string) ([]HomeSlide, error)
 	CreateHomeSlide(ctx context.Context, req *CreateHomeSlideRequest) (*HomeSlide, error)
+	DeleteHomeSlide(ctx context.Context, id string) error
 
 	// Syllabus & Calendar Docs
 	ListSyllabusDocs(ctx context.Context, deptID string) ([]SyllabusDoc, error)
@@ -369,6 +370,12 @@ func (r *pgRepository) CreateHomeSlide(ctx context.Context, req *CreateHomeSlide
 		return nil, err
 	}
 	return &s, nil
+}
+
+func (r *pgRepository) DeleteHomeSlide(ctx context.Context, id string) error {
+	querySQL := `UPDATE home_slides SET deleted_at = NOW() WHERE id = $1`
+	_, err := r.pool.Exec(ctx, querySQL, id)
+	return err
 }
 
 func (r *pgRepository) ListSyllabusDocs(ctx context.Context, deptID string) ([]SyllabusDoc, error) {

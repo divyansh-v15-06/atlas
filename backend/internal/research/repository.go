@@ -241,11 +241,15 @@ func (r *pgRepository) CreatePublication(ctx context.Context, userID string, req
 
 	// Insert authors
 	for _, a := range req.Authors {
+		var facID *string
+		if a.FacultyID != nil && *a.FacultyID != "" {
+			facID = a.FacultyID
+		}
 		authorQuery := `
 			INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order, is_corresponding)
 			VALUES ($1, $2, $3, $4, $5)
 		`
-		if _, err := tx.Exec(ctx, authorQuery, p.ID, a.FacultyID, a.AuthorName, a.AuthorOrder, a.IsCorresponding); err != nil {
+		if _, err := tx.Exec(ctx, authorQuery, p.ID, facID, a.AuthorName, a.AuthorOrder, a.IsCorresponding); err != nil {
 			return nil, err
 		}
 	}
@@ -449,8 +453,12 @@ func (r *pgRepository) CreatePatent(ctx context.Context, userID string, req *Cre
 	}
 
 	for _, inv := range req.Inventors {
+		var facID *string
+		if inv.FacultyID != nil && *inv.FacultyID != "" {
+			facID = inv.FacultyID
+		}
 		invQuery := `INSERT INTO patent_inventors (patent_id, faculty_id, inventor_name, inventor_order) VALUES ($1, $2, $3, $4)`
-		if _, err := tx.Exec(ctx, invQuery, p.ID, inv.FacultyID, inv.InventorName, inv.InventorOrder); err != nil {
+		if _, err := tx.Exec(ctx, invQuery, p.ID, facID, inv.InventorName, inv.InventorOrder); err != nil {
 			return nil, err
 		}
 	}

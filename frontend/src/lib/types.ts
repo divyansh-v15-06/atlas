@@ -235,6 +235,8 @@ export interface Student {
   email: string;
   batch_year: number;
   cgpa: number;
+  current_semester?: number;
+  status?: string;
 }
 
 export interface Staff {

@@ -22,6 +22,7 @@ import (
 	"github.com/institute-portal/backend/internal/platform/config"
 	"github.com/institute-portal/backend/internal/platform/database"
 	"github.com/institute-portal/backend/internal/platform/logger"
+	"github.com/institute-portal/backend/internal/platform/mailer"
 	"github.com/institute-portal/backend/internal/platform/middleware"
 	"github.com/institute-portal/backend/internal/platform/response"
 	"github.com/institute-portal/backend/internal/reporting"
@@ -96,9 +97,17 @@ func main() {
 	authMiddleware := middleware.Authenticate(cfg.JWTSecret)
 
 	if db != nil && db.Pool != nil {
+		// Mailer (SMTP — nil-safe; dev mode works without credentials)
+		m := mailer.New(cfg.SMTPHost, cfg.SMTPPort, cfg.SMTPUser, cfg.SMTPPassword, cfg.SMTPFrom)
+		if m.IsConfigured() {
+			log.Info("SMTP mailer configured", "user", cfg.SMTPUser, "host", cfg.SMTPHost)
+		} else {
+			log.Info("SMTP not configured — running in dev mode (reset tokens returned in API response)")
+		}
+
 		// Identity Module
 		identityRepo := identity.NewRepository(db.Pool)
-		identityService := identity.NewService(identityRepo, cfg.JWTSecret, cfg.JWTExpirationHours)
+		identityService := identity.NewService(identityRepo, cfg.JWTSecret, cfg.JWTExpirationHours, m, cfg.FrontendURL)
 		identityHandler := identity.NewHandler(identityService)
 		identityHandler.RegisterRoutes(r, authMiddleware)
 

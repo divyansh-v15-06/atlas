@@ -25,6 +25,7 @@ type Service interface {
 
 	ListHomeSlides(ctx context.Context, deptID string) ([]HomeSlide, error)
 	CreateHomeSlide(ctx context.Context, req *CreateHomeSlideRequest) (*HomeSlide, error)
+	DeleteHomeSlide(ctx context.Context, id string) error
 
 	ListSyllabusDocs(ctx context.Context, deptID string) ([]SyllabusDoc, error)
 	ListCalendarDocs(ctx context.Context, deptID string) ([]CalendarDoc, error)
@@ -100,6 +101,10 @@ func (s *service) ListHomeSlides(ctx context.Context, deptID string) ([]HomeSlid
 
 func (s *service) CreateHomeSlide(ctx context.Context, req *CreateHomeSlideRequest) (*HomeSlide, error) {
 	return s.repo.CreateHomeSlide(ctx, req)
+}
+
+func (s *service) DeleteHomeSlide(ctx context.Context, id string) error {
+	return s.repo.DeleteHomeSlide(ctx, id)
 }
 
 func (s *service) ListSyllabusDocs(ctx context.Context, deptID string) ([]SyllabusDoc, error) {

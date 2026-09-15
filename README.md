@@ -1,20 +1,22 @@
 # 🏛️ NIT Hamirpur Multi-Department Portal & Research Management Platform
 
-[![Go Version](https://img.shields.io/badge/Go-1.23+-00ADD8?style=for-the-badge&logo=go)](https://golang.org)
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
+[![Production Status](https://img.shields.io/badge/Production-Live-success?style=for-the-badge&logo=nginx)](https://tempcse.nith.ac.in)
+[![Domain](https://img.shields.io/badge/Domain-tempcse.nith.ac.in-blue?style=for-the-badge)](https://tempcse.nith.ac.in)
+[![Go Version](https://img.shields.io/badge/Go-1.25+-00ADD8?style=for-the-badge&logo=go)](https://golang.org)
+[![Next.js](https://img.shields.io/badge/Next.js-16%20(Turbopack)-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql)](https://www.postgresql.org)
-[![Redis](https://img.shields.io/badge/Redis-7-DC382D?style=for-the-badge&logo=redis)](https://redis.io)
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com)
-[![Nginx](https://img.shields.io/badge/Nginx-1.25-009639?style=for-the-badge&logo=nginx)](https://nginx.org)
-[![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions)](https://github.com/features/actions)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?style=for-the-badge&logo=postgresql)](https://www.postgresql.org)
+[![PM2](https://img.shields.io/badge/PM2-Cluster-2B037A?style=for-the-badge&logo=pm2)](https://pm2.keymetrics.io)
+[![Nginx](https://img.shields.io/badge/Nginx-Reverse%20Proxy-009639?style=for-the-badge&logo=nginx)](https://nginx.org)
 
-A standardized, full-stack institutional web portal, research discovery engine, and faculty portfolio platform engineered for **National Institute of Technology Hamirpur (NIT Hamirpur)**.
+A standardized, full-stack institutional web portal, research discovery engine, and faculty portfolio platform engineered for **National Institute of Technology Hamirpur (NIT Hamirpur)**. Live in production at **[tempcse.nith.ac.in](https://tempcse.nith.ac.in)**.
 
 ---
 
 ## 📑 Table of Contents
 
+- [Live Production Deployment (tempcse.nith.ac.in)](#-live-production-deployment-tempcsenithacin)
+- [Credential & Access Roster](#-credential--access-roster)
 - [Overview & Architectural Vision](#-overview--architectural-vision)
 - [System Architecture](#-system-architecture)
 - [Key Features Breakdown](#-key-features-breakdown)
@@ -36,7 +38,107 @@ A standardized, full-stack institutional web portal, research discovery engine, 
 - [Canonical API Reference](#-canonical-api-reference)
 - [Project Directory Structure](#-project-directory-structure)
 - [Getting Started & Local Development](#-getting-started--local-development)
-- [Production Deployment & CI/CD](#-production-deployment--cicd)
+- [Production Operations & PM2 Guide](#-production-operations--pm2-guide)
+
+---
+
+## 🌐 Live Production Deployment (`tempcse.nith.ac.in`)
+
+The platform is deployed and actively serving institutional traffic on the on-premise NIT Hamirpur server infrastructure:
+
+* **Production URL**: [https://tempcse.nith.ac.in](https://tempcse.nith.ac.in)
+* **Faculty Workspace**: [https://tempcse.nith.ac.in/faculty/login](https://tempcse.nith.ac.in/faculty/login)
+* **Administrator Console**: [https://tempcse.nith.ac.in/admin/login](https://tempcse.nith.ac.in/admin/login)
+* **Password Recovery**: [https://tempcse.nith.ac.in/forgot-password](https://tempcse.nith.ac.in/forgot-password)
+* **Backend API Base**: `https://tempcse.nith.ac.in/backend/api/v1`
+* **Health Check**: `https://tempcse.nith.ac.in/backend/health`
+
+### Production Architecture & Process Topology
+
+```text
+[ Client Traffic (HTTPS / 443) ]
+               │
+               ▼
+   [ Host NGINX Reverse Proxy ] ── (/etc/nginx/sites-enabled/tempcse)
+               │
+       ┌───────┴────────────────────────┐
+       │ (location /)                   │ (location /backend/)
+       ▼                                ▼
+[ Next.js 16 SSR Frontend ]     [ Go Modular Monolith Backend ]
+  • Port: 3005                    • Port: 3001
+  • PM2: tempcse-frontend         • PM2: tempcse-backend
+  • Turbopack Engine              • Native Compiled Binary
+                                        │
+                                        ▼
+                           [ PostgreSQL 18.6 Engine ]
+                             • Port: 5432
+                             • Database: institute_portal
+                             • Role: portal_admin
+```
+
+### Safety & Multi-Tenant Coexistence
+
+The server hosts multiple institute web properties. The deployment operates in strict isolation without impacting adjacent services:
+- **`cms.nith.ac.in`** (Port 8080, `/var/www/cms`, DB `cmsdb`) — Untouched & fully active.
+- **`eo.nith.ac.in`** (Ports 8000 & 8001, MongoDB `estate_db`) — Untouched & fully active.
+- **`mind2023.nith.ac.in`** (`/var/www/mind2023`) — Untouched & fully active.
+- **`tempcsebase_backup`** — Full filesystem backup of the legacy CSE application preserved on server for rollback safety.
+
+---
+
+## 🔐 Credential & Access Roster
+
+> [!IMPORTANT]
+> For security, all public demo autofill options have been **completely removed** from the login UI. Authentication is strictly processed by the Go backend using salted bcrypt password hashes.
+
+### Administrator Accounts
+
+| Role | Username / Email | Initial Password | Notes |
+|---|---|---|---|
+| **Central System Administrator** | `admin@nith.ac.in` | `admin*123` | Multi-department administrative control, audit logs, and user management. |
+| **HOD Admin (CSE)** | `hod@nith.ac.in` | `admin*123` | Departmental administration, HOD desk, notices, and faculty curation. |
+
+### Faculty Accounts Roster (All 27 Active Faculty)
+
+All faculty accounts are initialized with default password **`fac*123`**. Faculty can sign in at [`/faculty/login`](https://tempcse.nith.ac.in/faculty/login) using either their **Employee Code** OR their **Registered Email**.
+
+| # | Code | Faculty Name | Registered Email | Initial Password |
+|---|---|---|---|---|
+| 1 | `CS01` | Prof. Lalit Kumar Awasthi | `lalit@nith.ac.in` | `fac*123` |
+| 2 | `CS02` | Dr.(Mrs.) Kamlesh Dutta | `kd@nith.ac.in` | `fac*123` |
+| 3 | `CS03` | Dr. T P Sharma | `teek@nith.ac.in` | `fac*123` |
+| 4 | `CS04` | Dr. Siddhartha Chauhan (HOD) | `sid@nith.ac.in` | `fac*123` |
+| 5 | `CS05` | Dr. Naveen Chauhan | `naveen@nith.ac.in` | `fac*123` |
+| 6 | `CS07` | Dr. Pardeep Singh | `pardeep@nith.ac.in` | `fac*123` |
+| 7 | `CS09` | Dr. Rajeev Kumar | `rajeev@nith.ac.in` | `fac*123` |
+| 8 | `CS010` | Dr. Nitin Gupta | `nitin@nith.ac.in` | `fac*123` |
+| 9 | `CS011` | Dr. Dharmendra Prasad Mahato | `dpm@nith.ac.in` | `fac*123` |
+| 10 | `CS012` | Dr. Arun Kumar Yadav | `ayadav@nith.ac.in` | `fac*123` |
+| 11 | `CS013` | Dr. Mohit Kumar | `mohit@nith.ac.in` | `fac*123` |
+| 12 | `CS014` | Dr. Jyoti Srivastava | `jyoti.s@nith.ac.in` | `fac*123` |
+| 13 | `CS015` | Dr. Priyanka | `dr.priyanka@nith.ac.in` | `fac*123` |
+| 14 | `CS016` | Dr. Sangeeta Sharma | `sangeetas@nith.ac.in` | `fac*123` |
+| 15 | `CS017` | Dr. Mohammad Khalid Pandit | `mkhalid@nith.ac.in` | `fac*123` |
+| 16 | `CS018` | Dr. Ajay Kumar Mallick | `ajaymallick@nith.ac.in` | `fac*123` |
+| 17 | `CS020` | Dr. Robin Singh Bhadoria | `robin.bhadoria@nith.ac.in` | `fac*123` |
+| 18 | `CS021` | Dr. Ram Prakash Sharma | `ram.sharma@nith.ac.in` | `fac*123` |
+| 19 | `TF042` | Dr. Pushpender Kumar | `pkdhiman@nith.ac.in` | `fac*123` |
+| 20 | `TF043` | Dr. Pooja Sharma | `poojas@nith.ac.in` | `fac*123` |
+| 21 | `TF045` | Dr. Tanuj Wala | `tanuj@nith.ac.in` | `fac*123` |
+| 22 | `TF046` | Dr. Mukul Majhi | `mukulkmajhi@gmail.com` | `fac*123` |
+| 23 | `TF047` | Dr. Richa | `richa_cs@nith.ac.in` | `fac*123` |
+| 24 | `TF048` | Mrs. Pooja Rani | `pooja_phdcse@nith.ac.in` | `fac*123` |
+| 25 | `TF049` | Mrs. Pratibha Singh | `pratibhasingh@nith.ac.in` | `fac*123` |
+| 26 | `TF050` | Mr. Keshav Kaundal | `keshavkaundal@nith.ac.in` | `fac*123` |
+| 27 | `TF051` | Mrs. Meenakshi Nayyer | `meenakshinayyer@nith.ac.in` | `fac*123` |
+
+### Automated Password Reset Flow
+
+A secure, transactional password recovery pipeline is wired into the Go backend:
+1. User enters their registered email at [`/forgot-password`](https://tempcse.nith.ac.in/forgot-password).
+2. The Go backend generates a cryptographically secure SHA-256 hashed single-use token (valid for 1 hour).
+3. A branded HTML reset email is dispatched via Gmail SMTP TLS to the user's inbox.
+4. User sets a new password at [`/reset-password/[token]`](https://tempcse.nith.ac.in/reset-password) with real-time strength validation.
 
 ---
 
@@ -640,61 +742,73 @@ npm install --legacy-peer-deps
 npm run dev
 ```
 
-### 🌐 Access URLs
+### 🌐 Access URLs Reference
 
-| Portal | URL | Default Credentials |
-| :--- | :--- | :--- |
-| **Public Institute Website** | [http://localhost:3000](http://localhost:3000) | Public Access |
-| **Department Portal (e.g. CSE)** | [http://localhost:3000/?dept=cse](http://localhost:3000/?dept=cse) | Public Access |
-| **Faculty Portal** | [http://localhost:3000/faculty/login](http://localhost:3000/faculty/login) | Any Faculty Code/Email (e.g. `CS01`, `CS04`) / `fac*123` |
-| **Admin Portal** | [http://localhost:3000/admin/login](http://localhost:3000/admin/login) | `admin@nith.ac.in` / `admin*123` |
-| **Go Backend Health** | [http://localhost:8080/health](http://localhost:8080/health) | API Status |
+| Environment | Portal | URL | Access Mode / Credentials |
+| :--- | :--- | :--- | :--- |
+| **Production** | **Public Website** | [https://tempcse.nith.ac.in](https://tempcse.nith.ac.in) | Public Access |
+| **Production** | **Faculty Workspace** | [https://tempcse.nith.ac.in/faculty/login](https://tempcse.nith.ac.in/faculty/login) | Faculty Code (e.g. `CS04`) or Email / `fac*123` |
+| **Production** | **Administrator Console** | [https://tempcse.nith.ac.in/admin/login](https://tempcse.nith.ac.in/admin/login) | `admin@nith.ac.in` or `hod@nith.ac.in` / `admin*123` |
+| **Production** | **Password Reset** | [https://tempcse.nith.ac.in/forgot-password](https://tempcse.nith.ac.in/forgot-password) | Transactional OTP/Link via Gmail SMTP |
+| **Production** | **Backend API** | [https://tempcse.nith.ac.in/backend/api/v1](https://tempcse.nith.ac.in/backend/api/v1) | JWT Protected (`/backend/` Nginx proxy) |
+| **Production** | **Backend Health** | [https://tempcse.nith.ac.in/backend/health](https://tempcse.nith.ac.in/backend/health) | `{"status":"healthy","version":"1.0.0"}` |
+| **Local Dev** | **Public Website** | [http://localhost:3000](http://localhost:3000) | Public Access |
+| **Local Dev** | **Faculty Workspace** | [http://localhost:3000/faculty/login](http://localhost:3000/faculty/login) | Faculty Code / `fac*123` |
+| **Local Dev** | **Administrator Console** | [http://localhost:3000/admin/login](http://localhost:3000/admin/login) | `admin@nith.ac.in` / `admin*123` |
+| **Local Dev** | **Backend API Health** | [http://localhost:8080/health](http://localhost:8080/health) | API Status |
 
 ---
 
-## 🚢 Production Deployment & CI/CD
+## 🛠️ Production Operations & PM2 Guide
 
-The platform includes an enterprise-grade production deployment setup using **Docker Compose**, **Nginx**, and **GitHub Actions**.
+The production deployment on `14.139.56.28` is managed via **PM2** under the `serv-admin` user:
 
-### 1. Server Prerequisites (One-Time Setup)
+### Service Lifecycle Commands
 
-On a clean Ubuntu/Debian Linux server, run the automated setup script:
 ```bash
-git clone https://github.com/divyansh-v15-06/koiniyaraapkozadaaatahai.git /var/www/institute-portal
-cd /var/www/institute-portal
-sudo bash deploy/setup-server.sh
-```
-This script installs Docker, Docker Compose, sets up permissions, and configures the UFW firewall for ports 22, 80, and 443.
+# View live status of production services
+pm2 list
+pm2 status
 
-### 2. Configure Production Secrets in GitHub Actions
+# View live output logs
+pm2 logs tempcse-backend     # Go API logs
+pm2 logs tempcse-frontend    # Next.js SSR logs
 
-To enable zero-downtime continuous deployment on push to `main`, configure these repository secrets in GitHub:
-**`Settings` &rarr; `Secrets and variables` &rarr; `Actions`**:
+# Restarting services
+pm2 restart tempcse-backend
+pm2 restart tempcse-frontend
 
-| Secret Name | Description | Example |
-| :--- | :--- | :--- |
-| `SSH_HOST` | Remote server IP address or domain | `192.168.1.50` or `portal.nith.ac.in` |
-| `SSH_USER` | SSH login username | `ubuntu` or `root` |
-| `SSH_PASSWORD` | SSH login password | `YourSecurePassword` |
-| `SSH_PORT` | SSH port (defaults to 22) | `22` |
-| `DEPLOY_PATH` | Deployment path on remote server | `/var/www/institute-portal` |
+# Reloading with zero downtime
+pm2 reload all
 
-### 3. Production Launch with Docker Compose
-
-On your server inside `/var/www/institute-portal`:
-```bash
-cp .env.production.example .env
-# Edit .env with your production database credentials and JWT secret
-nano .env
-
-# Launch all production containers
-docker compose -f docker-compose.prod.yml up -d --build
+# Resource monitoring dashboard
+pm2 monit
 ```
 
-### 4. Continuous Integration & Deployment Pipeline
+### Applying Future Updates to Production
 
-- **CI Pipeline (`.github/workflows/ci.yml`)**: Automatically triggers on pull requests to `main`. Runs `go vet`, backend unit tests, static compilation check, frontend linting, and Next.js static build validation.
-- **CD Pipeline (`.github/workflows/deploy.yml`)**: Automatically triggers upon merge to `main`. Connects securely over SSH, pulls the latest code, performs zero-downtime container replacement via `docker compose`, verifies service health check, and cleans dangling images.
+```bash
+# 1. SSH into the server
+ssh -i ~/.ssh/server_access serv-admin@14.139.56.28
+
+# 2. Navigate to project root
+cd ~/Documents/projects/koiniyaraapkozadaaatahai
+
+# 3. Pull latest changes
+git pull origin main
+
+# 4. If backend changes: Recompile Go binary
+cd backend
+/usr/local/go/bin/go build -o server ./cmd/api/main.go
+pm2 restart tempcse-backend
+
+# 5. If frontend changes: Rebuild Next.js bundle
+cd ../frontend
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+npm run build
+pm2 restart tempcse-frontend
+```
 
 ---
 

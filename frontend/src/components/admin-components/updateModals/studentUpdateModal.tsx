@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogOverlay, DialogContent } from '@reach/dialog'
 import '@reach/dialog/styles.css'
-import axios from 'axios'
 import Select from 'react-select'
+import { uploadToCloudinary } from '@/lib/utils'
 
 const InputField = ({ label, id, value, onChange }) => (
     <div className='flex items-center my-2'>
@@ -70,19 +70,17 @@ function StudentUpdateModal({
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const data = new FormData();
-        let updatedFormData = {}
+        let updatedFormData = { ...formData }
         if (image) {
-            data.append("file", image);
-            data.append("upload_preset", "trials");
-            setLoading(true);
-            const res = await axios.post("https://api.cloudinary.com/v1_1/dvnrlqqpq/image/upload", data)
-            setLoading(false);
-            updatedFormData = { ...formData, photo: res.data.secure_url }
-        }
-        else {
-
-            updatedFormData = { ...formData }
+            try {
+                setLoading(true);
+                const secureUrl = await uploadToCloudinary(image);
+                updatedFormData.photo = secureUrl;
+            } catch (err: any) {
+                console.error('Error uploading student photo:', err);
+            } finally {
+                setLoading(false);
+            }
         }
 
         onSubmit(updatedFormData, initialData.id)

@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogOverlay, DialogContent } from '@reach/dialog'
-import '@reach/dialog/styles.css'
 import Select from 'react-select'
+import { uploadToCloudinary } from '@/lib/utils'
 
 const InputField = ({ label, value, onChange, id ,required}) => (
     <div className='flex flex-col my-2'>
@@ -77,11 +77,15 @@ const AdminModalAchievements = ({ isOpen, onClose, onSubmit }) => {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        const data = new FormData();
-        data.append("file", image);
-        data.append("upload_preset", "trials");
-        const res = await axios.post("https://api.cloudinary.com/v1_1/dvnrlqqpq/image/upload", data)
-        const updatedFormData = { ...formData, photo: res.data.secure_url,date:new Date() }
+        let photoUrl = formData.photo || ''
+        if (image) {
+            try {
+                photoUrl = await uploadToCloudinary(image)
+            } catch (err: any) {
+                console.error('Error uploading achievement photo:', err)
+            }
+        }
+        const updatedFormData = { ...formData, photo: photoUrl, date: new Date() }
         onSubmit(updatedFormData)
         setFormData({
             title: '',

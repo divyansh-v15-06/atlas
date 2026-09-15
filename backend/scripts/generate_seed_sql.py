@@ -4,12 +4,16 @@ Seed PostgreSQL Database from tempcsebase live_export.sql
 Maps all 41 MySQL tables and relations into canonical PostgreSQL schema.
 """
 
+import os
 import re
 import uuid
 from datetime import datetime
 
-EXPORT_PATH = "/home/divyansh/Development/Projects/tempcsebase/schema-design/live_export.sql"
-OUTPUT_SQL_PATH = "/home/divyansh/Development/Projects/koiniyaraapkozadaaatahai/backend/migrations/seed_from_tempcse.sql"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+EXPORT_PATH = os.path.join(BASE_DIR, "../../tempcsebase/schema-design/live_export.sql")
+if not os.path.exists(EXPORT_PATH):
+    EXPORT_PATH = "/home/divyansh/Development/Projects/tempcsebase/schema-design/live_export.sql"
+OUTPUT_SQL_PATH = os.path.join(BASE_DIR, "../migrations/seed_from_tempcse.sql")
 
 INSTITUTION_ID = "11111111-1111-1111-1111-111111111111"
 CSE_DEPT_ID = "22222222-2222-2222-2222-222222222222"
@@ -163,19 +167,20 @@ def escape_sql_year(val, default=2024):
 
 
 def main():
-    print("Reading live_export.sql...")
-    with open(EXPORT_PATH, "r", encoding="utf-8", errors="ignore") as f:
-        content = f.read()
-
-    # Extract all tables and values
-    insert_matches = re.finditer(r'INSERT INTO \`?([a-zA-Z0-9_]+)\`?\s+VALUES\s*([\s\S]+?);', content)
+    print(f"Reading live_export.sql from {EXPORT_PATH}...")
     table_data = {}
-    for m in insert_matches:
-        tname = m.group(1)
-        raw_vals = m.group(2)
-        rows = parse_sql_values(raw_vals)
-        table_data[tname] = rows
-        print(f"Loaded table: {tname} with {len(rows)} rows")
+    with open(EXPORT_PATH, "r", encoding="utf-8", errors="ignore") as f:
+        for line in f:
+            if line.startswith("INSERT INTO"):
+                m = re.match(r"INSERT INTO \`?([a-zA-Z0-9_]+)\`?\s+VALUES\s*", line)
+                if m:
+                    tname = m.group(1)
+                    raw_vals = line[m.end():].strip()
+                    if raw_vals.endswith(";"):
+                        raw_vals = raw_vals[:-1]
+                    rows = parse_sql_values(raw_vals)
+                    table_data[tname] = rows
+                    print(f"Loaded table: {tname:35} with {len(rows)} rows")
 
     out_lines = []
     out_lines.append("-- ============================================================================")
@@ -399,13 +404,13 @@ VALUES ('{fac_uuid}', {title}, {venue}, {venue}, {tdate}, {desc});""")
 
         title = row[1] or "Research Paper"
         venue = row[2] or ""
-        vol = row[3] or ""
-        issue = row[4] or ""
-        pages = row[5] or ""
+        vol = (row[3] or "")[:50]
+        issue = (row[4] or "")[:50]
+        pages = (row[5] or "")[:50]
         year = escape_sql_year(row[6])
         doi = row[9]
         if doi:
-            doi = doi.strip()
+            doi = doi.strip()[:255]
             if doi.lower().startswith("doi:"):
                 doi = doi[4:].strip()
             if "doi.org/" in doi:
@@ -419,10 +424,10 @@ VALUES ('{fac_uuid}', {title}, {venue}, {venue}, {tdate}, {desc});""")
 
         rtype_id = int(row[10]) if row[10] is not None else 1
         ptype = RESEARCH_TYPE_MAP.get(rtype_id, "JOURNAL")
-        indexing = row[11] or "Scopus"
-        quartile = row[12] or None
+        indexing = (row[11] or "Scopus")[:50]
+        quartile = row[12][:20] if row[12] else None
         authors = row[13] or "Faculty Authors"
-        isbn = row[14] or None
+        isbn = row[14][:50] if row[14] else None
 
         out_lines.append(f"""INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
 VALUES ('{pub_uuid}', {escape_sql_string(title)}, '{ptype}', {escape_sql_string(doi)}, {escape_sql_string(isbn)}, {escape_sql_string(venue)}, {escape_sql_string(vol)}, {escape_sql_string(issue)}, {escape_sql_string(pages)}, {year}, {escape_sql_string(indexing)}, {escape_sql_string(quartile)}, {escape_sql_string(authors)}, 'PUBLISHED')
