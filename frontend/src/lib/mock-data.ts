@@ -44,6 +44,8 @@ export const MOCK_FACULTY = databaseSeed.faculty.map((f: any) => ({
   publications: f.publications || [],
   patents: f.patents || [],
   projects: f.projects || [],
+  events: f.events || [],
+  consultancies: f.consultancies || [],
   profile: {
     faculty_id: f.id,
     specializations: (f.research_interests || []).join(", "),

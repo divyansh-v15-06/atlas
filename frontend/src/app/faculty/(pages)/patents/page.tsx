@@ -55,14 +55,18 @@ export default function FacultyPatentsPage() {
   const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
 
   const loadPatents = (activeFaculty: any) => {
-    const lastName = activeFaculty.full_name?.toLowerCase().split(" ").pop() || "";
+    const facId = activeFaculty?.id;
+    const legacyId = activeFaculty?.legacy_id;
     const userPatents = MOCK_PATENTS.filter((p: any) => {
-      if (p.faculty_ids && p.faculty_ids.includes(activeFaculty.id)) return true;
-      if (p.raw_inventors && p.raw_inventors.toLowerCase().includes(lastName)) return true;
+      if (facId && p.faculty_ids && p.faculty_ids.includes(facId)) return true;
+      if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
       return false;
     });
 
-    const fallback = userPatents.length > 0 ? userPatents : MOCK_PATENTS;
+    const fallback =
+      Array.isArray(activeFaculty?.patents) && activeFaculty.patents.length > 0
+        ? activeFaculty.patents
+        : userPatents;
     const stored = getStoredData(activeFaculty, "patents", fallback);
     setPatents(stored);
   };

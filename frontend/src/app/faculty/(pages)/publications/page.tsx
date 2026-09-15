@@ -71,21 +71,18 @@ export default function FacultyPublicationsPage() {
       ) || activeFaculty;
 
     const legacyId = baseFaculty?.legacy_id;
-    const lastName = baseFaculty?.full_name?.toLowerCase().split(" ").pop() || "";
+    const facId = baseFaculty?.id;
 
     const userPapers = MOCK_PUBLICATIONS.filter((p: any) => {
+      if (facId && p.faculty_ids?.includes(facId)) return true;
       if (legacyId && p.faculty_legacy_ids?.includes(legacyId)) return true;
-      if (p.author_text && typeof p.author_text === "string" && p.author_text.toLowerCase().includes(lastName)) return true;
-      if (Array.isArray(p.authors) && p.authors.some((a: any) => typeof a === "string" && a.toLowerCase().includes(lastName))) return true;
       return false;
     });
 
     const fallback =
-      baseFaculty?.publications && baseFaculty.publications.length > 0
+      Array.isArray(baseFaculty?.publications) && baseFaculty.publications.length > 0
         ? baseFaculty.publications
-        : userPapers.length > 0
-        ? userPapers
-        : MOCK_PUBLICATIONS.slice(0, 15);
+        : userPapers;
 
     const stored = getStoredData(baseFaculty, "publications", fallback);
     setPublications(stored);
@@ -135,7 +132,11 @@ export default function FacultyPublicationsPage() {
 
       const matchesType =
         typeFilter === "ALL" ||
-        p.publication_type?.toLowerCase() === typeFilter.toLowerCase();
+        p.publication_type?.toLowerCase() === typeFilter.toLowerCase() ||
+        p.type?.toLowerCase() === typeFilter.toLowerCase() ||
+        (typeFilter.toLowerCase() === "journal" && (p.publication_type?.toLowerCase()?.includes("journal") || p.type?.toLowerCase()?.includes("journal"))) ||
+        (typeFilter.toLowerCase() === "conference" && (p.publication_type?.toLowerCase()?.includes("conference") || p.type?.toLowerCase()?.includes("conference"))) ||
+        (typeFilter.toLowerCase() === "book chapter" && (p.publication_type?.toLowerCase()?.includes("chapter") || p.type?.toLowerCase()?.includes("chapter")));
 
       return matchesSearch && matchesType;
     });

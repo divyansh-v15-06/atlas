@@ -183,52 +183,60 @@ export function resolveFacultyBaseline(faculty: any, section: string): any[] {
     MOCK_FACULTY.find((f: any) => getFacultyCanonicalCode(f) === canonicalCode) || faculty;
 
   if (section === "publications") {
-    if (Array.isArray(baseFaculty.publications) && baseFaculty.publications.length > 0) {
+    if (Array.isArray(baseFaculty.publications)) {
       return baseFaculty.publications;
     }
     const legacyId = baseFaculty.legacy_id;
-    const lastName = (baseFaculty.full_name || "").toLowerCase().split(" ").pop() || "";
     return MOCK_PUBLICATIONS.filter((p: any) => {
+      if (baseFaculty.id && p.faculty_ids?.includes(baseFaculty.id)) return true;
       if (legacyId && p.faculty_legacy_ids?.includes(legacyId)) return true;
-      if (p.author_text && typeof p.author_text === "string" && p.author_text.toLowerCase().includes(lastName)) return true;
-      if (Array.isArray(p.authors) && p.authors.some((a: any) => typeof a === "string" && a.toLowerCase().includes(lastName))) return true;
       return false;
     });
   }
 
   if (section === "patents") {
-    if (Array.isArray(baseFaculty.patents) && baseFaculty.patents.length > 0) {
+    if (Array.isArray(baseFaculty.patents)) {
       return baseFaculty.patents;
     }
-    const lastName = (baseFaculty.full_name || "").toLowerCase().split(" ").pop() || "";
+    const legacyId = baseFaculty.legacy_id;
     return MOCK_PATENTS.filter((p: any) => {
       if (p.faculty_ids && p.faculty_ids.includes(baseFaculty.id)) return true;
-      if (p.raw_inventors && p.raw_inventors.toLowerCase().includes(lastName)) return true;
+      if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
       return false;
     });
   }
 
   if (section === "projects") {
-    if (Array.isArray(baseFaculty.projects) && baseFaculty.projects.length > 0) {
+    if (Array.isArray(baseFaculty.projects)) {
       return baseFaculty.projects;
     }
-    const lastName = (baseFaculty.full_name || "").toLowerCase().split(" ").pop() || "";
+    const legacyId = baseFaculty.legacy_id;
     return MOCK_PROJECTS.filter((p: any) => {
       if (p.faculty_ids && p.faculty_ids.includes(baseFaculty.id)) return true;
-      if (p.investigator_names && p.investigator_names.toLowerCase().includes(lastName)) return true;
+      if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
       return false;
     });
   }
 
   if (section === "consultancies") {
+    if (Array.isArray(baseFaculty.consultancies)) {
+      return baseFaculty.consultancies;
+    }
+    const legacyId = baseFaculty.legacy_id;
     return MOCK_CONSULTANCIES.filter((c: any) =>
-      c.faculty_ids && (c.faculty_ids.includes(baseFaculty.id) || (baseFaculty.legacy_id && c.faculty_ids.includes(baseFaculty.legacy_id)))
+      (c.faculty_ids && c.faculty_ids.includes(baseFaculty.id)) ||
+      (legacyId && c.faculty_legacy_ids && c.faculty_legacy_ids.includes(legacyId))
     );
   }
 
   if (section === "events") {
+    if (Array.isArray(baseFaculty.events)) {
+      return baseFaculty.events;
+    }
+    const legacyId = baseFaculty.legacy_id;
     return MOCK_EVENTS.filter((e: any) =>
-      e.faculty_ids && (e.faculty_ids.includes(baseFaculty.id) || (baseFaculty.legacy_id && e.faculty_ids.includes(baseFaculty.legacy_id)))
+      (e.faculty_ids && e.faculty_ids.includes(baseFaculty.id)) ||
+      (legacyId && e.faculty_legacy_ids && e.faculty_legacy_ids.includes(legacyId))
     );
   }
 

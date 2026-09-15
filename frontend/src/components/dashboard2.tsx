@@ -51,8 +51,6 @@ function buildFacultyFallbackAnalytics(faculty: any): AnalyticsData {
   }
 
   const legacyId = faculty.legacy_id;
-  const nameLower = (faculty.full_name || "").toLowerCase();
-  const lastName = nameLower.split(" ").pop() || "";
   const facId = faculty.id;
 
   // 1. Personal Publications
@@ -61,12 +59,8 @@ function buildFacultyFallbackAnalytics(faculty: any): AnalyticsData {
     : [];
 
   const matchedPubs = MOCK_PUBLICATIONS.filter((p: any) => {
-    if (legacyId && p.faculty_legacy_ids?.includes(legacyId)) return true;
     if (facId && p.faculty_ids?.includes(facId)) return true;
-    if (p.author_text && typeof p.author_text === "string" && p.author_text.toLowerCase().includes(lastName)) return true;
-    if (Array.isArray(p.authors) && p.authors.some((a: any) => 
-      typeof a === "string" ? a.toLowerCase().includes(lastName) : (a.author_name && a.author_name.toLowerCase().includes(lastName))
-    )) return true;
+    if (legacyId && p.faculty_legacy_ids?.includes(legacyId)) return true;
     return false;
   });
 
@@ -86,7 +80,7 @@ function buildFacultyFallbackAnalytics(faculty: any): AnalyticsData {
 
   const matchedProjects = MOCK_PROJECTS.filter((p: any) => {
     if (facId && p.faculty_ids?.includes(facId)) return true;
-    if (p.raw_investigators && p.raw_investigators.toLowerCase().includes(lastName)) return true;
+    if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
     return false;
   });
 
@@ -107,7 +101,7 @@ function buildFacultyFallbackAnalytics(faculty: any): AnalyticsData {
 
   const matchedPatents = MOCK_PATENTS.filter((p: any) => {
     if (facId && p.faculty_ids?.includes(facId)) return true;
-    if (p.raw_inventors && p.raw_inventors.toLowerCase().includes(lastName)) return true;
+    if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
     return false;
   });
 
@@ -127,8 +121,7 @@ function buildFacultyFallbackAnalytics(faculty: any): AnalyticsData {
 
   const matchedEvents = MOCK_EVENTS.filter((e: any) => {
     if (facId && e.faculty_ids?.includes(facId)) return true;
-    if (e.convenor && e.convenor.toLowerCase().includes(lastName)) return true;
-    if (e.coordinator && e.coordinator.toLowerCase().includes(lastName)) return true;
+    if (legacyId && e.faculty_legacy_ids && e.faculty_legacy_ids.includes(legacyId)) return true;
     return false;
   });
 

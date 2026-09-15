@@ -89,38 +89,46 @@ export default function ExportResumePage() {
     setFaculty(currentFaculty);
 
     const legacyId = currentFaculty.legacy_id;
-    const lastName = currentFaculty.full_name.toLowerCase().split(" ").pop() || "";
+    const facId = currentFaculty.id;
 
     // Publications
-    const userPapers = MOCK_PUBLICATIONS.filter((p: any) => {
-      if (legacyId && p.faculty_legacy_ids?.includes(legacyId)) return true;
-      if (p.author_text && p.author_text.toLowerCase().includes(lastName)) return true;
-      return false;
-    });
-    setPublications(userPapers.length > 0 ? userPapers : MOCK_PUBLICATIONS.slice(0, 12));
+    const userPapers = Array.isArray(currentFaculty.publications) && currentFaculty.publications.length > 0
+      ? currentFaculty.publications
+      : MOCK_PUBLICATIONS.filter((p: any) => {
+          if (facId && p.faculty_ids?.includes(facId)) return true;
+          if (legacyId && p.faculty_legacy_ids?.includes(legacyId)) return true;
+          return false;
+        });
+    setPublications(userPapers);
 
     // Patents
-    const userPatents = MOCK_PATENTS.filter((p: any) => {
-      if (p.faculty_ids && p.faculty_ids.includes(currentFaculty.id)) return true;
-      if (p.raw_inventors && p.raw_inventors.toLowerCase().includes(lastName)) return true;
-      return false;
-    });
+    const userPatents = Array.isArray(currentFaculty.patents) && currentFaculty.patents.length > 0
+      ? currentFaculty.patents
+      : MOCK_PATENTS.filter((p: any) => {
+          if (facId && p.faculty_ids && p.faculty_ids.includes(facId)) return true;
+          if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
+          return false;
+        });
     setPatents(userPatents);
 
     // Projects
-    const userProjects = MOCK_PROJECTS.filter((p: any) => {
-      if (p.faculty_ids && p.faculty_ids.includes(currentFaculty.id)) return true;
-      if (p.raw_investigators && p.raw_investigators.toLowerCase().includes(lastName)) return true;
-      return false;
-    });
+    const userProjects = Array.isArray(currentFaculty.projects) && currentFaculty.projects.length > 0
+      ? currentFaculty.projects
+      : MOCK_PROJECTS.filter((p: any) => {
+          if (facId && p.faculty_ids && p.faculty_ids.includes(facId)) return true;
+          if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
+          return false;
+        });
     setProjects(userProjects);
 
     // Consultancies
-    const userCons = MOCK_CONSULTANCIES.filter((c: any) => {
-      if (c.faculty_ids && c.faculty_ids.includes(currentFaculty.id)) return true;
-      if (c.author_text && c.author_text.toLowerCase().includes(lastName)) return true;
-      return false;
-    });
+    const userCons = Array.isArray(currentFaculty.consultancies) && currentFaculty.consultancies.length > 0
+      ? currentFaculty.consultancies
+      : MOCK_CONSULTANCIES.filter((c: any) => {
+          if (facId && c.faculty_ids && c.faculty_ids.includes(facId)) return true;
+          if (legacyId && c.faculty_legacy_ids && c.faculty_legacy_ids.includes(legacyId)) return true;
+          return false;
+        });
     setConsultancies(userCons);
   }, []);
 

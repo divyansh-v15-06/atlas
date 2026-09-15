@@ -49,15 +49,18 @@ export default function FacultyEventsPage() {
   const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
 
   const loadEvents = (activeFaculty: any) => {
-    const lastName = activeFaculty.full_name?.toLowerCase().split(" ").pop() || "";
+    const facId = activeFaculty?.id;
+    const legacyId = activeFaculty?.legacy_id;
     const userEvents = MOCK_EVENTS.filter((e: any) => {
-      if (e.faculty_ids && e.faculty_ids.includes(activeFaculty.id)) return true;
-      if (e.convenor && e.convenor.toLowerCase().includes(lastName)) return true;
-      if (e.coordinator && e.coordinator.toLowerCase().includes(lastName)) return true;
+      if (facId && e.faculty_ids && e.faculty_ids.includes(facId)) return true;
+      if (legacyId && e.faculty_legacy_ids && e.faculty_legacy_ids.includes(legacyId)) return true;
       return false;
     });
 
-    const fallback = userEvents.length > 0 ? userEvents : MOCK_EVENTS;
+    const fallback =
+      Array.isArray(activeFaculty?.events) && activeFaculty.events.length > 0
+        ? activeFaculty.events
+        : userEvents;
     const stored = getStoredData(activeFaculty, "events", fallback);
     setEvents(stored);
   };

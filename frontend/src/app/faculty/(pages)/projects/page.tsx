@@ -55,14 +55,18 @@ export default function FacultyProjectsPage() {
   const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
 
   const loadProjects = (activeFaculty: any) => {
-    const lastName = activeFaculty.full_name?.toLowerCase().split(" ").pop() || "";
+    const facId = activeFaculty?.id;
+    const legacyId = activeFaculty?.legacy_id;
     const userProjects = MOCK_PROJECTS.filter((p: any) => {
-      if (p.faculty_ids && p.faculty_ids.includes(activeFaculty.id)) return true;
-      if (p.raw_investigators && p.raw_investigators.toLowerCase().includes(lastName)) return true;
+      if (facId && p.faculty_ids && p.faculty_ids.includes(facId)) return true;
+      if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
       return false;
     });
 
-    const fallback = userProjects.length > 0 ? userProjects : MOCK_PROJECTS;
+    const fallback =
+      Array.isArray(activeFaculty?.projects) && activeFaculty.projects.length > 0
+        ? activeFaculty.projects
+        : userProjects;
     const stored = getStoredData(activeFaculty, "projects", fallback);
     setProjects(stored);
   };

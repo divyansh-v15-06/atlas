@@ -384,12 +384,16 @@ export default function FacultyPortfolioPage({
     if (allSupervisions && allSupervisions.length > 0) {
       return allSupervisions;
     }
-    const nameLower = faculty?.full_name?.toLowerCase() || "";
-    const lastName = nameLower.split(" ").pop() || "";
-    if (lastName && lastName.length > 2) {
+    const cleanName = (faculty?.full_name || "")
+      .replace(/^(Dr\.|Prof\.|Mr\.|Mrs\.|Ms\.)\s*/i, "")
+      .replace(/\(Mrs\.\)/i, "")
+      .trim()
+      .toLowerCase();
+
+    if (cleanName && cleanName.length > 3) {
       const matched = MOCK_PHD_SCHOLARS.filter((s: any) =>
-        s.supervisor?.toLowerCase().includes(lastName) ||
-        s.co_supervisor?.toLowerCase().includes(lastName)
+        s.supervisor?.toLowerCase().includes(cleanName) ||
+        s.co_supervisor?.toLowerCase().includes(cleanName)
       ).map((s: any) => ({
         id: s.id,
         level: "Ph.D.",

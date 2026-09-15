@@ -5088,6 +5088,10 @@
           "faculty_ids": [
             "62d679bb-959c-5740-bf26-241647a6e873",
             "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            1,
+            3
           ]
         }
       ],
@@ -5105,6 +5109,9 @@
           "raw_investigators": "Prof. Lalit Awasthi(PI)",
           "faculty_ids": [
             "62d679bb-959c-5740-bf26-241647a6e873"
+          ],
+          "faculty_legacy_ids": [
+            1
           ]
         },
         {
@@ -5120,6 +5127,9 @@
           "raw_investigators": "Prof. Lalit Awasthi(PI)",
           "faculty_ids": [
             "62d679bb-959c-5740-bf26-241647a6e873"
+          ],
+          "faculty_legacy_ids": [
+            1
           ]
         },
         {
@@ -5135,6 +5145,9 @@
           "raw_investigators": "Prof. Lalit Awasthi(PI)",
           "faculty_ids": [
             "62d679bb-959c-5740-bf26-241647a6e873"
+          ],
+          "faculty_legacy_ids": [
+            1
           ]
         },
         {
@@ -5150,6 +5163,9 @@
           "raw_investigators": "Prof. Lalit Awasthi(PI)",
           "faculty_ids": [
             "62d679bb-959c-5740-bf26-241647a6e873"
+          ],
+          "faculty_legacy_ids": [
+            1
           ]
         }
       ],
@@ -5205,7 +5221,36 @@
         "research_gate_url": "https://www.researchgate.net/profile/Example",
         "vidwan_url": "https://vidwan.inflibnet.ac.in/profile/123456",
         "linkedin_url": null
-      }
+      },
+      "events": [
+        {
+          "id": "1573dd94-d7f6-592c-bc1a-b6393340f66b",
+          "legacy_id": 17,
+          "title": "Recent advances in Artificial Intelligence and Internet of Things, RAAI-2021",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2021-09-25",
+          "end_date": "2021-09-29",
+          "academic_session": "2021-2022",
+          "convenor": "Dr. Y. D. Sharma, Dr. Kamlesh Dutta",
+          "coordinator": "Dr. Sangeeta Sharma, Dr. Nidhi Gupta",
+          "link_url": "https://nith.ac.in/uploads/topics/raai202116322919518774.pdf",
+          "faculty_ids": [
+            "62d679bb-959c-5740-bf26-241647a6e873",
+            "5e12253b-db56-5e31-9e51-19ab6edac297",
+            "cfcbebac-52f4-5195-b732-d21e74137122"
+          ],
+          "faculty_legacy_ids": [
+            1,
+            2,
+            16
+          ]
+        }
+      ],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "5e12253b-db56-5e31-9e51-19ab6edac297",
@@ -5248,18 +5293,20 @@
       "teaching_experiences": [],
       "administrative_experiences": [
         {
-          "id": "3b036e72-1ac4-474e-a79f-c7c6dc528370",
           "position": "Head of the Department",
           "organization": "Computer Science & Enngineering Department, NIT Hamirpur",
-          "start_date": "2011-10-02",
-          "end_date": "2013-05-14"
+          "start_date": "2011",
+          "end_date": "2013",
+          "full_start": "2011-10-02",
+          "full_end": "2013-05-14"
         },
         {
-          "id": "815c8e9c-eeb5-4875-8111-39bc89b18525",
           "position": "Head of the Department",
           "organization": "Computer Science & Enngineering Department, NIT Hamirpur",
-          "start_date": "2018-04-24",
-          "end_date": "2020-04-21"
+          "start_date": "2018",
+          "end_date": "2020",
+          "full_start": "2018-04-24",
+          "full_end": "2020-04-21"
         }
       ],
       "honors": [
@@ -7419,6 +7466,9 @@
           "country": "India",
           "faculty_ids": [
             "5e12253b-db56-5e31-9e51-19ab6edac297"
+          ],
+          "faculty_legacy_ids": [
+            2
           ]
         },
         {
@@ -7435,6 +7485,9 @@
           "country": "India",
           "faculty_ids": [
             "5e12253b-db56-5e31-9e51-19ab6edac297"
+          ],
+          "faculty_legacy_ids": [
+            2
           ]
         }
       ],
@@ -7456,6 +7509,13 @@
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
             "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
             "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+          ],
+          "faculty_legacy_ids": [
+            2,
+            3,
+            5,
+            9,
+            10
           ]
         },
         {
@@ -7471,6 +7531,9 @@
           "raw_investigators": null,
           "faculty_ids": [
             "5e12253b-db56-5e31-9e51-19ab6edac297"
+          ],
+          "faculty_legacy_ids": [
+            2
           ]
         },
         {
@@ -7486,6 +7549,9 @@
           "raw_investigators": "Dr. Kamlesh Dutta",
           "faculty_ids": [
             "5e12253b-db56-5e31-9e51-19ab6edac297"
+          ],
+          "faculty_legacy_ids": [
+            2
           ]
         },
         {
@@ -7527,6 +7593,52 @@
           "end_date": "2020",
           "full_start": "2018-04-24",
           "full_end": "2020-04-21"
+        }
+      ],
+      "events": [
+        {
+          "id": "1573dd94-d7f6-592c-bc1a-b6393340f66b",
+          "legacy_id": 17,
+          "title": "Recent advances in Artificial Intelligence and Internet of Things, RAAI-2021",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2021-09-25",
+          "end_date": "2021-09-29",
+          "academic_session": "2021-2022",
+          "convenor": "Dr. Y. D. Sharma, Dr. Kamlesh Dutta",
+          "coordinator": "Dr. Sangeeta Sharma, Dr. Nidhi Gupta",
+          "link_url": "https://nith.ac.in/uploads/topics/raai202116322919518774.pdf",
+          "faculty_ids": [
+            "62d679bb-959c-5740-bf26-241647a6e873",
+            "5e12253b-db56-5e31-9e51-19ab6edac297",
+            "cfcbebac-52f4-5195-b732-d21e74137122"
+          ],
+          "faculty_legacy_ids": [
+            1,
+            2,
+            16
+          ]
+        }
+      ],
+      "consultancies": [
+        {
+          "id": "8ac48150-e963-5063-883c-15c40ecd6311",
+          "legacy_id": 22,
+          "title": "IPV6 Consultancy Services for RINL, Visakhapatnam Steel Plant",
+          "client_organisation": "RINL, Visakhapatnam Steel Plant",
+          "amount": 2000000.0,
+          "start_year": 2024,
+          "academic_session": "2022-2023",
+          "status": "Completed",
+          "author_text": "Dr. Kamlesh Dutta",
+          "faculty_ids": [
+            "5e12253b-db56-5e31-9e51-19ab6edac297"
+          ],
+          "faculty_legacy_ids": [
+            2
+          ]
         }
       ]
     },
@@ -7570,88 +7682,100 @@
       "teaching_experiences": [],
       "administrative_experiences": [
         {
-          "id": "734595bf-fbb9-4e03-ab51-3918c1986d8d",
           "position": "Assistant Director",
           "organization": "Directorate of Technical Education, Vocational & Industrial Training, HP",
-          "start_date": "1995-01-30",
-          "end_date": "1996-08-13"
+          "start_date": "1995",
+          "end_date": "1996",
+          "full_start": "1995-01-30",
+          "full_end": "1996-08-13"
         },
         {
-          "id": "8f65157f-efea-4353-b8bc-27486a1d6c85",
           "position": "Deputy Director",
           "organization": "HP State Electricity Regulatory Commission, Shimla",
-          "start_date": "2002-01-11",
-          "end_date": "2003-08-13"
+          "start_date": "2002",
+          "end_date": "2003",
+          "full_start": "2002-01-11",
+          "full_end": "2003-08-13"
         },
         {
-          "id": "d92152b5-a74f-4cbc-897d-f24db0d11a46",
           "position": "Chairman cum Center In-charge, Central Counseling Board12 (CCB-12) and Central seat allocation Board-13 (CSAB-13)",
           "organization": "National Institute of Technology Hamirpur",
-          "start_date": "2012-01-01",
-          "end_date": "2014-12-31"
+          "start_date": "2012",
+          "end_date": "2014",
+          "full_start": "2012-01-01",
+          "full_end": "2014-12-31"
         },
         {
-          "id": "e50bdc1d-ca96-4e53-859d-481f31676b6a",
           "position": "Chairman, Senate for Undergraduate Studies (SUGC)",
           "organization": "National Institute of Technology Hamirpur",
-          "start_date": "2012-10-08",
-          "end_date": "2014-01-07"
+          "start_date": "2012",
+          "end_date": "2014",
+          "full_start": "2012-10-08",
+          "full_end": "2014-01-07"
         },
         {
-          "id": "3802d0ca-9670-4e45-aa6a-554c8dc4e36b",
           "position": "Program Incharge",
           "organization": "IGNOU Program Study Centre, NIT Hamirpur",
-          "start_date": "2012-10-29",
-          "end_date": "2018-10-08"
+          "start_date": "2012",
+          "end_date": "2018",
+          "full_start": "2012-10-29",
+          "full_end": "2018-10-08"
         },
         {
-          "id": "aa9b52b8-3bce-423d-85c9-8222b9529fff",
           "position": "Head of Department",
           "organization": "Computer Science & Engineering Department, NIT Hamirpur",
-          "start_date": "2013-05-21",
-          "end_date": "2015-07-30"
+          "start_date": "2013",
+          "end_date": "2015",
+          "full_start": "2013-05-21",
+          "full_end": "2015-07-30"
         },
         {
-          "id": "73cde2de-255c-4d2f-8496-69f0595e7ae4",
           "position": "Chairman, Committee for implementation of eOffice at NITH",
           "organization": "National Institute of Technology Hamirpur",
-          "start_date": "2016-05-04",
-          "end_date": "Present"
+          "start_date": "2016",
+          "end_date": "Present",
+          "full_start": "2016-05-04",
+          "full_end": "Present"
         },
         {
-          "id": "556a9e67-781c-4677-9e2f-b9201e8a845c",
           "position": "Nodal Officer, National Knowledge Network (NKN)",
           "organization": "National Institute of Technology Hamirpur",
-          "start_date": "2016-10-05",
-          "end_date": "Present"
+          "start_date": "2016",
+          "end_date": "Present",
+          "full_start": "2016-10-05",
+          "full_end": "Present"
         },
         {
-          "id": "cf4c96d1-25c8-4aef-9bcb-845955313c5a",
           "position": "Head of Department",
           "organization": "Computer Centre, National Institute of Technology Hamirpur",
-          "start_date": "2016-10-05",
-          "end_date": "2018-10-08"
+          "start_date": "2016",
+          "end_date": "2018",
+          "full_start": "2016-10-05",
+          "full_end": "2018-10-08"
         },
         {
-          "id": "061c862a-4db1-4c5a-a58a-bfafc2e64daa",
           "position": "Deputy Registrar (Audit & Accounts) cum Deputy Registrar (Consultancy & Testing)",
           "organization": "National Institute of Technology Hamirpur",
-          "start_date": "2018-11-06",
-          "end_date": "2019-02-13"
+          "start_date": "2018",
+          "end_date": "2019",
+          "full_start": "2018-11-06",
+          "full_end": "2019-02-13"
         },
         {
-          "id": "44957434-9041-490e-b822-9b9a51740568",
           "position": "Associate Dean (Consultancy Projects & Testing)",
           "organization": "National Institute of Technology Hamirpur",
-          "start_date": "2019-05-02",
-          "end_date": "2020-04-30"
+          "start_date": "2019",
+          "end_date": "2020",
+          "full_start": "2019-05-02",
+          "full_end": "2020-04-30"
         },
         {
-          "id": "db63a19e-7140-4c18-b338-b644acf99e14",
           "position": "Head of Department",
           "organization": "Computer Science & Engineering Department, NIT Hamirpur",
-          "start_date": "2020-04-22",
-          "end_date": "Present"
+          "start_date": "2020",
+          "end_date": "Present",
+          "full_start": "2020-04-22",
+          "full_end": "Present"
         }
       ],
       "honors": [],
@@ -9576,6 +9700,10 @@
           "faculty_ids": [
             "62d679bb-959c-5740-bf26-241647a6e873",
             "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            1,
+            3
           ]
         }
       ],
@@ -9593,6 +9721,9 @@
           "raw_investigators": "Dr. T.P. Sharma",
           "faculty_ids": [
             "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
           ]
         },
         {
@@ -9608,6 +9739,9 @@
           "raw_investigators": "Dr. T.P. Sharma",
           "faculty_ids": [
             "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
           ]
         },
         {
@@ -9627,6 +9761,13 @@
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
             "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
             "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+          ],
+          "faculty_legacy_ids": [
+            2,
+            3,
+            5,
+            9,
+            10
           ]
         }
       ],
@@ -10060,7 +10201,303 @@
         "research_gate_url": null,
         "vidwan_url": "https://vidwan.inflibnet.ac.in/profile/18381",
         "linkedin_url": "https://www.linkedin.com/in/dr-t-p-sharma-0a0978b8/"
-      }
+      },
+      "events": [
+        {
+          "id": "0f33c129-587f-5f76-8d2e-bfb7205e48d5",
+          "legacy_id": 14,
+          "title": "Recent Trends in Networks & Communication: Theory & Challenges",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2023-09-25",
+          "end_date": "2023-09-29",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. T.P. Sharma",
+          "coordinator": "Dr. Priyanka, Dr. Nitin Gupta",
+          "link_url": "https://nith.ac.in/uploads/topics/cse-workshop16946690908540.pdf",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c",
+            "fa8f838f-1d0f-5506-9c25-961dd6458f00",
+            "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+          ],
+          "faculty_legacy_ids": [
+            3,
+            10,
+            15
+          ]
+        },
+        {
+          "id": "4b53c95d-880b-5121-a2cb-02c45727d0b4",
+          "legacy_id": 121,
+          "title": "First International Conference on Advances in Computing and Communication",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2011-04-08",
+          "end_date": "2011-04-10",
+          "academic_session": "2011-2012",
+          "convenor": "",
+          "coordinator": "",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        },
+        {
+          "id": "66f5a49f-3ebd-5253-980f-5d016c1eaf48",
+          "legacy_id": 126,
+          "title": "40th National Conference on Fluid Mechanics and Fluid Power (NCFMFP-13)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2013-12-12",
+          "end_date": "2013-12-14",
+          "academic_session": "2013-2014",
+          "convenor": "",
+          "coordinator": "",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        },
+        {
+          "id": "0f02f8a3-13d2-5f58-9dd9-9e9229c7f668",
+          "legacy_id": 127,
+          "title": "Civil Engineering Conference – Innovation for Sustainability (CEC-2016)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2016-09-09",
+          "end_date": "2016-09-10",
+          "academic_session": "2016-2017",
+          "convenor": "",
+          "coordinator": "",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        },
+        {
+          "id": "501b2cd3-cdb0-5ef5-9585-eacbce00ff43",
+          "legacy_id": 128,
+          "title": "Winter School on Mobile and Distributed Systems: Theory and Challenges",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2013-12-02",
+          "end_date": "2013-12-06",
+          "academic_session": "2013-2014",
+          "convenor": "",
+          "coordinator": "Dr. T.P. Sharma",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        },
+        {
+          "id": "046a31ab-eb71-54ab-82f7-ebd8e15e12c3",
+          "legacy_id": 129,
+          "title": "Winter School on Mobile and Distributed systems: Theory and Challenges (MDS-13)",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2013-12-02",
+          "end_date": "2013-12-06",
+          "academic_session": "2013-2014",
+          "convenor": "",
+          "coordinator": "",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        },
+        {
+          "id": "cc27d141-f2bf-5cba-8a14-556dc14d92b2",
+          "legacy_id": 130,
+          "title": "STC on Recent Trends in Networks & Communication: Theory & Challenges",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2021-12-01",
+          "end_date": "2021-12-06",
+          "academic_session": "2021-2022",
+          "convenor": "",
+          "coordinator": "Dr. T.P. Sharma",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        },
+        {
+          "id": "bc949c30-04fc-519e-9fbd-0f9c419d1c0b",
+          "legacy_id": 131,
+          "title": "Recent Trends in Networks & Communication: Theory & Challenges",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2023-09-25",
+          "end_date": "2023-09-29",
+          "academic_session": "2023-2024",
+          "convenor": "",
+          "coordinator": "Dr. T.P. Sharma",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        },
+        {
+          "id": "84ac33e1-7dd4-51fb-8d11-331b10610478",
+          "legacy_id": 132,
+          "title": "Training & Skill development Program for HPPCL Employees on E-Governance",
+          "category": "organized",
+          "event_type": "workshop",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2018-01-18",
+          "end_date": "2018-01-19",
+          "academic_session": "2018-2019",
+          "convenor": "",
+          "coordinator": "Dr. T.P. Sharma",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        },
+        {
+          "id": "6a7d3c92-f079-5625-8adc-4423c1d1c712",
+          "legacy_id": 133,
+          "title": "Workshop on Wireless Sensor Networks Classroom Kit and Wireless Sensor Networks Professional Kit",
+          "category": "organized",
+          "event_type": "workshop",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2014-03-04",
+          "end_date": "2014-03-05",
+          "academic_session": "2014-2015",
+          "convenor": "",
+          "coordinator": "Dr. T.P. Sharma",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        },
+        {
+          "id": "030f381d-abdc-52e4-94d0-c7d0babb3790",
+          "legacy_id": 134,
+          "title": "Mobile Device Security",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "Ministry of Electronics and Information Technology",
+          "start_date": "2025-02-23",
+          "end_date": "2025-03-27",
+          "academic_session": "2024-2025",
+          "convenor": "Dr. T. P. Sharma, Dr. Naveen Chauhan",
+          "coordinator": "Dr. Rajeev Kumar, Dr. Nitin Gupta",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c",
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+          ],
+          "faculty_legacy_ids": [
+            3,
+            5,
+            9,
+            10
+          ]
+        }
+      ],
+      "consultancies": [
+        {
+          "id": "ec7a93a1-3196-55fa-a054-c49f2a272c68",
+          "legacy_id": 19,
+          "title": "Consultancy Service to Kangra Central Cooperative Bank for establishment of ATMs",
+          "client_organisation": "Kangra Central Cooperative Bank",
+          "amount": 545770.0,
+          "start_year": 2024,
+          "academic_session": "2021-2022",
+          "status": "Completed",
+          "author_text": "Dr. T.P. Sharma, Dr. Narottam Chand, Mr. K.S. Pandey, Dr. S.K. Soni, Dr. Ashok Kumar, Mr. Anil Kumar",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        },
+        {
+          "id": "3a806668-4462-5cea-b98a-1d4859c1f2c7",
+          "legacy_id": 20,
+          "title": "Consultancy Service to Kangra Central Cooperative Bank for establishment of CBS and Internet Banking",
+          "client_organisation": "Kangra Central Cooperative Bank, Dharamsala",
+          "amount": 4537086.0,
+          "start_year": 2024,
+          "academic_session": "2021-2022",
+          "status": "Completed",
+          "author_text": "Dr. T.P. Sharma, Dr. Narottam Chand, Mr. K.S. Pandey, Dr. S.K. Soni, Dr. Ashok Kumar, Mr. Anil Kumar",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        },
+        {
+          "id": "b7afe3ff-a10b-5d56-bcee-8f07430119c3",
+          "legacy_id": 21,
+          "title": "Consultancy Service to Kangra Central Cooperative Bank for establishment of surveillance and Biometric Attendance System",
+          "client_organisation": "Kangra Central Cooperative Bank",
+          "amount": 540569.0,
+          "start_year": 2024,
+          "academic_session": "2022-2023",
+          "status": "Completed",
+          "author_text": "Dr. T.P. Sharma, Dr. Narottam Chand, Mr. K.S. Pandey, Dr. S.K. Soni, Dr. Ashok Kumar, Mr. Anil Kumar",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c"
+          ],
+          "faculty_legacy_ids": [
+            3
+          ]
+        }
+      ]
     },
     {
       "id": "6c4f2340-35a3-5b21-b580-081dad7f5ab1",
@@ -10141,88 +10578,108 @@
       ],
       "administrative_experiences": [
         {
-          "id": "7e07309d-b723-40e5-91b1-f5547320c4bd",
           "position": "Warden Dhauladhar Boys Hostel",
           "organization": "National Institute of Technology , Hamirpur",
-          "start_date": "2019-03-25",
-          "end_date": "2020-06-01"
+          "start_date": "2019",
+          "end_date": "2020",
+          "full_start": "2019-03-25",
+          "full_end": "2020-06-01"
         },
         {
-          "id": "932608f2-d14b-4821-bce4-d6f8d48eef22",
           "position": "Warden In charge(Boys Hostels)",
           "organization": "National Institute of Technology , Hamirpur",
-          "start_date": "2020-06-01",
-          "end_date": "2020-08-08"
+          "start_date": "2020",
+          "end_date": "2020",
+          "full_start": "2020-06-01",
+          "full_end": "2020-08-08"
         },
         {
-          "id": "7828f72f-73fc-4e46-a99b-b4cae5268421",
           "position": "Faculty Incharge(Computer Centre)",
           "organization": "Computer Centre , NIT Hamirpur",
-          "start_date": "2020-09-15",
-          "end_date": "2022-09-26"
+          "start_date": "2020",
+          "end_date": "2022",
+          "full_start": "2020-09-15",
+          "full_end": "2022-09-26"
         },
         {
-          "id": "59a702cf-6a39-4b88-973e-3ec5e0ad5917",
           "position": "Convener DDPC",
           "organization": "Computer Science and Engineering , NIT Hamirpur",
-          "start_date": "2021-08-11",
-          "end_date": "2023-09-08"
+          "start_date": "2021",
+          "end_date": "2023",
+          "full_start": "2021-08-11",
+          "full_end": "2023-09-08"
         },
         {
-          "id": "65e32ba7-2fb0-4045-8b87-35a5795c1ec3",
           "position": "Member SDPC",
           "organization": "NIT Hamirpur",
-          "start_date": "2021-08-11",
-          "end_date": "2023-09-08"
+          "start_date": "2021",
+          "end_date": "2023",
+          "full_start": "2021-08-11",
+          "full_end": "2023-09-08"
         },
         {
-          "id": "d8edc889-51c2-4ea3-9564-1e79c9e862b3",
           "position": "Nodal Officer Digital India",
           "organization": "NIT Hamirpur",
-          "start_date": "2018-05-03",
-          "end_date": "2019-05-01"
+          "start_date": "2018",
+          "end_date": "2019",
+          "full_start": "2018-05-03",
+          "full_end": "2019-05-01"
         },
         {
-          "id": "09f44642-6599-4d00-b0ce-5c75f1de734e",
           "position": "Warden Shivalik Boys Hostel",
           "organization": "NIT Hamirpur",
-          "start_date": "2017-09-01",
-          "end_date": "2019-05-28"
+          "start_date": "2017",
+          "end_date": "2019",
+          "full_start": "2017-09-01",
+          "full_end": "2019-05-28"
         },
         {
-          "id": "db408e17-4c45-4cf0-bcbb-a5a88c9d3742",
+          "position": "Convener Departmental Post Graduate Committee(DPGC),CSED",
+          "organization": "NIT Hamirpur",
+          "start_date": "2018",
+          "end_date": "2020",
+          "full_start": "2018-07-16",
+          "full_end": "2020-02-16"
+        },
+        {
           "position": "Coordinator Institute Website",
           "organization": "NIT Hamirpur",
-          "start_date": "2012-10-18",
-          "end_date": "2014-01-07"
+          "start_date": "2012",
+          "end_date": "2014",
+          "full_start": "2012-10-18",
+          "full_end": "2014-01-07"
         },
         {
-          "id": "ac57541c-2801-4bce-a8bd-755d5e927f3b",
           "position": "Coordinator Sports",
           "organization": "NIT Hamirpur",
-          "start_date": "2014-01-07",
-          "end_date": "2025-07-27"
+          "start_date": "2014",
+          "end_date": "2025",
+          "full_start": "2014-01-07",
+          "full_end": "2025-07-27"
         },
         {
-          "id": "1a03b9d1-04c5-42f6-b120-ccd96059238f",
           "position": "Coordinator (Administration)",
           "organization": "IIIT,Una",
-          "start_date": "2014-07-21",
-          "end_date": "2016-03-01"
+          "start_date": "2014",
+          "end_date": "2016",
+          "full_start": "2014-07-21",
+          "full_end": "2016-03-01"
         },
         {
-          "id": "cabbd2be-402a-46ee-8feb-33e03fd03bc1",
           "position": "Faculty In-Charge GLUG",
           "organization": "NIT Hamirpur",
-          "start_date": "2011-11-08",
-          "end_date": "Present"
+          "start_date": "2011",
+          "end_date": "Present",
+          "full_start": "2011-11-08",
+          "full_end": "Present"
         },
         {
-          "id": "b15d3b7e-6ded-4fa1-9856-677223a12c44",
           "position": "Lab in charge Microprocessor Lab ,CSED",
           "organization": "NIT Hamirpur",
-          "start_date": "2008-05-01",
-          "end_date": "Present"
+          "start_date": "2008",
+          "end_date": "Present",
+          "full_start": "2008-05-01",
+          "full_end": "Present"
         }
       ],
       "honors": [],
@@ -12213,6 +12670,10 @@
           "faculty_ids": [
             "6c4f2340-35a3-5b21-b580-081dad7f5ab1",
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            4,
+            5
           ]
         },
         {
@@ -12228,6 +12689,9 @@
           "raw_investigators": "Dr Siddhartha Chauhan",
           "faculty_ids": [
             "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
+          ],
+          "faculty_legacy_ids": [
+            4
           ]
         }
       ],
@@ -12909,7 +13373,78 @@
         "research_gate_url": "https://www.researchgate.net/profile/Siddhartha-Chauhan",
         "vidwan_url": 18382,
         "linkedin_url": "https://in.linkedin.com/in/dr-siddhartha-chauhan-79846616"
-      }
+      },
+      "events": [],
+      "consultancies": [
+        {
+          "id": "5b891618-875d-5c7d-b55c-9b0a0b83a979",
+          "legacy_id": 30,
+          "title": "Automation of Dr. Rajendra Prasad Govt. Medical College, Kangra",
+          "client_organisation": "DR.R.P.G.M.C Kangra at Tanda",
+          "amount": 5389000.0,
+          "start_year": 2025,
+          "academic_session": "2024-2025",
+          "status": "Ongoing",
+          "author_text": "Dr. Siddhartha Chauhan, Mr. Ashwini Sharma and Mr. Rajesh Sharma",
+          "faculty_ids": [
+            "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
+          ],
+          "faculty_legacy_ids": [
+            4
+          ]
+        },
+        {
+          "id": "069bc657-e78f-5e75-97a6-a3e091b0a834",
+          "legacy_id": 31,
+          "title": "Establishment of ATMs, EFT switching and Allied Services to Punjab State Cooperative Bank and DCCBs, PSCB Chandigarh",
+          "client_organisation": "PSCB, Chandigarh",
+          "amount": 4085000.0,
+          "start_year": 2025,
+          "academic_session": "2024-2025",
+          "status": "Completed",
+          "author_text": "Dr. Siddhartha Chauhan and Mr. Ashwini Sharma",
+          "faculty_ids": [
+            "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
+          ],
+          "faculty_legacy_ids": [
+            4
+          ]
+        },
+        {
+          "id": "c824f766-2147-5f1f-a66d-1a47ca164839",
+          "legacy_id": 32,
+          "title": "Migration from IPv4 to IPv6 of 27 LANs and Applications and websites of RINL, VIZAG Steel, Vishakhapatnam",
+          "client_organisation": "RINL VIZAG Steel",
+          "amount": 2000000.0,
+          "start_year": 2025,
+          "academic_session": "2024-2025",
+          "status": "Completed",
+          "author_text": "Dr. Mrs. Kamlesh Dutta, Dr. Siddhartha Chauhan and Mr. K.S. Pandey",
+          "faculty_ids": [
+            "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
+          ],
+          "faculty_legacy_ids": [
+            4
+          ]
+        },
+        {
+          "id": "62f1dc85-e8e5-58ba-b33c-2cbb2f7f3742",
+          "legacy_id": 33,
+          "title": "Providing Consultancy for IT Services (Setting up of Integrated Control Command Centre) for Dharamshala Smart City Project",
+          "client_organisation": "Dharamshala Smart City Limited, Dharmshala",
+          "amount": 10600000.0,
+          "start_year": 2025,
+          "academic_session": "2025-2026",
+          "status": "Completed",
+          "author_text": "Dr. Siddhartha Chauhan",
+          "faculty_ids": [
+            "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
+          ],
+          "faculty_legacy_ids": [
+            4
+          ]
+        }
+      ]
     },
     {
       "id": "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
@@ -12951,74 +13486,84 @@
       "teaching_experiences": [],
       "administrative_experiences": [
         {
-          "id": "1ee047a2-623c-4bdd-a1a3-ee08f15b80c7",
           "position": "Associate Dean",
           "organization": "Examination & Evaluation",
-          "start_date": "2020-04-30",
-          "end_date": "2021-12-27"
+          "start_date": "2020",
+          "end_date": "2021",
+          "full_start": "2020-04-30",
+          "full_end": "2021-12-27"
         },
         {
-          "id": "133a8842-9738-4083-8915-e263394aebf5",
           "position": "Associate Dean",
           "organization": "Research Projects & Collaborations, Startup",
-          "start_date": "2021-12-28",
-          "end_date": "2022-01-07"
+          "start_date": "2021",
+          "end_date": "2022",
+          "full_start": "2021-12-28",
+          "full_end": "2022-01-07"
         },
         {
-          "id": "9df64a62-7137-4bc5-8519-f3cf7d2fd4ea",
           "position": "Coodinator",
           "organization": "ISTE",
-          "start_date": "2006-08-02",
-          "end_date": "2008-08-03"
+          "start_date": "2006",
+          "end_date": "2008",
+          "full_start": "2006-08-02",
+          "full_end": "2008-08-03"
         },
         {
-          "id": "4836ca60-62d7-46ff-9941-e6a0ef827d66",
           "position": "Cordinator",
           "organization": "Video Conferencing",
-          "start_date": "2012-11-20",
-          "end_date": "2018-04-10"
+          "start_date": "2012",
+          "end_date": "2018",
+          "full_start": "2012-11-20",
+          "full_end": "2018-04-10"
         },
         {
-          "id": "9ff26ff8-5e69-457f-a205-372d43a8ec89",
           "position": "Facuty In-Charge",
           "organization": "Computre Centre",
-          "start_date": "2018-07-04",
-          "end_date": "2020-09-15"
+          "start_date": "2018",
+          "end_date": "2020",
+          "full_start": "2018-07-04",
+          "full_end": "2020-09-15"
         },
         {
-          "id": "c8f672b9-a326-4cd8-97ed-35baa572a09f",
           "position": "Facuty In-Charge",
           "organization": "Outsourced Multitasking Services",
-          "start_date": "2020-05-01",
-          "end_date": "2023-09-30"
+          "start_date": "2020",
+          "end_date": "2023",
+          "full_start": "2020-05-01",
+          "full_end": "2023-09-30"
         },
         {
-          "id": "d0dd5d26-0cd7-4bba-9f81-f3b9022d32fe",
           "position": "HoD",
           "organization": "Computer Science & Engineering",
-          "start_date": "2022-09-06",
-          "end_date": "2024-09-25"
+          "start_date": "2022",
+          "end_date": "2024",
+          "full_start": "2022-09-06",
+          "full_end": "2024-09-25"
         },
         {
-          "id": "a604d932-063c-45cf-9444-fd469fcfc21d",
           "position": "Nodal Officer",
           "organization": "IIIT Una",
-          "start_date": "2015-09-16",
-          "end_date": "2018-07-24"
+          "start_date": "2015",
+          "end_date": "2018",
+          "full_start": "2015-09-16",
+          "full_end": "2018-07-24"
         },
         {
-          "id": "a4f6029b-64dc-4dd2-b055-3922c0d5fd04",
           "position": "OIC",
           "organization": "Aravali Trainees Hostel",
-          "start_date": "2010-09-13",
-          "end_date": "2017-05-04"
+          "start_date": "2010",
+          "end_date": "2017",
+          "full_start": "2010-09-13",
+          "full_end": "2017-05-04"
         },
         {
-          "id": "f4a19f98-4872-44c5-afc6-799fab16fc38",
           "position": "Warden",
           "organization": "Dhauladhar Boys Hostel",
-          "start_date": "2006-01-08",
-          "end_date": "2009-06-29"
+          "start_date": "2006",
+          "end_date": "2009",
+          "full_start": "2006-01-08",
+          "full_end": "2009-06-29"
         }
       ],
       "honors": [],
@@ -15603,6 +16148,9 @@
           "raw_investigators": "Dr. TP Sharma",
           "faculty_ids": [
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
           ]
         },
         {
@@ -15619,6 +16167,10 @@
           "faculty_ids": [
             "6c4f2340-35a3-5b21-b580-081dad7f5ab1",
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            4,
+            5
           ]
         },
         {
@@ -15638,6 +16190,13 @@
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
             "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
             "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+          ],
+          "faculty_legacy_ids": [
+            2,
+            3,
+            5,
+            9,
+            10
           ]
         },
         {
@@ -15653,6 +16212,9 @@
           "raw_investigators": "Dr. Naveen Chauhan",
           "faculty_ids": [
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
           ]
         },
         {
@@ -15668,6 +16230,9 @@
           "raw_investigators": "Dr. T.P. Sharma",
           "faculty_ids": [
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
           ]
         }
       ],
@@ -15855,7 +16420,316 @@
         "research_gate_url": "https://www.researchgate.net/profile/Naveen-Chauhan-5",
         "vidwan_url": null,
         "linkedin_url": null
-      }
+      },
+      "events": [
+        {
+          "id": "8f408d89-cff1-596b-9b6a-edf119f208e4",
+          "legacy_id": 13,
+          "title": "International Conference on Machine Learning, Image Processing, Network Security and Data Sciences (MIND-2023)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur, SERB, SBI",
+          "start_date": "2023-12-21",
+          "end_date": "2023-12-22",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. Naveen Chauhan",
+          "coordinator": "Dr. Arun Kumar Yadav, Dr. Mohit Kumar, Dr. Rajeev Kumar",
+          "link_url": "https://mind2023.nith.ac.in/index.html",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            5,
+            9,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "030f381d-abdc-52e4-94d0-c7d0babb3790",
+          "legacy_id": 134,
+          "title": "Mobile Device Security",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "Ministry of Electronics and Information Technology",
+          "start_date": "2025-02-23",
+          "end_date": "2025-03-27",
+          "academic_session": "2024-2025",
+          "convenor": "Dr. T. P. Sharma, Dr. Naveen Chauhan",
+          "coordinator": "Dr. Rajeev Kumar, Dr. Nitin Gupta",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c",
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+          ],
+          "faculty_legacy_ids": [
+            3,
+            5,
+            9,
+            10
+          ]
+        },
+        {
+          "id": "a4526092-217f-52e3-8c1f-318556585b49",
+          "legacy_id": 135,
+          "title": "Artificial Intelligence, Machine Learning & Intelligent Systems (ICAMS-2025)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2025-02-07",
+          "end_date": "2025-02-08",
+          "academic_session": "2024-2025",
+          "convenor": "Dr. Naveen Chauhan",
+          "coordinator": "Dr. Mohammad Khalid Pandit, Dr. Ajay Kumar Mallick",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        },
+        {
+          "id": "d36640c0-b15b-5d77-aeb9-ea7161748f19",
+          "legacy_id": 136,
+          "title": "Emerging Trends in Computing & Communication (ETCC-07)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2007-07-27",
+          "end_date": "2007-07-28",
+          "academic_session": "2007-2008",
+          "convenor": "",
+          "coordinator": "Dr. Naveen Chauhan",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        },
+        {
+          "id": "0ed405c2-3ac6-5094-9a66-542b7691c9c9",
+          "legacy_id": 137,
+          "title": "ISTE (Section Annual Convention)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2007-11-18",
+          "end_date": "2007-11-19",
+          "academic_session": "2024-2025",
+          "convenor": "",
+          "coordinator": "Dr. Naveen Chauhan",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        },
+        {
+          "id": "a0d1d672-88a7-58fd-8ac8-be4104b7d406",
+          "legacy_id": 138,
+          "title": "Emerging Trends in Computing & Communication (ETCC-08)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2008-12-30",
+          "end_date": "2008-12-31",
+          "academic_session": "2024-2025",
+          "convenor": "",
+          "coordinator": "Dr. Naveen Chauhan",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        },
+        {
+          "id": "13821bf7-7cd3-57ee-9f5f-c12405e7236a",
+          "legacy_id": 139,
+          "title": "Advances in Computing & Communication",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "MHRD",
+          "start_date": "2011-04-08",
+          "end_date": "2011-04-10",
+          "academic_session": "2024-2025",
+          "convenor": "",
+          "coordinator": "Dr. Naveen Chauhan",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        },
+        {
+          "id": "62a0b65f-a0f5-5433-a2cd-f623fa2aa2ea",
+          "legacy_id": 142,
+          "title": "ISTE (Section Annual Convention)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2015-09-30",
+          "end_date": "2015-10-01",
+          "academic_session": "2024-2025",
+          "convenor": "",
+          "coordinator": "Dr. Naveen Chauhan",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        },
+        {
+          "id": "c65d01a3-90ba-58d3-bc32-668dee1414b1",
+          "legacy_id": 143,
+          "title": "Emerging Trends in Engineering, Innovations & Technology Management (ICET:EITM-2017)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2017-12-16",
+          "end_date": "2017-12-17",
+          "academic_session": "2024-2025",
+          "convenor": "",
+          "coordinator": "Dr. Naveen Chauhan",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        },
+        {
+          "id": "855727dd-ceb6-5979-908e-a68bc09bb883",
+          "legacy_id": 145,
+          "title": "Winter School on Mobile Computing",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2006-12-18",
+          "end_date": "2006-12-22",
+          "academic_session": "2024-2025",
+          "convenor": "",
+          "coordinator": "Dr. Naveen Chauhan",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        },
+        {
+          "id": "595ff56e-a57e-5a84-ae86-3cd6aab71c94",
+          "legacy_id": 146,
+          "title": "Cloud Computing",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "AICTE",
+          "start_date": "2009-12-28",
+          "end_date": "2010-01-01",
+          "academic_session": "2024-2025",
+          "convenor": "",
+          "coordinator": "Dr. Naveen Chauhan",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        },
+        {
+          "id": "5ec3a2ab-a116-5b77-a918-9685d4849802",
+          "legacy_id": 147,
+          "title": "Mobile Computing & Communication",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2013-06-17",
+          "end_date": "2013-06-21",
+          "academic_session": "2024-2025",
+          "convenor": "",
+          "coordinator": "Dr. Naveen Chauhan",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        },
+        {
+          "id": "e4bf1144-6bda-536a-be36-3f6d84668a34",
+          "legacy_id": 148,
+          "title": "Security Trends in Mobile Ad-hoc & Sensor Systems",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "ISEA Project Phase – II",
+          "start_date": "2016-03-11",
+          "end_date": "2016-03-16",
+          "academic_session": "2024-2025",
+          "convenor": "",
+          "coordinator": "Dr. Naveen Chauhan",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        },
+        {
+          "id": "6160caa8-33f8-5189-bae2-cd248f481cdc",
+          "legacy_id": 149,
+          "title": "Security Trends in Mobile Ad-hoc & Sensor Systems",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "ISEA Project Phase – II",
+          "start_date": "2007-02-02",
+          "end_date": "2007-02-07",
+          "academic_session": "2024-2025",
+          "convenor": "",
+          "coordinator": "Dr. Naveen Chauhan",
+          "link_url": "",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+          ],
+          "faculty_legacy_ids": [
+            5
+          ]
+        }
+      ],
+      "consultancies": []
     },
     {
       "id": "975a3e83-a789-559f-91c9-65395cb5bbdc",
@@ -17238,6 +18112,9 @@
           "country": "India",
           "faculty_ids": [
             "975a3e83-a789-559f-91c9-65395cb5bbdc"
+          ],
+          "faculty_legacy_ids": [
+            7
           ]
         },
         {
@@ -17254,6 +18131,9 @@
           "country": "India",
           "faculty_ids": [
             "975a3e83-a789-559f-91c9-65395cb5bbdc"
+          ],
+          "faculty_legacy_ids": [
+            7
           ]
         }
       ],
@@ -17269,7 +18149,10 @@
         "research_gate_url": "https://www.researchgate.net/profile/Pardeep-Singh-2",
         "vidwan_url": "https://vidwan.inflibnet.ac.in/profile/49071",
         "linkedin_url": "https://www.linkedin.com/in/dr-pardeep-singh-b3861519/"
-      }
+      },
+      "events": [],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
@@ -17339,60 +18222,68 @@
       ],
       "administrative_experiences": [
         {
-          "id": "86820e17-9f22-4497-bf46-67495cac39dc",
           "position": "Faculty-Incharge (Cultural Activities & Clubs)",
           "organization": "Office of Dean (Student Welfare)",
-          "start_date": "2024-09-01",
-          "end_date": "Present"
+          "start_date": "2024",
+          "end_date": "Present",
+          "full_start": "2024-09-01",
+          "full_end": "Present"
         },
         {
-          "id": "f4b2938b-912b-4b57-b82a-557cce622d0e",
           "position": "Convenor, DDPC",
           "organization": "Computer Science & Engineering",
-          "start_date": "2023-08-08",
-          "end_date": "Present"
+          "start_date": "2023",
+          "end_date": "Present",
+          "full_start": "2023-08-08",
+          "full_end": "Present"
         },
         {
-          "id": "e3ea9d2f-d292-4d2f-a0d4-3f5e85ad1ef5",
           "position": "Nodal Officer (Rashtriya Abhiskar Abhiyaan)",
           "organization": "National Institute of Technology, Hamirpur",
-          "start_date": "2023-08-11",
-          "end_date": "Present"
+          "start_date": "2023",
+          "end_date": "Present",
+          "full_start": "2023-08-11",
+          "full_end": "Present"
         },
         {
-          "id": "8a878e6b-5b1c-4e02-b116-d70a9b3da678",
           "position": "Faculty-Incharge (NCC Air Wing)",
           "organization": "Office of Dean (Student Welfare)",
-          "start_date": "2021-07-20",
-          "end_date": "2025-02-10"
+          "start_date": "2021",
+          "end_date": "2025",
+          "full_start": "2021-07-20",
+          "full_end": "2025-02-10"
         },
         {
-          "id": "94ce7216-6245-4f7b-93c8-5b06911f964b",
           "position": "Convenor, DBPC",
           "organization": "Computer Science & Engineering",
-          "start_date": "2021-08-12",
-          "end_date": "2023-08-08"
+          "start_date": "2021",
+          "end_date": "2023",
+          "full_start": "2021-08-12",
+          "full_end": "2023-08-08"
         },
         {
-          "id": "1d248fe2-195e-4abf-a77b-13f138285c3a",
           "position": "Faculty-Incharge (Examination)",
           "organization": "Office of Dean (Academics)",
-          "start_date": "2021-06-21",
-          "end_date": "2023-06-21"
+          "start_date": "2021",
+          "end_date": "2023",
+          "full_start": "2021-06-21",
+          "full_end": "2023-06-21"
         },
         {
-          "id": "ed034388-03db-47dd-a394-f237e9f37e3a",
           "position": "Assistant Faculty-Incharge (Examination and Evaluation)",
           "organization": "Office of Dean (Academics)",
-          "start_date": "2018-07-03",
-          "end_date": "2021-08-12"
+          "start_date": "2018",
+          "end_date": "2021",
+          "full_start": "2018-07-03",
+          "full_end": "2021-08-12"
         },
         {
-          "id": "cf127acc-2eb3-48d6-a0cd-6bd134e7bf9a",
           "position": "Center In-charge (CSAB 2025)",
           "organization": "Office of Dean (Academics)",
-          "start_date": "2025-03-19",
-          "end_date": "Present"
+          "start_date": "2025",
+          "end_date": "Present",
+          "full_start": "2025-03-19",
+          "full_end": "Present"
         }
       ],
       "honors": [],
@@ -17881,6 +18772,13 @@
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
             "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
             "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+          ],
+          "faculty_legacy_ids": [
+            2,
+            3,
+            5,
+            9,
+            10
           ]
         }
       ],
@@ -18021,7 +18919,114 @@
           "full_start": "2025-03-19",
           "full_end": "Present"
         }
-      ]
+      ],
+      "events": [
+        {
+          "id": "83405a7b-18d3-5906-ae77-5d09e55d7506",
+          "legacy_id": 10,
+          "title": "Research Applications of Deep Learning",
+          "category": "organized",
+          "event_type": "E-STC",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2024-07-01",
+          "end_date": "2024-07-05",
+          "academic_session": "2024-2025",
+          "convenor": "Dr. Rajeev Kumar",
+          "coordinator": "Dr. Mohhammad Khalid Pandit, Dr. Ajay Kumar Mallick",
+          "link_url": "https://nith.ac.in/uploads/topics/estc-csed17177438577130.pdf",
+          "faculty_ids": [
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "26c2fd67-8cf4-5d5d-b843-d783e1568e38",
+            "4f0ed2a0-960b-5ba1-bbee-6723c562a1da"
+          ],
+          "faculty_legacy_ids": [
+            9,
+            17,
+            18
+          ]
+        },
+        {
+          "id": "0ec8ccaf-4a7b-5b93-967e-26c62ef7db26",
+          "legacy_id": 12,
+          "title": "Advancing Pedagogical Practices and Teaching Excellence-APPTEX 2024",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2024-02-12",
+          "end_date": "2024-02-16",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. Arun Kumar Yadav",
+          "coordinator": "Dr. Mohit Kumar, Dr. Rajeev Kumar",
+          "link_url": "",
+          "faculty_ids": [
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            9,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "8f408d89-cff1-596b-9b6a-edf119f208e4",
+          "legacy_id": 13,
+          "title": "International Conference on Machine Learning, Image Processing, Network Security and Data Sciences (MIND-2023)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur, SERB, SBI",
+          "start_date": "2023-12-21",
+          "end_date": "2023-12-22",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. Naveen Chauhan",
+          "coordinator": "Dr. Arun Kumar Yadav, Dr. Mohit Kumar, Dr. Rajeev Kumar",
+          "link_url": "https://mind2023.nith.ac.in/index.html",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            5,
+            9,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "030f381d-abdc-52e4-94d0-c7d0babb3790",
+          "legacy_id": 134,
+          "title": "Mobile Device Security",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "Ministry of Electronics and Information Technology",
+          "start_date": "2025-02-23",
+          "end_date": "2025-03-27",
+          "academic_session": "2024-2025",
+          "convenor": "Dr. T. P. Sharma, Dr. Naveen Chauhan",
+          "coordinator": "Dr. Rajeev Kumar, Dr. Nitin Gupta",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c",
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+          ],
+          "faculty_legacy_ids": [
+            3,
+            5,
+            9,
+            10
+          ]
+        }
+      ],
+      "consultancies": []
     },
     {
       "id": "fa8f838f-1d0f-5506-9c25-961dd6458f00",
@@ -19523,6 +20528,9 @@
           "country": "India",
           "faculty_ids": [
             "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+          ],
+          "faculty_legacy_ids": [
+            10
           ]
         }
       ],
@@ -19544,6 +20552,13 @@
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
             "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
             "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+          ],
+          "faculty_legacy_ids": [
+            2,
+            3,
+            5,
+            9,
+            10
           ]
         }
       ],
@@ -19949,7 +20964,63 @@
         "research_gate_url": null,
         "vidwan_url": null,
         "linkedin_url": null
-      }
+      },
+      "events": [
+        {
+          "id": "0f33c129-587f-5f76-8d2e-bfb7205e48d5",
+          "legacy_id": 14,
+          "title": "Recent Trends in Networks & Communication: Theory & Challenges",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2023-09-25",
+          "end_date": "2023-09-29",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. T.P. Sharma",
+          "coordinator": "Dr. Priyanka, Dr. Nitin Gupta",
+          "link_url": "https://nith.ac.in/uploads/topics/cse-workshop16946690908540.pdf",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c",
+            "fa8f838f-1d0f-5506-9c25-961dd6458f00",
+            "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+          ],
+          "faculty_legacy_ids": [
+            3,
+            10,
+            15
+          ]
+        },
+        {
+          "id": "030f381d-abdc-52e4-94d0-c7d0babb3790",
+          "legacy_id": 134,
+          "title": "Mobile Device Security",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "Ministry of Electronics and Information Technology",
+          "start_date": "2025-02-23",
+          "end_date": "2025-03-27",
+          "academic_session": "2024-2025",
+          "convenor": "Dr. T. P. Sharma, Dr. Naveen Chauhan",
+          "coordinator": "Dr. Rajeev Kumar, Dr. Nitin Gupta",
+          "link_url": "",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c",
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+          ],
+          "faculty_legacy_ids": [
+            3,
+            5,
+            9,
+            10
+          ]
+        }
+      ],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "56a64caf-d814-5fc7-a9e1-3d12a6cd9d76",
@@ -21922,7 +22993,10 @@
         "research_gate_url": null,
         "vidwan_url": null,
         "linkedin_url": null
-      }
+      },
+      "events": [],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "edbab47f-a36c-5216-9914-5b5561bc8137",
@@ -21973,18 +23047,20 @@
       ],
       "administrative_experiences": [
         {
-          "id": "738e5403-e2f7-41ca-b6de-4a0fde409b56",
           "position": "FI(NAD)",
           "organization": "NATIONAL INSTITUTE OF TECHNOLOGY HAMIRPUR",
-          "start_date": "2024-02-29",
-          "end_date": "Present"
+          "start_date": "2024",
+          "end_date": "Present",
+          "full_start": "2024-02-29",
+          "full_end": "Present"
         },
         {
-          "id": "866b74f8-c3d4-4825-9b11-45985afee73d",
           "position": "Nodal Officer-NITH EOC",
           "organization": "NATIONAL INSTITUTE OF TECHNOLOGY HAMIRPUR",
-          "start_date": "2020-02-12",
-          "end_date": "Present"
+          "start_date": "2020",
+          "end_date": "Present",
+          "full_start": "2020-02-12",
+          "full_end": "Present"
         }
       ],
       "honors": [],
@@ -24602,6 +25678,10 @@
           "faculty_ids": [
             "edbab47f-a36c-5216-9914-5b5561bc8137",
             "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13
           ]
         },
         {
@@ -24640,6 +25720,9 @@
           "raw_investigators": "Dr. Arun Kumar Yadav",
           "faculty_ids": [
             "edbab47f-a36c-5216-9914-5b5561bc8137"
+          ],
+          "faculty_legacy_ids": [
+            12
           ]
         },
         {
@@ -24655,6 +25738,9 @@
           "raw_investigators": "Dr. Prakash Kumar Singh",
           "faculty_ids": [
             "edbab47f-a36c-5216-9914-5b5561bc8137"
+          ],
+          "faculty_legacy_ids": [
+            12
           ]
         },
         {
@@ -24670,6 +25756,9 @@
           "raw_investigators": "Dr. Vibhash Yadav",
           "faculty_ids": [
             "edbab47f-a36c-5216-9914-5b5561bc8137"
+          ],
+          "faculty_legacy_ids": [
+            12
           ]
         },
         {
@@ -24685,6 +25774,9 @@
           "raw_investigators": "Dr. Sonam Gupta",
           "faculty_ids": [
             "edbab47f-a36c-5216-9914-5b5561bc8137"
+          ],
+          "faculty_legacy_ids": [
+            12
           ]
         }
       ],
@@ -24988,7 +26080,202 @@
         "research_gate_url": "https://www.reseaate.net/profile/Example_Name",
         "vidwan_url": "https://vidwan.inflibnet.ac.in/profile/105471",
         "linkedin_url": null
-      }
+      },
+      "events": [
+        {
+          "id": "0ec8ccaf-4a7b-5b93-967e-26c62ef7db26",
+          "legacy_id": 12,
+          "title": "Advancing Pedagogical Practices and Teaching Excellence-APPTEX 2024",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2024-02-12",
+          "end_date": "2024-02-16",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. Arun Kumar Yadav",
+          "coordinator": "Dr. Mohit Kumar, Dr. Rajeev Kumar",
+          "link_url": "",
+          "faculty_ids": [
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            9,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "8f408d89-cff1-596b-9b6a-edf119f208e4",
+          "legacy_id": 13,
+          "title": "International Conference on Machine Learning, Image Processing, Network Security and Data Sciences (MIND-2023)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur, SERB, SBI",
+          "start_date": "2023-12-21",
+          "end_date": "2023-12-22",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. Naveen Chauhan",
+          "coordinator": "Dr. Arun Kumar Yadav, Dr. Mohit Kumar, Dr. Rajeev Kumar",
+          "link_url": "https://mind2023.nith.ac.in/index.html",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            5,
+            9,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "d625b50d-ddbd-5f42-9a98-37f8237516e9",
+          "legacy_id": 15,
+          "title": "Machine Learning and its applications in lnformation Security, Computer Vision and Natural Language Processing",
+          "category": "organized",
+          "event_type": "E-STC",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2023-03-13",
+          "end_date": "2023-03-17",
+          "academic_session": "2022-2023",
+          "convenor": "Dr. Arun Kumar Yadav",
+          "coordinator": "Dr. Jyoti Srivastava, Dr. Mohit Kumar",
+          "link_url": "https://nith.ac.in/uploads/topics/e-stc-csed-extended16777503978267.pdf",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea",
+            "4144f97d-26c3-588f-a81b-f9c7c0740347"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "id": "4e9bc1d2-7e65-574d-80b2-ab5a907ea3a6",
+          "legacy_id": 119,
+          "title": "Cyber-Physical System Security with Artificial Intelligence",
+          "category": "organized",
+          "event_type": "GIAN",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "GIAN, IIT Hyderabad",
+          "start_date": "2025-02-03",
+          "end_date": "2025-02-14",
+          "academic_session": "2024-2025",
+          "convenor": "Dr. Arun Kumar Yadav",
+          "coordinator": "Dr. Mohit Kumar",
+          "link_url": "",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13
+          ]
+        },
+        {
+          "id": "a79315c6-e7ec-515f-bc3d-617ab8a2c2da",
+          "legacy_id": 156,
+          "title": "Short term training program for SC trainees at ITI Joginder Nagar",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "ITI JOGINDER NAGAR",
+          "start_date": "2022-12-23",
+          "end_date": "2022-12-27",
+          "academic_session": "2021-2022",
+          "convenor": "Dr. Arun Kumar Yadav (Coordinator)",
+          "coordinator": "Dr. Mohit Kumar (Coordinator)",
+          "link_url": "",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13
+          ]
+        },
+        {
+          "id": "25406ea9-1f3a-5555-836f-9bdc1611a441",
+          "legacy_id": 162,
+          "title": "Short term training program for SC trainees at ITI Joginder Nagar",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "ITI JOGINDER NAGAR",
+          "start_date": "2023-06-05",
+          "end_date": "2023-06-10",
+          "academic_session": "2022-2023",
+          "convenor": "Dr. Arun Kumar Yadav (Convenor)",
+          "coordinator": "Dr. Mohit Kumar (Coordinator)",
+          "link_url": "",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13
+          ]
+        },
+        {
+          "id": "c3b9677d-15cc-5f54-bb53-65a2999e73ae",
+          "legacy_id": 167,
+          "title": "Machine Learning and its applications in lnformation Security, Computer Vision and Natural Language Processing",
+          "category": "organized",
+          "event_type": "E-STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2025-01-20",
+          "end_date": "2025-01-24",
+          "academic_session": "2024-2025",
+          "convenor": "Dr. Arun Kumar Yadav (Convenor)",
+          "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
+          "link_url": "",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137"
+          ],
+          "faculty_legacy_ids": [
+            12
+          ]
+        },
+        {
+          "id": "de7268f0-6910-5e71-ac35-4a8ad49cf9b2",
+          "legacy_id": 174,
+          "title": "Machine Learning and its applications in lnformation Security, Computer Vision and Natural Language Processing",
+          "category": "organized",
+          "event_type": "E-STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2026-01-12",
+          "end_date": "2026-01-16",
+          "academic_session": "2025-2026",
+          "convenor": "Dr. Arun Kumar Yadav (Convenor)",
+          "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
+          "link_url": "",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea",
+            "4144f97d-26c3-588f-a81b-f9c7c0740347"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13,
+            14
+          ]
+        }
+      ],
+      "consultancies": []
     },
     {
       "id": "b638c21f-609f-57d2-8a24-b133e03ad4ea",
@@ -25898,6 +27185,10 @@
           "faculty_ids": [
             "edbab47f-a36c-5216-9914-5b5561bc8137",
             "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13
           ]
         },
         {
@@ -25965,7 +27256,182 @@
         "research_gate_url": null,
         "vidwan_url": null,
         "linkedin_url": null
-      }
+      },
+      "events": [
+        {
+          "id": "0ec8ccaf-4a7b-5b93-967e-26c62ef7db26",
+          "legacy_id": 12,
+          "title": "Advancing Pedagogical Practices and Teaching Excellence-APPTEX 2024",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2024-02-12",
+          "end_date": "2024-02-16",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. Arun Kumar Yadav",
+          "coordinator": "Dr. Mohit Kumar, Dr. Rajeev Kumar",
+          "link_url": "",
+          "faculty_ids": [
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            9,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "8f408d89-cff1-596b-9b6a-edf119f208e4",
+          "legacy_id": 13,
+          "title": "International Conference on Machine Learning, Image Processing, Network Security and Data Sciences (MIND-2023)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur, SERB, SBI",
+          "start_date": "2023-12-21",
+          "end_date": "2023-12-22",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. Naveen Chauhan",
+          "coordinator": "Dr. Arun Kumar Yadav, Dr. Mohit Kumar, Dr. Rajeev Kumar",
+          "link_url": "https://mind2023.nith.ac.in/index.html",
+          "faculty_ids": [
+            "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            5,
+            9,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "d625b50d-ddbd-5f42-9a98-37f8237516e9",
+          "legacy_id": 15,
+          "title": "Machine Learning and its applications in lnformation Security, Computer Vision and Natural Language Processing",
+          "category": "organized",
+          "event_type": "E-STC",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2023-03-13",
+          "end_date": "2023-03-17",
+          "academic_session": "2022-2023",
+          "convenor": "Dr. Arun Kumar Yadav",
+          "coordinator": "Dr. Jyoti Srivastava, Dr. Mohit Kumar",
+          "link_url": "https://nith.ac.in/uploads/topics/e-stc-csed-extended16777503978267.pdf",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea",
+            "4144f97d-26c3-588f-a81b-f9c7c0740347"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "id": "4e9bc1d2-7e65-574d-80b2-ab5a907ea3a6",
+          "legacy_id": 119,
+          "title": "Cyber-Physical System Security with Artificial Intelligence",
+          "category": "organized",
+          "event_type": "GIAN",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "GIAN, IIT Hyderabad",
+          "start_date": "2025-02-03",
+          "end_date": "2025-02-14",
+          "academic_session": "2024-2025",
+          "convenor": "Dr. Arun Kumar Yadav",
+          "coordinator": "Dr. Mohit Kumar",
+          "link_url": "",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13
+          ]
+        },
+        {
+          "id": "a79315c6-e7ec-515f-bc3d-617ab8a2c2da",
+          "legacy_id": 156,
+          "title": "Short term training program for SC trainees at ITI Joginder Nagar",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "ITI JOGINDER NAGAR",
+          "start_date": "2022-12-23",
+          "end_date": "2022-12-27",
+          "academic_session": "2021-2022",
+          "convenor": "Dr. Arun Kumar Yadav (Coordinator)",
+          "coordinator": "Dr. Mohit Kumar (Coordinator)",
+          "link_url": "",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13
+          ]
+        },
+        {
+          "id": "25406ea9-1f3a-5555-836f-9bdc1611a441",
+          "legacy_id": 162,
+          "title": "Short term training program for SC trainees at ITI Joginder Nagar",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "ITI JOGINDER NAGAR",
+          "start_date": "2023-06-05",
+          "end_date": "2023-06-10",
+          "academic_session": "2022-2023",
+          "convenor": "Dr. Arun Kumar Yadav (Convenor)",
+          "coordinator": "Dr. Mohit Kumar (Coordinator)",
+          "link_url": "",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13
+          ]
+        },
+        {
+          "id": "de7268f0-6910-5e71-ac35-4a8ad49cf9b2",
+          "legacy_id": 174,
+          "title": "Machine Learning and its applications in lnformation Security, Computer Vision and Natural Language Processing",
+          "category": "organized",
+          "event_type": "E-STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2026-01-12",
+          "end_date": "2026-01-16",
+          "academic_session": "2025-2026",
+          "convenor": "Dr. Arun Kumar Yadav (Convenor)",
+          "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
+          "link_url": "",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea",
+            "4144f97d-26c3-588f-a81b-f9c7c0740347"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13,
+            14
+          ]
+        }
+      ],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "4144f97d-26c3-588f-a81b-f9c7c0740347",
@@ -26006,60 +27472,68 @@
       "teaching_experiences": [],
       "administrative_experiences": [
         {
-          "id": "87c404b2-91b5-4e28-b0ce-b9a9ecca5370",
           "position": "Assistant Faculty In-charge (Technical Activities & Clubs)",
           "organization": "NIT Hamirpur",
-          "start_date": "2019-12-03",
-          "end_date": "2020-08-10"
+          "start_date": "2019",
+          "end_date": "2020",
+          "full_start": "2019-12-03",
+          "full_end": "2020-08-10"
         },
         {
-          "id": "431d6643-93f1-40bb-803d-df42c8284415",
           "position": "Assistant Nodal Officer (NIRF)",
           "organization": "NIT Hamirpur",
-          "start_date": "2019-12-03",
-          "end_date": "2020-08-10"
+          "start_date": "2019",
+          "end_date": "2020",
+          "full_start": "2019-12-03",
+          "full_end": "2020-08-10"
         },
         {
-          "id": "97608462-4366-4d75-b430-c335b946fe19",
           "position": "Assistant Warden",
           "organization": "AGH & PGH",
-          "start_date": "2020-05-08",
-          "end_date": "2020-08-08"
+          "start_date": "2020",
+          "end_date": "2020",
+          "full_start": "2020-05-08",
+          "full_end": "2020-08-08"
         },
         {
-          "id": "73f9ed93-1e16-4ec5-aade-a29243a9e74c",
           "position": "Departmental Counselor (DoCSE)",
           "organization": "DoCSE, NIT Hamirpur",
-          "start_date": "2019-12-18",
-          "end_date": "2020-12-18"
+          "start_date": "2019",
+          "end_date": "2020",
+          "full_start": "2019-12-18",
+          "full_end": "2020-12-18"
         },
         {
-          "id": "c499e621-72ea-4a71-94ad-a2c080772ab0",
           "position": "FI(Result Processing)",
           "organization": "NIT Hamirpur",
-          "start_date": "2023-10-13",
-          "end_date": "2024-10-13"
+          "start_date": "2023",
+          "end_date": "2024",
+          "full_start": "2023-10-13",
+          "full_end": "2024-10-13"
         },
         {
-          "id": "245bd503-88f0-4c73-8a0d-62685dc9999a",
           "position": "OIC (Artificial Intelligence and Robotics Lab)",
           "organization": "DoCSE, NIT Hamirpur",
-          "start_date": "2020-02-17",
-          "end_date": "Present"
+          "start_date": "2020",
+          "end_date": "Present",
+          "full_start": "2020-02-17",
+          "full_end": "Present"
         },
         {
-          "id": "ce044a2f-768d-4bb0-bf5c-8ce5ba198351",
           "position": "OIC (CSEC Departmental Society)",
           "organization": "DoCSE, NIT Hamirpur",
-          "start_date": "2020-02-19",
-          "end_date": "Present"
+          "start_date": "2020",
+          "end_date": "Present",
+          "full_start": "2020-02-19",
+          "full_end": "Present"
         },
         {
-          "id": "5b55d6bb-407b-44ba-9cfa-8960844ced54",
           "position": "OIC (Hindi)",
           "organization": "DoCSE, NIT Hamirpur",
-          "start_date": "2022-05-23",
-          "end_date": "Present"
+          "start_date": "2022",
+          "end_date": "Present",
+          "full_start": "2022-05-23",
+          "full_end": "Present"
         }
       ],
       "honors": [
@@ -26707,6 +28181,9 @@
           "country": "India",
           "faculty_ids": [
             "4144f97d-26c3-588f-a81b-f9c7c0740347"
+          ],
+          "faculty_legacy_ids": [
+            14
           ]
         },
         {
@@ -26723,6 +28200,9 @@
           "country": "India",
           "faculty_ids": [
             "4144f97d-26c3-588f-a81b-f9c7c0740347"
+          ],
+          "faculty_legacy_ids": [
+            14
           ]
         }
       ],
@@ -26935,7 +28415,81 @@
         "research_gate_url": "https://www.researchgate.net/profile/Jyoti-Srivastava-4",
         "vidwan_url": null,
         "linkedin_url": "https://in.linkedin.com/in/jyoti-srivastava-53973323"
-      }
+      },
+      "events": [
+        {
+          "id": "d625b50d-ddbd-5f42-9a98-37f8237516e9",
+          "legacy_id": 15,
+          "title": "Machine Learning and its applications in lnformation Security, Computer Vision and Natural Language Processing",
+          "category": "organized",
+          "event_type": "E-STC",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2023-03-13",
+          "end_date": "2023-03-17",
+          "academic_session": "2022-2023",
+          "convenor": "Dr. Arun Kumar Yadav",
+          "coordinator": "Dr. Jyoti Srivastava, Dr. Mohit Kumar",
+          "link_url": "https://nith.ac.in/uploads/topics/e-stc-csed-extended16777503978267.pdf",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea",
+            "4144f97d-26c3-588f-a81b-f9c7c0740347"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "id": "220ce4a8-bb43-58ca-bd5f-db0f214a6ef7",
+          "legacy_id": 122,
+          "title": "Machine Learning for Natural Language Processing (MNLP-2020)",
+          "category": "organized",
+          "event_type": "E-STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2020-10-12",
+          "end_date": "2020-10-17",
+          "academic_session": "2020-2021",
+          "convenor": "",
+          "coordinator": "Dr. Jyoti Srivastava",
+          "link_url": "",
+          "faculty_ids": [
+            "4144f97d-26c3-588f-a81b-f9c7c0740347"
+          ],
+          "faculty_legacy_ids": [
+            14
+          ]
+        },
+        {
+          "id": "de7268f0-6910-5e71-ac35-4a8ad49cf9b2",
+          "legacy_id": 174,
+          "title": "Machine Learning and its applications in lnformation Security, Computer Vision and Natural Language Processing",
+          "category": "organized",
+          "event_type": "E-STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2026-01-12",
+          "end_date": "2026-01-16",
+          "academic_session": "2025-2026",
+          "convenor": "Dr. Arun Kumar Yadav (Convenor)",
+          "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
+          "link_url": "",
+          "faculty_ids": [
+            "edbab47f-a36c-5216-9914-5b5561bc8137",
+            "b638c21f-609f-57d2-8a24-b133e03ad4ea",
+            "4144f97d-26c3-588f-a81b-f9c7c0740347"
+          ],
+          "faculty_legacy_ids": [
+            12,
+            13,
+            14
+          ]
+        }
+      ],
+      "consultancies": []
     },
     {
       "id": "48004e0f-8ca0-5f45-85e1-2c6cf4eada17",
@@ -27770,7 +29324,162 @@
         "research_gate_url": null,
         "vidwan_url": "https://portfolios.nith.ac.in/index.php?/nith/dr-priyanka",
         "linkedin_url": null
-      }
+      },
+      "events": [
+        {
+          "id": "0f33c129-587f-5f76-8d2e-bfb7205e48d5",
+          "legacy_id": 14,
+          "title": "Recent Trends in Networks & Communication: Theory & Challenges",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2023-09-25",
+          "end_date": "2023-09-29",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. T.P. Sharma",
+          "coordinator": "Dr. Priyanka, Dr. Nitin Gupta",
+          "link_url": "https://nith.ac.in/uploads/topics/cse-workshop16946690908540.pdf",
+          "faculty_ids": [
+            "c17e0191-445a-5f4d-961b-fb830ce9136c",
+            "fa8f838f-1d0f-5506-9c25-961dd6458f00",
+            "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+          ],
+          "faculty_legacy_ids": [
+            3,
+            10,
+            15
+          ]
+        },
+        {
+          "id": "da652cdc-da86-5781-b77f-06ba1609ca6a",
+          "legacy_id": 44,
+          "title": "Shine Rural India with renewable Energy",
+          "category": "organized",
+          "event_type": "workshop",
+          "venue": "IIT Delhi",
+          "sponsoring_agency": "IIT Delhi",
+          "start_date": "2016-12-13",
+          "end_date": "2016-12-13",
+          "academic_session": "2016-2017",
+          "convenor": "",
+          "coordinator": "",
+          "link_url": "",
+          "faculty_ids": [
+            "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+          ],
+          "faculty_legacy_ids": [
+            15
+          ]
+        },
+        {
+          "id": "728093bf-4ab6-56cd-8d76-e32eba5251ea",
+          "legacy_id": 45,
+          "title": "International Conference on Applications of Computing and Communication Technology (ICACCT-2018)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "SPM college, University of Delhi",
+          "sponsoring_agency": "University of Delhi",
+          "start_date": "2018-03-09",
+          "end_date": "2018-03-09",
+          "academic_session": "2018-2019",
+          "convenor": "",
+          "coordinator": "",
+          "link_url": "",
+          "faculty_ids": [
+            "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+          ],
+          "faculty_legacy_ids": [
+            15
+          ]
+        },
+        {
+          "id": "4c75ad6f-8608-5384-83ca-30921edd8129",
+          "legacy_id": 46,
+          "title": "Faculty Development Program on Research Trends in AI and Mobile Systems",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2019-12-16",
+          "end_date": "2019-12-16",
+          "academic_session": "2019-2020",
+          "convenor": "",
+          "coordinator": "",
+          "link_url": "",
+          "faculty_ids": [
+            "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+          ],
+          "faculty_legacy_ids": [
+            15
+          ]
+        },
+        {
+          "id": "bec24984-9d94-559f-b4f0-140172c95879",
+          "legacy_id": 47,
+          "title": "E-STC on Recent Trends in Networks and Communication",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "Online",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2021-12-01",
+          "end_date": "2021-12-01",
+          "academic_session": "2021-2022",
+          "convenor": "",
+          "coordinator": "",
+          "link_url": "",
+          "faculty_ids": [
+            "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+          ],
+          "faculty_legacy_ids": [
+            15
+          ]
+        },
+        {
+          "id": "82fd4439-9f86-5d01-8015-55af3b4a7ede",
+          "legacy_id": 48,
+          "title": "2nd E-STC on Recent Trends in Networks and Communications",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "Online",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2023-09-25",
+          "end_date": "2023-09-29",
+          "academic_session": "2023-2024",
+          "convenor": "",
+          "coordinator": "",
+          "link_url": "",
+          "faculty_ids": [
+            "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+          ],
+          "faculty_legacy_ids": [
+            15
+          ]
+        },
+        {
+          "id": "63f93b69-5597-536d-9b80-f5a826d7786d",
+          "legacy_id": 49,
+          "title": "3rd STC on Recent Trends in Networks and Communications",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "Offline",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2024-09-23",
+          "end_date": "2024-09-29",
+          "academic_session": "2024-2025",
+          "convenor": "",
+          "coordinator": "",
+          "link_url": "",
+          "faculty_ids": [
+            "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+          ],
+          "faculty_legacy_ids": [
+            15
+          ]
+        }
+      ],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "cfcbebac-52f4-5195-b732-d21e74137122",
@@ -28224,7 +29933,61 @@
       ],
       "patents": [],
       "projects": [],
-      "supervisions": []
+      "supervisions": [],
+      "events": [
+        {
+          "id": "95e12882-5130-5507-828e-80a21c1b3172",
+          "legacy_id": 11,
+          "title": "Recent Advancements in Artificial Intelligence and Internet of Things (RAAI-2024)",
+          "category": "organized",
+          "event_type": "workshop",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2024-04-08",
+          "end_date": "2024-04-12",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. Sangeeta Sharma",
+          "coordinator": "Dr. Ram Prakash Sharma, Dr. Robin Singh Bhadoria",
+          "link_url": "https://nith.ac.in/uploads/topics/csed-workshop-ai17121269353999.pdf",
+          "faculty_ids": [
+            "cfcbebac-52f4-5195-b732-d21e74137122",
+            "c6b9e423-ae53-563f-afb8-8c06426dedb5",
+            "a9eafb31-0751-5ab7-a3a9-af7f2dbbf8e2"
+          ],
+          "faculty_legacy_ids": [
+            16,
+            20,
+            21
+          ]
+        },
+        {
+          "id": "1573dd94-d7f6-592c-bc1a-b6393340f66b",
+          "legacy_id": 17,
+          "title": "Recent advances in Artificial Intelligence and Internet of Things, RAAI-2021",
+          "category": "organized",
+          "event_type": "STC",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2021-09-25",
+          "end_date": "2021-09-29",
+          "academic_session": "2021-2022",
+          "convenor": "Dr. Y. D. Sharma, Dr. Kamlesh Dutta",
+          "coordinator": "Dr. Sangeeta Sharma, Dr. Nidhi Gupta",
+          "link_url": "https://nith.ac.in/uploads/topics/raai202116322919518774.pdf",
+          "faculty_ids": [
+            "62d679bb-959c-5740-bf26-241647a6e873",
+            "5e12253b-db56-5e31-9e51-19ab6edac297",
+            "cfcbebac-52f4-5195-b732-d21e74137122"
+          ],
+          "faculty_legacy_ids": [
+            1,
+            2,
+            16
+          ]
+        }
+      ],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "26c2fd67-8cf4-5d5d-b843-d783e1568e38",
@@ -28819,6 +30582,9 @@
           "raw_investigators": "Mohammad Khalid Pandit",
           "faculty_ids": [
             "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
+          ],
+          "faculty_legacy_ids": [
+            17
           ]
         },
         {
@@ -28834,6 +30600,9 @@
           "raw_investigators": "Mohammad Khalid Pandit",
           "faculty_ids": [
             "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
+          ],
+          "faculty_legacy_ids": [
+            17
           ]
         },
         {
@@ -28849,6 +30618,9 @@
           "raw_investigators": "Shoaib Amin Banday",
           "faculty_ids": [
             "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
+          ],
+          "faculty_legacy_ids": [
+            17
           ]
         },
         {
@@ -28864,6 +30636,9 @@
           "raw_investigators": "Assif Assad",
           "faculty_ids": [
             "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
+          ],
+          "faculty_legacy_ids": [
+            17
           ]
         }
       ],
@@ -28939,7 +30714,36 @@
         "research_gate_url": "https://www.researchgate.net/profile/Mohammad-Khalid-Pandit",
         "vidwan_url": null,
         "linkedin_url": "https://www.linkedin.com/in/mohammad-khalid-pandit-5b0a8a24/?originalSubdomain=in"
-      }
+      },
+      "events": [
+        {
+          "id": "83405a7b-18d3-5906-ae77-5d09e55d7506",
+          "legacy_id": 10,
+          "title": "Research Applications of Deep Learning",
+          "category": "organized",
+          "event_type": "E-STC",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2024-07-01",
+          "end_date": "2024-07-05",
+          "academic_session": "2024-2025",
+          "convenor": "Dr. Rajeev Kumar",
+          "coordinator": "Dr. Mohhammad Khalid Pandit, Dr. Ajay Kumar Mallick",
+          "link_url": "https://nith.ac.in/uploads/topics/estc-csed17177438577130.pdf",
+          "faculty_ids": [
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "26c2fd67-8cf4-5d5d-b843-d783e1568e38",
+            "4f0ed2a0-960b-5ba1-bbee-6723c562a1da"
+          ],
+          "faculty_legacy_ids": [
+            9,
+            17,
+            18
+          ]
+        }
+      ],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "4f0ed2a0-960b-5ba1-bbee-6723c562a1da",
@@ -29001,32 +30805,44 @@
       ],
       "administrative_experiences": [
         {
-          "id": "db576623-5d5f-46bc-8a1b-7483f90bfd88",
           "position": "Assistant Faculty In-charge (AFI):Cultural Activities and Clubs- (Sangeet)",
           "organization": "Department of Computer Science and Engineering, NIT Hamirpur",
-          "start_date": "2024-08-09",
-          "end_date": "Present"
+          "start_date": "2024",
+          "end_date": "Present",
+          "full_start": "2024-08-09",
+          "full_end": "Present"
         },
         {
-          "id": "8023fcac-f018-4708-a3e6-440b1df3d0a4",
           "position": "Officer In-Charge (OIC) : Department Research Laboratory",
           "organization": "Department of Computer Science and Engineering, NIT Hamirpur",
-          "start_date": "2024-02-23",
-          "end_date": "Present"
+          "start_date": "2024",
+          "end_date": "Present",
+          "full_start": "2024-02-23",
+          "full_end": "Present"
         },
         {
-          "id": "9d303a4a-2d8c-4bf2-ad94-5b99db765e02",
           "position": "Officer In-Charge (OIC) :Department Infrastructure",
           "organization": "Department of Computer Science and Engineering, NIT Hamirpur",
-          "start_date": "2024-02-23",
-          "end_date": "Present"
+          "start_date": "2024",
+          "end_date": "Present",
+          "full_start": "2024-02-23",
+          "full_end": "Present"
         },
         {
-          "id": "92ba0cb4-acaf-4283-ab64-24efbf122395",
           "position": "Single Point of Contact (SPOC)",
           "organization": "Smart India Hackathon 2025, NIT Hamirpur",
-          "start_date": "2025-08-28",
-          "end_date": "Present"
+          "start_date": "2025",
+          "end_date": "Present",
+          "full_start": "2025-08-28",
+          "full_end": "Present"
+        },
+        {
+          "position": "Assistant Faculty In-charge (AFI):Google Developer Group",
+          "organization": "Technical Activities and Clubs",
+          "start_date": "2025",
+          "end_date": "Present",
+          "full_start": "2025-11-21",
+          "full_end": "Present"
         }
       ],
       "honors": [],
@@ -29669,7 +31485,98 @@
         "research_gate_url": "https://www.researchgate.net/profile/Ajay-Mallick-3?ev=hdr_xprf",
         "vidwan_url": "https://vidwan.inflibnet.ac.in/profile/463097",
         "linkedin_url": "https://www.linkedin.com/feed/?trk=sem-ga_campid.14650114788_asid.151761418307_crid.657403558721_kw.linkedin%20login_d.c_tid.kwd-12704335873_n.g_mt.e_geo.9297884"
-      }
+      },
+      "events": [
+        {
+          "id": "83405a7b-18d3-5906-ae77-5d09e55d7506",
+          "legacy_id": 10,
+          "title": "Research Applications of Deep Learning",
+          "category": "organized",
+          "event_type": "E-STC",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2024-07-01",
+          "end_date": "2024-07-05",
+          "academic_session": "2024-2025",
+          "convenor": "Dr. Rajeev Kumar",
+          "coordinator": "Dr. Mohhammad Khalid Pandit, Dr. Ajay Kumar Mallick",
+          "link_url": "https://nith.ac.in/uploads/topics/estc-csed17177438577130.pdf",
+          "faculty_ids": [
+            "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
+            "26c2fd67-8cf4-5d5d-b843-d783e1568e38",
+            "4f0ed2a0-960b-5ba1-bbee-6723c562a1da"
+          ],
+          "faculty_legacy_ids": [
+            9,
+            17,
+            18
+          ]
+        },
+        {
+          "id": "89d01ef5-fe48-5c3f-a795-811b21b7785e",
+          "legacy_id": 123,
+          "title": "5th International Conference on Machine Learning, Image Processing, Network Security and Data Sciences",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2023-12-21",
+          "end_date": "2023-12-22",
+          "academic_session": "2023-2024",
+          "convenor": "Technical Session Management Committee Member & Session Co-Chair",
+          "coordinator": "Dr. Ajay Kumar Mallick",
+          "link_url": "",
+          "faculty_ids": [
+            "4f0ed2a0-960b-5ba1-bbee-6723c562a1da"
+          ],
+          "faculty_legacy_ids": [
+            18
+          ]
+        },
+        {
+          "id": "20cfa4c2-e4e2-5744-ae98-8f788a448bd1",
+          "legacy_id": 124,
+          "title": "Recent Trends in Transport Phenomena (RTTP 2024)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2024-06-24",
+          "end_date": "2024-06-26",
+          "academic_session": "2023-2024",
+          "convenor": "Technical Session Management Committee Member & Session Co-Chair",
+          "coordinator": "Dr. Ajay Kumar Mallick",
+          "link_url": "",
+          "faculty_ids": [
+            "4f0ed2a0-960b-5ba1-bbee-6723c562a1da"
+          ],
+          "faculty_legacy_ids": [
+            18
+          ]
+        },
+        {
+          "id": "439983db-6138-5898-8d4c-2d6d68bf2652",
+          "legacy_id": 125,
+          "title": "2nd International Conference on Artificial Intelligence, Machine Learning and Intelligent Systems (ICAMS 2025)",
+          "category": "organized",
+          "event_type": "conference",
+          "venue": "NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2025-02-07",
+          "end_date": "2025-02-08",
+          "academic_session": "2023-2024",
+          "convenor": "Organizing Secretary",
+          "coordinator": "Dr. Ajay Kumar Mallick",
+          "link_url": "",
+          "faculty_ids": [
+            "4f0ed2a0-960b-5ba1-bbee-6723c562a1da"
+          ],
+          "faculty_legacy_ids": [
+            18
+          ]
+        }
+      ],
+      "consultancies": []
     },
     {
       "id": "c6b9e423-ae53-563f-afb8-8c06426dedb5",
@@ -29711,18 +31618,20 @@
       "teaching_experiences": [],
       "administrative_experiences": [
         {
-          "id": "e7002d90-b470-484b-b821-9c4d1a6086e1",
           "position": "Assistant Faculty Incharge (AFI)",
           "organization": "E-Cell (Entrepreneurship Cell)",
-          "start_date": "2024-04-16",
-          "end_date": "Present"
+          "start_date": "2024",
+          "end_date": "Present",
+          "full_start": "2024-04-16",
+          "full_end": "Present"
         },
         {
-          "id": "5d4ea4b6-8ccc-4856-98af-16beb794909f",
           "position": "Officer In-charge (OIC)",
           "organization": "Departmental Library",
-          "start_date": "2024-02-23",
-          "end_date": "Present"
+          "start_date": "2024",
+          "end_date": "Present",
+          "full_start": "2024-02-23",
+          "full_end": "Present"
         }
       ],
       "honors": [
@@ -30705,6 +32614,9 @@
           "country": "India",
           "faculty_ids": [
             "c6b9e423-ae53-563f-afb8-8c06426dedb5"
+          ],
+          "faculty_legacy_ids": [
+            20
           ]
         },
         {
@@ -30721,6 +32633,9 @@
           "country": "India",
           "faculty_ids": [
             "c6b9e423-ae53-563f-afb8-8c06426dedb5"
+          ],
+          "faculty_legacy_ids": [
+            20
           ]
         },
         {
@@ -30737,6 +32652,9 @@
           "country": "India",
           "faculty_ids": [
             "c6b9e423-ae53-563f-afb8-8c06426dedb5"
+          ],
+          "faculty_legacy_ids": [
+            20
           ]
         }
       ],
@@ -30754,6 +32672,9 @@
           "raw_investigators": "Dr. Robin Singh Bhadoria",
           "faculty_ids": [
             "c6b9e423-ae53-563f-afb8-8c06426dedb5"
+          ],
+          "faculty_legacy_ids": [
+            20
           ]
         }
       ],
@@ -30857,7 +32778,35 @@
         "research_gate_url": "https://www.researchgate.net/profile/Robin-Bhadoria",
         "vidwan_url": "https://vidwan.inflibnet.ac.in//profile/224383/MjI0Mzgz",
         "linkedin_url": "https://in.linkedin.com/in/dr-robin-singh-bhadoria-569214b6"
-      }
+      },
+      "events": [
+        {
+          "id": "95e12882-5130-5507-828e-80a21c1b3172",
+          "legacy_id": 11,
+          "title": "Recent Advancements in Artificial Intelligence and Internet of Things (RAAI-2024)",
+          "category": "organized",
+          "event_type": "workshop",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2024-04-08",
+          "end_date": "2024-04-12",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. Sangeeta Sharma",
+          "coordinator": "Dr. Ram Prakash Sharma, Dr. Robin Singh Bhadoria",
+          "link_url": "https://nith.ac.in/uploads/topics/csed-workshop-ai17121269353999.pdf",
+          "faculty_ids": [
+            "cfcbebac-52f4-5195-b732-d21e74137122",
+            "c6b9e423-ae53-563f-afb8-8c06426dedb5",
+            "a9eafb31-0751-5ab7-a3a9-af7f2dbbf8e2"
+          ],
+          "faculty_legacy_ids": [
+            16,
+            20,
+            21
+          ]
+        }
+      ],
+      "consultancies": []
     },
     {
       "id": "a9eafb31-0751-5ab7-a3a9-af7f2dbbf8e2",
@@ -30919,18 +32868,20 @@
       ],
       "administrative_experiences": [
         {
-          "id": "e7b58b27-0bcc-4885-bfed-a85489b65be2",
           "position": "Faculty Incharge (FI) NAD",
           "organization": "NIT Hamirpur",
-          "start_date": "2024-02-23",
-          "end_date": "Present"
+          "start_date": "2024",
+          "end_date": "Present",
+          "full_start": "2024-02-23",
+          "full_end": "Present"
         },
         {
-          "id": "2e17887b-0645-44bc-8a2b-7be42279dd9b",
           "position": "OIC- Department Information",
           "organization": "Computer Science and Engineering",
-          "start_date": "2024-02-23",
-          "end_date": "Present"
+          "start_date": "2024",
+          "end_date": "Present",
+          "full_start": "2024-02-23",
+          "full_end": "Present"
         }
       ],
       "honors": [],
@@ -31401,7 +33352,35 @@
         "research_gate_url": null,
         "vidwan_url": "https://nith.irins.org//profile/463491",
         "linkedin_url": "https://www.linkedin.com/in/ram-prakash-sharma-b3197a78/"
-      }
+      },
+      "events": [
+        {
+          "id": "95e12882-5130-5507-828e-80a21c1b3172",
+          "legacy_id": 11,
+          "title": "Recent Advancements in Artificial Intelligence and Internet of Things (RAAI-2024)",
+          "category": "organized",
+          "event_type": "workshop",
+          "venue": "Online, DoCSE, NIT Hamirpur",
+          "sponsoring_agency": "NIT Hamirpur",
+          "start_date": "2024-04-08",
+          "end_date": "2024-04-12",
+          "academic_session": "2023-2024",
+          "convenor": "Dr. Sangeeta Sharma",
+          "coordinator": "Dr. Ram Prakash Sharma, Dr. Robin Singh Bhadoria",
+          "link_url": "https://nith.ac.in/uploads/topics/csed-workshop-ai17121269353999.pdf",
+          "faculty_ids": [
+            "cfcbebac-52f4-5195-b732-d21e74137122",
+            "c6b9e423-ae53-563f-afb8-8c06426dedb5",
+            "a9eafb31-0751-5ab7-a3a9-af7f2dbbf8e2"
+          ],
+          "faculty_legacy_ids": [
+            16,
+            20,
+            21
+          ]
+        }
+      ],
+      "consultancies": []
     },
     {
       "id": "18f0d03c-bf43-559a-b7d1-bf4523d6c4e0",
@@ -31430,7 +33409,10 @@
       "publications": [],
       "patents": [],
       "projects": [],
-      "supervisions": []
+      "supervisions": [],
+      "events": [],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "5651f9b9-b4a6-5f7d-b50f-e25973e4b6b9",
@@ -31462,7 +33444,10 @@
       "publications": [],
       "patents": [],
       "projects": [],
-      "supervisions": []
+      "supervisions": [],
+      "events": [],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "cf5f575d-5d0f-5590-bcce-6e0524888d21",
@@ -31525,7 +33510,10 @@
       ],
       "patents": [],
       "projects": [],
-      "supervisions": []
+      "supervisions": [],
+      "events": [],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "5a0ae956-355b-5463-8072-149d2907c535",
@@ -31556,7 +33544,10 @@
       "publications": [],
       "patents": [],
       "projects": [],
-      "supervisions": []
+      "supervisions": [],
+      "events": [],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "6ef3772a-7828-5360-b13c-2205c16f2d8b",
@@ -31588,7 +33579,10 @@
       "publications": [],
       "patents": [],
       "projects": [],
-      "supervisions": []
+      "supervisions": [],
+      "events": [],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "fccf5101-40c0-5fcb-8c3a-85ecc1e32664",
@@ -31620,7 +33614,10 @@
       "publications": [],
       "patents": [],
       "projects": [],
-      "supervisions": []
+      "supervisions": [],
+      "events": [],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "1cb19593-d52b-543c-9ccf-fb0bd6b18e67",
@@ -31649,7 +33646,10 @@
       "publications": [],
       "patents": [],
       "projects": [],
-      "supervisions": []
+      "supervisions": [],
+      "events": [],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "0e724c92-dc80-51b8-a65e-3426541d6d65",
@@ -31678,7 +33678,10 @@
       "publications": [],
       "patents": [],
       "projects": [],
-      "supervisions": []
+      "supervisions": [],
+      "events": [],
+      "consultancies": [],
+      "admin_experiences": []
     },
     {
       "id": "94f282ed-eed6-5d94-b67c-e524cfb954fa",
@@ -31708,7 +33711,10 @@
       "publications": [],
       "patents": [],
       "projects": [],
-      "supervisions": []
+      "supervisions": [],
+      "events": [],
+      "consultancies": [],
+      "admin_experiences": []
     }
   ],
   "publications": [
@@ -54029,6 +56035,9 @@
       "country": "India",
       "faculty_ids": [
         "4144f97d-26c3-588f-a81b-f9c7c0740347"
+      ],
+      "faculty_legacy_ids": [
+        14
       ]
     },
     {
@@ -54045,6 +56054,9 @@
       "country": "India",
       "faculty_ids": [
         "4144f97d-26c3-588f-a81b-f9c7c0740347"
+      ],
+      "faculty_legacy_ids": [
+        14
       ]
     },
     {
@@ -54061,6 +56073,9 @@
       "country": "India",
       "faculty_ids": [
         "c6b9e423-ae53-563f-afb8-8c06426dedb5"
+      ],
+      "faculty_legacy_ids": [
+        20
       ]
     },
     {
@@ -54077,6 +56092,9 @@
       "country": "India",
       "faculty_ids": [
         "c6b9e423-ae53-563f-afb8-8c06426dedb5"
+      ],
+      "faculty_legacy_ids": [
+        20
       ]
     },
     {
@@ -54093,6 +56111,9 @@
       "country": "India",
       "faculty_ids": [
         "975a3e83-a789-559f-91c9-65395cb5bbdc"
+      ],
+      "faculty_legacy_ids": [
+        7
       ]
     },
     {
@@ -54109,6 +56130,9 @@
       "country": "India",
       "faculty_ids": [
         "975a3e83-a789-559f-91c9-65395cb5bbdc"
+      ],
+      "faculty_legacy_ids": [
+        7
       ]
     },
     {
@@ -54126,6 +56150,10 @@
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137",
         "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+      ],
+      "faculty_legacy_ids": [
+        12,
+        13
       ]
     },
     {
@@ -54143,6 +56171,10 @@
       "faculty_ids": [
         "62d679bb-959c-5740-bf26-241647a6e873",
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        1,
+        3
       ]
     },
     {
@@ -54159,6 +56191,9 @@
       "country": "India",
       "faculty_ids": [
         "c6b9e423-ae53-563f-afb8-8c06426dedb5"
+      ],
+      "faculty_legacy_ids": [
+        20
       ]
     },
     {
@@ -54173,7 +56208,8 @@
       "grant_date": "2023-12-08",
       "raw_inventors": "Dr. Robin Singh Bhadoria",
       "country": "India",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "a79cbb6e-13d2-5502-aeba-c8a6905bd7e8",
@@ -54189,6 +56225,9 @@
       "country": "India",
       "faculty_ids": [
         "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+      ],
+      "faculty_legacy_ids": [
+        10
       ]
     },
     {
@@ -54205,6 +56244,9 @@
       "country": "India",
       "faculty_ids": [
         "5e12253b-db56-5e31-9e51-19ab6edac297"
+      ],
+      "faculty_legacy_ids": [
+        2
       ]
     },
     {
@@ -54221,6 +56263,9 @@
       "country": "India",
       "faculty_ids": [
         "5e12253b-db56-5e31-9e51-19ab6edac297"
+      ],
+      "faculty_legacy_ids": [
+        2
       ]
     },
     {
@@ -54235,7 +56280,8 @@
       "grant_date": "2023-05-19",
       "raw_inventors": "1. Sangeeta Sharma 2. Priyanka Verma 3. Nitesh Bharot",
       "country": "India",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "32d13ebc-c399-55b0-8448-9f0ebc7dbef7",
@@ -54273,6 +56319,9 @@
       "raw_investigators": "Dr. Arun Kumar Yadav",
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137"
+      ],
+      "faculty_legacy_ids": [
+        12
       ]
     },
     {
@@ -54288,6 +56337,9 @@
       "raw_investigators": "Dr. Prakash Kumar Singh",
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137"
+      ],
+      "faculty_legacy_ids": [
+        12
       ]
     },
     {
@@ -54303,6 +56355,9 @@
       "raw_investigators": "Dr. Vibhash Yadav",
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137"
+      ],
+      "faculty_legacy_ids": [
+        12
       ]
     },
     {
@@ -54318,6 +56373,9 @@
       "raw_investigators": "Dr. TP Sharma",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -54334,6 +56392,10 @@
       "faculty_ids": [
         "6c4f2340-35a3-5b21-b580-081dad7f5ab1",
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        4,
+        5
       ]
     },
     {
@@ -54349,6 +56411,9 @@
       "raw_investigators": "Mohammad Khalid Pandit",
       "faculty_ids": [
         "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
+      ],
+      "faculty_legacy_ids": [
+        17
       ]
     },
     {
@@ -54364,6 +56429,9 @@
       "raw_investigators": "Mohammad Khalid Pandit",
       "faculty_ids": [
         "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
+      ],
+      "faculty_legacy_ids": [
+        17
       ]
     },
     {
@@ -54379,6 +56447,9 @@
       "raw_investigators": "Shoaib Amin Banday",
       "faculty_ids": [
         "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
+      ],
+      "faculty_legacy_ids": [
+        17
       ]
     },
     {
@@ -54394,6 +56465,9 @@
       "raw_investigators": "Assif Assad",
       "faculty_ids": [
         "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
+      ],
+      "faculty_legacy_ids": [
+        17
       ]
     },
     {
@@ -54409,6 +56483,9 @@
       "raw_investigators": "Dr. Robin Singh Bhadoria",
       "faculty_ids": [
         "c6b9e423-ae53-563f-afb8-8c06426dedb5"
+      ],
+      "faculty_legacy_ids": [
+        20
       ]
     },
     {
@@ -54424,6 +56501,9 @@
       "raw_investigators": "Dr. Sonam Gupta",
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137"
+      ],
+      "faculty_legacy_ids": [
+        12
       ]
     },
     {
@@ -54439,6 +56519,9 @@
       "raw_investigators": "Dr Siddhartha Chauhan",
       "faculty_ids": [
         "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
+      ],
+      "faculty_legacy_ids": [
+        4
       ]
     },
     {
@@ -54454,6 +56537,9 @@
       "raw_investigators": "Dr. T.P. Sharma",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -54469,6 +56555,9 @@
       "raw_investigators": "Dr. T.P. Sharma",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -54488,6 +56577,13 @@
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
         "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
         "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+      ],
+      "faculty_legacy_ids": [
+        2,
+        3,
+        5,
+        9,
+        10
       ]
     },
     {
@@ -54503,6 +56599,9 @@
       "raw_investigators": "Dr. Naveen Chauhan",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -54518,6 +56617,9 @@
       "raw_investigators": "Dr. T.P. Sharma",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -54533,6 +56635,9 @@
       "raw_investigators": "Prof. Lalit Awasthi(PI)",
       "faculty_ids": [
         "62d679bb-959c-5740-bf26-241647a6e873"
+      ],
+      "faculty_legacy_ids": [
+        1
       ]
     },
     {
@@ -54548,6 +56653,9 @@
       "raw_investigators": "Prof. Lalit Awasthi(PI)",
       "faculty_ids": [
         "62d679bb-959c-5740-bf26-241647a6e873"
+      ],
+      "faculty_legacy_ids": [
+        1
       ]
     },
     {
@@ -54563,6 +56671,9 @@
       "raw_investigators": "Prof. Lalit Awasthi(PI)",
       "faculty_ids": [
         "62d679bb-959c-5740-bf26-241647a6e873"
+      ],
+      "faculty_legacy_ids": [
+        1
       ]
     },
     {
@@ -54578,6 +56689,9 @@
       "raw_investigators": "Prof. Lalit Awasthi(PI)",
       "faculty_ids": [
         "62d679bb-959c-5740-bf26-241647a6e873"
+      ],
+      "faculty_legacy_ids": [
+        1
       ]
     },
     {
@@ -54593,6 +56707,9 @@
       "raw_investigators": null,
       "faculty_ids": [
         "5e12253b-db56-5e31-9e51-19ab6edac297"
+      ],
+      "faculty_legacy_ids": [
+        2
       ]
     },
     {
@@ -54608,6 +56725,9 @@
       "raw_investigators": "Dr. Kamlesh Dutta",
       "faculty_ids": [
         "5e12253b-db56-5e31-9e51-19ab6edac297"
+      ],
+      "faculty_legacy_ids": [
+        2
       ]
     },
     {
@@ -63885,6 +66005,9 @@
       "author_text": "Dr. T.P. Sharma, Dr. Narottam Chand, Mr. K.S. Pandey, Dr. S.K. Soni, Dr. Ashok Kumar, Mr. Anil Kumar",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -63899,6 +66022,9 @@
       "author_text": "Dr. T.P. Sharma, Dr. Narottam Chand, Mr. K.S. Pandey, Dr. S.K. Soni, Dr. Ashok Kumar, Mr. Anil Kumar",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -63913,6 +66039,9 @@
       "author_text": "Dr. T.P. Sharma, Dr. Narottam Chand, Mr. K.S. Pandey, Dr. S.K. Soni, Dr. Ashok Kumar, Mr. Anil Kumar",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -63927,6 +66056,9 @@
       "author_text": "Dr. Kamlesh Dutta",
       "faculty_ids": [
         "5e12253b-db56-5e31-9e51-19ab6edac297"
+      ],
+      "faculty_legacy_ids": [
+        2
       ]
     },
     {
@@ -63941,6 +66073,9 @@
       "author_text": "Dr. Siddhartha Chauhan, Mr. Ashwini Sharma and Mr. Rajesh Sharma",
       "faculty_ids": [
         "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
+      ],
+      "faculty_legacy_ids": [
+        4
       ]
     },
     {
@@ -63955,6 +66090,9 @@
       "author_text": "Dr. Siddhartha Chauhan and Mr. Ashwini Sharma",
       "faculty_ids": [
         "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
+      ],
+      "faculty_legacy_ids": [
+        4
       ]
     },
     {
@@ -63969,6 +66107,9 @@
       "author_text": "Dr. Mrs. Kamlesh Dutta, Dr. Siddhartha Chauhan and Mr. K.S. Pandey",
       "faculty_ids": [
         "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
+      ],
+      "faculty_legacy_ids": [
+        4
       ]
     },
     {
@@ -63983,6 +66124,9 @@
       "author_text": "Dr. Siddhartha Chauhan",
       "faculty_ids": [
         "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
+      ],
+      "faculty_legacy_ids": [
+        4
       ]
     }
   ],
@@ -64001,7 +66145,8 @@
       "convenor": "Rajeev Kumar",
       "coordinator": "Ajay Kumar Mallick, Mohammad Khalid Pandit",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "83405a7b-18d3-5906-ae77-5d09e55d7506",
@@ -64021,6 +66166,11 @@
         "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
         "26c2fd67-8cf4-5d5d-b843-d783e1568e38",
         "4f0ed2a0-960b-5ba1-bbee-6723c562a1da"
+      ],
+      "faculty_legacy_ids": [
+        9,
+        17,
+        18
       ]
     },
     {
@@ -64041,6 +66191,11 @@
         "cfcbebac-52f4-5195-b732-d21e74137122",
         "c6b9e423-ae53-563f-afb8-8c06426dedb5",
         "a9eafb31-0751-5ab7-a3a9-af7f2dbbf8e2"
+      ],
+      "faculty_legacy_ids": [
+        16,
+        20,
+        21
       ]
     },
     {
@@ -64061,6 +66216,11 @@
         "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
         "edbab47f-a36c-5216-9914-5b5561bc8137",
         "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+      ],
+      "faculty_legacy_ids": [
+        9,
+        12,
+        13
       ]
     },
     {
@@ -64082,6 +66242,12 @@
         "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
         "edbab47f-a36c-5216-9914-5b5561bc8137",
         "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+      ],
+      "faculty_legacy_ids": [
+        5,
+        9,
+        12,
+        13
       ]
     },
     {
@@ -64102,6 +66268,11 @@
         "c17e0191-445a-5f4d-961b-fb830ce9136c",
         "fa8f838f-1d0f-5506-9c25-961dd6458f00",
         "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+      ],
+      "faculty_legacy_ids": [
+        3,
+        10,
+        15
       ]
     },
     {
@@ -64122,6 +66293,11 @@
         "edbab47f-a36c-5216-9914-5b5561bc8137",
         "b638c21f-609f-57d2-8a24-b133e03ad4ea",
         "4144f97d-26c3-588f-a81b-f9c7c0740347"
+      ],
+      "faculty_legacy_ids": [
+        12,
+        13,
+        14
       ]
     },
     {
@@ -64138,7 +66314,8 @@
       "convenor": "Dr. T.P. Sharma",
       "coordinator": "Dr. Priyanka, Dr. Nitin Gupta",
       "link_url": "https://nith.ac.in/uploads/topics/estc-cse16381859131666.pdf",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "1573dd94-d7f6-592c-bc1a-b6393340f66b",
@@ -64158,6 +66335,11 @@
         "62d679bb-959c-5740-bf26-241647a6e873",
         "5e12253b-db56-5e31-9e51-19ab6edac297",
         "cfcbebac-52f4-5195-b732-d21e74137122"
+      ],
+      "faculty_legacy_ids": [
+        1,
+        2,
+        16
       ]
     },
     {
@@ -64176,6 +66358,9 @@
       "link_url": "",
       "faculty_ids": [
         "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+      ],
+      "faculty_legacy_ids": [
+        15
       ]
     },
     {
@@ -64194,6 +66379,9 @@
       "link_url": "",
       "faculty_ids": [
         "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+      ],
+      "faculty_legacy_ids": [
+        15
       ]
     },
     {
@@ -64212,6 +66400,9 @@
       "link_url": "",
       "faculty_ids": [
         "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+      ],
+      "faculty_legacy_ids": [
+        15
       ]
     },
     {
@@ -64230,6 +66421,9 @@
       "link_url": "",
       "faculty_ids": [
         "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+      ],
+      "faculty_legacy_ids": [
+        15
       ]
     },
     {
@@ -64248,6 +66442,9 @@
       "link_url": "",
       "faculty_ids": [
         "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+      ],
+      "faculty_legacy_ids": [
+        15
       ]
     },
     {
@@ -64266,6 +66463,9 @@
       "link_url": "",
       "faculty_ids": [
         "48004e0f-8ca0-5f45-85e1-2c6cf4eada17"
+      ],
+      "faculty_legacy_ids": [
+        15
       ]
     },
     {
@@ -64282,7 +66482,8 @@
       "convenor": "",
       "coordinator": "",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "29a39389-3bd9-50b4-b3eb-1cf4114a3828",
@@ -64298,7 +66499,8 @@
       "convenor": "",
       "coordinator": "",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "55e15565-1cea-5c96-b660-3c881df412b2",
@@ -64314,7 +66516,8 @@
       "convenor": "",
       "coordinator": "",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "5e459308-7f1c-5462-98b2-c109cd8265cf",
@@ -64330,7 +66533,8 @@
       "convenor": "",
       "coordinator": "",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "4e9bc1d2-7e65-574d-80b2-ab5a907ea3a6",
@@ -64349,6 +66553,10 @@
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137",
         "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+      ],
+      "faculty_legacy_ids": [
+        12,
+        13
       ]
     },
     {
@@ -64367,6 +66575,9 @@
       "link_url": "",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -64385,6 +66596,9 @@
       "link_url": "",
       "faculty_ids": [
         "4144f97d-26c3-588f-a81b-f9c7c0740347"
+      ],
+      "faculty_legacy_ids": [
+        14
       ]
     },
     {
@@ -64403,6 +66617,9 @@
       "link_url": "",
       "faculty_ids": [
         "4f0ed2a0-960b-5ba1-bbee-6723c562a1da"
+      ],
+      "faculty_legacy_ids": [
+        18
       ]
     },
     {
@@ -64421,6 +66638,9 @@
       "link_url": "",
       "faculty_ids": [
         "4f0ed2a0-960b-5ba1-bbee-6723c562a1da"
+      ],
+      "faculty_legacy_ids": [
+        18
       ]
     },
     {
@@ -64439,6 +66659,9 @@
       "link_url": "",
       "faculty_ids": [
         "4f0ed2a0-960b-5ba1-bbee-6723c562a1da"
+      ],
+      "faculty_legacy_ids": [
+        18
       ]
     },
     {
@@ -64457,6 +66680,9 @@
       "link_url": "",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -64475,6 +66701,9 @@
       "link_url": "",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -64493,6 +66722,9 @@
       "link_url": "",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -64511,6 +66743,9 @@
       "link_url": "",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -64529,6 +66764,9 @@
       "link_url": "",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -64547,6 +66785,9 @@
       "link_url": "",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -64565,6 +66806,9 @@
       "link_url": "",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -64583,6 +66827,9 @@
       "link_url": "",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
+      ],
+      "faculty_legacy_ids": [
+        3
       ]
     },
     {
@@ -64604,6 +66851,12 @@
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
         "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
         "fa8f838f-1d0f-5506-9c25-961dd6458f00"
+      ],
+      "faculty_legacy_ids": [
+        3,
+        5,
+        9,
+        10
       ]
     },
     {
@@ -64622,6 +66875,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64640,6 +66896,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64658,6 +66917,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64676,6 +66938,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64694,6 +66959,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64710,7 +66978,8 @@
       "convenor": "",
       "coordinator": "",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "58fbc526-0418-56bd-be81-220e05db68ad",
@@ -64726,7 +66995,8 @@
       "convenor": "",
       "coordinator": "",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "62a0b65f-a0f5-5433-a2cd-f623fa2aa2ea",
@@ -64744,6 +67014,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64762,6 +67035,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64778,7 +67054,8 @@
       "convenor": "",
       "coordinator": "Dr. Naveen Chauhan",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "855727dd-ceb6-5979-908e-a68bc09bb883",
@@ -64796,6 +67073,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64814,6 +67094,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64832,6 +67115,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64850,6 +67136,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64868,6 +67157,9 @@
       "link_url": "",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
+      ],
+      "faculty_legacy_ids": [
+        5
       ]
     },
     {
@@ -64884,7 +67176,8 @@
       "convenor": "Dr. Sidhartha Chauhan (Convenor)",
       "coordinator": "Dr. Mohit Kumar (Coordinator), Dr. Arun Kumar Yadav (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "a79315c6-e7ec-515f-bc3d-617ab8a2c2da",
@@ -64903,6 +67196,10 @@
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137",
         "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+      ],
+      "faculty_legacy_ids": [
+        12,
+        13
       ]
     },
     {
@@ -64919,7 +67216,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Coordinator)",
       "coordinator": "Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "dfa9d575-ba3b-568e-9d37-7013cecf7ca4",
@@ -64935,7 +67233,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Coordinator)",
       "coordinator": "Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "b38cd016-aaaf-54c2-b9d4-234248a178e0",
@@ -64951,7 +67250,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Convenor)",
       "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "25406ea9-1f3a-5555-836f-9bdc1611a441",
@@ -64970,6 +67270,10 @@
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137",
         "b638c21f-609f-57d2-8a24-b133e03ad4ea"
+      ],
+      "faculty_legacy_ids": [
+        12,
+        13
       ]
     },
     {
@@ -64986,7 +67290,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Convenor)",
       "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "633d900e-0b5f-5407-b15d-f48469e86ade",
@@ -65002,7 +67307,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Convenor)",
       "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "0417fc96-170e-544a-8f03-acb6a7ad1a7f",
@@ -65018,7 +67324,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Convenor)",
       "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "4c3d68dd-46d3-5bd2-bb13-ce0386607160",
@@ -65034,7 +67341,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Convenor)",
       "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "c3b9677d-15cc-5f54-bb53-65a2999e73ae",
@@ -65052,6 +67360,9 @@
       "link_url": "",
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137"
+      ],
+      "faculty_legacy_ids": [
+        12
       ]
     },
     {
@@ -65068,7 +67379,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Convenor)",
       "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "f6d5885f-3dc5-5a73-b020-5d4869d21325",
@@ -65084,7 +67396,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Convenor)",
       "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "4f81b234-dc15-503a-8e82-5b678a285827",
@@ -65100,7 +67413,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Convenor)",
       "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "9a360e52-5b5a-58a7-a532-f87cbe002700",
@@ -65116,7 +67430,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Convenor)",
       "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "ee945572-674a-5e02-8c9a-06dc19bacd6f",
@@ -65132,7 +67447,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Convenor)",
       "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "3d51f9c6-c378-56e5-9034-4977cade070e",
@@ -65148,7 +67464,8 @@
       "convenor": "Dr. Arun Kumar Yadav (Convenor)",
       "coordinator": "Dr. Jyoti Srivastava (Coordinator), Dr. Mohit Kumar (Coordinator)",
       "link_url": "",
-      "faculty_ids": []
+      "faculty_ids": [],
+      "faculty_legacy_ids": []
     },
     {
       "id": "de7268f0-6910-5e71-ac35-4a8ad49cf9b2",
@@ -65168,6 +67485,11 @@
         "edbab47f-a36c-5216-9914-5b5561bc8137",
         "b638c21f-609f-57d2-8a24-b133e03ad4ea",
         "4144f97d-26c3-588f-a81b-f9c7c0740347"
+      ],
+      "faculty_legacy_ids": [
+        12,
+        13,
+        14
       ]
     }
   ]

@@ -46,14 +46,18 @@ export default function FacultyConsultanciesPage() {
   const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
 
   const loadConsultancies = (activeFaculty: any) => {
-    const lastName = activeFaculty.full_name?.toLowerCase().split(" ").pop() || "";
+    const facId = activeFaculty?.id;
+    const legacyId = activeFaculty?.legacy_id;
     const userConsultancies = MOCK_CONSULTANCIES.filter((c: any) => {
-      if (c.faculty_ids && c.faculty_ids.includes(activeFaculty.id)) return true;
-      if (c.author_text && c.author_text.toLowerCase().includes(lastName)) return true;
+      if (facId && c.faculty_ids && c.faculty_ids.includes(facId)) return true;
+      if (legacyId && c.faculty_legacy_ids && c.faculty_legacy_ids.includes(legacyId)) return true;
       return false;
     });
 
-    const fallback = userConsultancies.length > 0 ? userConsultancies : MOCK_CONSULTANCIES;
+    const fallback =
+      Array.isArray(activeFaculty?.consultancies) && activeFaculty.consultancies.length > 0
+        ? activeFaculty.consultancies
+        : userConsultancies;
     const stored = getStoredData(activeFaculty, "consultancies", fallback);
     setConsultancies(stored);
   };
