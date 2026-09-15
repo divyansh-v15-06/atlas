@@ -30,6 +30,9 @@ export const MOCK_FACULTY = databaseSeed.faculty.map((f: any) => ({
   department_name: f.department_name || "Computer Science & Engineering",
   department_code: f.department_code || "CSE",
   research_interests: f.research_interests || ["Computer Science & Engineering"],
+  specialization: Array.isArray(f.research_interests)
+    ? f.research_interests.join(", ")
+    : (f.research_interests || "Computer Science & Engineering"),
   qualifications: f.qualifications || [],
   teaching_experiences: f.teaching_experiences || [],
   administrative_experiences: f.admin_experiences || f.administrative_experiences || [],
