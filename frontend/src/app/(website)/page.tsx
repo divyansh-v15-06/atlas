@@ -120,7 +120,7 @@ export default function HomePage() {
   );
   const [metrics, setMetrics] = useState({
     faculty: isCse ? 27 : 0,
-    publications: isCse ? 113 : 0,
+    publications: isCse ? 715 : 0,
     students: isCse ? 621 : 0,
     highestPackage: isCse ? 1.51 : 0,
     patents: isCse ? 17 : 0,
@@ -192,7 +192,7 @@ export default function HomePage() {
       if (!isCancelled) {
         setMetrics({
           faculty: isCse ? 27 : 0,
-          publications: isCse ? 113 : 0,
+          publications: isCse ? 715 : 0,
           students: isCse ? 621 : 0,
           highestPackage: isCse ? 1.51 : 0,
           patents: isCse ? 17 : 0,
@@ -559,7 +559,7 @@ export default function HomePage() {
                   <div className="bg-white p-3 rounded-lg border border-[#eedfd8] shadow-2xs hover:border-[#85261e]/40 transition">
                     <div className="flex items-center gap-2 text-[#85261e] font-extrabold text-xs mb-1">
                       <BookOpen className="w-4 h-4" />
-                      <span>{metrics.publications > 0 ? `${metrics.publications}+` : "0"} Publications</span>
+                      <span>{metrics.publications} Publications</span>
                     </div>
                     <p className="text-[11px] text-neutral-600 leading-relaxed">
                       Peer-reviewed journal articles in IEEE Transactions, ACM, Elsevier, and top CORE A/A* international conferences.
@@ -569,7 +569,7 @@ export default function HomePage() {
                   <div className="bg-white p-3 rounded-lg border border-[#eedfd8] shadow-2xs hover:border-[#85261e]/40 transition">
                     <div className="flex items-center gap-2 text-[#85261e] font-extrabold text-xs mb-1">
                       <Lightbulb className="w-4 h-4" />
-                      <span>{metrics.patents > 0 ? `${metrics.patents}+` : "17+"} Patents Filed &amp; Granted</span>
+                      <span>{metrics.patents} Patents Filed &amp; Granted</span>
                     </div>
                     <p className="text-[11px] text-neutral-600 leading-relaxed">
                       Intellectual property spanning edge computing, cyber-physical security, neural systems, and intelligent sensing.
@@ -627,19 +627,16 @@ export default function HomePage() {
                 <div className="pt-3 md:pt-0">
                   <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
                     {isClient ? (
-                      <>
-                        <CountUp
-                          key={`pub-${activeDepartment.id}-${metrics.publications}`}
-                          start={0}
-                          end={metrics.publications}
-                          duration={2.2}
-                          enableScrollSpy={true}
-                          scrollSpyOnce={false}
-                        />
-                        {metrics.publications > 0 && "+"}
-                      </>
+                      <CountUp
+                        key={`pub-${activeDepartment.id}-${metrics.publications}`}
+                        start={0}
+                        end={metrics.publications}
+                        duration={2.2}
+                        enableScrollSpy={true}
+                        scrollSpyOnce={false}
+                      />
                     ) : (
-                      `${metrics.publications}${metrics.publications > 0 ? "+" : ""}`
+                      metrics.publications
                     )}
                   </div>
                   <p className="text-xs text-neutral-300 uppercase tracking-wider font-bold mt-1">
@@ -651,19 +648,16 @@ export default function HomePage() {
                 <div className="pt-3 md:pt-0">
                   <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
                     {isClient ? (
-                      <>
-                        <CountUp
-                          key={`stu-${activeDepartment.id}-${metrics.students}`}
-                          start={0}
-                          end={metrics.students}
-                          duration={2.4}
-                          enableScrollSpy={true}
-                          scrollSpyOnce={false}
-                        />
-                        {metrics.students > 0 && "+"}
-                      </>
+                      <CountUp
+                        key={`stu-${activeDepartment.id}-${metrics.students}`}
+                        start={0}
+                        end={metrics.students}
+                        duration={2.4}
+                        enableScrollSpy={true}
+                        scrollSpyOnce={false}
+                      />
                     ) : (
-                      `${metrics.students}${metrics.students > 0 ? "+" : ""}`
+                      metrics.students
                     )}
                   </div>
                   <p className="text-xs text-neutral-300 uppercase tracking-wider font-bold mt-1">

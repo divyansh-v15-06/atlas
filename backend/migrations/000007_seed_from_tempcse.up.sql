@@ -10,7 +10,7 @@ INSERT INTO metric_sources (id, code, name) VALUES ('44444444-4444-4444-4444-444
 
 -- 2. Faculty & User Accounts
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('af3db2f6-2cd3-587e-9762-0f94be8eb674', 'lalit@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Prof. Lalit Kumar Awasthi', TRUE, TRUE)
+VALUES ('af3db2f6-2cd3-587e-9762-0f94be8eb674', 'lalit@nith.ac.in', '$2b$08$B0m3H4lUCQDvrlND.oUu/uVtJ0dL99sjdz.e1cajVkcPMaoQzM41i', 'Prof. Lalit Kumar Awasthi', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('af3db2f6-2cd3-587e-9762-0f94be8eb674', '00000000-0000-0000-0000-000000000005')
@@ -23,7 +23,7 @@ VALUES ('bfb209c7-3e80-531b-ab07-7e9829b6f9be', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 1, 'faculty', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('bf67a867-677d-5795-b49a-59ca9b7f4708', 'kd@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr.(Mrs.) Kamlesh Dutta', TRUE, TRUE)
+VALUES ('bf67a867-677d-5795-b49a-59ca9b7f4708', 'kd@nith.ac.in', '$2b$08$fg0EFUcZh4Xx0GJvV8obROuKIfFiHoayUFKG3shWyU63tD5RcjnXa', 'Dr.(Mrs.) Kamlesh Dutta', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('bf67a867-677d-5795-b49a-59ca9b7f4708', '00000000-0000-0000-0000-000000000005')
@@ -36,7 +36,7 @@ VALUES ('33007428-2ecd-5b52-93aa-b6849142c098', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 2, 'faculty', '33007428-2ecd-5b52-93aa-b6849142c098') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('62bed2c9-f242-5555-ba4c-2497b12a30d2', 'teek@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. T P Sharma', TRUE, TRUE)
+VALUES ('62bed2c9-f242-5555-ba4c-2497b12a30d2', 'teek@nith.ac.in', '$2b$08$/qe3UpfK2PdDOwF1BiPOFuD5oFGMgxug.uNDlfpJGvzIt3FvlphSC', 'Dr. T P Sharma', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('62bed2c9-f242-5555-ba4c-2497b12a30d2', '00000000-0000-0000-0000-000000000005')
@@ -49,7 +49,7 @@ VALUES ('8f3440cb-d43b-5454-a7fd-9f9179831f9f', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 3, 'faculty', '8f3440cb-d43b-5454-a7fd-9f9179831f9f') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('cd1b6d9c-1170-58fa-aad0-dba1ef327a42', 'sid@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Siddhartha Chauhan', TRUE, TRUE)
+VALUES ('cd1b6d9c-1170-58fa-aad0-dba1ef327a42', 'sid@nith.ac.in', '$2b$08$C92hXHuOA.Miwq2aBdVSluwoK6KwoKes/WbiyMURYoDqlr317FtPO', 'Dr. Siddhartha Chauhan', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('cd1b6d9c-1170-58fa-aad0-dba1ef327a42', '00000000-0000-0000-0000-000000000005')
@@ -62,7 +62,7 @@ VALUES ('9cf82300-a051-548f-b5b1-f2dfd9a1f263', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 4, 'faculty', '9cf82300-a051-548f-b5b1-f2dfd9a1f263') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('cdc5ffcd-fae3-59c2-a146-10ef5299328b', 'naveen@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Naveen Chauhan', TRUE, TRUE)
+VALUES ('cdc5ffcd-fae3-59c2-a146-10ef5299328b', 'naveen@nith.ac.in', '$2b$08$d33Q4RoYw/EPXBeZTp6mL.k5QKJeP1sWsSdCsynRMbP7dWIFnQ3cC', 'Dr. Naveen Chauhan', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('cdc5ffcd-fae3-59c2-a146-10ef5299328b', '00000000-0000-0000-0000-000000000005')
@@ -75,7 +75,7 @@ VALUES ('3d84f2ba-e5ae-5995-90ed-576fc675f3e2', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 5, 'faculty', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('4a9619c2-2222-5925-b200-d08ef6cf287c', 'pardeep@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Pardeep Singh', TRUE, TRUE)
+VALUES ('4a9619c2-2222-5925-b200-d08ef6cf287c', 'pardeep@nith.ac.in', '$2b$08$hi0oPS7g6p9VYmMogUgPr.Co3VeaoEZ9aZe3DWxGILYDJosUjjqk6', 'Dr. Pardeep Singh', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('4a9619c2-2222-5925-b200-d08ef6cf287c', '00000000-0000-0000-0000-000000000005')
@@ -88,7 +88,7 @@ VALUES ('4a251956-1179-50e2-bf7e-f3be7d5574e2', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 7, 'faculty', '4a251956-1179-50e2-bf7e-f3be7d5574e2') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('43d5b4be-369a-5ed7-a68d-e79cbda8cfc7', 'rajeev@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Rajeev Kumar', TRUE, TRUE)
+VALUES ('43d5b4be-369a-5ed7-a68d-e79cbda8cfc7', 'rajeev@nith.ac.in', '$2b$08$5hDEu5Kul/Mzet2Ie1BhlON9b4MVuYhC5i6cPo4KdJo3a0ChebdbS', 'Dr. Rajeev Kumar', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('43d5b4be-369a-5ed7-a68d-e79cbda8cfc7', '00000000-0000-0000-0000-000000000005')
@@ -101,7 +101,7 @@ VALUES ('8baebe79-6e19-545b-a306-0d8b8ca2382b', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 9, 'faculty', '8baebe79-6e19-545b-a306-0d8b8ca2382b') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('74bc7fb8-fd39-541b-9bc6-b3773b778f9f', 'nitin@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Nitin Gupta', TRUE, TRUE)
+VALUES ('74bc7fb8-fd39-541b-9bc6-b3773b778f9f', 'nitin@nith.ac.in', '$2b$08$vINihUmTOmKF.7bWTYSnnevKZKLnjotbefW8vhiKV9aKImG033Llm', 'Dr. Nitin Gupta', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('74bc7fb8-fd39-541b-9bc6-b3773b778f9f', '00000000-0000-0000-0000-000000000005')
@@ -114,7 +114,7 @@ VALUES ('6ba9979b-078d-563a-ae15-44354e3c8fb0', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 10, 'faculty', '6ba9979b-078d-563a-ae15-44354e3c8fb0') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('8ae5458d-b4aa-59ec-8700-d7cde7f8dcf0', 'dpm@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Dharmendra Prasad Mahato', TRUE, TRUE)
+VALUES ('8ae5458d-b4aa-59ec-8700-d7cde7f8dcf0', 'dpm@nith.ac.in', '$2b$08$qjahCSfBNgyrGCa3fQkYEOrPxdFHGhuFRKFh14aezRzgAybbEW.Ma', 'Dr. Dharmendra Prasad Mahato', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('8ae5458d-b4aa-59ec-8700-d7cde7f8dcf0', '00000000-0000-0000-0000-000000000005')
@@ -127,7 +127,7 @@ VALUES ('6fca9444-24e9-5214-8602-158f38f353ec', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 11, 'faculty', '6fca9444-24e9-5214-8602-158f38f353ec') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('701ce252-d532-5dba-a4db-efbe95afbb43', 'ayadav@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Arun Kumar Yadav', TRUE, TRUE)
+VALUES ('701ce252-d532-5dba-a4db-efbe95afbb43', 'ayadav@nith.ac.in', '$2b$08$wAXVtIILS7GinFHSu2js9uKGX6PMqNo58ffEo3q98u5ixF6Vy7/g2', 'Dr. Arun Kumar Yadav', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('701ce252-d532-5dba-a4db-efbe95afbb43', '00000000-0000-0000-0000-000000000005')
@@ -140,7 +140,7 @@ VALUES ('bab88791-e99c-561e-986e-2a99c8c84b19', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 12, 'faculty', 'bab88791-e99c-561e-986e-2a99c8c84b19') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('a0b27644-4248-5b61-8859-ba7bacc5953a', 'mohit@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Mohit Kumar', TRUE, TRUE)
+VALUES ('a0b27644-4248-5b61-8859-ba7bacc5953a', 'mohit@nith.ac.in', '$2b$08$9RRhIV97RPcqByuRJTbQe.I6t5YIRUZzvEXR11URPVIXvmc4Wq77a', 'Dr. Mohit Kumar', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('a0b27644-4248-5b61-8859-ba7bacc5953a', '00000000-0000-0000-0000-000000000005')
@@ -153,7 +153,7 @@ VALUES ('88d09aab-214e-509e-8038-c6bd8ddb63c7', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 13, 'faculty', '88d09aab-214e-509e-8038-c6bd8ddb63c7') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('7ce25482-843e-518f-ba7a-0f1389cdbb10', 'jyoti.s@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Jyoti Srivastava', TRUE, TRUE)
+VALUES ('7ce25482-843e-518f-ba7a-0f1389cdbb10', 'jyoti.s@nith.ac.in', '$2b$08$9Qz1N8yzx96EkDaiFs.1QOPTWQ4Eiakxqj/3pYxuNaZZQ/gvX1AcK', 'Dr. Jyoti Srivastava', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('7ce25482-843e-518f-ba7a-0f1389cdbb10', '00000000-0000-0000-0000-000000000005')
@@ -166,7 +166,7 @@ VALUES ('e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 14, 'faculty', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('96be07b4-21c6-5b54-b351-40ce7ce6bd7a', 'dr.priyanka@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Priyanka', TRUE, TRUE)
+VALUES ('96be07b4-21c6-5b54-b351-40ce7ce6bd7a', 'dr.priyanka@nith.ac.in', '$2b$08$8dVf6xCjSE14Falp4wGiLuyWj4kptcqViqYQFP6rlbZMKamGPGfIK', 'Dr. Priyanka', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('96be07b4-21c6-5b54-b351-40ce7ce6bd7a', '00000000-0000-0000-0000-000000000005')
@@ -179,7 +179,7 @@ VALUES ('7ea23dd5-a666-543f-b04d-fdc4563b500c', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 15, 'faculty', '7ea23dd5-a666-543f-b04d-fdc4563b500c') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('29b6e7b6-3075-5862-ab9f-6155b18fec08', 'sangeetas@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Sangeeta Sharma', TRUE, TRUE)
+VALUES ('29b6e7b6-3075-5862-ab9f-6155b18fec08', 'sangeetas@nith.ac.in', '$2b$08$Ws.qteyJhRGqYJc6tymHU.pAb.o4GGpCdIqyxJ0SUTrO6MXbE0KVu', 'Dr. Sangeeta Sharma', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('29b6e7b6-3075-5862-ab9f-6155b18fec08', '00000000-0000-0000-0000-000000000005')
@@ -192,7 +192,7 @@ VALUES ('f78d864c-94e1-5cdf-9672-b2c891bb2abb', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 16, 'faculty', 'f78d864c-94e1-5cdf-9672-b2c891bb2abb') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('102119ea-79bc-56e7-831a-2ba9a57a0adf', 'mkhalid@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Mohammad Khalid Pandit', TRUE, TRUE)
+VALUES ('102119ea-79bc-56e7-831a-2ba9a57a0adf', 'mkhalid@nith.ac.in', '$2b$08$.pKetMgFcleqnuFc/82j0ejFdMzRyQsihSgAyCoT9CWgSXePlTAsG', 'Dr. Mohammad Khalid Pandit', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('102119ea-79bc-56e7-831a-2ba9a57a0adf', '00000000-0000-0000-0000-000000000005')
@@ -205,7 +205,7 @@ VALUES ('3d607ef3-b375-5ece-9f8b-84feb2ed4a16', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 17, 'faculty', '3d607ef3-b375-5ece-9f8b-84feb2ed4a16') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('f4f65c47-3b55-58c2-9f92-0e924244ec4c', 'ajaymallick@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Ajay Kumar Mallick', TRUE, TRUE)
+VALUES ('f4f65c47-3b55-58c2-9f92-0e924244ec4c', 'ajaymallick@nith.ac.in', '$2b$08$28CAXqZrCDDNrWP.jfM1uu2DMw4G24rjVeVuFbZAgfkRxoyaAV0MG', 'Dr. Ajay Kumar Mallick', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('f4f65c47-3b55-58c2-9f92-0e924244ec4c', '00000000-0000-0000-0000-000000000005')
@@ -218,7 +218,7 @@ VALUES ('0bdba158-8848-57a1-8223-ccdf001d9c5b', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 18, 'faculty', '0bdba158-8848-57a1-8223-ccdf001d9c5b') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('03b3b4aa-7e39-5b53-952e-6da1e6ff061b', 'robin.bhadoria@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Robin Singh Bhadoria', TRUE, TRUE)
+VALUES ('03b3b4aa-7e39-5b53-952e-6da1e6ff061b', 'robin.bhadoria@nith.ac.in', '$2b$08$Oa02bI7BEgZ6f91LJGWa8e24nFqnmiBz/Kg1Q.uS1AKceI3faFYWa', 'Dr. Robin Singh Bhadoria', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('03b3b4aa-7e39-5b53-952e-6da1e6ff061b', '00000000-0000-0000-0000-000000000005')
@@ -231,7 +231,7 @@ VALUES ('7f377458-de96-52a7-b8cf-04e50369469a', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 20, 'faculty', '7f377458-de96-52a7-b8cf-04e50369469a') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('5fd276c6-71bb-5513-9fed-b3ca64ea4db6', 'ram.sharma@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Ram Prakash Sharma', TRUE, TRUE)
+VALUES ('5fd276c6-71bb-5513-9fed-b3ca64ea4db6', 'ram.sharma@nith.ac.in', '$2b$08$NptX98i0o0hhaRGAAqTJRO2DMJsGIJ8w.kxgug17pTjjM/1hbjBha', 'Dr. Ram Prakash Sharma', TRUE, TRUE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('5fd276c6-71bb-5513-9fed-b3ca64ea4db6', '00000000-0000-0000-0000-000000000005')
@@ -244,117 +244,117 @@ VALUES ('56b955eb-618e-5dcb-ac02-f8404a61a048', '22222222-2222-2222-2222-2222222
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 21, 'faculty', '56b955eb-618e-5dcb-ac02-f8404a61a048') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('d55bcde5-9942-5320-b773-170dbb81a546', 'pkdhiman@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Pushpender Kumar', TRUE, FALSE)
+VALUES ('d55bcde5-9942-5320-b773-170dbb81a546', 'pkdhiman@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Dr. Pushpender Kumar', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('d55bcde5-9942-5320-b773-170dbb81a546', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('8f8cf312-11a9-55d1-b838-9fbb14edb2f4', 'd55bcde5-9942-5320-b773-170dbb81a546', 'TF042', 'pkdhiman@nith.ac.in', 'Dr. Pushpender Kumar', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427469/g8lirzlgin9kliyeyzlt.jpg', 'fac-42', 0, 'Wireless sensor networks')
+VALUES ('8f8cf312-11a9-55d1-b838-9fbb14edb2f4', 'd55bcde5-9942-5320-b773-170dbb81a546', 'TF042', 'pkdhiman@nith.ac.in', 'Dr. Pushpender Kumar', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730566751/pushpendra_j9zwft.jpg', 'fac-42', 0, 'Wireless sensor networks')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('8f8cf312-11a9-55d1-b838-9fbb14edb2f4', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 42, 'faculty', '8f8cf312-11a9-55d1-b838-9fbb14edb2f4') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('2f71f3e7-ed78-5f1f-9efe-e7ef8fa8d8b9', 'poojas@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Pooja Sharma', TRUE, FALSE)
+VALUES ('2f71f3e7-ed78-5f1f-9efe-e7ef8fa8d8b9', 'poojas@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Dr. Pooja Sharma', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('2f71f3e7-ed78-5f1f-9efe-e7ef8fa8d8b9', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('e0f136b4-3be3-52a4-8ae0-fbd435e22d98', '2f71f3e7-ed78-5f1f-9efe-e7ef8fa8d8b9', 'TF043', 'poojas@nith.ac.in', 'Dr. Pooja Sharma', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427448/kfeceomwr0qalyzljzry.jpg', 'https://www.linkedin.com/in/pooja-sharma-91a6b9269', 0, 'Software Engineering, software process improvement, Fault prediction, Machine learning')
+VALUES ('e0f136b4-3be3-52a4-8ae0-fbd435e22d98', '2f71f3e7-ed78-5f1f-9efe-e7ef8fa8d8b9', 'TF043', 'poojas@nith.ac.in', 'Dr. Pooja Sharma', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dha8atrgz/image/upload/v1730799923/WhatsApp_Image_2024-11-04_at_11.01.53_AM_rrb7hg.jpg', 'https://www.linkedin.com/in/pooja-sharma-91a6b9269', 0, 'Software Engineering, software process improvement, Fault prediction, Machine learning')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('e0f136b4-3be3-52a4-8ae0-fbd435e22d98', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 43, 'faculty', 'e0f136b4-3be3-52a4-8ae0-fbd435e22d98') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('79568c4d-e456-54a1-b39c-bf38d6713a46', 'tanuj@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Tanuj Wala', TRUE, FALSE)
+VALUES ('79568c4d-e456-54a1-b39c-bf38d6713a46', 'tanuj@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Dr. Tanuj Wala', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('79568c4d-e456-54a1-b39c-bf38d6713a46', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('93a853b0-b5ce-5ed1-b715-f88f25ed9e76', '79568c4d-e456-54a1-b39c-bf38d6713a46', 'TF045', 'tanuj@nith.ac.in', 'Dr. Tanuj Wala', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427457/wrnsymglkoeywzn8a2df.jpg', 'http://linkedin.com/in/dr-tanuj-wala-380767114', 0, 'Wireless sensor networks, Efficient Data Handling in Internet of Things, Big Data.')
+VALUES ('93a853b0-b5ce-5ed1-b715-f88f25ed9e76', '79568c4d-e456-54a1-b39c-bf38d6713a46', 'TF045', 'tanuj@nith.ac.in', 'Dr. Tanuj Wala', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563085/tanuj_wala_hjzkiq.jpg', 'http://linkedin.com/in/dr-tanuj-wala-380767114', 0, 'Wireless sensor networks, Efficient Data Handling in Internet of Things, Big Data.')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('93a853b0-b5ce-5ed1-b715-f88f25ed9e76', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 45, 'faculty', '93a853b0-b5ce-5ed1-b715-f88f25ed9e76') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('d58a47c5-99d5-5db8-b861-838e336fa75a', 'mukulkmajhi@gmail.com', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Mukul Majhi', TRUE, FALSE)
+VALUES ('d58a47c5-99d5-5db8-b861-838e336fa75a', 'mukulkmajhi@gmail.com', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Dr. Mukul Majhi', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('d58a47c5-99d5-5db8-b861-838e336fa75a', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('02aa78ef-5966-5e7d-afd9-45f788cf1fdc', 'd58a47c5-99d5-5db8-b861-838e336fa75a', 'TF046', 'mukulkmajhi@gmail.com', 'Dr. Mukul Majhi', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427459/lvcxljuhrladsylnzno2.jpg', 'https://www.linkedin.com/in/dr-mukul-majhi-17b455130', 0, 'Content Based Image Retrieval, Image Security, AI&ML')
+VALUES ('02aa78ef-5966-5e7d-afd9-45f788cf1fdc', 'd58a47c5-99d5-5db8-b861-838e336fa75a', 'TF046', 'mukulkmajhi@gmail.com', 'Dr. Mukul Majhi', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563155/mukul_majhi_wb8okx.jpg', 'https://www.linkedin.com/in/dr-mukul-majhi-17b455130', 0, 'Content Based Image Retrieval, Image Security, AI&ML')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('02aa78ef-5966-5e7d-afd9-45f788cf1fdc', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 46, 'faculty', '02aa78ef-5966-5e7d-afd9-45f788cf1fdc') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('d2d7d0c6-5730-57d3-99a5-6a060afa078d', 'richa_cs@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Dr. Richa', TRUE, FALSE)
+VALUES ('d2d7d0c6-5730-57d3-99a5-6a060afa078d', 'richa_cs@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Dr. Richa', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('d2d7d0c6-5730-57d3-99a5-6a060afa078d', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('97ce26f7-28ab-5679-9876-215ac22d6cff', 'd2d7d0c6-5730-57d3-99a5-6a060afa078d', 'TF047', 'richa_cs@nith.ac.in', 'Dr. Richa', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427461/vwgon5vpkycdpavdvo6i.jpg', 'www.linkedin.com/in/dr-richa-sharma-81a24b166', 0, 'Internet of things, Internet of vehicles, fault tolerance for data dissemination in Internet of vehicles, Wireless sensor network')
+VALUES ('97ce26f7-28ab-5679-9876-215ac22d6cff', 'd2d7d0c6-5730-57d3-99a5-6a060afa078d', 'TF047', 'richa_cs@nith.ac.in', 'Dr. Richa', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563293/richa_shar_a_xz0fsl.jpg', 'www.linkedin.com/in/dr-richa-sharma-81a24b166', 0, 'Internet of things, Internet of vehicles, fault tolerance for data dissemination in Internet of vehicles, Wireless sensor network')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('97ce26f7-28ab-5679-9876-215ac22d6cff', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 47, 'faculty', '97ce26f7-28ab-5679-9876-215ac22d6cff') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('5f4f3f9c-e550-5f6e-8408-a890923eab8a', 'pooja_phdcse@nith.ac.ini', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Mrs. Pooja Rani', TRUE, FALSE)
+VALUES ('5f4f3f9c-e550-5f6e-8408-a890923eab8a', 'pooja_phdcse@nith.ac.ini', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Mrs. Pooja Rani', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('5f4f3f9c-e550-5f6e-8408-a890923eab8a', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('8986b4f9-5c4c-5047-8e5f-cde02c59b83a', '5f4f3f9c-e550-5f6e-8408-a890923eab8a', 'TF048', 'pooja_phdcse@nith.ac.ini', 'Mrs. Pooja Rani', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427463/vef2u3xwjndf2orq8y6p.jpg', 'https://www.linkedin.com/in/pooja-rani-585b45ba', 0, 'AI, machine learning, deep learning, and image processing')
+VALUES ('8986b4f9-5c4c-5047-8e5f-cde02c59b83a', '5f4f3f9c-e550-5f6e-8408-a890923eab8a', 'TF048', 'pooja_phdcse@nith.ac.ini', 'Mrs. Pooja Rani', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563357/pooja_rani_xficdc.jpg', 'https://www.linkedin.com/in/pooja-rani-585b45ba', 0, 'AI, machine learning, deep learning, and image processing')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('8986b4f9-5c4c-5047-8e5f-cde02c59b83a', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 48, 'faculty', '8986b4f9-5c4c-5047-8e5f-cde02c59b83a') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('b095649f-6a68-5169-9143-4e85dd3fd6c7', 'pratibhasingh@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Mrs. Pratibha Singh', TRUE, FALSE)
+VALUES ('b095649f-6a68-5169-9143-4e85dd3fd6c7', 'pratibhasingh@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Mrs. Pratibha Singh', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('b095649f-6a68-5169-9143-4e85dd3fd6c7', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('0494529c-89b3-5038-9c24-c69fdd82942f', 'b095649f-6a68-5169-9143-4e85dd3fd6c7', 'TF049', 'pratibhasingh@nith.ac.in', 'Mrs. Pratibha Singh', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427465/gpskbf6mygopmtbnwfep.jpg', 'https://www.linkedin.com/in/pratibha-singh-13a100231', 0, 'Artificial intelligence')
+VALUES ('0494529c-89b3-5038-9c24-c69fdd82942f', 'b095649f-6a68-5169-9143-4e85dd3fd6c7', 'TF049', 'pratibhasingh@nith.ac.in', 'Mrs. Pratibha Singh', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563421/pratibha_cytkck.jpg', 'https://www.linkedin.com/in/pratibha-singh-13a100231', 0, 'Artificial intelligence')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('0494529c-89b3-5038-9c24-c69fdd82942f', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 49, 'faculty', '0494529c-89b3-5038-9c24-c69fdd82942f') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('a6dcead1-90de-5068-b4b7-a61c0ac20ec0', 'keshavkaundal@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Mr. Keshav Kaundal', TRUE, FALSE)
+VALUES ('a6dcead1-90de-5068-b4b7-a61c0ac20ec0', 'keshavkaundal@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Mr. Keshav Kaundal', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('a6dcead1-90de-5068-b4b7-a61c0ac20ec0', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('e0a19ad4-16dc-5113-8e43-588121443653', 'a6dcead1-90de-5068-b4b7-a61c0ac20ec0', 'TF050', 'keshavkaundal@nith.ac.in', 'Mr. Keshav Kaundal', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427471/dpdxco6obz2lgntw60hz.jpg', 'http://linkedin.com/in/keshav-kaundal-18b2aa147', 0, 'Internet of Things')
+VALUES ('e0a19ad4-16dc-5113-8e43-588121443653', 'a6dcead1-90de-5068-b4b7-a61c0ac20ec0', 'TF050', 'keshavkaundal@nith.ac.in', 'Mr. Keshav Kaundal', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730566898/keshav_y1fmvr.jpg', 'http://linkedin.com/in/keshav-kaundal-18b2aa147', 0, 'Internet of Things')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('e0a19ad4-16dc-5113-8e43-588121443653', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
 ON CONFLICT DO NOTHING;
 INSERT INTO legacy_id_maps (source_table, legacy_int_id, target_table, target_uuid) VALUES ('faculty', 50, 'faculty', 'e0a19ad4-16dc-5113-8e43-588121443653') ON CONFLICT (source_table, legacy_int_id) DO NOTHING;
 INSERT INTO users (id, email, password_hash, full_name, is_active, first_login)
-VALUES ('acd8be77-9cbe-5e61-9f5e-e3643a8faaa3', 'meenakshinayyer@nith.ac.in', '$2a$10$NkXIIu/dHZsBCyE4TsgJcOSrzctmqz00qwXSIhW6mmmrvKeUaI7GC', 'Mrs. Meenakshi Nayyer', TRUE, FALSE)
+VALUES ('acd8be77-9cbe-5e61-9f5e-e3643a8faaa3', 'meenakshinayyer@nith.ac.in', '$2a$10$vI8aWBnW3fID.ZQ4/zo1G.q1lRps.9cGLcZEiGDMVr5yUP1KUOYeq', 'Mrs. Meenakshi Nayyer', TRUE, FALSE)
 ON CONFLICT (email) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, password_hash = EXCLUDED.password_hash;
 INSERT INTO user_roles (user_id, role_id)
 VALUES ('acd8be77-9cbe-5e61-9f5e-e3643a8faaa3', '00000000-0000-0000-0000-000000000005')
 ON CONFLICT (user_id, role_id) DO NOTHING;
 INSERT INTO faculty (id, user_id, employee_code, official_email, full_name, designation, is_permanent, phone, photo_url, portfolio_slug, sort_order, research_interests)
-VALUES ('94f282ed-eed6-5d94-b67c-e524cfb954fa', 'acd8be77-9cbe-5e61-9f5e-e3643a8faaa3', 'TF051', 'meenakshinayyer@nith.ac.in', 'Mrs. Meenakshi Nayyer', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427467/wsxhohzunkerdwfjjpyv.jpg', 'https://www.linkedin.com/in/meenakshi-nayyer-48251024', 0, 'WSN, Software Engineering and Testing')
+VALUES ('94f282ed-eed6-5d94-b67c-e524cfb954fa', 'acd8be77-9cbe-5e61-9f5e-e3643a8faaa3', 'TF051', 'meenakshinayyer@nith.ac.in', 'Mrs. Meenakshi Nayyer', 'Assistant Professor', FALSE, '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1730563500/meenkashi_wiegxb.jpg', 'https://www.linkedin.com/in/meenakshi-nayyer-48251024', 0, 'WSN, Software Engineering and Testing')
 ON CONFLICT (employee_code) WHERE deleted_at IS NULL DO UPDATE SET full_name = EXCLUDED.full_name, designation = EXCLUDED.designation, photo_url = EXCLUDED.photo_url, research_interests = EXCLUDED.research_interests;
 INSERT INTO faculty_appointments (faculty_id, department_id, designation, is_primary, start_date)
 VALUES ('94f282ed-eed6-5d94-b67c-e524cfb954fa', '22222222-2222-2222-2222-222222222222', 'Assistant Professor', TRUE, '2020-01-01')
@@ -1253,6 +1253,2414 @@ INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume,
 VALUES ('1ae5db5f-e03f-500d-b158-5f3c7c9e24bd', 'Mobility Management in Mobile Computing Environments', 'CONFERENCE', '10.1007/s00779-010-0328-2', NULL, 'Asian Conference on Intelligent Systems & Networks (AISN-2006)', '', '', '250-258', 2006, 'Scopus', 'T', 'Lalit Kumar Awasthi', 'PUBLISHED')
 ON CONFLICT (id) DO NOTHING;
 INSERT INTO publication_departments (publication_id, department_id) VALUES ('1ae5db5f-e03f-500d-b158-5f3c7c9e24bd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('bb38e77a-27d4-5f0e-acca-e5104a955e1e', 'Enhanced Query Processing Technique for Location based Services', 'CONFERENCE', '10.1109/MobServ.2012.15', NULL, 'International Conference on Information Systems and Technology', '', '', '', 2006, 'Scopus', 'T', 'Singh, Anurag;Chand, Narottam;Awasthi, Lalit Kr', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('bb38e77a-27d4-5f0e-acca-e5104a955e1e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f1a6148b-52ac-5871-b03a-a60eefaff6c7', 'New Routing Protocol for Wireless Sensor Networks', 'CONFERENCE', '10.3390/s91108399', NULL, 'National Conference on Emerging Trends in Computing and Communication (ETCC’07)', '', '', '', 2007, 'Scopus', 'T', 'Agarwal, Khushboo;Awasthi, Lalit Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f1a6148b-52ac-5871-b03a-a60eefaff6c7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4614baf7-53b3-57f3-925b-fa55941a2779', 'Data Indexing and Scheduling for Heterogeneous Multiple Broadcast Channels', 'CONFERENCE', '10.1109/MDM.2004.1263073', NULL, 'National Conference on Emerging Trends in Computing and Communication (ETCC’07)', '', '', '', 2007, 'Scopus', 'T', 'Pal, Yash;Awasthi, Lalit K.;Singh, A. J.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4614baf7-53b3-57f3-925b-fa55941a2779', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('940e0190-caa3-5c36-80c2-8f44c0c385c5', 'Data Replication in Mobile Ad hoc Networks', 'CONFERENCE', NULL, NULL, 'National Conference on Emerging Trends in Computing and Communication (ETCC’07)', '', '', '', 2007, 'Scopus', 'T', 'Chauhan, Naveen;Awasthi, L. K.;Chand, Narottam', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('940e0190-caa3-5c36-80c2-8f44c0c385c5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('520ff9f4-bc26-5cc5-9013-f9eeb88723ca', 'Peer Enterprises: Possibilities, Challenges and Some Ideas Towards Their Realization', 'CONFERENCE', '10.1007/11943952_58', NULL, 'In OTM Confederated International Conferences" On the Move to Meaningful Internet Systems"', '', '', '1011-1020', 2007, 'Other', 'T', 'D. K. Jain and Lalit Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('520ff9f4-bc26-5cc5-9013-f9eeb88723ca', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('895b55be-7ed7-5059-8324-660444c41646', 'Challenges in Check pointing Ad hoc Networks', 'CONFERENCE', '10.1504/IJHPCN.2018.089888', NULL, 'International Conference on Information Processing (ICIP), pp. 288 - 297', '', '', '288-297', 2007, 'Scopus', 'T', 'Yash Pal, Lalit Awasthi, and A.J. Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('895b55be-7ed7-5059-8324-660444c41646', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d43a18d9-35aa-5758-a980-1af35aa0fb98', 'A Secure and Highly Available Architecture for SNMP Based Monitoring of Network Devices', 'CONFERENCE', '10.1109/ISCC.2009.5202298', NULL, 'International Conference on Network Security (ICON’07)', '', '', '', 2009, 'Scopus', 'T', 'Gupta, A., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d43a18d9-35aa-5758-a980-1af35aa0fb98', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('cdafd286-f333-500a-8802-33b29d57741e', 'NeighborTrust: A trust-based scheme for countering Distributed Denial-of-Service attacks in P2P networks', 'CONFERENCE', '10.1109/ICDCN.2008.4772644', NULL, '16th IEEE International Conference on Networks, New Delhi, India', '', '', '', 2008, 'Other', 'T', 'Awasthi, Srikanth R.L.K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('cdafd286-f333-500a-8802-33b29d57741e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('19f33f5d-adf9-56a0-8d5b-22fdd985dfa9', 'Enhanced AODV routing protocol for Ad hoc networks', 'CONFERENCE', '10.1109/ICDCN.2008.4772575', NULL, '16th IEEE International Conference on Networks', '', '', '', 2008, 'Other', 'T', 'Amrik Singh, Lalit K Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('19f33f5d-adf9-56a0-8d5b-22fdd985dfa9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8e109ed6-2e45-5524-8148-6f196e223713', 'Hybrid Multicast Routing Protocol for MANENTs using Multipoint Relay', 'CONFERENCE', '10.1109/WNCG.2013.6724255', NULL, 'International Conference on Wireless Networks & Embedded Systems (WECON 2008)', '', '', '235-237', 2008, 'Scopus', 'T', 'Gupta, A., Malhotra, D., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8e109ed6-2e45-5524-8148-6f196e223713', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ca45831f-3542-5adb-8922-ce4a0dbcfd24', 'Node-to-node Activation Scheme for Energy Saving in Object Tracking Sensor Networks', 'CONFERENCE', '10.1109/ICET.2009.4809186', NULL, 'International Conference on Wireless Networks & Embedded Systems (WECON 2008)', '', '', '182-184', 2008, 'Scopus', 'T', 'Agarwal, K., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ca45831f-3542-5adb-8922-ce4a0dbcfd24', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b2c3f8a6-7768-5e7d-b386-2d4eaffc6f2f', 'Parch: A Peer-to-Peer Based Email Archival Application', 'CONFERENCE', NULL, NULL, 'International Conference on Data Management (ICDM’08)', '', '', '622-630', 2008, 'Scopus', 'T', 'Ankur Gupta and Lalit. Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b2c3f8a6-7768-5e7d-b386-2d4eaffc6f2f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('81465738-346c-5919-a4e8-7123bf267d01', 'Multicast Routing Protocol for MANET: A Survey', 'CONFERENCE', '10.1109/COMST.2008.4796928', NULL, 'National Conference FCPC’ 09 at H.I.E.T', '', '', '', 2009, 'Other', 'T', 'Faculty Authors', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('81465738-346c-5919-a4e8-7123bf267d01', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0fef78e1-d3a0-5320-a754-a4817a1649cf', 'Peer enterprises: A viable alternative to Cloud computing?', 'CONFERENCE', '10.1109/ICDAC.2009.5439456', NULL, '2009 IEEE International Conference on Internet Multimedia Services Architecture and Applications (IMSAA)', '', '', '', 2009, 'Other', 'T', 'Chauhan, Naveen;Awasthi, Lalit Kumar;Chand, Narottam;Joshi, R. C.;Mishra, Manoj', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0fef78e1-d3a0-5320-a754-a4817a1649cf', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('20500cff-c1d4-5778-9319-32f8d14a3eef', 'Cooperative data caching with prefetching in mobile ad-hoc networks', 'CONFERENCE', '10.1109/AHICI.2009.5340352', NULL, 'First Asian Himalayas International Conference on Internet', '', '', '', 2009, 'Other', 'T', 'Naveen Chauhan, L.K. Awasthi, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('20500cff-c1d4-5778-9319-32f8d14a3eef', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('96c0acd3-5d50-5b1a-82f6-b098c0fa5bab', 'Energy Efficient Object Tracking Sensor Network', 'CONFERENCE', '10.1109/JSEN.2010.5676238', NULL, '5th International Conference on Intelligent Sensors, Sensor Networks and Information Processing - Symposium on Adaptive Sensing, Control, and Optimization in Sensor Networks (ISSNIP 2009)', '', '', '', 2009, 'Scopus', 'T', 'Yash Pal, A. J. Singh and Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('96c0acd3-5d50-5b1a-82f6-b098c0fa5bab', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8d498bf9-85ee-514d-a3be-f0eb71c3aad5', 'Data Aggregation in Object Tracking Sensor Network with Node-to-Node Activation Scheme', 'CONFERENCE', NULL, NULL, 'International Conference on Global Computing and Communication', '', '', '13-18', 2009, 'Scopus', 'T', 'Amrik Singh and Lalit Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8d498bf9-85ee-514d-a3be-f0eb71c3aad5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('110262d7-934e-5fc9-b576-56b9da8dceba', 'Research Directions in Mobile Databases', 'CONFERENCE', '10.1145/1024694.1024708', NULL, 'International Conference on Pervasive Computing and Governance (ICPCG 09)', '', '', '', 2009, 'Scopus', 'T', 'Kamal Kant and Lalit Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('110262d7-934e-5fc9-b576-56b9da8dceba', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8e24395c-1608-5497-a7b0-28d687c68836', 'A comparative molecular modeling study of mitoxantrone and its analogues with 5’-CCCGGG-3’ and 5’-ATCGAT-3’ DNA hexamer sequences', 'CONFERENCE', '10.1007/978-3-642-03547-0_40', NULL, 'International Conference on frontiers in prevention, diagnosis and therapy of cancer (FPDTC – 2009)', '', '', '422-433', 2009, 'Scopus', 'T', 'Yash Pal, Lalit Kumar Awasthi and A. J. Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8e24395c-1608-5497-a7b0-28d687c68836', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4331cabf-f2dd-53e7-aa79-a96ff79199bf', 'Maximize the Lifetime of Object Tracking Sensor Network with Node-to-Node Activation Scheme', 'CONFERENCE', NULL, NULL, 'In 2009 IEEE International Advance Computing Conference', '', '', '1200-1205', 2009, 'Other', 'T', 'Awasthi, P., Dogra, S., Awasthi, L. K., & Barthwal, R.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4331cabf-f2dd-53e7-aa79-a96ff79199bf', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1679750a-d0f3-57b0-903d-69631e890b39', 'Stable link based multicast routing scheme for MANET', 'CONFERENCE', '10.1109/INDCON.2010.5701982', NULL, 'International Conference on Computational Intelligence and Communication Networks', '', '', '248-252', 2009, 'Scopus', 'T', 'Faculty Authors', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1679750a-d0f3-57b0-903d-69631e890b39', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0ea073fa-ef90-5770-9f1a-64b1345b1941', 'Node Authentication in WSN using Quantum Cryptography', 'CONFERENCE', '10.1088/1367-2630/ad11b7', NULL, '3rd National Conference on Next-Generation Computing and Information Systems (NGCIS''10)', '', '', '46-59', 2010, 'Scopus', 'T', 'Chauhan, N., Awasthi, L. K., Chand, N., Joshi, R. C., & Mishra, M.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0ea073fa-ef90-5770-9f1a-64b1345b1941', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1eb743f1-54bf-55e1-9790-d8cee4f37ba3', 'A Multicast Routing Protocol for MANETS Based on Node Stability', 'CONFERENCE', '10.1109/CICN.2010.68', NULL, 'International Conference on Advances in Communication, Network, and Computing', '', '', '', 2010, 'Scopus', 'T', 'Anurag Singh, Srikanth R and Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1eb743f1-54bf-55e1-9790-d8cee4f37ba3', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('869f8a37-bef8-54d2-9a70-c737732d14c1', 'Efficient Traffic Protocol for Highly Populated Cities', 'CONFERENCE', '10.1109/ICC.2013.6655141', NULL, '3rd International Conference Transport Science and Technology Congress (TRANSTEC 2010)', '', '', '', 2010, 'Scopus', 'T', 'Srikanth R, Anurag Singh and Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('869f8a37-bef8-54d2-9a70-c737732d14c1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('24d55a66-c465-5814-8766-d771091890be', 'QoS in Wireless Sensor Network with Node-to-Node Activation Scheme', 'CONFERENCE', '10.1016/j.comnet.2011.03.016', NULL, 'International Conference on Data Management (ICDM 2010) at Institute of Management Technology (IMT)', '', '', '46-59', 2010, 'Scopus', 'T', 'Chauhan, N., Awasthi, L. K., Chand, N., & Chugh, A.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('24d55a66-c465-5814-8766-d771091890be', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f239a47a-148f-5f44-8775-cbf2189d68b9', 'A Survey on Routing Protocols for MANETs and Comparisons', 'CONFERENCE', '10.5120/19358-0834', NULL, 'International Conference on Recent Trends in Soft Computing and Information Technology (RTSCIT-09)', '', '', '405-411', 2010, 'Scopus', 'T', 'Kamal Kant and Lalit Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f239a47a-148f-5f44-8775-cbf2189d68b9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a33f3ff5-121b-559f-bcab-fa9297963481', 'Enhancing Cache Invalidation Techniques in IVANET', 'CONFERENCE', '10.1109/CSNT.2011.35', NULL, 'International Conference on Communication Systems and Network Technologies', '', '', '', 2010, 'Other', 'T', 'Choudhary, Anita;Govil, M. C.;Singh, Girdhari;Awasthi, Lalit K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a33f3ff5-121b-559f-bcab-fa9297963481', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('aa7aed56-54ab-5bdc-b9ef-93d3d65f1bc6', 'Voronoi-based Continuous Query Processing for Mobile Users', 'CONFERENCE', '10.1109/CSNT.2011.36', NULL, 'International Conference on Communication Systems and Network Technologies', '', '', '', 2011, 'Other', 'T', 'Dubey, Brij Bihari;Chauhan, Naveen;Chand, Narottam;Awasthi, Lalit Kr', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('aa7aed56-54ab-5bdc-b9ef-93d3d65f1bc6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('fca349bf-6dff-5048-a827-dd6b6fbc4ec8', 'NILDD: nearest intersection location dependent dissemination of traffic information in VANETs', 'CONFERENCE', '10.1109/SIBCON.2011.6072593', NULL, 'Proceedings of the 2011 International Conference on Communication, Computing & Security,', '', '', '', 2011, 'Scopus', 'T', 'Brij Bihari Dubey, Naveen Chauhan, Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('fca349bf-6dff-5048-a827-dd6b6fbc4ec8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d659548b-27fa-5e02-811b-10afd5b5b42c', 'A new mechanism to query latency minimization for cache invalidation in vehicular ad hoc networks', 'CONFERENCE', '10.1109/ICECTECH.2011.5941897', NULL, '3rd International Conference on Electronics Computer Technology', '', '', '250-253', 2011, 'Scopus', 'T', 'Babu Ram, Naveen Chauhan, Narottam Chand and L.K. Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d659548b-27fa-5e02-811b-10afd5b5b42c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4f2bd990-355f-5f2e-a35c-93014647a61c', 'A cooperative caching strategy in mobile ad hoc networks based on clusters', 'CONFERENCE', '10.1007/s11277-006-9238-z', NULL, 'Proceedings of the 2011 International Conference on Communication, Computing & Security', '', '', '17-20', 2011, 'Other', 'T', 'Naveen Chauhan, Lalit Kumar Awasthi, Narottam Chand, R. C. Joshi, Manoj Mishra', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4f2bd990-355f-5f2e-a35c-93014647a61c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1aeb83f9-d228-50fe-a05b-3f5e15d1e22c', 'Data Caching with Intelligent Prefetching in Mobile Ad Hoc Networks', 'CONFERENCE', '10.1109/CSNT.2011.22', NULL, 'International Conference on Communication Systems and Network Technologies', '', '', '71-75', 2011, 'Scopus', 'T', 'Naveen Chauhan, L.K. Awasthi and Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1aeb83f9-d228-50fe-a05b-3f5e15d1e22c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('fbd01cfd-c281-58a5-bd36-fcf0d2a1ce03', 'Performance comparisons and scheduling of load balancing strategy in Grid Computing', 'CONFERENCE', '10.1109/ETNCC.2011.6255939', NULL, 'International Conference on Emerging Trends in Networks and Computer Communications (ETNCC)', '', '', '', 2011, 'Scopus', 'T', 'Ram, Babu;Chauhan, Naveen;Chand, Narottam;Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('fbd01cfd-c281-58a5-bd36-fcf0d2a1ce03', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8daa2e7e-b6b1-53c4-9dbe-c8adfbe87e1c', 'Distributed Localization for Anisotropic Sensor Networks Using Spatial Clustering', 'CONFERENCE', '10.1007/978-3-642-29280-4_44', NULL, 'International Conference on Advanced Computing, Networking and Security', '', '', '375-380', 2011, 'Other', 'T', 'Chauhan, N., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8daa2e7e-b6b1-53c4-9dbe-c8adfbe87e1c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('eed5e198-6825-59b5-a86d-1ec32f306ffc', 'Global cooperative caching for Wireless Sensor Networks', 'CONFERENCE', '10.1109/WICT.2011.6141250', NULL, 'World Congress on Information and Communication Technologies', '', '', '235-239', 2011, 'Scopus', 'T', 'Naveen Chauhan, L.K. Awasthi, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('eed5e198-6825-59b5-a86d-1ec32f306ffc', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9f21ab00-a012-5df8-afd2-40b497f44385', 'Encryption based channel coding algorithm for secure SMS', 'CONFERENCE', '10.1109/WICT.2011.6141433', NULL, 'World Congress on Information and Communication Technologies', '', '', '1282-1287', 2011, 'Other', 'T', 'Ammari, H. M., & Das, S. K. LK Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9f21ab00-a012-5df8-afd2-40b497f44385', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4f15b0cb-4afd-52bf-8d5c-5af9141bf580', 'Joint Channel Coding and Cryptography for SMS', 'CONFERENCE', NULL, NULL, 'International Siberian Conference on Control and Communications (SIBCON)', '', '', '51-55', 2011, 'Other', 'T', 'Lakshmi Priya M.Lalit K. Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4f15b0cb-4afd-52bf-8d5c-5af9141bf580', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1d3598ad-ca9d-54dc-a096-60a618318551', 'Improving Fading Aware Routing with Circular Cache Layers in Wireless Sensor Networks', 'CONFERENCE', '10.1007/978-3-642-22606-9_40', NULL, 'International Conference on Contemporary Computing', '', '', '609-614', 2011, 'Other', 'T', 'Nanda, A. K., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1d3598ad-ca9d-54dc-a096-60a618318551', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('595e0d7c-1bad-549c-bb37-20578f9f532b', 'Cache Invalidation for Location dependent and independent data in IVANETS', 'CONFERENCE', '10.1007/978-3-642-22720-2_64', NULL, 'International Conference on Advances in Computing and Communications', '', '', '594-602', 2011, 'Other', 'T', 'Anurag Singh, Narottam Chand and Lalit Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('595e0d7c-1bad-549c-bb37-20578f9f532b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('cc2f6b32-56e3-5433-834b-04c6ad4d0f1c', 'Data Mining Techniques for Prefetching in Mobile Ad Hoc Networks', 'CONFERENCE', '10.1007/978-3-642-22577-2_79', NULL, 'International Conference on High Performance Architecture and Grid Computing', '', '', '594-602', 2011, 'Scopus', 'T', 'Naveen Chauhan, L. K. Awasthi & Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('cc2f6b32-56e3-5433-834b-04c6ad4d0f1c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8d06d9a5-c30b-5752-abc9-4f2cd9c33d0c', 'Cooperative Caching and Replacement in MANETs', 'CONFERENCE', NULL, NULL, 'International Conference on Mobile Communications, Networking and Applications (MobiCONA 2011)', '', '', '36-47', 2011, 'Other', 'T', 'Pant, S., Chauhan, N., Chand, N., Awasthi, L. K., & Dubey, B. B.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8d06d9a5-c30b-5752-abc9-4f2cd9c33d0c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5311ba0c-a0b0-5121-9a5f-900e01527923', 'Integrated Push Pull Algorithm with Accomplishment Assurance in VANET', 'CONFERENCE', '10.47164/ijngc.v3i3.38', NULL, 'International Conference on Advances in Computing and Communication (ICACC)', '', '', '274–287', 2011, 'Scopus', 'T', 'L. K. Awasthi, R. Srikanth', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5311ba0c-a0b0-5121-9a5f-900e01527923', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a8a737a6-aba7-5097-bbc6-7f91036a266c', 'TDMA Based MAC Layer Protocols for Wireless Sensor Networks: A Survey', 'CONFERENCE', '10.1109/WECON.2016.7993426', NULL, 'International Conference on Advances in Computing and Communication', '', '', '42-47', 2011, 'Scopus', 'T', 'Ram, B., Chauhan, N., Chand, N., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a8a737a6-aba7-5097-bbc6-7f91036a266c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('01ad22fc-eb11-536c-b406-4a99611ea22f', 'A Log Based Recovery Protocol for Mobile Distributed Computing Systems', 'CONFERENCE', NULL, NULL, 'International Conference on Advances in Computing and Communication (ICACC)', '', '', '206-215', 2011, 'Scopus', 'T', 'Babu Ram, Naveen Chauhan, Narottam Chand and Lalit Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('01ad22fc-eb11-536c-b406-4a99611ea22f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('76b48d56-6ef6-5c2f-ae89-369e4e6632de', 'Cooperative Caching Strategy in Mobile Ad Hoc Networks', 'CONFERENCE', '10.1007/978-3-642-19542-6_123', NULL, 'International Conference on Advances in Communication, Network, and Computing', '', '', '628-630', 2011, 'Other', 'T', 'Rajesh Sharma and Lalit Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('76b48d56-6ef6-5c2f-ae89-369e4e6632de', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ee517b2e-530a-5ea1-bc99-c87c5f2f1a1a', 'NILDD- Nearest Intersection Location Dependent Dissemination of Traffic Information in VANETs', 'CONFERENCE', '10.1145/1947940.1947961', NULL, 'International Conference on Communication, Computing & Security', '', '', '96-99', 2011, 'Scopus', 'T', 'Ashok Kumar Nanda and Lalit Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ee517b2e-530a-5ea1-bc99-c87c5f2f1a1a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('772a60c0-9335-5a02-81db-eee3c3ef92fe', 'NRNDD: Nearest Relay Node based Data Dissemination Technique for VANETs', 'CONFERENCE', '10.1016/j.comnet.2021.108097', NULL, 'International Conference on Information and Communication Technology for Competitive Strategies', '', '', '00-0006', 2014, 'Scopus', 'T', 'Brij Bihari Dubey, Naveen Chauhan, Narottam Chand, Lalit Kr. Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('772a60c0-9335-5a02-81db-eee3c3ef92fe', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('548a6e28-3fe8-5f94-8500-7dab9fc8b317', 'A Review Paper on IEEE 802.11 WLAN', 'CONFERENCE', '10.1007/978-81-322-1299-7_24', NULL, 'International Conference on Internet Computing and Information Communications', '', '', '251-256', 2014, 'Other', 'T', 'Choudhary, A., Govil, M. C., Singh, G., Awasthi, L. K., Pilli, E. S., & Kumar, N.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('548a6e28-3fe8-5f94-8500-7dab9fc8b317', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ccf09839-efa7-5df0-bf5b-015d6ef53d51', 'Solutions for security in mobile agent system', 'CONFERENCE', '10.1007/978-81-322-1299-7_10', NULL, 'International Conference on Internet Computing and Information Communications', '', '', '103-110', 2014, 'Other', 'T', 'Thakur Jawahar, Kalia Arvind and Awasthi Lalit', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ccf09839-efa7-5df0-bf5b-015d6ef53d51', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9fffb2c9-3b4b-5269-9ee3-bdcbee1ff699', 'Checkpointing based Rollback Recovery Techniques in Wireless Ad-hoc Networks', 'CONFERENCE', NULL, NULL, 'International Conference organized by (CMAI) and in academic participation with HELP University', '', '', '140-152', 2015, 'Scopus', 'T', 'Sharma, R., Awasthi, L. K., & Chauhan, N.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9fffb2c9-3b4b-5269-9ee3-bdcbee1ff699', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1e3ecabf-442a-5275-b5b2-add0f80c58b5', 'Cluster based coordinated Checkpointing in Wireless Adhoc Network', 'CONFERENCE', '10.1109/ICIIP.2015.7414769', NULL, 'Third International Conference on Image Information Processing (ICIIP)', '', '', '220-224', 2015, 'Other', 'T', 'Choudhary, A., Govil, M. C., Singh, G., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1e3ecabf-442a-5275-b5b2-add0f80c58b5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f1987d17-1424-5619-817f-0a2da32a96c5', 'Workflow scheduling algorithms in cloud environment: A review, taxonomy, and challenges', 'CONFERENCE', '10.1109/PDGC.2016.7913197', NULL, 'Fourth International Conference on Parallel, Distributed and Grid Computing', '', '', '617-624', 2016, 'Other', 'T', 'Aidan, Jagmeet Singh;Verma, Harsh Kumar;Awasthi, Lalit Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f1987d17-1424-5619-817f-0a2da32a96c5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7476be41-ad6e-53c6-ad93-2b10bc3ad688', 'Cluster-based coordinated checkpointing protocol in wireless ad-hoc networks', 'CONFERENCE', NULL, NULL, 'Third International Conference on Image Information Processing (ICIIP)', '', '', '220-224', 2016, 'Other', 'T', 'Sharma Abhilasha;Awasthi, Lalit Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7476be41-ad6e-53c6-ad93-2b10bc3ad688', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9ad9b7b9-3f32-5a9d-a4df-21e9342b835b', 'Energy-efficient resource allocation approaches with optimum virtual machine migrations in cloud environment', 'CONFERENCE', '10.1109/PDGC.2016.7913141', NULL, 'Fourth International Conference on Parallel, Distributed and Grid Computing', '', '', '182-187', 2016, 'Scopus', 'T', 'Choudhary, Anita;Govil, M. C.;Singh, Girdhari;Awasthi, Lalit K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9ad9b7b9-3f32-5a9d-a4df-21e9342b835b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9970122c-4652-5a71-9f47-9ade3814a3da', 'Improved Virtual Machine Migration Approaches in Cloud Environment', 'CONFERENCE', '10.1109/CCEM.2016.013', NULL, 'International conference on cloud computing in emerging markets (CCEM)', '', '', '17-24', 2016, 'Other', 'T', 'Aidan, J. S., Verma, H. K., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9970122c-4652-5a71-9f47-9ade3814a3da', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2e137e0e-7ad7-50e3-be6f-718ccd8da826', 'Comprehensive survey on petya ransomware attack', 'CONFERENCE', '10.1109/ICNGCIS.2017.30', NULL, 'International Conference on Next Generation Computing and Information Systems (ICNGCIS)', '', '', '122-125', 2017, 'Other', 'T', 'Awasthi, Lalit Kumar; Ashok Kumar Nanda', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2e137e0e-7ad7-50e3-be6f-718ccd8da826', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('837eb761-cb82-5f2e-94f2-56b2e89d342a', 'An empirical enhancement using scale invariant feature transform in text extraction from images', 'CONFERENCE', '10.1109/INTELCCT.2017.8324050', NULL, 'International Conference on Intelligent Communication and Computational Techniques (ICCT)', '', '', '228-232', 2017, 'Other', 'T', 'Sharma, A., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('837eb761-cb82-5f2e-94f2-56b2e89d342a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a0eb3f25-e72b-5f57-9a76-1b81fad7c868', 'Rolling Circle Algorithm for Routing Along the Boundaries of Wireless Sensor Networks', 'CONFERENCE', '10.1007/978-981-10-3226-4_47', NULL, 'Computer Communication, Networking and Internet Security', '', '', '461-470', 2017, 'Other', 'T', 'Rajesh Sharma, Lalit Kumar Awasthi & Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a0eb3f25-e72b-5f57-9a76-1b81fad7c868', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('06b923e6-8bc8-5b97-bdf0-24753627ea39', 'A proposal for SMS security using NTRU cryptosystem', 'CONFERENCE', '10.1007/978-3-642-37949-9_62', NULL, 'International Conference on Heterogeneous Networking for Quality, Reliability, Security and Robustness', '', '', '706-718', 2017, 'Other', 'T', 'Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('06b923e6-8bc8-5b97-bdf0-24753627ea39', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6682dae4-3f82-5293-a610-7bb1ad1fd1aa', 'Sentiment Analysis Approach Based on N-gram and KNN Classifier', 'CONFERENCE', '10.1109/ICSCCC.2018.8703350', NULL, 'First International Conference on Secure Cyber Computing and Communication (ICSCCC)', '', '', '13-17', 2018, 'Other', 'T', 'Choudhary, Anita;Govil, Mahesh Chandra;Singh, Girdhari;Awasthi, Lalit K.;Pilli, E. S.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6682dae4-3f82-5293-a610-7bb1ad1fd1aa', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f0fa371b-0f2d-5aff-b2bd-dab1ce55a139', 'A Comparative Survey on Information Dissemination in Heterogeneous Vehicular Communication Networks', 'CONFERENCE', '10.1109/ICSCCC.2018.8703294', NULL, 'First International Conference on Secure Cyber Computing and Communication (ICSCCC)', '', '', '556-560', 2018, 'Other', 'T', 'Kirti Kaur Sahota ,Harsh Kumar Verma, Awasthi, Lalit K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f0fa371b-0f2d-5aff-b2bd-dab1ce55a139', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5707d0e1-726d-50b1-ba65-42271b0b566e', 'A Study of Performance Evaluators for Software Defined Networking', 'CONFERENCE', '10.1109/ICSCCC.2018.8703211', NULL, 'First International Conference on Secure Cyber Computing and Communication (ICSCCC)', '', '', '333-339', 2018, 'Other', 'T', 'Sharma, V., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5707d0e1-726d-50b1-ba65-42271b0b566e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('41332d04-53cd-54dc-a1a9-07f09a9f319b', 'Task clustering-based Energy-aware Workflow Scheduling in Cloud environment', 'CONFERENCE', '10.1109/HPCC/SmartCity/DSS.2018.00160', NULL, 'IEEE 20th International Conference on High Performance Computing and Communications', '', '', '968-973', 2018, 'Other', 'T', 'Kaur, S., Sikka, G., & Awasthi, L. K', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('41332d04-53cd-54dc-a1a9-07f09a9f319b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2786ae98-c795-5e82-971a-aa712d3e62bb', 'Techniques for Task Scheduling in Cloud and Fog Environment: A Survey', 'CONFERENCE', '10.1007/978-981-15-4451-4_53', NULL, 'In International Conference on Futuristic Trends in Networks and Computing Technologies', '', '', '673-685', 2020, 'Other', 'T', 'Sharma, P., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2786ae98-c795-5e82-971a-aa712d3e62bb', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e7154fec-5fa1-5c81-9431-5ab77696d357', 'Web Service Clustering Approaches to Enhance Service Discovery: A Review', 'CONFERENCE', '10.1007/978-981-15-8297-4_3', NULL, 'The International Conference on Recent Innovations in Computing', '', '', '947-962', 2021, 'Other', 'T', 'Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e7154fec-5fa1-5c81-9431-5ab77696d357', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('57474613-ea38-5937-b2df-8d917ef5069e', 'Big Data Storage and Decentralization: A Review.', 'CONFERENCE', '10.1109/ICSCCC51823.2021.9478097', NULL, 'In 2021 2nd International Conference on Secure Cyber Computing and Communications (ICSCCC)', '', '', '546-550', 2021, 'Other', 'T', 'Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('57474613-ea38-5937-b2df-8d917ef5069e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('45a32d5c-c95c-5c47-b562-79359d4809b0', 'Divergent applications of Blockchain Security: A Survey', 'CONFERENCE', '10.1109/ICSCCC51823.2021.9478094', NULL, 'In 2021 2nd International Conference on Secure Cyber Computing and Communications (ICSCCC)', '', '', '212-217', 2021, 'Other', 'T', 'Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('45a32d5c-c95c-5c47-b562-79359d4809b0', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('70771151-e8cd-530a-bbfa-587df748a007', 'Semi?automatic Annotation for Mentions in Hindi Text', 'JOURNAL', '10.1007/s42979-023-01885-z', NULL, 'SN Computers Scopus', '4', '9', '515', 2023, 'Scopus', 'T', 'Kusum Lata, Pardeep Singh and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('70771151-e8cd-530a-bbfa-587df748a007', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3dad416c-a9ec-5a05-a8b7-02c8103544b6', 'SMDDH: Singleton Mention Detection using Deep Learning in Hindi Text', 'JOURNAL', '10.1145/370082', NULL, 'ACM Transactions on Asian and Low-Resource Language Information Processing', '23', '11', '', 2024, 'SCI(E)', 'T', 'Kusum Lata, Pardeep Singh and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3dad416c-a9ec-5a05-a8b7-02c8103544b6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a1a6ee5d-8a76-52e2-b3e3-e03a5156edc8', 'Hindi Text Summarization using Sequence to Sequence Neural Network', 'JOURNAL', '10.1145/3624013', NULL, 'ACM Transactions on Asian and Low-Resource Language Information Processing', '22', '10', '239-258', 2023, 'SCI(E)', 'T', 'Namrata Kumari and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a1a6ee5d-8a76-52e2-b3e3-e03a5156edc8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7a72bdf8-a07a-56cc-b7e3-f09e71a99294', 'Automated Hindi Text Summarization Using TF-IDF and Textrank Algorithm', 'JOURNAL', '10.31838/jcr.07.17.315', NULL, 'Journal of Critical Reviews', '7', '7', '2547-2555', 2020, 'Scopus', 'T', 'Namrata Kumari and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7a72bdf8-a07a-56cc-b7e3-f09e71a99294', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5936951d-2c41-5d87-a754-985efdd38509', 'A comprehensive review on feature set used for anaphora resolution', 'JOURNAL', '10.1007/s10462-020-09917-3', NULL, 'Artificial Intelligence Review', '54', '4', '2917�3006', 2020, 'SCI(E)', 'T', 'Kusum Lata, Pardeep Singh and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5936951d-2c41-5d87-a754-985efdd38509', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('45779149-225a-51f3-839c-101bbd1b9e83', 'Identifying the Opinion Orientation of Online Product Reviews at Feature Level: A Pruning Approach', 'JOURNAL', '10.4018/IJISMD.2017040106', NULL, 'International Journal of Information System Modeling and Design', '8', '2', '92-111', 2017, 'Scopus', 'T', 'Nilanshi Chauhan and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('45779149-225a-51f3-839c-101bbd1b9e83', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('776ede73-4b66-55bd-b4dc-a7dc9ae7280c', 'Automation and Validation of Annotation for Hindi Anaphora Resolution', 'JOURNAL', '�10.14569/IJACSA.2015.061025', NULL, 'International Journal of Advanced Computer Science and Applications (IJACSA)', '6', '10', '179-185', 2015, 'Scopus', 'T', 'Pardeep Singh and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('776ede73-4b66-55bd-b4dc-a7dc9ae7280c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d881b509-2b78-52de-b67d-688770f434c7', 'Siddu: Decentralized Authorization with Zero Trust', 'CONFERENCE', '10.1007/978-981-99-7137-4_20', NULL, 'International Conference on Communications and Cyber Physical Engineering (ICCCE 2023)', '', '', '213-221', 2023, 'Other', 'T', 'Abhishek Guleri, Nagendra Pratap Singh, Pardeep Singh & Kusum Lata', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d881b509-2b78-52de-b67d-688770f434c7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9b3cc5d8-2dec-5c3f-95f9-da0e3f7dfe02', 'A Review on Clinical Named Entity Recognition', 'CONFERENCE', '10.1109/OTCON56053.2023.10113977', NULL, 'OPJU International Technology Conference on Emerging Technologies for Sustainable Development', '', '', '01--06', 2022, 'Other', 'T', 'Poonam Kashtriya, Pardeep Singh and Parul Bansal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9b3cc5d8-2dec-5c3f-95f9-da0e3f7dfe02', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b4531854-1d70-533f-ab29-746b85332660', 'The task of Question Answering in NLP A Comprehensive Review', 'CONFERENCE', '10.1007/978-981-99-0601-7_46', NULL, 'International Conference on Recent Innovations in Computing (ICRIC-2022)', '', '', '603-611', 2022, 'Other', 'T', 'Sagnik Sarkar, Pardeep Singh, Namrata Kumari & Poonam Kashtriya', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b4531854-1d70-533f-ab29-746b85332660', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9d660cc8-bd3a-5eb6-8178-f128a84be87a', 'Survey of Text Summarization Stratification', 'CONFERENCE', '10.1007/978-981-99-0601-7_41', NULL, 'International Conference on Recent Innovations in Computing (ICRIC-2022)', '', '', '533-543', 2023, 'Other', 'T', 'Arvind Jamwal, Pardeep Singh & Namrata Kumari', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9d660cc8-bd3a-5eb6-8178-f128a84be87a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('723ee85b-cc11-5fcb-91a7-c01f80c47c84', 'Emotion Cause Pair Extraction By Multi Task Learning on Enhanced English Dataset', 'CONFERENCE', '10.1016/j.procs. 2023.01.057', NULL, 'International Conference on Machine Learning and Data Engineering (ICMLDE 2022', '218', '', '766-777', 2022, 'Other', 'T', 'Arunima Khunteta and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('723ee85b-cc11-5fcb-91a7-c01f80c47c84', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4c480e8d-a576-558b-b867-756ea98fa361', 'Diagnosis of breast cancer using machine learning tools and techniques', 'CONFERENCE', '10.1016/j.procs.2023.01.122.', NULL, 'International Conference on Machine Learning and Data Engineering (ICMLDE 2022)', '218', '', '1434-1443', 2023, 'Other', 'T', 'Rahul Kumar Yadav, Pardeep Singh and Poonam Kashtriya', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4c480e8d-a576-558b-b867-756ea98fa361', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('70467145-7fbf-50cd-9ffd-06b94e1b3fae', 'Performance of Optimizers in Text Summarization for News Articles', 'CONFERENCE', '10.1016/j.procs. 2023.01.218', NULL, 'International Conference on Machine Learning and Data Engineering (ICMLDE 2022)', '218', '', '2430-2437', 2022, 'Other', 'T', 'Namrata Kumari , Nikhil Sharma and Pradeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('70467145-7fbf-50cd-9ffd-06b94e1b3fae', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9c88983c-1bbf-5ba4-9c5a-1c5c7bb2d1ad', 'Emotion Cause Extraction - A Review of Various Methods and Corpora', 'CONFERENCE', '10.1109/ICSCCC51823.2021.9478079.', NULL, '2nd International Conference on Secure Cyber Computing and Communications (ICSCCC)', '', '', '314-319', 2021, 'Other', 'T', 'Arunima Khunteta and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9c88983c-1bbf-5ba4-9c5a-1c5c7bb2d1ad', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('357a2da1-5b93-5067-8a72-bd74a258881f', 'Optimizing Stream Data classification using improved Hoeffding Bound', 'CONFERENCE', '10.1007/978-981-15-5341-7_19.', NULL, 'First International Conference on Advanced Communication & Computational Technology- 2019, NIT Kurukushtra, India', '668', '', '235-243', 2019, 'Other', 'T', 'Arvind Pillania, Pardeep Singh and Vrinda Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('357a2da1-5b93-5067-8a72-bd74a258881f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4defce29-1242-5a6b-9de8-f680c2d95639', 'Automatic Keyphrase Extraction using SVM', 'CONFERENCE', '10.1007/978-981-15-5341-7_71', NULL, 'First International Conference on Advanced Communication & Computational Technology- 2019, NIT Kurukushtra, India', '668', '', '945-956', 2019, 'Other', 'T', 'Ankit Guleria, Radhika Sood & Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4defce29-1242-5a6b-9de8-f680c2d95639', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ba0a0225-c504-5b64-ac04-b4bcbb535977', 'Semiautomatic annotation scheme for demonstrative pronoun considering indirect anaphora for Hindi', 'CONFERENCE', '10.1109/ ICACCI. 2014. 6968538', NULL, 'Advances in Computing, Communications and Informatics (ICACCI, 2014), Noida, India', '', '', '1710 - 1714', 2014, 'Other', 'T', 'Pardeep Singh and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ba0a0225-c504-5b64-ac04-b4bcbb535977', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e52996fe-d2a7-5b21-bbef-db04db259cc8', 'Analysis and Comparison of Antecedent Type of Demonstrative pronoun in Context of Co-reference Resolution: A Corpus Based Study of Hindi for Monologue and Dialogue', 'CONFERENCE', 'DOI 10.1109/CICN.2014.122', NULL, 'Sixth IEEE International Conference on Computational Intelligence and Communication Networks (CICN 2014), India', '', '', '536-540', 2014, 'Other', 'T', 'Pardeep Singh and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e52996fe-d2a7-5b21-bbef-db04db259cc8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('34ca0ab8-7d14-573d-8e86-4f1cc932eafb', 'Annotating Indirect Anaphora for Hindi: A Corpus Based Study', 'CONFERENCE', 'DOI 10.1109/ CICN.2014.120', NULL, 'Sixth IEEE International Conference on Computational Intelligence and Communication Networks (CICN 2014), India', '', '', '525-529', 2014, 'Other', 'T', 'Pardeep Singh and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('34ca0ab8-7d14-573d-8e86-4f1cc932eafb', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a297ff9f-6287-59af-9f21-4d50e17e3538', 'Security and Privacy Enabling Solution for Vehicular Networks', 'CONFERENCE', '10.1007/978-3-642-32573-1_31', NULL, 'Lecture Notes of the Institute for Computer Sciences, Social Informatics and Telecommunications Engineering', '62', '', '191-194', 2011, 'Other', 'T', 'Upasana Singh & Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a297ff9f-6287-59af-9f21-4d50e17e3538', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b7f3b088-07ef-5090-977d-7ea65fc118fe', 'Wavelet Tree based Hybrid Geo-Textual Indexing Technique for Geographical Search', 'JOURNAL', '10.17485/ijst/2015/v8i33/72962', NULL, 'Indian Journal of Science and Technology', '8', '33', '1--7', 2015, 'Scopus', 'T', 'Arun Kumar Yadav and Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b7f3b088-07ef-5090-977d-7ea65fc118fe', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('fb230d5c-15c1-535c-9b41-df258ef21353', 'Efficient Textual Web Retrieval using Wavelet Tree', 'JOURNAL', '10.4018/IJIRR.2016100102', NULL, 'International Journal of Information Retrieval Research (IJIRR)', '6', '4', '16-29', 2016, 'ESCI', 'T', 'Arun Kumar Yadav,Divakar Yadav and Rajesh Prasad', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('fb230d5c-15c1-535c-9b41-df258ef21353', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7f718682-6b60-518d-a1ed-b7dd7e3aa7b4', 'Wavelet Tree based Dual Indexing Technique for Geographical Search', 'JOURNAL', 'https://ccis2k.org/iajit/PDF/July%202019,%20No.%204/13252.pdf', NULL, 'The International Arab Journal of Information Technology', '16', '4', '624-632', 2019, 'SCI(E)', 'T', 'Arun Kumar Yadav and Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7f718682-6b60-518d-a1ed-b7dd7e3aa7b4', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('94aafe77-ccfe-5574-9e97-c36ad26837c8', 'Optimization of Hopfield Networks for Storage and Recall: A Decade Review', 'JOURNAL', '10.1504/IJAIP.2021.10030669', NULL, 'International Journal of Advanced Intelligence Paradigms', '21', '3-4', '321-329', 2022, 'Scopus', 'Q4', 'Jay Kant Pratap Singh Yadav, Arun Kumar Yadav, Divakar Yadav, Vikash Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('94aafe77-ccfe-5574-9e97-c36ad26837c8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a4da878f-96f3-50e7-a58b-3dcdb3fa7083', 'An Improvised Feature-Based Method for Sentimental Analysis of Product Reviews', 'JOURNAL', '10.4108/eai.13-7-2018.165670', NULL, 'EAI Endorsed Transactions on Scalable Information Systems', '8', '29', '1--8', 2021, 'Scopus', 'T', 'Arun Yadav, Divakar Yadav and Arti Jain', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a4da878f-96f3-50e7-a58b-3dcdb3fa7083', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('47535d49-6a0b-5ff7-81aa-c3e55a0c5646', 'A novel convolutional neural network based model for recognition and classification of apple leaf diseases', 'JOURNAL', '10.18280/ts.370622', NULL, 'Traitement du Signal', '37', '6', '1093-1101', 2020, 'SCI(E)', 'T', 'Yadav, D., Akanksha, Yadav, A.K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('47535d49-6a0b-5ff7-81aa-c3e55a0c5646', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b68c079c-7eb5-56e4-941b-807e413538e9', 'Microaneurysm Detection using Color Locus Detection Method', 'JOURNAL', '10.1016/j.measurement.2021.109084', NULL, 'Measurement', '176', '109084', '1--9', 2021, 'SCI(E)', 'Q2', 'Divakar Yadav, q, Arti Dhiman, Sakshi Sharma, Anurag Giddalur, Muskan, and Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b68c079c-7eb5-56e4-941b-807e413538e9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d1680b13-da1a-5718-a517-1e69315ed3a7', 'Modeling Fingerprint Presentation Attack Detection Through Transient Liveness Factor-A Person Specific Approach.', 'JOURNAL', '10.18280/ts.380206', NULL, 'Traitement du Signal', '38', '2', '299-307', 2021, 'SCI(E)', 'T', 'A Yerma, VK Gupta, S Goel, AK Yadav, D Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d1680b13-da1a-5718-a517-1e69315ed3a7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9b2dd9ef-7962-5d97-abde-b8dae41b0cd3', 'Cyberbullying detection from tweets using deep learning', 'JOURNAL', '10.1108/K-01-2021-0061', NULL, 'Kybernetes(Emeralled Publishing)', '51', '9', '2695-2411', 2021, 'SCI(E)', 'Q1', 'S. Bharti, A. K. Yadav, M. Kumar, and D. Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9b2dd9ef-7962-5d97-abde-b8dae41b0cd3', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d5f6fc4f-2790-53be-9841-d5b8ed62e46d', 'Efficient transitive operations using binary indexed trees', 'JOURNAL', '10.1007/s41870-021-00685-z', NULL, 'International Journal of Information Technology', '13', '3', '1155-1163', 2021, 'Scopus', 'Q1', 'Kartikey Tewari, Abhijeet Shrivastava, Arun Kumar Yadav, Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d5f6fc4f-2790-53be-9841-d5b8ed62e46d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c2f71d64-53c2-5812-bdbd-898d09443212', 'An Automated Tomato Maturity Grading System Using Transfer Learning Based AlexNet.', 'JOURNAL', '10.18280/isi.260206', NULL, 'Ingénierie des Systèmes d’Information', '26', '2', '191-200', 2021, 'Scopus', 'Q3', 'P Das, JKP Singh Yadav, AK Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c2f71d64-53c2-5812-bdbd-898d09443212', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e0947dea-f83a-5c0d-9e8a-0239d2f24694', 'Extractive text summarization using deep learning approach', 'JOURNAL', '10.1007/s41870-022-00863-7', NULL, 'International Journal of Information Technology', '14', '5', '2407-2415', 2022, 'Scopus', 'Q1', 'Arun Kumar Yadav, Amit Singh, Mayank Dhiman, Vineet, Rishabh Kaundal, Ankit Verma , Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e0947dea-f83a-5c0d-9e8a-0239d2f24694', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('77a2e234-80de-5978-8dea-4284ed0fb56e', 'Optimisation of Hopfield networks for storage and recall: a decade review', 'JOURNAL', '10.1504/IJAIP.2022.122197', NULL, 'International Journal of Advanced Intelligence Paradigms', '21', '3-4', '321-329', 2022, 'Scopus', 'Q4', 'Jay Kant Pratap Singh Yadav, Arun Kumar Yadav, Divakar Yadav, Vikash Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('77a2e234-80de-5978-8dea-4284ed0fb56e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2bc553e9-7460-5ec3-a6ee-91accb8c0e75', 'A scalable approach for index compression using wavelet tree and LZW', 'JOURNAL', '10.1007/s41870-022-00915-y', NULL, 'International Journal of Information Technology', '14', '4', '2191-2204', 2022, 'Scopus', 'Q1', 'Sonam Gupta, Arun Kumar Yadav, Divakar Yadav , Bharti Shukla', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2bc553e9-7460-5ec3-a6ee-91accb8c0e75', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0e21ae7f-c052-5bfb-a295-59126ed28045', 'Intrusion Detection System Using Deep Learning Asymmetric Autoencoder (DLAA)', 'JOURNAL', '10.4018/IJFSA.296590', NULL, 'International Journal of Fuzzy System Applications (IJFSA)', '11', '2', '1--17', 2022, 'Scopus', 'Q3', 'Arjun Singh, , Surbhi Chauhan, Sonam Gupta, and Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0e21ae7f-c052-5bfb-a295-59126ed28045', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1b1f4544-575a-531e-82d9-c9a8af453487', 'A hybrid machine learning approach for credit card fraud detection', 'JOURNAL', '10.4018/IJITPM.313420', NULL, 'International Journal of Information Technology Project Management (IJITPM)', '13', '3', '1--13', 2022, 'Scopus', 'Q3', 'Sonam Gupta, Tushtee Varshney, Abhinav Verma, Lipika Goel, Arun Kumar Yadav, Arjun Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1b1f4544-575a-531e-82d9-c9a8af453487', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('88ff8b50-8131-549f-948e-2deb63df39b6', 'Plant leaf disease detection using CNN with transfer learning and XGBoost', 'JOURNAL', '10.1504/IJDATS.2022.128273', NULL, 'International Journal of Data Analysis Techniques and Strategies', '14', '3', '244-265', 2022, 'Scopus', 'Q3', 'Divakar Yadav, Aarushi Gupta, Arti Jain, and Arun Kumar Yadav.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('88ff8b50-8131-549f-948e-2deb63df39b6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f1d43ea7-3d3a-57e0-8828-009e8867a1b7', 'Machine learning based approaches for age and gender prediction from tweets', 'JOURNAL', '10.1007/s11042-022-12920-1', NULL, 'Multimedia Tools and Applications', '81', '19', '27799-27817', 2022, 'SCI(E)', 'Q1', 'Rishabh Katna, Kashish Kalsi, Srajika Gupta, Divakar Yadav , Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f1d43ea7-3d3a-57e0-8828-009e8867a1b7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d0146dc5-77f2-5872-a6c3-aed23aec9557', 'Presentation Attack Detection Using Referential Quality Metrics and Minutiae Count', 'JOURNAL', '10.1007/s11277-022-09921-6', NULL, 'Wireless Personal Communications', '127', '4', '3347-3361', 2022, 'SCI(E)', 'Q2', 'Akhilesh Verma, Anshdha Gupta, Mohammad Akbar, Arun Kumar Yadav , Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d0146dc5-77f2-5872-a6c3-aed23aec9557', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c94777b0-218c-5a60-9a71-3a33e8e7fcea', 'Scalable thread based index construction using wavelet tree', 'JOURNAL', '10.1007/s11042-022-13906-9', NULL, 'Multimedia Tools and Applications', '82', '9', '14037-14053', 2022, 'SCI(E)', 'Q1', 'Arun Kumar Yadav, Divakar Yadav, Akhilesh Verma, Mohd. Akbar ,Kartikey Tewari', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c94777b0-218c-5a60-9a71-3a33e8e7fcea', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9a262ff0-c3f7-579a-87c9-b5b20d71cbcf', 'Feature Based Automatic Text Summarization Methods: A Comprehensive State-of-the-Art Survey', 'JOURNAL', '10.1109/ACCESS.2022.3231016', NULL, 'IEEE Access', '10', '', '133981-134003', 2022, 'SCI(E)', 'Q1', 'Divakar Yadav; Rishabh Katna; Arun Kumar Yadav; Jorge Morato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9a262ff0-c3f7-579a-87c9-b5b20d71cbcf', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a594cc6a-0c6c-5655-adb6-cf026e844992', 'FERNET: An Integrated Hybrid DCNN Model for Driver Stress Monitoring via Facial Expression', 'JOURNAL', '10.1142/S0218001423570021', NULL, 'International Journal of Pattern Recognition and Artificial Intelligence', '37', '3', '1--25', 2023, 'SCI(E)', 'Q3', 'Chinmay Gupta, Mohit Kumar, Arun Kumar Yadav, and Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a594cc6a-0c6c-5655-adb6-cf026e844992', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b292eda7-1c89-5a49-b015-fd9a2bc5e66b', 'Automatic image caption generation using deep learning', 'JOURNAL', '10.1007/s11042-023-15555-y', NULL, 'Multimedia Tools and Applications', '83', '2', '5309-5325', 2023, 'SCI(E)', 'Q1', 'Akash Verma, Arun Kumar Yadav, Mohit Kumar , Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b292eda7-1c89-5a49-b015-fd9a2bc5e66b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('24c5ecb2-1bf1-548b-82a0-1a61f9c5dc06', 'Automatic Indian sign language recognition using MediaPipe holistic and LSTM network', 'JOURNAL', '10.1007/s11042-023-17361-y', NULL, 'Multimedia Tools and Applications', '83', '20', '58329--58348', 2023, 'SCI(E)', 'Q1', 'G Khartheesvar, Mohit Kumar, Arun Kumar Yadav , Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('24c5ecb2-1bf1-548b-82a0-1a61f9c5dc06', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0db1e006-e3e4-5b5d-903d-fcb31a2bad85', 'Hate speech recognition in multilingual text: hinglish documents', 'JOURNAL', '10.1007/s41870-023-01211-z', NULL, 'International Journal of Information Technology', '15', '3', '1319-1331', 2023, 'Scopus', 'Q1', 'Arun Kumar Yadav, Mohit Kumar, Abhishek Kumar, Shivani, Kusum, Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0db1e006-e3e4-5b5d-903d-fcb31a2bad85', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('13a0b98c-cabf-59aa-a31a-a43f45a46132', 'Identification of Fake News Using Deep Neural Network-Based Hybrid Mode.', 'JOURNAL', '10.1007/s42979-023-02117-0', NULL, 'SN Computer Science', '4', '5', '1--13', 2023, 'Scopus', 'Q1', 'Gupta, Sonam, Bhanu Verma, Pradeep Gupta, Lipika Goel, Arun Kumar Yadav, and Divakar Yada', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('13a0b98c-cabf-59aa-a31a-a43f45a46132', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b1d322d4-65f8-57ec-add7-4499881ecbaa', 'Fake news detection using hybrid deep learning method', 'JOURNAL', '10.1007/s42979-023-02296-w', NULL, 'SN Computer Science', '4', '6', '1--15', 2023, 'Scopus', 'Q1', 'Arun Kumar Yadav, Suraj Kumar, Dipesh Kumar, Lalit Kumar, Kapil Kumar, Sandeep Kumar Maurya, Mohit Kumar, and Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b1d322d4-65f8-57ec-add7-4499881ecbaa', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4e40cad0-674f-5c00-aad0-47b76554b23f', 'Pothole Detection and Localization from Images using Deep Learning', 'JOURNAL', '10.1504/IJIDS.2025.10059513', NULL, 'International Journal of Information and Decision Sciences', '18', '1', '', 2023, 'Scopus', 'Q4', 'Archit Dhiman, Mohit Kumar,Arun Kumar Yadav, Divakar Yadav.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4e40cad0-674f-5c00-aad0-47b76554b23f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4a17afca-41b8-56d6-9f06-1239e30248e4', 'Satellite image classification using deep learning approach', 'JOURNAL', '10.1007/s12145-024-01301-x', NULL, 'Earth Science Informatics', '17', '3', '2495-2508', 2023, 'SCI(E)', 'Q2', 'Divakar Yadav, Kritarth Kapoor, Arun Kumar Yadav, Mohit Kumar, Arti Jain', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4a17afca-41b8-56d6-9f06-1239e30248e4', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('16e2d2b5-650f-55c0-b008-8a2125fa85ad', 'An Automatic and a Machine-assisted Method to Clean Bilingual Corpus', 'JOURNAL', 'https://dl.acm.org/doi/10.1145/3342351', NULL, 'ACM Transactions on Asian and Low-Resource Language Information Processing (TALLIP)', '19', '1', '1--19', 2019, 'SCI(E)', 'T', 'Jyoti Srivastava, Sudip Sanyal, Ashish Kumar Srivastava', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('16e2d2b5-650f-55c0-b008-8a2125fa85ad', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4cc47c0a-bdd0-5310-9ec2-43278b207cef', 'Extraction of reordering rules for statistical machine translation', 'JOURNAL', '10.3233/JIFS-179029', NULL, 'Journal of Intelligent & Fuzzy Systems', '36', '5', '4809--4819', 2019, 'SCI(E)', 'T', 'Jyoti Srivastava, Sudip Sanyal, Ashish Kumar Srivastava', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4cc47c0a-bdd0-5310-9ec2-43278b207cef', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3e3968b7-4b89-5d43-940f-e8b94cc67fbd', 'Text summarization using modified generative adversarial network', 'JOURNAL', '10.3233/JIFS-236813', NULL, 'Journal of Intelligent & Fuzzy Systems', '46', '3', '7295--7306', 2024, 'SCI(E)', 'T', 'Jyoti Srivastava, Ashish Kumar Srivastava, B Muthu Kumar, SP Anandaraj', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3e3968b7-4b89-5d43-940f-e8b94cc67fbd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9b3fc9f2-5f7b-5659-aff6-d622265bb5b7', 'Segmenting long sentence pairs to improve word alignment in english-hindi parallel corpora', 'CONFERENCE', '10.1007/978-3-642-33983-7_10', NULL, 'Advances in Natural Language Processing: 8th International Conference on NLP, JapTAL 2012, Kanazawa, Japan, October 22-24, 2012. Proceedings', '7614', '', '97--107', 2012, 'SCI(E)', 'T', 'Jyoti Srivastava, Sudip Sanyal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9b3fc9f2-5f7b-5659-aff6-d622265bb5b7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0ca54eb4-8b27-5551-ae06-60a555da188a', 'A hybrid approach for word alignment in english-hindi parallel corpora with scarce resources', 'CONFERENCE', '10.1109/IALP.2012.13', NULL, '2012 International Conference on Asian Language Processing, IEEE, Hanoi, Vietnam', '', '', '185--188', 2012, 'SCI(E)', 'T', 'Jyoti Srivastava, Sudip Sanyal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0ca54eb4-8b27-5551-ae06-60a555da188a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('600cfeb0-db5c-5114-84a9-2cde08903677', 'A stable route selection algorithm for Cognitive Radio Networks', 'CONFERENCE', '10.1109/ICACCI.2014.6968260', NULL, '2014 International Conference on Advances in Computing, Communications and Informatics (ICACCI)', '', '', '1168--1174', 2014, 'Scopus', 'T', 'Nitul Dutta, Hiren Kumar Deva Sarma, Ashish Kr Srivastava, Jyoti Srivastava', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('600cfeb0-db5c-5114-84a9-2cde08903677', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7965b4fa-0fe2-51e3-9893-332499f947c6', 'A Hybrid Approach for Word Alignment with Statistical Modeling and Chunker', 'CONFERENCE', '10.1007/978-3-319-18111-0_43', NULL, 'Computational Linguistics and Intelligent Text Processing: 16th International Conference, CICLing 2015, Cairo, Egypt', '9041', '', '570--581', 2015, 'SCI(E)', 'T', 'Jyoti Srivastava, Sudip Sanyal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7965b4fa-0fe2-51e3-9893-332499f947c6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('36bf913c-624b-5b4d-97d1-8f0268843c22', 'POS-based word alignment for small corpus', 'CONFERENCE', '10.1109/IALP.2015.7451526', NULL, '', '', '', '37--40', 2015, 'SCI(E)', 'T', 'Jyoti Srivastava, Sudip Sanyal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('36bf913c-624b-5b4d-97d1-8f0268843c22', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ea798147-41c2-5ea3-8181-22feab4e0a9f', 'Cassava Leaf Disease Detection Using Deep Learning', 'CONFERENCE', '10.1109/IEMTRONICS55184.2022.9795751', NULL, '2022 IEEE International IOT, Electronics and Mechatronics Conference (IEMTRONICS), Toronto, ON, Canada', '', '', '1--7', 2022, 'Scopus', 'T', 'Manick;�Jyoti Srivastava', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ea798147-41c2-5ea3-8181-22feab4e0a9f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f9fe8d10-f2be-50b4-a1c8-a2b289447262', 'Early-Stage Dementia Detection by Optimize Feature Weights with Ensemble Learning', 'CONFERENCE', '10.1007/978-3-031-25088-0_56', NULL, 'International Conference on Advanced Communication and Intelligent Systems', '1749', '', '633--648', 2022, 'Scopus', 'T', 'Tanvi Mahajan, Jyoti Srivastava', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f9fe8d10-f2be-50b4-a1c8-a2b289447262', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('fa0490e6-45b7-5c77-9184-98a1eb62b9f9', 'Exploring the Effectiveness of Combined Cosine Similarity and Convolutional Neural Networks for Text Similarity Analysis', 'CONFERENCE', '10.2139/ssrn.4624815', NULL, 'International Conference on Innovative Computing & Communication (ICICC) 2023', 'Available at SSRN: https://ssrn.com/abstract=46248', '', '', 2023, 'Scopus', 'T', 'Johan Anish Philip, Jyoti Srivastava', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('fa0490e6-45b7-5c77-9184-98a1eb62b9f9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ce4b7f71-de5e-5e83-9f76-bee084a0b7ab', 'Sarcasm Detection with BiLSTM Multihead Attention', 'CONFERENCE', '10.1109/I2CT61223.2024.10543816', NULL, '2024 IEEE 9th International Conference for Convergence in Technology (I2CT)', '', '', '1--7', 2024, 'Scopus', 'T', 'Harish Thakur, Jyoti Srivastava', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ce4b7f71-de5e-5e83-9f76-bee084a0b7ab', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('bd08fa10-4f50-54b9-be54-4a3efe1d0f53', 'Revolutionizing Tomato Agriculture: Leaf Disease Detection Using CNN and Its Variants', 'CONFERENCE', '10.1109/I2CT61223.2024.10544294', NULL, '2024 IEEE 9th International Conference for Convergence in Technology (I2CT)', '', '', '1--6', 2024, 'Scopus', 'T', 'Malika Sood, Jyoti Srivastava, Ajay Kumar Mallick', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('bd08fa10-4f50-54b9-be54-4a3efe1d0f53', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('750569b1-02e3-5b7c-804f-3554d9d0789c', 'Probabilistic neural network approach to the classification of demonstrative pronouns for indirect anaphora in Hindi', 'JOURNAL', '10.1016/j.eswa.2010.02.052', NULL, 'Expert Systems with Applications', '37', '8', '5607-5613', 2010, 'SCI(E)', 'T', 'Kamlesh Dutta, Nupur Prakash, Saroj Kaushik', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('750569b1-02e3-5b7c-804f-3554d9d0789c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c671baec-02de-5644-9b05-270ada660b86', 'Architectural space planning using evolutionary computing approaches: A review', 'JOURNAL', '10.1007/s10462-011-9217-y', NULL, 'Artificial Intelligence Review', '36', '4', '311–321', 2011, 'SCI(E)', 'T', 'Kamlesh Dutta, Siddhant Sarthak', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c671baec-02de-5644-9b05-270ada660b86', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('cf908721-8784-5c87-96f7-e8e1e5473cf0', 'Machine Learning Approach for the Classification of Demonstrative Pronouns for Indirect Anaphora in Hindi News Items', 'JOURNAL', '10.2478/v10108-011-0003-4', NULL, 'The Prague Bulletin of Mathematical Linguistics', '95', '', '33-50', 2011, 'SCI(E)', 'T', 'Kamlesh Dutta, Saroj Kaushik, Nupur Prakash', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('cf908721-8784-5c87-96f7-e8e1e5473cf0', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('01a1c6be-3832-5343-8162-5ca0a09404db', 'Requirement Reprioritization: A Multilayered Dynamic Approach', 'JOURNAL', '10.14257/ijseia.2013.7.5.06', NULL, 'International Journal of Software Engineering and its Applications', '7', '5', '55-64', 2013, 'SCI(E)', 'T', 'Varun Gupta, Durg Singh Chauhan, Kamlesh Dutta, Chetna Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('01a1c6be-3832-5343-8162-5ca0a09404db', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e896437a-2607-56a7-ae0c-00cb10715448', 'Incremental development revolutions of E-learning software systems in education sector: a case study approach', 'JOURNAL', 'http://www.hcis-journal.com/content/3/1/8', NULL, 'Human-centric Computing and Information Sciences', '3', '', '1-14', 2013, 'SCI(E)', 'T', 'Varun Gupta, Durg Singh Chauhan, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e896437a-2607-56a7-ae0c-00cb10715448', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c376b322-fee0-5d99-8689-b394f7dc3b37', 'Regression testing based requirement prioritization of desktop software applications approach', 'JOURNAL', '10.4018/jssoe.2012100102', NULL, 'International Journal of Software Engineering and its Applications', '3', '4', '20-39', 2012, 'SCI(E)', 'T', 'Varun Gupta, Durg Singh Chauhan, Chetna Gupta, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c376b322-fee0-5d99-8689-b394f7dc3b37', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('664230f4-a063-5719-b97a-4b170656d904', 'Neural network based models for software effort estimation: A review', 'JOURNAL', '10.1007/s10462-012-9339-x', NULL, 'Artificial Intelligence Review', '42', '2', '295-307', 2014, 'SCI(E)', 'T', 'Vachik S. Dave, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('664230f4-a063-5719-b97a-4b170656d904', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('bd41dbca-f618-54c5-9ccd-edc69f421671', 'Current prioritisation and reprioritisation practices: A case study approach', 'JOURNAL', '10.1504/IJCAET.2014.060297', NULL, 'International Journal of Computer Aided Engineering and Technology', '6', '2', '159-170', 2014, 'Scopus', 'T', 'Varun Gupta, Durg Singh Chauhan, Chetna Gupta, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('bd41dbca-f618-54c5-9ccd-edc69f421671', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('89b06f79-2aa8-51a2-9189-fc11d64ac1f1', 'Requirement reprioritisation for pairwise compared requirements', 'JOURNAL', '10.1504/IJCAET.2014.058003', NULL, 'International Journal of Computer Aided Engineering and Technology', '6', '1', '29-47', 2014, 'Scopus', 'T', 'Varun Gupta, Durg Singh Chauhan, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('89b06f79-2aa8-51a2-9189-fc11d64ac1f1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e8471be5-90af-58ac-bfe0-66ba51582250', 'Hybrid regression testing technique: Based on requirement priorities, fault and modification history', 'JOURNAL', '10.1504/IJCAT.2015.070497', NULL, 'International Journal of Computer Applications in Technology', '51', '4', '352-365', 2015, 'SCI(E)', 'T', 'Varun Gupta, Durg Singh Chauhan, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e8471be5-90af-58ac-bfe0-66ba51582250', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('11a28708-b41d-53a1-aef8-9e42b1d2801f', 'Exploring prioritization through systematic literature surveys and case studies', 'JOURNAL', '10.1186/s40064-015-1320-0', NULL, 'SpringerPlus', '4', '1', '539', 2015, 'SCI(E)', 'T', 'Varun Gupta, Durg Singh Chauhan, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('11a28708-b41d-53a1-aef8-9e42b1d2801f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ca69359d-191b-58f8-b48f-780bd90e69a3', 'Prediction of Deviator Stress of Sand Reinforced with Waste Plastic Strips Using Neural Network', 'JOURNAL', '10.1007/s40891-015-0013-7', NULL, 'International Journal of Geosynthetics and Ground Engineering', '1', '', '1-12', 2015, 'SCI(E)', 'T', 'Rakesh Kumar Dutta, Kamlesh Dutta and S. Jeevanandham', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ca69359d-191b-58f8-b48f-780bd90e69a3', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1d919159-0c7e-5d26-9537-7667972da81a', 'Detection of slanders through Euclidean distance similarity assessment for securing e-commerce agents in P2P decentralised electronic communities', 'JOURNAL', '10.1504/IJSN.2016.075072', NULL, 'International Journal of Security and Networks', '11', '2-1', '48-65', 2016, 'Scopus', 'T', 'Priyanka Dadhich, Kamlesh Dutta, M.C. Govil', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1d919159-0c7e-5d26-9537-7667972da81a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('48ee598a-8daf-53be-a77e-07ffd2f47536', 'Intrusion detection in mobile ad hoc networks: techniques, systems, and future challenges', 'JOURNAL', '10.1002/sec.1484', NULL, 'Security and Communication Networks', '9', '14', '2484-2556', 2016, 'SCI(E)', 'T', 'Sunil Kumar, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('48ee598a-8daf-53be-a77e-07ffd2f47536', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('bac5e947-f27a-5f59-8728-2387394e1fb8', 'Historical prioritisation and reprioritisations using hierarchical historical R-tree', 'JOURNAL', '10.1504/IJCAT.2016.080492', NULL, 'International Journal of Computer Applications in Technology (IJCAT)', '54', '4', '257-265', 2016, 'SCI(E)', 'T', 'Varun Gupta, Durg Singh Chauhan, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('bac5e947-f27a-5f59-8728-2387394e1fb8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8bd16d52-a9cb-54c5-8e7e-1575d6f935c5', 'LDAT: LFTM based data aggregation and transmission protocol for wireless sensor networks', 'JOURNAL', '10.1186/s40493-016-0023-y', NULL, 'Journal of Trust Management', '3', '', '1-20', 2016, 'SCI(E)', 'T', 'Mukesh Kumar and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8bd16d52-a9cb-54c5-8e7e-1575d6f935c5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('327ce3d7-297a-50e4-8511-b4f3876e76eb', 'Direct trust-based security scheme for RREQ flooding attack in mobile ad hoc networks', 'JOURNAL', '10.1080/00207217.2017.1285433', NULL, 'International Journal of Electronics', '104', '6', '1034-1049', 2017, 'SCI(E)', 'T', 'Sunil Kumar, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('327ce3d7-297a-50e4-8511-b4f3876e76eb', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('06927c3b-7e71-5c40-9a8a-62d25cae3525', 'Natural language processing for hybrid knowledge representation', 'JOURNAL', '10.1504/IJAIP.2018.090787', NULL, 'International Journal of Advanced Intelligence Paradigms', '10', '3', '223-235', 2018, 'Scopus', 'T', 'Poonam Tanwar, T.V. Prasad, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('06927c3b-7e71-5c40-9a8a-62d25cae3525', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ba4f1f82-4dc1-5a72-bb2c-4c102cbab409', 'Trust Based Intrusion Detection Technique to Detect Selfish Nodes in Mobile Ad Hoc Networks', 'JOURNAL', '10.1007/s11277-018-5804-4', NULL, 'Wireless Personal Communications', '101', '4', '2029-2052', 2018, 'SCI(E)', 'T', 'Sunil Kumar, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ba4f1f82-4dc1-5a72-bb2c-4c102cbab409', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ebcb6c00-9700-50e0-a403-634ad66ad1cc', 'FJADA: Friendship Based JellyFish Attack Detection Algorithm for Mobile Ad Hoc Networks', 'JOURNAL', '10.1007/s11277-018-5797-z', NULL, 'Wireless Personal Communications', '101', '', '1901-1927', 2018, 'SCI(E)', 'T', 'Sunil Kumar, Kamlesh Dutta, Anjani Garg', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ebcb6c00-9700-50e0-a403-634ad66ad1cc', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ccc20cda-4a0e-577c-b189-a0769a5f3be3', 'Analysis and Comparison of Neural Network Models for Software Development Effort Estimation', 'JOURNAL', '10.4018/978-1-6684-3702-5.ch009', NULL, 'Journal of Cases on Information Technology (JCIT)', '21', '2', '88-112', 2019, 'Scopus', 'T', 'Kamlesh Dutta, Varun Gupta and Vachik S. Dave', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ccc20cda-4a0e-577c-b189-a0769a5f3be3', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8dc73100-57d6-5e25-be03-17e48bf68a15', 'A Survey on Various Threats and Current State of Security in Android Platform', 'JOURNAL', '10.1145/3301285', NULL, 'ACM Computing Surveys (CSUR)', '52', '1', '1-35', 2019, 'SCI(E)', 'T', 'Parnika Bhat and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8dc73100-57d6-5e25-be03-17e48bf68a15', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('189e53ad-0bfa-505e-988f-79d3ba596dd2', 'Hybrid technique for effective knowledge representation in normal life', 'JOURNAL', '10.35940/ijeat.F8218.088619', NULL, 'International Journal of Engineering and Advanced Technology', '8', '6', '891-898', 2019, 'Scopus', 'T', 'Poonam Tanwar, T.V. Prasad, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('189e53ad-0bfa-505e-988f-79d3ba596dd2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('cd74486a-abd7-559b-8fda-b80cf00e7f5b', 'Evaluating the Performance of Various Machine Learning Algorithms for Detecting DDoS Attacks in VANETs', 'JOURNAL', NULL, NULL, 'International Journal of Control and Automation', '12', '', '', 2019, 'Scopus', 'T', 'Kaushik Adhikary, Shashi Bhushan, Sunil Kumar, and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('cd74486a-abd7-559b-8fda-b80cf00e7f5b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d755e981-feff-5076-8f9f-d26080de0b6b', 'Decision Tree and Neural Network Based Hybrid Algorithm for Detecting and Preventing DDoS Attacks in VANETS', 'JOURNAL', '10.35940/ijitee.E2652.039520', NULL, 'International Journal of Innovative Technology and Exploring Engineering', '9', '5', '', 2020, 'Scopus', 'T', 'Kaushik Adhikary, Shashi Bhushan, Sunil Kumar and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d755e981-feff-5076-8f9f-d26080de0b6b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ca8af180-d746-5e78-a09e-605bbd54afd2', 'Hybrid Algorithm to Detect DDoS Attacks in VANETs', 'JOURNAL', '10.1007/s11277-020-07549-y', NULL, 'Wireless Personal Communications', '114', '4', '3613-3634', 2020, 'SCI(E)', 'T', 'Kaushik Adhikary, Shashi Bhushan, Sunil Kumar, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ca8af180-d746-5e78-a09e-605bbd54afd2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('bd1d5368-7c1c-5e07-91f1-7017ca9bc79c', 'Evaluating the impact of DDos Attacks in Vehicular Adhoc Networks', 'JOURNAL', '10.4018/IJSPPC.2020100101', NULL, 'International Journal of Security and Privacy in Pervasive Computing (IJSPPC)', '12', '4', '1-18', 2020, 'SCI(E)', 'T', 'Kaushik Adhikary, Shashi Bhushan, Sunil Kumar, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('bd1d5368-7c1c-5e07-91f1-7017ca9bc79c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('931bb5d4-7978-5a08-8d15-8f22bd52886b', 'CogramDroid- An approach towards malware detection in Android using opcode ngrams', 'JOURNAL', '10.1002/cpe.6332', NULL, 'Concurrency and Computation: Practice and Experience', '33', '20', 'e6332', 2021, 'SCI(E)', 'T', 'Parnika Bhat and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('931bb5d4-7978-5a08-8d15-8f22bd52886b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d2999a75-67ef-5d0e-a9fc-0d483ac2e8f8', 'मशीन आधारित भाषा अनुवाद में संदर्भ निराकरण का महत्व.', 'JOURNAL', NULL, NULL, 'भारतीय वैज्ञानिक एवं औद्योगिक अनुसंधान पत्रिका', '', '', '49-54', 2021, 'SCI(E)', 'T', 'चेतन अग्रवाल एवं कमलेश दत्ता', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d2999a75-67ef-5d0e-a9fc-0d483ac2e8f8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9b24e4bf-9c94-5cce-981e-1016329cec16', 'Mention detection in Coreference Resolution: Survey', 'JOURNAL', '10.1007/s10489-021-02878-2', NULL, 'Applied Intelligence', '52', '9', '9816-9860', 2022, 'SCI(E)', 'T', 'Kusum Lata, Pardeep Singh and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9b24e4bf-9c94-5cce-981e-1016329cec16', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5762bb43-0a2d-5b62-beb6-cdc71734eaa0', 'Evaluating the performance of various SVM Kernel functions based on basic features extracted from KDDCUP''99 dataset by Random Forest method for detecting DDoS Attacks', 'JOURNAL', '10.1007/s11277-021-09280-8', NULL, 'Wireless Personal Communications', '123', '', '3127–3145', 2022, 'SCI(E)', 'T', 'Kaushik Adhikary, Shashi Bhushan, Sunil Kumar, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5762bb43-0a2d-5b62-beb6-cdc71734eaa0', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('04fdaeda-51a7-58b9-84bc-94849f3c2f3b', 'A multi-tiered feature selection model for android malware detection based on Feature discrimination and Information Gain', 'JOURNAL', '10.1016/j.jksuci.2021.11.004', NULL, 'Journal of King Saud University - Computer and Information Sciences', '34', '10', '9464-9477', 2022, 'SCI(E)', 'T', 'Parnika Bhat and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('04fdaeda-51a7-58b9-84bc-94849f3c2f3b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('30bbafb3-2a81-5bee-b834-c66f661010ba', 'Artificial intelligence techniques for prediction of drug synergy in malignant diseases: Past, present, and future', 'JOURNAL', '10.1016/j.compbiomed.2022.105334', NULL, 'Computers in Biology and Medicine', '144', '', '105334', 2022, 'SCI(E)', 'T', 'Pooja Rani, Kamlesh Dutta, and Vijay Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('30bbafb3-2a81-5bee-b834-c66f661010ba', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6a0007d7-2860-57c5-aab2-762bfa43f29b', 'Generating Automated Layout Design Using a Multi-Population Genetic Algorithm', 'JOURNAL', '10.13052/jwe1540-9589.2227', NULL, 'Journal of Web Engineering', '22', '2', '357-384', 2023, 'SCI(E)', 'T', 'Arun Kumar, Kamlesh Dutta, Abhishek Srivastava', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6a0007d7-2860-57c5-aab2-762bfa43f29b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a8e5608f-0a58-5987-aa28-6abcf7170cdc', 'Topological and Dimensional constraints based optimal placement of Layout Entities using Clustering and Genetic Algorithm', 'JOURNAL', '10.1016/j.asoc.2022.109867', NULL, 'Applied Soft Computing', '132', '', '109867', 2023, 'SCI(E)', 'T', 'Arun Kumar, Kamlesh Dutta, Abhishek Srivastava', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a8e5608f-0a58-5987-aa28-6abcf7170cdc', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('483b3cd0-03e9-561e-852a-47fd9882f35a', 'Drug synergy model for malignant diseases using deep learning', 'JOURNAL', '10.1142/S0219720023500142', NULL, 'Journal of Bioinformatics and Computational', '21', '3', '2350014', 2023, 'SCI(E)', 'T', 'Pooja Rani, Kamlesh Dutta, Vijay Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('483b3cd0-03e9-561e-852a-47fd9882f35a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ba943df3-87b2-5522-be4c-c66be675516d', 'A System Call-based Android Malware Detection Approach with Homogeneous & Heterogeneous Ensemble Machine Learning', 'JOURNAL', '10.1016/j.cose.2023.103277', NULL, 'Computers & Security', '130', '', '103277', 2023, 'SCI(E)', 'T', 'Parnika Bhat, Sunny Behal, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ba943df3-87b2-5522-be4c-c66be675516d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('51e58e19-a365-5856-bffa-142e3696a387', 'Machine learning and deep learning techniques for detecting malicious android applications: An empirical analysis', 'JOURNAL', '10.1007/s43538-023-00182-w', NULL, 'Proceedings of the Indian National Science Academy', '89', '3', '429-444', 2023, 'ESCI', 'T', 'Parnika Bhat, Sunny Behal, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('51e58e19-a365-5856-bffa-142e3696a387', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('77c6e4a2-83db-5a64-a37d-0b5614569ec6', 'Semi-automatic Annotation for Mentions in Hindi Text', 'JOURNAL', NULL, NULL, 'SN Computer Science', '4', '5', '515', 2023, 'SCI(E)', 'T', 'Kusum Lata, Pardeep Singh and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('77c6e4a2-83db-5a64-a37d-0b5614569ec6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5212fd66-6908-5ac7-b9e4-dfc32f6ed94d', 'Ensemble Learning Based Malicious Node Detection in SDN-based VANETs', 'JOURNAL', 'http://e-journal.unair.ac.id/index.php/JISEBI', NULL, 'Journal of Information Systems Engineering and Business Intelligence', '9', '2', '', 2023, 'Scopus', 'T', 'Kunal Vermani, Amandeep Noilya, Sunil Kumar, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5212fd66-6908-5ac7-b9e4-dfc32f6ed94d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('498eb597-705e-5346-8ed2-6e9c102bcfc5', 'Performance evaluation of drug synergy datasets using computational intelligence approaches', 'JOURNAL', '10.1007/s11042-023-15723-0', NULL, 'Multimedia Tools and Applications.', '83', '3', '8971-8997', 2024, 'SCI(E)', 'T', 'Pooja Rani, Kamlesh Dutta, Vijay Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('498eb597-705e-5346-8ed2-6e9c102bcfc5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a7c0f0b4-5151-5afc-87ed-0adc8332474e', 'Multi-objective Prairie Dog Optimization Algorithm for IoT-based Intrusion Detection', 'JOURNAL', '10.1002/itl2.516', NULL, 'Internet Technology Letters', '', '', 'e516', 2024, 'Scopus', 'T', 'Shubhkirti Sharma, Vijay Kumar and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a7c0f0b4-5151-5afc-87ed-0adc8332474e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c64bee48-85cf-5728-80a7-379a6b29e2d2', 'Jellyfish Search Chimp Optimization Enabled Routing and Attack Detection in SDN based VANETs', 'JOURNAL', '10.1007/s11277-024-11525-1', NULL, 'Wireless Personal Communications', '138', '2', '819-859', 2024, 'SCI(E)', 'T', 'Upinder Kaur, Aparna N. Mahajan, Sunil Kumar, and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c64bee48-85cf-5728-80a7-379a6b29e2d2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('76cd299c-d8cf-5928-8d15-830e9c45e326', 'Machine learning and deep learning techniques for detecting and mitigating cyber threats in IoT-enabled smart grids: a comprehensive review', 'JOURNAL', '10.1504/IJICS.2024.141601', NULL, 'International Journal of Information and Computer Security', '24', '3-4', '284-321', 2024, 'Scopus', 'T', 'Aschalew Tirulo, Siddhartha Chauhan, Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('76cd299c-d8cf-5928-8d15-830e9c45e326', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a3b9a79f-c246-5031-a205-21220ceb7ca1', 'Autoencoder-based Drug Synergy Framework for Malignant Diseases', 'JOURNAL', '10.1016/j.compbiolchem.2024.108273', NULL, 'Computational Biology and Chemistry', '', '', '108273', 2024, 'SCI(E)', 'T', 'Pooja Rani, Kamlesh Dutta, and Vijay Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a3b9a79f-c246-5031-a205-21220ceb7ca1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('98d8d2fa-1cc0-5d9c-8bfc-e256aa823ead', 'Video Retrieval Framework based on Color Co-occurrence Feature of Adaptive Low Rank Extracted Keyframes and Graph Pattern Matching', 'JOURNAL', '10.1016/j.ipm.2022.102870', NULL, 'Information Processing & Management', '59', '2', '102870', 2022, 'SCI(E)', 'T', 'Ajay Kumar Mallick, and Susanta Mukhopadhyay', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('98d8d2fa-1cc0-5d9c-8bfc-e256aa823ead', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d383058c-7acb-5b14-bec9-1a9552908719', 'Video retrieval using salient foreground region of motion vector based extracted keyframes and spatial pyramid matching', 'JOURNAL', '10.1007/s11042-020-09312-8', NULL, 'Multimedia Tools and Applications', '79', '37', '27995-28022', 2020, 'SCI(E)', 'T', 'Ajay Kumar Mallick, and Susanta Mukhopadhyay', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d383058c-7acb-5b14-bec9-1a9552908719', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('642d234e-822c-5ed0-ad4d-bb680d6b513c', 'Random Projection and Hashing based Privacy Preserving for Image Retrieval Paradigm using Invariant and Clustered Feature', 'JOURNAL', '10.1016/j.jksuci.2022.04.018', NULL, 'Journal of King Saud University - Computer and Information Sciences', '34', '9', '6829-6846', 2022, 'SCI(E)', 'T', 'Mukul Majhi, and Ajay Kumar Mallick', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('642d234e-822c-5ed0-ad4d-bb680d6b513c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ea8517bd-d3c4-5b90-8056-715ddd4daec7', 'Video Retrieval based on Motion Vector Key Frame Extraction and Spatial Pyramid Matching', 'CONFERENCE', '10.1109/SPIN.2019.8711781', NULL, '6th International Conference on Signal Processing and Integrated Networks (SPIN),', '6', '', '687-692', 2019, 'Scopus', 'T', 'Ajay Kumar Mallick, and Susanta Mukhopadhyay', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ea8517bd-d3c4-5b90-8056-715ddd4daec7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('360d66ee-a715-57a4-97c3-537cd6092a58', 'Near-Duplicate Video Retrieval Based on Spatio Temporal Pattern Tree', 'CONFERENCE', '10.1007/978-981-10-7895-8_14', NULL, 'Proceedings of 2nd International Conference on Computer Vision & Image Processing, Springer,', '2', '', '173-186', 2018, 'Scopus', 'T', 'Ajay Kumar Mallick, and Sushila Maheshkar,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('360d66ee-a715-57a4-97c3-537cd6092a58', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f1e92b20-e60a-5277-be61-c37aee41a29b', 'Video Retrieval Based on Color Correlation Histogram Scheme of Clip Segmented Key Frames', 'CONFERENCE', '10.1109/PDGC.2016.7913148', NULL, 'Fourth International Conference on Parallel, Distributed and Grid Computing (PDGC)', '4', '', '213-218', 2016, 'Scopus', 'T', 'Ajay Kumar Mallick, and Sushila Maheshkar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f1e92b20-e60a-5277-be61-c37aee41a29b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b2bc71fb-ca44-5972-bdc5-80c7f06d25a7', 'Digital image watermarking scheme based on visual cryptography and SVD', 'CONFERENCE', '10.1007/978-81-322-2695-6_50', NULL, '4th International Conference on Frontiers in Intelligent Computing: Theory and Applications (FICTA) 2015, Springer', '4', '', '589-598', 2016, 'Scopus', 'T', 'Ajay Kumar Mallick, and Sushila Maheshkar.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b2bc71fb-ca44-5972-bdc5-80c7f06d25a7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9dac9baf-4bfb-513b-a1a5-e93ab08b4009', 'Cathedral and Indian Mughal Monument Recognition Using Tensorflow', 'CONFERENCE', '10.1007/978-3-030-51992-6_16', NULL, 'International Workshop Soft Computing Applications, Springer', '8', '', '186-196', 2018, 'Scopus', 'T', 'Aniket Ninawe, Ajay Kumar Mallick, Vikash Yadav, Hifzan Ahmad, Dinesh Kumar Sah, and Cornel Barna.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9dac9baf-4bfb-513b-a1a5-e93ab08b4009', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3efeab92-a72f-5fbe-b629-ba2a261ccfac', 'Dimensionality reduction technique on SIFT feature vector for content based image retrival', 'CONFERENCE', '10.1007/978-981-13-9181-1_34', NULL, 'International Conference on Recent Trends in Image Processing and Pattern Recognition, Springer', '2', '', '383-394,', 2018, 'Scopus', 'T', 'Mukul Kirti Verma, Rajesh Dwivedi, Ajay Kumar Mallick, and Ebenezer Jangam', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3efeab92-a72f-5fbe-b629-ba2a261ccfac', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('841f8914-dea5-5df8-b5ab-19889ead4378', 'Automatic Hadoop cluster deployment and Management tool', 'CONFERENCE', '10.1109/ICRCICN.2017.8234500', NULL, '2017 Third International Conference on Research in Computational Intelligence and Communication Networks (ICRCICN), IEEE', '3', '', '163-168', 2017, 'Scopus', 'T', 'Susila Maheshkar, Bhavishya Mathur, Raj Roushan, and Ajay Kumar Mallick', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('841f8914-dea5-5df8-b5ab-19889ead4378', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('64646ae9-6a68-5fea-8345-601044446408', 'Blockchain-based User Authentication and Data-sharing Framework for Healthcare Industries', 'JOURNAL', '10.1109/TNSE.2024.3381723', NULL, 'IEEE Transactions on Network Science and Engineering', '11', '4', '15', 2024, 'SCI(E)', 'T', 'Preeti Soni, SK Hafizul Islam, Arup Kumar Pal, Nimish Mishra, Debabrata Samanta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('64646ae9-6a68-5fea-8345-601044446408', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('75de0a98-e7bc-5818-a3dc-bb349cdfd258', 'An Adaptive Prediction Strategy with Clustering in Wireless Sensor Network pp 575 - 587', 'JOURNAL', 'https://link.springer.com/content/pdf/10.1007/s10776-020-00496-2.pdf', NULL, 'International Journal of Wireless Information Networks. Volume 27, Issue 4', '27', '', '575-587', 2020, 'ESCI', 'T', 'Rajeev Kumar, Vibha Jain, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('75de0a98-e7bc-5818-a3dc-bb349cdfd258', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('20b360e5-6b35-5880-bfaa-72f6fb0c9ae9', 'Fuzzy Logic-Based Delay Efficient Data Collection Technique for IoT Environment', 'JOURNAL', 'https://www.inderscienceonline.com/doi/abs/10.1504/IJCNDS.2023.133902', NULL, 'International Journal of Communication Networks and Distributed Systems', '29', '6', '653-678', 2023, 'ESCI', 'T', 'Deepa Rani, Tanuj Wala, Rajeev Kumar, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('20b360e5-6b35-5880-bfaa-72f6fb0c9ae9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7ab182ce-cbc6-5b73-a40d-24566f19cfc2', 'Study Influencing Factors of Maternal Health and the Role of Internet of Things (IoT) to Improve Maternal Care', 'JOURNAL', 'https://link.springer.com/article/10.1007/s42979-024-03129-0', NULL, 'SN Computer Science', '5', '778', '', 2023, 'Scopus', 'T', 'Deepa Rani, Rajeev Kumar, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7ab182ce-cbc6-5b73-a40d-24566f19cfc2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1fc8498b-815a-57fb-acea-a45ec43b6ad5', 'A Novel Federated Learning Approach for Routing Optimization in Opportunistic IoT Networks', 'JOURNAL', '10.1504/IJSNET.2024.10064733', NULL, 'International Journal of Sensor Networks', '', '', '', 2023, 'SCI(E)', 'T', 'Moulik Bhardwaj, Jagdeep Singh, Nitin Gupta, Kuldeep Jadon and Sanjay K. Dhurandher', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1fc8498b-815a-57fb-acea-a45ec43b6ad5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('079ceaee-572a-5387-9e09-5dd622cfdfdb', 'Reinforcement Learning and Blockchain-based Intelligent and Secure Vaccine Recommender System', 'JOURNAL', '10.1111/exsy.13478', NULL, 'Expert Systems', '41', '1', '', 2023, 'SCI(E)', 'T', 'M. Sreenu, Nitin Gupta, Chandrashekar Jatoth and Deepak Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('079ceaee-572a-5387-9e09-5dd622cfdfdb', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8c3b61fb-4fd4-534f-8989-e26042d72e2e', 'Blockchain based smart contract for cooperative spectrum sensing in cognitive radio networks for sustainable beyond 5G wireless communication', 'JOURNAL', '10.1016/j.grets.2023.100019', NULL, 'Green Technologies and Sustainability, Elsevier', '1', '2', '', 2023, 'Scopus', 'T', 'Archit Jain, Nitin Gupta, M. Sreenu', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8c3b61fb-4fd4-534f-8989-e26042d72e2e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d3225363-c4f0-533a-adec-1fbc271b6343', 'Advancing Security in the Industrial Internet of Things Using Deep Progressive Neural Networks', 'JOURNAL', '10.1007/s11036-023-02104-y', NULL, 'Mobile Networks and Applications, Springer', '28', '2', '782�794', 2023, 'SCI(E)', 'T', 'Mehul Sharma, Shrid Pant, Priety, Deepak Kumar Sharma, Nitin Gupta, Gautam Srivastava', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d3225363-c4f0-533a-adec-1fbc271b6343', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('546d5b4e-4a09-5c28-952e-6506a79704a1', 'Deep Learning Model based Multimedia Retrieval and its Optimization in Augmented Reality Applications', 'JOURNAL', '10.1007/s11042-022-13555-y', NULL, 'Multimedia Tools and Applications, Springer', '82', '6', '8447�8466', 2022, 'SCI(E)', 'T', 'Yash Prakash Gupta, Mukul and Nitin Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('546d5b4e-4a09-5c28-952e-6506a79704a1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('017c3b78-92f2-595a-bf0f-a76d5927b66f', 'Building Structural Analysis based Internet of Things Network Assisted Earthquake Detection', 'JOURNAL', '10.1016/j.iot.2022.100561', NULL, 'Internet of Things, Elsevier', '19', '', '', 2022, 'SCI(E)', 'T', 'Ritwik Duggal, Nitin Gupta, Aarya Pandyaa, Poorvansh Mahajan, Kanak Sharma, Tarush kaundal, and Pragya Angra', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('017c3b78-92f2-595a-bf0f-a76d5927b66f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7371f005-f0da-5c43-98da-d59d94927903', 'Blockchain based Secure and Reliable Cyber Physical Ecosystem for Vaccine Supply Chain', 'JOURNAL', '10.1016/j.comcom.2022.04.031', NULL, 'Computer Communications, Elsevier', '191', '', '173-183', 2022, 'SCI(E)', 'T', 'M Sreenu, Nitin Gupta, Chandrashekar Jatoth, Aldosary Saad, Abdullah Alharbi and Lewis Nkenyereye', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7371f005-f0da-5c43-98da-d59d94927903', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('297a19a5-9864-5950-b88f-5bbd668312bd', 'Efficient Task Scheduling in Cloud Environment', 'JOURNAL', '10.1002/dac.5158', NULL, 'International Journal of Communication Systems, Wiley', '35', '10', '', 2022, 'SCI(E)', 'T', 'Robin Singh Rana and Nitin Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('297a19a5-9864-5950-b88f-5bbd668312bd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b1744c9b-5243-5a4d-822d-b8e03bc5930f', 'Trajectory Optimization for the UAV assisted Data Collection in Wireless Sensor Networks', 'JOURNAL', 'https://link.springer.com/article/10.1007/s11276-022-02934-w', NULL, 'Wireless Networks, Springer', '28', '4', '1785-1796', 2022, 'SCI(E)', 'T', 'Kartik Saxena, Nitin Gupta, Jahnvi Gupta, Deepak K. Sharma, Kapal Dev', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b1744c9b-5243-5a4d-822d-b8e03bc5930f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c3e2f44c-01f9-50e2-9748-09e97dfd072d', 'An Opportunistic Approach for Cloud Service-Based IoT Routing Framework Administering Data, Transaction, and Identity Security', 'JOURNAL', '10.1109/JIOT.2021.3078810', NULL, 'IEEE Internet of Things Journal', '9', '4', '2505 - 2512', 2022, 'SCI(E)', 'T', 'Deepak Kumar Sharma, Kartik Krishna Bhardwaj, Siddhant Banyal, Riyanshi Gupta, Nitin Gupta, and Lewis Nkenyereye', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c3e2f44c-01f9-50e2-9748-09e97dfd072d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('303ef2e4-33d1-50e7-b5e2-4282fe7000c5', 'Cryptographically secure privacy-preserving authenticated key agreement protocol for an IoT network: A step towards critical infrastructure protection', 'JOURNAL', '10.1007/s12083-021-01236-w', NULL, 'Peer to Peer Networking and Appli- cations, Springer', '15', '', '206�220', 2021, 'SCI(E)', 'T', 'Vidyotma Thakur, Gaurav Indra, Nitin Gupta, Pushpita Chatterjee, Omar Said, Amr Tolba,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('303ef2e4-33d1-50e7-b5e2-4282fe7000c5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e87bebd5-b059-5abf-bc03-be77bd9d9a24', 'Contract-Theory-Based Incentive Design Mechanism for Opportunistic IoT Networks', 'JOURNAL', '10.1109/JIOT.2021.3109162', NULL, 'IEEE Internet of Things Journal', '10', '4', '2881 - 2892', 2023, 'SCI(E)', 'T', 'Nitin Gupta, Jagdeep Singh, Sanjay. K. Dhurandher and Zhu Han', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e87bebd5-b059-5abf-bc03-be77bd9d9a24', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2d3e51a2-4182-5377-867e-354557f1112e', 'Deep learning assisted COVID-19 detection using full CT-scans', 'JOURNAL', '10.1016/j.iot.2021.100377', NULL, 'Internet of Things, Elsevier', '14', '', '', 2021, 'SCI(E)', 'T', 'Varan Singh Rohila, Nitin Gupta, Amit Kaul and Deepak K Sharma,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2d3e51a2-4182-5377-867e-354557f1112e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f757c7ae-d3da-51bf-9d10-7cbbf67f4b7b', 'Energy-efficient dynamic homomorphic security scheme for fog computing in IoT networks', 'JOURNAL', '10.1016/j.jisa.2021.102768', NULL, 'Journal of Information Security and Applications, Elsevier', '58', '', '1-8', 2021, 'SCI(E)', 'T', 'Sejal Gupta, Ritu Garg, Nitin Gupta, Waleed S Alumany, Uttam Ghosh, Pradip K. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f757c7ae-d3da-51bf-9d10-7cbbf67f4b7b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('39c7a9e0-b248-5270-97e5-24b9cee2c43a', 'Secrecy Analysis of Reconfigurable Underlay Cognitive Radio Networks With SWIPT and Imperfect CSI', 'JOURNAL', '10.1109/TNSE.2020.3040531', NULL, 'IEEE Transactions on Network Science and Engineering', '9', '1', '89 - 97', 2020, 'SCI(E)', 'T', 'Anshu Thakur, Ashok Kumar, Nitin Gupta, and Puspita Chatterje', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('39c7a9e0-b248-5270-97e5-24b9cee2c43a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('20127c4f-700d-5924-a7c8-b52d9f3ec6ae', 'Federated Learning Based Caching in Fog Computing for Future Smart Cities', 'JOURNAL', '10.1002/itl2.225', NULL, 'Internet Technologies Letters, Wiley', '5', '1', '', 2020, 'SCI(E)', 'T', 'Sushant Sharma and Nitin Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('20127c4f-700d-5924-a7c8-b52d9f3ec6ae', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('23e6c6fb-f37c-581d-97ba-75aeda83a13c', 'Secrecy analysis of multiple-input multiple-output underlay cognitive radio networks with energy harvesting', 'JOURNAL', '10.1002/ett.4116', NULL, 'Transactions on Emerging Telecommunications Technologies, Wiley', '32', '6', '', 2020, 'SCI(E)', 'T', 'Anshu Thakur, Ashok Kumar, and Nitin Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('23e6c6fb-f37c-581d-97ba-75aeda83a13c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('eb2d2a93-7214-5bb5-a814-590f04fa417b', 'Efficient Caching Method in Fog Computing for Internet of Everything', 'JOURNAL', '10.1007/s12083-020-00952-z', NULL, 'Peer To Peer Networking and Application, Springer', '14', '', '439�452', 2020, 'SCI(E)', 'T', 'Riya, Nitin Gupta and Sanjay K. Dhurandher', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('eb2d2a93-7214-5bb5-a814-590f04fa417b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ef002a21-2cd3-5721-9a2d-c4cac58fb714', 'A Contract Theory Approach-Based Scheme to Encourage Secondary Users for Cooperative Sensing in Cognitive Radio Networks', 'JOURNAL', '10.1109/JSYST.2019.2927686', NULL, 'IEEE Systems Journal', '14', '2', '2400 - 2410', 2020, 'SCI(E)', 'T', 'Nitin Gupta, Sanjay K. Dhurandher, and Aarushi Sehgal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ef002a21-2cd3-5721-9a2d-c4cac58fb714', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('da6a7552-cb57-5563-80d9-952cc8c4e7ac', 'Cross-layer perspective for channel assignment in cognitive radio networks: A survey', 'JOURNAL', '10.1002/dac.4261', NULL, 'International Journal of Communication Systems, Wiley', '33', '5', '', 2019, 'SCI(E)', 'T', 'Nitin Gupta and Sanjay K. Dhurandher', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('da6a7552-cb57-5563-80d9-952cc8c4e7ac', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2cf7dd77-6d76-516a-a10e-17912fa1948a', 'Contract Theory Based Medium Access Contention Resolution in TDMA Cognitive Radio Networks', 'JOURNAL', '10.1109/TVT.2019.2922478', NULL, 'IEEE Transactions on Vehicular Technology', '68', '8', '8026 - 8035', 2019, 'SCI(E)', 'T', 'Sanjay K. Dhurandher, Nitin Gupta and Petros Nicopolitidis', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2cf7dd77-6d76-516a-a10e-17912fa1948a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('887ccc57-4d20-56bb-91a3-9e521b2b638b', 'Secrecy outage performance analysis of MIMO underlay cognitive radio networks with delayed CSI and transmitter antenna selection', 'JOURNAL', '10.1002/dac.4106', NULL, 'International Journal of Communication Systems, Wiley', '36', '12', '', 2019, 'SCI(E)', 'T', 'Anshu Thakur, Ashok Kumar, Nitin Gupta and Ajay Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('887ccc57-4d20-56bb-91a3-9e521b2b638b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c5273a94-25c4-5844-9dc6-157c8311641d', 'Subcarriers assignment scheme for multiple secondary users in OFDMA-based IEEE 802.22 WRAN: A game theoretic approach', 'JOURNAL', '10.1002/ett.3502', NULL, 'Transactions on Emerging Telecommunications Technologies, Wiley', '29', '11', '', 2018, 'SCI(E)', 'T', 'Nitin Gupta, Sanjay K. Dhurandher and Isaac Woungang', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c5273a94-25c4-5844-9dc6-157c8311641d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('23749742-1007-5643-8189-304b1de9855b', 'On the target channel sequence selection for multiple handoffs in cognitive radio-based wireless regional area networks', 'JOURNAL', '10.1504/IJSSC.2018.098691', NULL, 'International Journal of space based and situated computing, Inderscience', '8', '4', '214-224', 2019, 'SCI(E)', 'T', 'Nitin Gupta, Sanjay K. Dhurandher, Isaac Woungang and Joel J. P. C. Rodrigues,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('23749742-1007-5643-8189-304b1de9855b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('62e8acb9-41e3-5912-b52d-af0090fe99ea', 'Profit aware Resource Allocation in Fog Computing: A Stackelberg Game Approach', 'CONFERENCE', '10.1109/CITS58301.2023.10188727', NULL, 'IEEE CITS 2023 Genao, Italy on 11-12 July 2023', '', '', '01-08', 2023, 'Scopus', 'T', 'Akshita Doad, Nitin Gupta, Mohammad S. Obaidat, Kuldeep Singh Jadon, Piyush Rawat and Kuie-Fang Hsiao,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('62e8acb9-41e3-5912-b52d-af0090fe99ea', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('00b439f7-f0c6-5790-8a4d-3ee310492e6b', 'Improved Deep Learning-based Contactless Biometric Recognition using Bracelet Lines', 'CONFERENCE', '10.1049/icp.2024.0545', NULL, '4th International Conference on Distributed Sensing and Intelligent Systems (ICDSIS2023) Dubai, UAE, 21-22 December 2023.', '2023', '', '567-574', 2023, 'Scopus', 'T', 'Ritwik Duggal, Aarya Pandya, Rajkumar Singh Rathore, Khwab Kalra, Kanak Sharma, and Nitin Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('00b439f7-f0c6-5790-8a4d-3ee310492e6b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ba994c63-db99-5547-855c-f187554071a5', 'Deep Learning based Contactless Biometric Recognition using Bracelet Lines', 'CONFERENCE', '10.1109/I2CT57861.2023.10126317', NULL, 'IEEE 8th I2CT, Pune, Maharashtra, India, 07-09 April, 2023.', '', '', '01-09', 2023, 'Scopus', 'T', 'Ritwik Duggal, Aarya Pandyaa, Nitin Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ba994c63-db99-5547-855c-f187554071a5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('17464340-c5d2-5027-abc3-9e0686fdf49c', 'Lattice Cryptography based Geo-encrypted Contact Tracing for Infection Detection', 'CONFERENCE', '10.1007/978-981-99-1203-2_10', NULL, '4th International Conference on Advances in Distributed Computing and Machine Learning (ICADCML-2023) NIT, Rourkela, January 15-16, 2023.', '660', '', '111-125', 2023, 'Scopus', 'T', 'Mayank Dhiman, Nitin Gupta, Kuldeep s. Jadon, Ujjwal Gupta and Yashwant Kumar, �', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('17464340-c5d2-5027-abc3-9e0686fdf49c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6d6b3de7-1607-52a3-ae9b-c8acebfb7624', 'T-AES and ECC based secure data communication in peer to peer networks', 'CONFERENCE', '10.1007/978-3-031-33242-5_4', NULL, '5th International Conference on Wireless, Intelligent, and Distributed Environment for COMmunication (WIDECOM 2022), University of Windsor, Canada, October 12-14, 2022.', '174', '', '43-58', 2022, 'Scopus', 'T', 'Mukesh Kumar, Kuldeep Singh Jadon and Nitin Gupta,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6d6b3de7-1607-52a3-ae9b-c8acebfb7624', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('96c2c221-b7ab-58eb-99c0-770bbdf38d75', 'A Novel Approach For the Detection of Tea Leaf Disease Using Deep Neural Network', 'CONFERENCE', '10.1016/j.procs.2023.01.203', NULL, 'In International Conference on Machine Learning and Data Engineering, ICMLDE 2022, going to be held in UPES, Dehradun, 7-8 Sep 2022', '218', '', '2273-2286.', 2022, 'Scopus', 'T', 'Saikat Dutta and Nitin Gupta,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('96c2c221-b7ab-58eb-99c0-770bbdf38d75', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9715730f-2d00-5819-8aa3-88a6d67327db', 'A Comprehensive Study on Artificial Intelligence and Blockchain Driven Beyond 5G Network', 'CONFERENCE', '10.1109/CITS55221.2022.9832998', NULL, 'IEEE CITS, Athens Greece, July 2022.', '', '', '1-6', 2022, 'Scopus', 'T', 'Nitin Gupta, Mohammad S. Obaidat, Deborsi Basu, Uttam Ghosh, and Kuie-Fang Hsiao,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9715730f-2d00-5819-8aa3-88a6d67327db', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('bd956e1f-3208-508f-a499-3df41ca034a7', 'Delay-Tolerant and Prioritized Batch Verification System using Efficient RSU Scheduling in VANET', 'CONFERENCE', '10.1109/ICC45855.2022.9838800', NULL, 'IEEE ICC, Seol, S. Korea, May 2022', '', '', '5706-5711', 2022, 'Scopus', 'T', 'Sidhant Gupta, Sejal Gupta, Nitin Gupta, Ritu Garg, Pankaj Dhiman and Joel J. P. C. Rodrigues,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('bd956e1f-3208-508f-a499-3df41ca034a7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('495573c0-0982-527b-a676-8825b76fcc57', 'Classification of Human Posture Data using Wearable Sensors', 'CONFERENCE', '10.1109/ICC42927.2021.9500414', NULL, 'IEEE GLOBECOM, Madrid, Spain, Dec 2021.', '', '', '1-6', 2021, 'Scopus', 'T', 'Jahnvi Gupta, Nitin Gupta, Mukesh Kumar, Ritwik Duggal and Joel J. P. C. Rodrigues,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('495573c0-0982-527b-a676-8825b76fcc57', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f8702406-0906-50a6-b183-ded9b5538e96', 'Towards Framework for Edge Computing Assisted Covid-19 Detection using CT-scan Images', 'CONFERENCE', NULL, NULL, 'IEEE ICC, Montreal, Canada, June 2021.', '', '', '1-6', 2021, 'Scopus', 'T', 'Varan S. Rohila, Nitin Gupta, Amit Kaul and Uttam Ghosh,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f8702406-0906-50a6-b183-ded9b5538e96', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b42d567f-d131-513f-a851-d9e248fa7377', 'Trust Aware Scheme based Malicious Nodes Detection under Cooperative Spectrum Sensing for Cognitive Radio Networks', 'CONFERENCE', '10.1145/3427477.3429992', NULL, 'In Adjunct Proceedings of the 2021 ACM International Conference on Distributed Computing and Networking (ICDCN 21), January 5-8, 2021, Nara, Japan.', '', '', '56-61', 2021, 'Scopus', 'T', 'Abhishek Kumar, Nitin Gupta, Riya, and Jagdeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b42d567f-d131-513f-a851-d9e248fa7377', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c69bec6a-3568-5a00-97b0-a748ba029635', '�Secrecy Analysis of Underlay Cognitive Radio with Delayed Channel Information",', 'CONFERENCE', NULL, NULL, '3rd Springer International Conference on Wireless Intelligent and Distributed Environment for Communication (WIDECOM), Ryerson University, Ontario, Canada, June 2020', '51', '', '91-97', 2020, 'Scopus', 'T', 'Anshu Thakur, Ashok Kumar and Nitin Gupta,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c69bec6a-3568-5a00-97b0-a748ba029635', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('69af838e-b6a5-517b-a4b0-8ec42fa20a3d', 'Contract Theory Based Incentive Mechanism Design Approaches in Cognitive Radio Networks: A Survey', 'CONFERENCE', '10.1109/IoT-SIU.2019.8777498', NULL, 'IEEE 4th International Conference On Internet of Things: Smart Innovation and Usages (IEEE IoT-SIU 2019), Gaziabad, UP, India, April 18-19, 2019.', '', '', '1-6', 2019, 'Scopus', 'T', 'Nitin Gupta, Sanjay K. Dhurandher, and Bhoopendra Kumar,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('69af838e-b6a5-517b-a4b0-8ec42fa20a3d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6b08c3ed-9096-5a4c-9f99-20e1fff03688', 'Optimal Secondary Users Selection for Cooperative Spectrum Sensing in Cognitive Radio Networks', 'CONFERENCE', '10.1109/GLOCOMW.2018.8644208', NULL, 'proceedings of Global Communication Conference, IEEE Globecom, Abu Dhabi, pages 1-6, 09-13 Dec 2018,', '', '', '1-6', 2018, 'Scopus', 'T', 'Sanjay Kumar Dhurandher, Isaac Woungang, Nitin Gupta, Rishabh Jain, Devesh Singhal, Joshika Agarwal and Mohammad S. Obaidat,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6b08c3ed-9096-5a4c-9f99-20e1fff03688', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('628cd82b-c480-5e95-b53f-fe88440c8d07', 'Proactive Decision Based Handoff Scheme for Cognitive Radio Next Generation Networks', 'CONFERENCE', '10.1109/ICC.2018.8422635', NULL, 'proceedings of International Conference on Communications, IEEE ICC, Kansas city MO, USA , pages 1-6, 20-24 May, 2018.', '', '', '1-6', 2018, 'Scopus', 'T', 'Nitin Gupta, Sanjay K. Dhurandher, Isaac Woungang and Mohammad S. Obaidat,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('628cd82b-c480-5e95-b53f-fe88440c8d07', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b67a7589-ca9a-54fb-af0e-23ef503c6e55', 'Fair Sub-Carrier Allocation in OFDMA and Cognitive Radio Based IEEE 802.22 WRAN', 'CONFERENCE', '10.1109/INFCOMW.2018.8406893', NULL, 'proceeding of International Conference on Computer Communications, IEEE INFOCOM, Honolulu, HI, USA, pages 1-5, 15-19 April, 2018', '', '', '1-5', 2018, 'Scopus', 'T', 'Joshika Agarwal, Rishabh Jain, Sanjay Kumar Dhurandher, Isaac Woungang and Nitin Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b67a7589-ca9a-54fb-af0e-23ef503c6e55', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b9fa29c0-0d52-54b8-9ee7-fa95b79a14ce', 'Optimal Cache Placement by Identifying Possible Congestion Points in Wireless Sensor Networks', 'CONFERENCE', '10.1007/978-3-319-75626-4_12', NULL, 'International Conference on Wireless, Intelligent, and Dis tributed Environment for Communication, (WIDECOM 2018)', '18', '', '161-170', 2018, 'Other', 'T', 'Nitin Gupta and Neelam Dayal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b9fa29c0-0d52-54b8-9ee7-fa95b79a14ce', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('29d9c54d-98a4-55f2-b449-64291926b6b0', 'Game Theoretic Analysis of Post Handoff Target Channel Sharing in Cognitive Radio Networks', 'CONFERENCE', '10.1109/GLOCOM.2017.8254068', NULL, 'proceeding of Global Communication Conference, IEEE Globecom, Singapore,', '', '', '1-5', 2017, 'Scopus', 'T', 'Nitin Gupta, Sanjay K. Dhurandher, Isaac Woungang and Joel J. P. C. Rodrigues, �', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('29d9c54d-98a4-55f2-b449-64291926b6b0', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('dc01c071-39ab-5445-a516-def2ff9d2593', 'On the Probability of Appearance of Primary User in IEEE 802.22 WRAN using an Artificial Neural Network Learning Technique",', 'CONFERENCE', '10.1109/IICIP.2016.7975317', NULL, 'Proceedings of IEEE India International Conference On Information Processing (IICIP�16), New Delhi,', '', '', '1-5', 2016, 'Scopus', 'T', 'Nitin Gupta, Sanjay K. Dhurandher and Isaac Woungang,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('dc01c071-39ab-5445-a516-def2ff9d2593', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8b4c6ec5-b567-54f8-afe4-d5b7dec1e248', 'Security Aspects of the Extended Playfair Cipher",', 'CONFERENCE', '10.1109/CSNT.2011.37', NULL, 'Proceedings of IEEE 1st International Conference on Computer Modeling and Simulation (CSNT), (ISBN - 978-1-4577-0543-4),Jammu', '', '', '615-617', 2011, 'Scopus', 'T', 'Shiv Shakti Srivastava and Nitin Gupta,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8b4c6ec5-b567-54f8-afe4-d5b7dec1e248', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d576b425-2bcb-5cf4-ae28-60025e741ce0', 'Mnemonics in e-learning using augmented reality', 'BOOK_CHAPTER', '10.1049/pbpc040e_ch10', NULL, 'E-learning Methodologies: Fundamentals, Technologies and Applications', '40', '', '215-233', 2021, 'Scopus', 'T', 'Dinesh Kumar Saini ; Arun Kumar Yadav ; Kartik Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d576b425-2bcb-5cf4-ae28-60025e741ce0', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8c86d1ab-252c-5378-a288-4c6a21b8b4a7', 'Role of Artificial Intelligence of Things (AIoT) to Combat Pandemic COVID-19', 'BOOK_CHAPTER', '10.4018/978-1-7998-6870-5.ch008', NULL, 'Handbook of Research on Innovations and Applications of AI, IoT, and Cognitive Technologies', '', '', '117-128', 2021, 'Scopus', 'T', 'A. Jain, R. Kushwah, A. Swaroop, and A. Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8c86d1ab-252c-5378-a288-4c6a21b8b4a7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1f0d00a6-3ad7-526c-ba6d-c0c50fd2ab5e', 'Perspective of Cybersecurity and Ethical Hacking with Vulnerability Assessment and Exploitation Tools', 'BOOK_CHAPTER', '10.201/9781032665399', NULL, 'Big Data Analytics Framework for Smart Grids', '1', '', '98-11', 2023, 'Scopus', 'T', 'Devyanshi Bansal, Madhulika Bhatia, Aniruddh Atrey, Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1f0d00a6-3ad7-526c-ba6d-c0c50fd2ab5e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0cacbcb0-38e8-5c34-b479-c75cc873624f', 'A systematic Review of Attach graph generation and analysistechniqyes', 'BOOK_CHAPTER', '10.1201/9780429424878', NULL, 'Computer and Cyber Security: Principles, Algorithm, Applications, and Perspectives, 115.', '1', '', '115-146', 2018, 'Other', 'T', 'Garg, U., Sikka, G., & Awasthi, L. K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0cacbcb0-38e8-5c34-b479-c75cc873624f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('612a1156-238a-51ef-8e6e-d83d8283baed', 'Checkpointing in Distributed Computing Systems', 'BOOK_CHAPTER', '10.1007/978-1-4757-3573-4', NULL, 'Concurrency in Dependable Computing', '1', '', '273-289', 2002, 'Other', 'T', 'L. K. Awasthi, Manoj Misra, R. C. Joshi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('612a1156-238a-51ef-8e6e-d83d8283baed', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('31be47dd-38fa-5151-bbb0-6e7b6cca097c', 'DATA COLLECTION', 'BOOK_CHAPTER', '10.1201/b15425', NULL, 'Wireless Sensor Networks: From Theory to Applications', '1', '', '23-86', 2013, 'Other', 'T', 'Lalit Kumar Awasthi and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('31be47dd-38fa-5151-bbb0-6e7b6cca097c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c8f3fd16-e10c-5d28-9923-1a9b51614e62', 'Cooperating caching in Mobile AdHoc network', 'BOOK_CHAPTER', '10.5555/2462682', NULL, 'Contemporary Challenges and Solutions for Mobile and Multimedia Technologies .', '1', '', '271-285', 2012, 'Other', 'T', 'Kumar, P., Chauhan, N., Awasthi, L. K., & Chand, N.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c8f3fd16-e10c-5d28-9923-1a9b51614e62', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('fd77a4d5-b084-511e-b614-9cbacfcdef2b', 'Molecular Modeling Study of Interaction of Anthracenedione Class of Drug Mitoxantrone and Its Analogs with DNA Tetrameric Sequences', 'BOOK_CHAPTER', '10.1007/978-1-4419-7046-6', NULL, 'Software Tools and Algorithms for Biological Systems', '1', '', '385-400', 2011, 'Other', 'T', 'Pamita Awasthi, Shilpa Dogra, Lalit K Awasthi, Ritu Barthwal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('fd77a4d5-b084-511e-b614-9cbacfcdef2b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('199d4cda-d595-5b4d-81c9-859c1d364b2b', 'Some Observations on the Behaviour of Federated Learning', 'BOOK_CHAPTER', '10.1007/978-3-030-85559-8_5', NULL, 'Springer International Publishing', '', '', '67-74', 2022, 'Scopus', 'T', 'Vishal Kaushal, Sangeeta Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('199d4cda-d595-5b4d-81c9-859c1d364b2b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2f70567a-4983-5ebe-afc4-d9c24e4457df', 'Internet of things in food industry', 'BOOK_CHAPTER', '10.1016/B978-0-323-85203-6.00019-0', NULL, 'Innovation Strategies in the Food Industry', '', '', '287-303', 2022, 'Scopus', 'T', 'Rahul Kodan, Mahmoud Said Rashed, Mohammad Khalid Pandit, Puneet Parmar, Shivani Pathania', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2f70567a-4983-5ebe-afc4-d9c24e4457df', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1d1343db-9e4a-5b2e-a31b-f61d48b7b610', 'Securing medical images via a texture and chaotic key framework', 'BOOK_CHAPTER', '10.1007/978-981-15-8711-5_1', NULL, 'Multimedia Security: Algorithm Development, Analysis and Applications', '', '', 'Mar-24', 2021, 'Scopus', 'T', 'Shoaib Amin Banday, Mohammad Khalid Pandit, Ab Rouf Khan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1d1343db-9e4a-5b2e-a31b-f61d48b7b610', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('59deee9f-e2c2-5c5c-a0e4-5d20b16313bd', 'Improving the Security of Data in the Internet of Things by Performing Data Aggregation Using Neural Network-Based Autoencoders', 'BOOK_CHAPTER', 'https://www.taylorfrancis.com/chapters/edit/10.1201/9781003016304-12/improving-security-data-internet-things-performing-data-aggregation-using-neural-network-based-autoencoders-ab-rouf-khan-mohammad-khalid-pandit-shoaib-amin-banday', NULL, 'Security and Privacy in the Internet of Thing', '', '', '171-185', 2020, 'Scopus', 'T', 'Shoaib Amin Banday, Mohammad Khalid Pandit, Ab Rouf Khan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('59deee9f-e2c2-5c5c-a0e4-5d20b16313bd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('97751bd9-b8ef-5be6-ac99-21c63bddc872', 'A secure and trusted consensus protocol for blockchain-enabled supply chain management system', 'JOURNAL', '10.1007/s12083-024-01782-z', NULL, 'Peer-to-Peer Networking and Applications', '17', '', '3815–3840', 2024, 'SCI(E)', 'T', 'Rangu Manjula, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('97751bd9-b8ef-5be6-ac99-21c63bddc872', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('489990f1-bdcb-55e7-bd35-5dac838fe343', 'A secure framework for IoT‐based healthcare using blockchain and IPFS', 'JOURNAL', '10.1002/spy2.348', NULL, 'Security and Privacy', '7', '2', 'e348', 2023, 'Other', 'T', 'Deepa Rani, Rajeev Kumar, and Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('489990f1-bdcb-55e7-bd35-5dac838fe343', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0e3997df-878f-597d-b396-e6a24e396fb2', 'Benevolence Behavior Based Message Forwarding Scheme for Consumer-Centric IoT Opportunistic Networks', 'JOURNAL', '10.1109/TCE.2024.3424239', NULL, 'IEEE Transactions on Consumer Electronics', '70', '4', '6892-6900', 2024, 'SCI(E)', 'T', 'Prashant Kumar, Naveen Chauhan, Nisha Chaurasia, Krishna Kant Agarwal, Ankit Vidyarthi, Deepak Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0e3997df-878f-597d-b396-e6a24e396fb2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('54b56107-6281-53f8-a31a-54c38c19a324', 'Exploring security and privacy enhancement technologies in the Internet of Things: A comprehensive review', 'JOURNAL', '10.1002/spy2.448', NULL, 'Security and Privacy', '7', '6', 'e448', 2024, 'Other', 'T', 'Md. Ataullah, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('54b56107-6281-53f8-a31a-54c38c19a324', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3a697bdc-66d3-53a2-9b79-5cc480df5e4d', 'Reduced lead ECG multi-label classification with higher generalization using 2D SEResnets with self attention', 'JOURNAL', '10.1007/s11042-024-18116-z', NULL, 'Multimedia Tools and Applications', '83', '', '65315–65339', 2024, 'Scopus', 'T', 'Danish Sheikh, Himanshu Verma, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3a697bdc-66d3-53a2-9b79-5cc480df5e4d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b5a3f425-4d85-56cd-97c8-ffc7f1855df6', 'A Vision-Based Pothole Detection Using CNN Model', 'JOURNAL', '10.1007/s42979-023-02153-w', NULL, 'SN Computer Science', '4', '6', '716', 2023, 'Scopus', 'T', 'Prashant Kumar, Pooja, Naveen Chauhan, Nisha Chaurasia', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b5a3f425-4d85-56cd-97c8-ffc7f1855df6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b267e73d-8c74-5e7d-933d-36fd8c7ceef8', 'DDC‐OMDC: Deadline‐based data collection using optimal mobile data collectors in Internet of Things', 'JOURNAL', '10.1002/dac.5486', NULL, 'International Journal of Communication Systems', '36', '10', 'e5486', 2023, 'SCI(E)', 'T', 'Tanuj Wala, Rajeev Kumar, Naveen Chauhan, Ajay K Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b267e73d-8c74-5e7d-933d-36fd8c7ceef8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('56e02706-255e-555e-b923-b6b27aebdcac', 'A Novel Deep Convolutional Neural Network based Classification of Arrhythmia', 'JOURNAL', '10.47164/ijngc.v14i2.1153', NULL, 'International Journal of Next-Generation Computing', '14', '', '2', 2023, 'Scopus', 'T', 'Priyanka Rathee, Mahesh Shirsath,Lalit Kumar Awasthi, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('56e02706-255e-555e-b923-b6b27aebdcac', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('69ca6238-fe4d-54cd-8d86-84291bd32616', 'Cluster based distributed service discovery in internet of vehicle', 'JOURNAL', '10.24138/jcomss-2021-0069', NULL, 'Journal of Communications Software and Systems', '17', '3', '281-288', 2021, 'Scopus', 'T', 'Nishant Sharma, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('69ca6238-fe4d-54cd-8d86-84291bd32616', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2ec0384c-930a-5073-86ea-7b68c64c03b5', 'An adaptive prediction strategy with clustering in wireless sensor network', 'JOURNAL', '10.1007/s10776-020-00496-2', NULL, 'International Journal of Wireless Information Networks', '27', '', '575-587', 2020, 'Scopus', 'T', 'Rajeev Kumar, Vibha Jain, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2ec0384c-930a-5073-86ea-7b68c64c03b5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('00526c64-010f-5388-8153-dddd47c8d01f', 'Incentive based scheme for improving data availability in vehicular ad-hoc networks', 'JOURNAL', '10.1007/s11276-016-1246-7', NULL, 'Wireless Networks', '23', '', '1669–1687', 2017, 'SCI(E)', 'T', 'Brij Bihari Dubey, Naveen Chauhan, Narottam Chand, Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('00526c64-010f-5388-8153-dddd47c8d01f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('642f8c74-aa5c-5f4b-9fee-9430c5ea6b06', 'Energy Efficient Entropy Based Clustering in Wireless Sensor Networks', 'JOURNAL', '10.14257/ijgdc.2017.10.7.04', NULL, 'International Journal Of Grid And Distributed Computing', '10', '7', '41-51', 2017, 'Scopus', 'T', 'Rajeev Kumar, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('642f8c74-aa5c-5f4b-9fee-9430c5ea6b06', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6cd699d4-a169-55d1-bef8-f99cb0d026bf', 'Adaptive Clustering in Wireless Sensor Networks', 'JOURNAL', '10.14257/ijmue.2017.12.9.02', NULL, 'International Journal of Multimedia and Ubiquitous Engineering', '12', '9', '15-26', 2017, 'Scopus', 'T', 'Rajeev Kumar, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6cd699d4-a169-55d1-bef8-f99cb0d026bf', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5d974808-e021-54ea-9575-6372c5fd1577', 'NextContact: neighbor discovery mechanism for opportunistic networks', 'JOURNAL', '10.14257/ijgdc.2017.10.1.10', NULL, 'Internatonal Journal of Grid and Distributed Computing', '10', '1', '99-110', 2017, 'Scopus', 'T', 'Prashant Kumar, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5d974808-e021-54ea-9575-6372c5fd1577', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('03f45e28-9fbd-5049-974c-76210976ed4b', 'GRAB: Greedy Forwarding with Routing Along Boundaries in Wireless Sensor Networks.', 'JOURNAL', '10.47164/ijngc.v7i3.116', NULL, 'International Journal of Next-Generation Computing', '7', '3', '', 2016, 'Scopus', 'T', 'Rajesh Sharma, Lalit Kumar Awasthi, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('03f45e28-9fbd-5049-974c-76210976ed4b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3e80627b-4eb7-538e-bfe4-0c310dee7aa7', 'Minimal Marking of Trap-Regions for Efficient Greedy Forwarding in WSNs.', 'JOURNAL', '10.47164/ijngc.v7i1.104', NULL, 'International Journal of Next-Generation Computing', '7', '', '', 2016, 'Scopus', 'T', 'Rajesh Sharma, Lalit Kumar Awasthi, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3e80627b-4eb7-538e-bfe4-0c310dee7aa7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e07064d8-bce1-5a6f-9f7a-6d53a5ae3a17', 'Efficient Technique for Improving Data Availability in VANETs', 'JOURNAL', '10.9790/0661-15010010162-68', NULL, 'IOSR Journal of Computer Engineering (IOSR-JCE)', '', '', '62-68', 2016, 'Scopus', 'T', 'Brij Bihari Dubey, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e07064d8-bce1-5a6f-9f7a-6d53a5ae3a17', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ccd5d2ce-8dd7-5193-8b40-96cf6400d216', 'Hybrid cellular-Manet based communication Architecture for natural disasters', 'JOURNAL', NULL, NULL, 'MMU Journal of Management & Technology', '1', '1', '', 2016, 'Scopus', 'T', 'Himanshu Verma, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ccd5d2ce-8dd7-5193-8b40-96cf6400d216', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6bfffb33-04d8-551a-a884-a4f09852b59f', 'Edgc: efficient dynamic group caching technique for mobile ad hoc networks', 'JOURNAL', NULL, NULL, 'International Journal of Computer Applications', '41', '13', '25-30', 2012, 'Scopus', 'T', 'Atul Rao, Prashant Kumar, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6bfffb33-04d8-551a-a884-a4f09852b59f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5f80b7cd-b256-593a-8bd5-6bc5160f83cc', 'Convolutional Neural Network Based IOT Intrusion Detection System using Edge-IIoTset', 'CONFERENCE', '10.1109/ICIC3S61846.2024.10603309', NULL, '2024 International Conference on Integrated Circuits, Communication, and Computing Systems (ICIC3S)', '1', '', '1-4', 2024, 'Scopus', 'T', 'Mahima Singh, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5f80b7cd-b256-593a-8bd5-6bc5160f83cc', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8d17e1c7-8eac-5299-a2fa-83188eb9537b', 'Enhancing Skin Lesion Analysis: Leveraging UNet and VGG Architectures in Deep Learning Models', 'CONFERENCE', '10.1109/ICIC3S61846.2024.10603184', NULL, '2024 International Conference on Integrated Circuits, Communication, and Computing Systems (ICIC3S)', '1', '', '1-8', 2024, 'Scopus', 'T', 'Mayank Choudhary, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8d17e1c7-8eac-5299-a2fa-83188eb9537b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f686244f-7242-5ddd-974a-78fe1346bf74', 'Privacy and Data Usefulness Trade-off for Autonomic IoT Applications: A Framework', 'CONFERENCE', '10.1109/IC457434.2024.10486510', NULL, '2024 2nd International Conference on Computer, Communication and Control (IC4)', '', '', '1-6', 2024, 'Scopus', 'T', 'Md. Ataullah, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f686244f-7242-5ddd-974a-78fe1346bf74', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ebb5a6d8-a4ff-544a-93e9-dae88e01ab01', 'Biotic stress management in soil-less agriculture systems: A deep learning approach for identification of leaf miner pest infestation', 'CONFERENCE', '10.1016/j.procs.2024.03.227', NULL, '5th International Conference on Innovative Data Communication Technologies and Application (ICIDCA 2024)', '233', '', '371-380', 2024, 'Scopus', 'T', 'A Subeesh, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ebb5a6d8-a4ff-544a-93e9-dae88e01ab01', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ba719367-f174-5a1f-b136-7ad06b01bd7c', 'Realtime Atrial Fibrillation Detection System For IoMT Using Hybrid Machine Learning Classification', 'CONFERENCE', '10.1109/ICCSAI59793.2023.10421349', NULL, '2023 International Conference on Communication, Security and Artificial Intelligence (ICCSAI)', '1', '', '70-75', 2023, 'Scopus', 'T', 'Akshat Raj Vansh, Himanshu Verma, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ba719367-f174-5a1f-b136-7ad06b01bd7c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ab01d719-9bb2-531f-a098-841d29c0b9a3', 'A GitHub actions workflow for continuous delivery of software on Arduino-based IoT devices', 'CONFERENCE', '10.1049/icp.2023.1516', NULL, '8th International Conference on Computing in Engineering and Technology (ICCET 2023)', '1', '', '356-363', 2023, 'Scopus', 'T', 'Suthinan Musitmani, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ab01d719-9bb2-531f-a098-841d29c0b9a3', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('dba7b272-787a-58d4-9348-5f68ffa5a1f8', 'DDoS Attacks Detection in ‘Internet of Medical Things’ Using Machine Learning Techniques', 'CONFERENCE', '10.1109/IATMSI56455.2022.10119428', NULL, '2022 IEEE Conference on Interdisciplinary Approaches in Technology and Management for Social Innovation (IATMSI)', '1', '', '1-6', 2022, 'Scopus', 'T', 'Nima Tshering Bhutia, Himanshu Verma, Naveen Chauhan, Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('dba7b272-787a-58d4-9348-5f68ffa5a1f8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('fbdd9a82-3ee6-5bdb-96c3-2e34ca84d574', 'Solid Waste Management using Equal Sized Clustering and Capacitated Vehicle Routing Problem', 'CONFERENCE', '10.1109/CICT56698.2022.9997928', NULL, '2022 IEEE 6th Conference on Information and Communication Technology (CICT)', '1', '', '1-5', 2022, 'Scopus', 'T', 'Sarbjit Singh, Himanshu Verma, Naveen Chauhan, Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('fbdd9a82-3ee6-5bdb-96c3-2e34ca84d574', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('88ae0bb5-a9d8-531c-ac92-57c83a3dfd90', 'Study and comparision of vectorization techniques used in text classification', 'CONFERENCE', '10.1109/ICCCNT54827.2022.9984608', NULL, '2022 13th International Conference on Computing Communication and Networking Technologies (ICCCNT)', '1', '', '1-6', 2022, 'Scopus', 'T', 'Deepa Rani, Rajeev Kumar, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('88ae0bb5-a9d8-531c-ac92-57c83a3dfd90', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('cf451a28-fc27-5f09-b55b-0f191064b534', 'An ecg heartbeat classification strategy using deep learning for automated cardiocare application', 'CONFERENCE', '10.1109/ICAC3N53548.2021.9725503', NULL, '2021 3rd International conference on advances in computing, communication control and networking (ICAC3N)', '1', '', '515-520', 2021, 'Scopus', 'T', 'Danish Sheikh, Akshat Raj Vansh, Himanshu Verma, Naveen Chauhan, Rajeev Kumar, Rajesh Sharma, PC Negi, Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('cf451a28-fc27-5f09-b55b-0f191064b534', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('03d17cc5-9ef7-5a7b-9f77-af61bacb1be9', 'Node activity based routing in opportunistic networks', 'CONFERENCE', '10.1007/978-981-13-3804-5_20', NULL, 'Futuristic Trends in Network and Communication Technologies: First International Conference, FTNCT 2018, Solan, India, February 9–10, 2018, Revised Selected Papers', '958', '', '265-277', 2018, 'Scopus', 'T', 'Prashant Kumar, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('03d17cc5-9ef7-5a7b-9f77-af61bacb1be9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a8c9ff1d-e207-5d51-9582-8f7cafccd9f3', 'Security challenges in Internet of Vehicles (IoV) environment', 'CONFERENCE', '10.1109/ICSCCC.2018.8703272', NULL, '2018 First International Conference on Secure Cyber Computing and Communication (ICSCCC)', '1', '', '203-207', 2018, 'Scopus', 'T', 'Nishant Sharma, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a8c9ff1d-e207-5d51-9582-8f7cafccd9f3', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('96248b9d-2c0b-5e18-855a-74120eb49856', 'Mobility models and simulation tools for opportunistic networks', 'CONFERENCE', '10.1109/ICSCCC.2018.8703348', NULL, '2018 First International Conference on Secure Cyber Computing and Communication (ICSCCC)', '1', '', '300-305', 2018, 'Scopus', 'T', 'Prashant Kumar, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('96248b9d-2c0b-5e18-855a-74120eb49856', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6d39e853-f850-5a9e-b75f-489cedf4684d', 'Authentication using trust framework in opportunistic networks', 'CONFERENCE', '10.1109/ICCCNT.2017.8203956', NULL, '2017 8th International Conference on Computing, Communication and Networking Technologies (ICCCNT)', '1', '', '1-7', 2017, 'Scopus', 'T', 'Umesh Pal Singh, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6d39e853-f850-5a9e-b75f-489cedf4684d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1912b935-77fa-5fe9-87a0-dfbaa856112d', 'Authentication with privacy preservation in opportunistic networks', 'CONFERENCE', '10.1109/ICICCT.2017.7975184', NULL, '2017 International Conference on Inventive Communication and Computational Technologies (ICICCT)', '1', '', '183-188', 2017, 'Scopus', 'T', 'Prashant Kumar, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1912b935-77fa-5fe9-87a0-dfbaa856112d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('24549954-bb34-54a0-bd45-0ab06e753b78', 'Smart logistics vehicle management system based on internet of vehicles', 'CONFERENCE', '10.1109/PDGC.2016.7913245.', NULL, '2016 Fourth International Conference on Parallel, Distributed and Grid Computing (PDGC)', '1', '', '495-499', 2016, 'Scopus', 'T', 'Nishant Sharma, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('24549954-bb34-54a0-bd45-0ab06e753b78', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9e204f69-1ef6-5264-a46d-f51d3e4b60f2', 'Node movement based neighbor discovery in opportunistic networks', 'CONFERENCE', '10.1109/IICIP.2016.7975378.', NULL, '2016 1st India International Conference on Information Processing (IICIP)', '1', '', '1-4', 2016, 'Scopus', 'T', 'Prashant Kumar, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9e204f69-1ef6-5264-a46d-f51d3e4b60f2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7438b27b-3201-5438-a691-9aca746d32ee', 'Efficient data scheduling technique at RSU for vehicular ad-hoc networks', 'CONFERENCE', '10.1109/ICICES.2016.7518900', NULL, '2016 International Conference on Information Communication and Embedded Systems (ICICES)', '1', '', '1-7', 2016, 'Scopus', 'T', 'Brij Bihari Dubey, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7438b27b-3201-5438-a691-9aca746d32ee', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('fb870db5-e39a-5b32-8696-3b8c99484cf7', 'MANET based emergency communication system for natural disasters', 'CONFERENCE', '10.1109/CCAA.2015.7148424', NULL, 'International Conference on Computing, Communication & Automation', '1', '', '480-485', 2015, 'Scopus', 'T', 'Himanshu Verma, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('fb870db5-e39a-5b32-8696-3b8c99484cf7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('54d48bb2-6cc7-564a-b408-168d88cad33c', 'A traffic-load adaptive power-conserving MAC protocol for wireless sensor networks', 'CONFERENCE', '10.1109/ICCCNT.2012.6395977', NULL, '2012 Third International Conference on Computing, Communication and Networking Technologies (ICCCNT''12)', '', '', '1-7', 2012, 'Scopus', 'T', 'Rakesh Bisht, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('54d48bb2-6cc7-564a-b408-168d88cad33c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a06f4572-ab7d-5b70-a3c4-6877ef212046', 'Energy efficient dynamic group caching in mobile ad hoc networks for improving data accessibility', 'CONFERENCE', '10.1109/ICRTIT.2012.6206800', NULL, '2012 International Conference on Recent Trends in Information Technology', '', '', '372-376', 2012, 'Scopus', 'T', 'Atul Rao, Prashant Kumar, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a06f4572-ab7d-5b70-a3c4-6877ef212046', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('934cd797-ff42-509a-af18-7e4a5e11a388', 'ES-ARP: an efficient and secure address resolution protocol', 'CONFERENCE', '10.1109/SCEECS.2012.6184794', NULL, '2012 IEEE Students'' Conference on Electrical, Electronics and Computer Science', '', '', '1-5', 2012, 'Scopus', 'T', 'Md. Ataullah, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('934cd797-ff42-509a-af18-7e4a5e11a388', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('05d731ba-4778-5cba-b8d0-0ca9ada37428', 'Cbrm–cluster based replica management in mobile adhoc networks', 'CONFERENCE', '10.1007/978-3-642-29280-4_40', NULL, 'Advanced Computing, Networking and Security: International Conference, ADCONS 2011', '', '', '338-347', 2012, 'Scopus', 'T', 'Rajeev Kumar, Prashant Kumar, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('05d731ba-4778-5cba-b8d0-0ca9ada37428', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('321d8373-4638-5731-97e5-1395a6494b3a', 'RRDD: Reliable route based data dissemination technique in VANETs', 'CONFERENCE', '10.1109/CSNT.2011.38', NULL, '2011 International Conference on Communication Systems and Network Technologies', '', '', '148-151', 2011, 'Scopus', 'T', 'Brij Bihari Dubey, Naveen Chauhan, Sudhanshu Pant', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('321d8373-4638-5731-97e5-1395a6494b3a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('45c5a495-d01c-51af-a848-719f358449ee', 'Cooperative caching in mobile ad hoc networks through clustering', 'CONFERENCE', 'https://dl.acm.org/doi/10.1016/j.knosys.2017.01.005', NULL, 'Proceedings of the 10th WSEAS international conference on Software engineering, parallel and distributed systems', '', '', '78-83', 2011, 'Scopus', 'T', 'Narottam Chand, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('45c5a495-d01c-51af-a848-719f358449ee', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('65bae99f-23a5-5aaa-82eb-58b945c2643c', 'Improving Fading-Aware Routing with Circular Cache Layers in Wireless Sensor Networks', 'CONFERENCE', NULL, NULL, 'Contemporary Computing: 4th International Conference, IC3 2011, Noida', '', '', '395-402', 2011, 'Scopus', 'T', 'Sudhanshu Pant, Naveen Chauhan, Narottam Chand, Lalit Kumar Awasthi, Brij Bihari Dubey', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('65bae99f-23a5-5aaa-82eb-58b945c2643c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('752efcc7-73c2-59a2-987f-e7ab01807582', 'Efficient VANET-based traffic information dissemination using centralized fixed infrastructure', 'CONFERENCE', '10.1007/978-3-642-22606-9_42', NULL, 'Contemporary Computing: 4th International Conference, IC3 2011, Noida', '', '', '415–425', 2011, 'Scopus', 'T', 'Brij Bihari Dubey, Naveen Chauhan, Lalit Kumar Awasthi, Narottam Chand, Sudhanshu Pant', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('752efcc7-73c2-59a2-987f-e7ab01807582', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('39aa0c28-2126-53a7-8115-32582508852d', 'An analysis of Internet integrated Mobile Adhoc Networks', 'CONFERENCE', '10.1109/ICCCT.2010.5640410', NULL, '2010 International Conference on Computer and Communication Technology (ICCCT)', '', '', '52-55', 2010, 'Scopus', 'T', 'Prashant Kumar, Gautam Bose, Jitendra Kumar Gupta and Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('39aa0c28-2126-53a7-8115-32582508852d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5c5abc95-e720-53cb-945e-fb32874581bd', 'Application of Deep Learning on Skin Cancer Prediction', 'BOOK_CHAPTER', '10.1007/978-981-19-9090-8_26', NULL, 'Lecture Notes in Electrical Engineering', '990', '', '299–309', 2023, 'Scopus', 'T', 'Abhishek Dhiman, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5c5abc95-e720-53cb-945e-fb32874581bd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5632843e-9407-5a47-824c-3d8304f82546', 'Task Offloading Using Queuing Theory in Fog-Assisted IoMT', 'BOOK_CHAPTER', '10.1007/978-981-19-9304-6_57', NULL, 'Lecture Notes in Networks and Systems', '615', '', '637-647', 2023, 'Scopus', 'T', 'Nitish Kumar, Himanshu Verma, Naveen Chauhan, Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5632843e-9407-5a47-824c-3d8304f82546', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0abcaa8f-0ebb-5e53-8089-7dd8417b96fa', 'Privacy aware prevention of Sybil attack in vehicular ad hoc networks', 'BOOK_CHAPTER', '10.1007/978-3-030-40305-8_18', NULL, 'Handbook of Wireless Sensor Networks: Issues and Challenges in Current Scenario''s', '1', '', '364-380', 2020, 'Scopus', 'T', 'Rajeev Kumar, Naveen Chauhan, Pushpender Kumar, Narottam Chand, Adil Umar Khan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0abcaa8f-0ebb-5e53-8089-7dd8417b96fa', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5d5f2aa5-d298-5707-9c90-26587fa0a71c', 'Sybil-Free Hybrid Localization Scheme in Wireless Sensor Networks', 'BOOK_CHAPTER', '10.1007/978-981-15-5341-7_43', NULL, 'International Conference on Advanced Communication and Computational Technology', '', '', '561-581', 2019, 'Scopus', 'T', 'Narendra Dodwaria, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5d5f2aa5-d298-5707-9c90-26587fa0a71c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('77b43fa1-5258-5878-ad85-2a06ff45b80b', 'Cooperative Caching in Wireless Multimedia Sensor Networks', 'BOOK_CHAPTER', '10.4018/978-1-5225-7335-7.ch016', NULL, 'Handbook of Research on the IoT, Cloud Computing, and Wireless Network Optimization', '1', '', '326-346', 2019, 'Scopus', 'T', 'Pushpender Kumar Dhiman, Narottam Chand, Naveen Chauhan, Rajeev Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('77b43fa1-5258-5878-ad85-2a06ff45b80b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b1f9d0fe-8b60-5b83-97d1-7c6b78354420', 'Flood early detection system using internet of things and artificial neural networks', 'BOOK_CHAPTER', '10.1007/978-981-13-2324-9_30', NULL, 'International Conference on Innovative Computing and Communications: Proceedings of ICICC 2018, Volume 1', '', '', '297-305', 2019, 'Scopus', 'T', 'A Subeesh, Prashant Kumar, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b1f9d0fe-8b60-5b83-97d1-7c6b78354420', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7bc121c2-856c-5f13-a6b7-decc274dfd9e', 'Forest fire detection system using IoT and artificial neural network', 'BOOK_CHAPTER', '10.1007/978-981-13-2324-9_33', NULL, 'International Conference on Innovative Computing and Communications: Proceedings of ICICC 2018, Volume 1', '1', '', '323-337', 2019, 'Scopus', 'T', 'Vinay Dubey, Prashant Kumar, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7bc121c2-856c-5f13-a6b7-decc274dfd9e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9c86443c-eccf-56e0-bf1e-26ccf7172e78', 'Security Framework for Opportunistic Networks', 'BOOK_CHAPTER', '10.1007/978-981-10-3376-6_50', NULL, 'Advances in Intelligent Systems and Computing', '719', '', '465–471', 2017, 'Scopus', 'T', 'Prashant Kumar, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9c86443c-eccf-56e0-bf1e-26ccf7172e78', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5840cebe-70ac-5b48-9ea5-c4858bdbed4f', 'Replica-Based Efficient Data Accessibility Technique for Vehicular Ad Hoc Networks', 'BOOK_CHAPTER', '10.1007/978-981-10-3376-6_51', NULL, 'Advances in Intelligent Systems and Computing', '2', '', '473-479', 2018, 'Scopus', 'T', 'Brij Bihari Dubey, Rajeev Kumar, Naveen Chauhan, Narottam Chand', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5840cebe-70ac-5b48-9ea5-c4858bdbed4f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('304273aa-4a35-5333-8d98-219ce4100de3', 'Sentiment classification in Hindi text using hybrid deep learning method', 'JOURNAL', '10.1007/s41870-024-01995-8', NULL, 'International Journal of Information Technology', '', '', '', 2024, 'Scopus', 'Q1', 'Ashish Dhiman, Arun Kumar Yadav, Mohit Kumar, Divakar Yadav, Akash Verma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('304273aa-4a35-5333-8d98-219ce4100de3', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9ecf8d02-fe87-5cf0-9ba2-2a35ea36fbb4', 'Semantic proximity assessment in Bhojpuri and Maithili: a word embedding perspective', 'JOURNAL', '10.1007/s13278-024-01287-w', NULL, 'Social Network Analysis and Mining', '14', '130', '1-12', 2023, 'SCI(E)', 'Q1', 'Arun Kumar Yadav, Abhishek Kumar, Mohit Kumar, Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9ecf8d02-fe87-5cf0-9ba2-2a35ea36fbb4', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('60e07b08-2849-5113-b777-9567b9d2659a', 'Residual learning for brain tumor segmentation: dual residual blocks approach', 'JOURNAL', '10.1007/s00521-024-10380-2', NULL, 'Neural Computing and Applications', '36', '', '22905–22921', 2024, 'Scopus', 'Q1', 'Akash Verma, Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('60e07b08-2849-5113-b777-9567b9d2659a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d0caba68-3f16-5d4e-95db-aeca6de3f01e', 'A novel approach for mitigating gray hole attack in MANET', 'JOURNAL', '10.1007/s11276-016-1353-5', NULL, 'Wireless Networks', '24', '5', '565-579', 2018, 'SCI(E)', 'T', 'Shashi Gurung, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d0caba68-3f16-5d4e-95db-aeca6de3f01e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6b3cac60-511a-57aa-acbf-6db44c2ac24a', 'Clustering protocols in wireless sensor network: A survey, classification, issues, and future directions', 'JOURNAL', '10.1016/j.cosrev.2021.100396', NULL, 'Computer Science Review', '40', '3.8', '100396', 2021, 'SCI(E)', 'T', 'Piyush Rawat, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6b3cac60-511a-57aa-acbf-6db44c2ac24a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('39583ed1-ecd0-514c-8bf7-187dcfb38a0a', 'Performance analysis of black-hole attack mitigation protocols under gray-hole attacks in MANET', 'JOURNAL', '10.1007/s11276-017-1639-2', NULL, 'Wireless Networks', '25', '', '975-988', 2019, 'SCI(E)', 'T', 'Shashi Gurung, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('39583ed1-ecd0-514c-8bf7-187dcfb38a0a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('99ef8dbf-16f4-56c7-9d00-81dd16e359e1', 'A survey on scheduling algorithms for wireless sensor networks', 'JOURNAL', 'https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=13e0c4c5707ca050dd74fb5c6976b7a595f58779', NULL, 'International Journal of Computer Applications', '20', '4.4', '45851', 2011, 'Scopus', 'T', 'Sumit Kumar, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('99ef8dbf-16f4-56c7-9d00-81dd16e359e1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('109cba5d-c529-5c35-86ff-cc1bfdaf2efe', 'Particle swarm optimization-based energy efficient clustering protocol in wireless sensor network', 'JOURNAL', '10.1007/s00521-021-06059-7', NULL, 'Neural Computing and applications', '33', '8.5', '14147–14165', 2021, 'SCI(E)', 'T', 'Piyush Rawat, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('109cba5d-c529-5c35-86ff-cc1bfdaf2efe', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b591991c-e00e-5148-8583-861f8709174c', 'A survey of black-hole attack mitigation techniques in MANET: merits, drawbacks, and suitability', 'JOURNAL', '10.1007/s11276-019-01966-z', NULL, 'Wireless Networks', '26', '20', '1981-2011', 2019, 'SCI(E)', 'T', 'Shashi Gurung, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b591991c-e00e-5148-8583-861f8709174c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f67f9ad3-eb91-5f02-a3c7-427d666941b2', 'A distributed reinforcement learning based sensor node scheduling algorithm for coverage and connectivity maintenance in wireless sensor network', 'JOURNAL', '10.1007/s11276-020-02350-y', NULL, 'Wireless Networks', '26', '6', '4411-4429', 2020, 'SCI(E)', 'T', 'Anamika Sharma, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f67f9ad3-eb91-5f02-a3c7-427d666941b2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ff509c40-546d-5a6e-a272-ecee6163a19d', 'A dynamic threshold based approach for mitigating black-hole attack in MANET', 'JOURNAL', '10.1007/s11276-017-1514-1', NULL, 'Wireless Networks', '24', '8', '2957–2971', 2017, 'SCI(E)', 'T', 'Shashi Gurung, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ff509c40-546d-5a6e-a272-ecee6163a19d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('21a79a44-6fe3-5fe1-8c8a-8514dd7d3de4', 'Contrastive self-supervised learning: review, progress, challenges and future research directions', 'JOURNAL', '10.1007/s13735-022-00245-6', NULL, 'International Journal of Multimedia Information Retrieval', '11', '4', '461-488', 2022, 'SCI(E)', 'T', 'Pranjal Kumar, Piyush Rawat, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('21a79a44-6fe3-5fe1-8c8a-8514dd7d3de4', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('282b1730-6595-5173-8873-85a2e4a3c8e2', 'Energy-efficient clusterhead selection scheme in heterogeneous wireless sensor network', 'JOURNAL', '10.1142/S0218126620502047', NULL, 'Journal of Circuits, Systems and Computers', '29', '13', '2050204', 2020, 'SCI(E)', 'T', 'Piyush Rawat, Siddhartha Chauhan, Rahul Priyadarshi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('282b1730-6595-5173-8873-85a2e4a3c8e2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('05cd7544-7590-5ce8-a1c5-55e5ec57898c', 'DeepHCoref: A Deep Neural Coreference Resolution for Hindi Text', 'CONFERENCE', '10.18653/v1/2024.crac-1.7', NULL, 'Proceedings of the Seventh Workshop on Computational Models of Reference, Anaphora and Coreference (CRAC 2024), Association for Computational Linguistics', '', '', '67-77', 2024, 'Scopus', 'T', 'Pardeep Singh, Kusum Lata, Kamlesh Dutta, Abhishek Kanwar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('05cd7544-7590-5ce8-a1c5-55e5ec57898c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('bedba520-9ad6-5afb-b55d-e99e8ffc2bc7', 'Domain Adaptation for NER Using mBERT', 'CONFERENCE', '10.1007/978-981-97-6992-6_14', NULL, 'Innovations in Computational Intelligence and Computer Vision', '2', '', '171-181', 2024, 'Other', 'T', 'Pardeep Singh, Ishaan Kalia, Anil Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('bedba520-9ad6-5afb-b55d-e99e8ffc2bc7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('00eeb22f-b175-5bab-9a1c-426a75533593', 'Comprehensive Review of Collaborative Filtering Techniques', 'CONFERENCE', '10.1007/978-981-97-7862-1_29', NULL, 'Proceedings of International Conference on Recent Innovations in Computing (ICRIC)', '2', '', '', 2024, 'Other', 'T', 'Aanchal Bhandari, Pardeep Singh, Kusum Lata', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('00eeb22f-b175-5bab-9a1c-426a75533593', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('92676bcd-cc3d-5189-adf4-9e85bd0bc34a', 'Fake Profile Detection on Social Networks—A Survey', 'CONFERENCE', '10.1007/978-981-97-3442-9_28', NULL, 'Proceedings of International Conference on Recent Innovations in Computing (ICRIC)', '2', '', '403-416', 2024, 'Other', 'T', 'Saksham Sharma, Pardeep Singh, Anil Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('92676bcd-cc3d-5189-adf4-9e85bd0bc34a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e66fcc65-e8ef-570c-8c9b-48dba2d9d050', 'A Comparative Study of Classification of Human-Written Text Versus AI-Generated Text', 'CONFERENCE', '10.1007/978-981-97-3442-9_13', NULL, 'Proceedings of International Conference on Recent Innovations in Computing (ICRIC)', '2', '', '197-206', 2024, 'Other', 'T', 'Maharishi Vashistha, Ishita Dhiman, Pardeep Singh, Anil Kumar and Dipti Malhotra', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e66fcc65-e8ef-570c-8c9b-48dba2d9d050', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9c5a612b-8751-509f-bea6-ed696faa79b0', 'Evolution of Financial Question Answering Themes, Challenges, and Advances', 'CONFERENCE', '10.1007/978-981-97-3442-9_42', NULL, 'Proceedings of International Conference on Recent Innovations in Computing (ICRIC)', '2', '', '607-620', 2024, 'Other', 'T', 'Khyati Saini and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9c5a612b-8751-509f-bea6-ed696faa79b0', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f057e07a-f1bf-5d58-a4d2-6a63b5ca5803', 'Comparative Study of Different Optical Character Recognition Models on Handwritten and Printed Medical Reports', 'CONFERENCE', '10.1109/ICIDCA56705.2023.10100213', NULL, 'International Conference on Innovative Data Communication Technologies and Application (ICIDCA 2023)', '', '', '581-586', 2023, 'Other', 'T', 'Anand Kumar, Pardeep Singh, Kusum Lata', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f057e07a-f1bf-5d58-a4d2-6a63b5ca5803', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7a7a42f0-d537-59d0-83e6-f9f43a06d6be', 'Clinical Named Entity Recognition Using U-Net Classification Model', 'CONFERENCE', '10.1007/978-981-99-0601-7_2', NULL, 'International Conference on Recent Innovations in Computing (ICRIC-2022)', '', '', '15-24', 2023, 'Other', 'T', 'Parul Bansal and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7a7a42f0-d537-59d0-83e6-f9f43a06d6be', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5ceec5b4-ca36-515e-873d-ceed40d52ace', 'An Analysis of Various Text Segmentation Approaches', 'CONFERENCE', '10.1007/978-981-16-7136-4_22', NULL, 'International Conference on Intelligent Cyber-Physical Systems(ICPS-2021)', '', '', '285–302', 2022, 'Other', 'T', 'Sumit Kumar and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5ceec5b4-ca36-515e-873d-ceed40d52ace', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8288850c-ceac-50d0-9e8a-82193bb1d6e7', 'Automatic Text Summarization Techniques Used in Industry', 'CONFERENCE', '10.1007/978-3-030-30577-2_19', NULL, 'Proceedings of ICETIT 2019', '', '', '229–237', 2019, 'Scopus', 'T', 'Mukesh Kumar Kharita and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8288850c-ceac-50d0-9e8a-82193bb1d6e7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a1eee5c1-e0a0-5120-9d23-6a3292b14b04', 'Systematic Survey on Sentiment Analysis', 'CONFERENCE', '10.1109/ICSCCC.2018.8703370', NULL, 'First International Conference on Secure Cyber Computing and Communication (ICSCCC)', '', '', '561-565', 2018, 'Other', 'T', 'Shubham Kumar Jain and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a1eee5c1-e0a0-5120-9d23-6a3292b14b04', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6cbbe6c1-547f-5a64-b373-1b5670ed5d8e', 'Item-Based Collaborative Filtering in Movie Recommendation in Real time', 'CONFERENCE', '10.1109/ICSCCC.2018.8703362', NULL, '2018 First International Conference on Secure Cyber Computing and Communication (ICSCCC)', '', '', '340-342', 2018, 'Other', 'T', 'Mukesh Kumar Kharita, Atul Kumar and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6cbbe6c1-547f-5a64-b373-1b5670ed5d8e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('02d1fc24-96a9-5d68-9bef-2f4f4912902c', 'Bilingual Code-Mixing in Indian Social Media Texts for Hindi and English', 'CONFERENCE', '10.1007/978-981-10-5780-9_11', NULL, 'First International Conference of Springer on Advanced Informatics for Computing Research, ICAICR 2017', '', '', '121–129', 2017, 'Other', 'T', 'Rajesh Kumar and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('02d1fc24-96a9-5d68-9bef-2f4f4912902c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('86dff06f-351d-51c0-a395-3683d8005096', 'Feature based opinion summarization of online product reviews', 'CONFERENCE', '10.1109/ICONSTEM.2017.8261247', NULL, '2017 Third International Conference on Science Technology Engineering & Management (ICONSTEM)', '', '', '1-7', 2018, 'Scopus', 'T', 'Nilanshi Chauhan and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('86dff06f-351d-51c0-a395-3683d8005096', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('805d719e-a3a7-5f20-92b0-359c920e1941', 'Formant Analysis of Punjabi Non-nasalized Vowel Phonemes', 'CONFERENCE', '10.1109/CICN.2011.79', NULL, '2011 International Conference on Computational Intelligence and Communication Networks', '', '', '375-380', 2011, 'Other', 'T', 'Pardeep Singh and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('805d719e-a3a7-5f20-92b0-359c920e1941', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6b389091-adb1-568c-ae29-5b7f0648540e', 'Exploring a new dimension in MANETs through a new routing protocol', 'CONFERENCE', '10.1109/ICECTECH.2011.5942013', NULL, '2011 3rd International Conference on Electronics Computer Technology', '', '', '328-331', 2011, 'Other', 'T', 'Aditya Kumar, Shiv Shakti Srivastava, Babu Ram and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6b389091-adb1-568c-ae29-5b7f0648540e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('cb40fe92-96c5-589c-b4d5-78bd3739ca4a', 'Optimizing Velocity Based Adaptive Zone Routing Protocol', 'CONFERENCE', '10.1109/ICCCT.2010.5640413', NULL, '2010 International Conference on Computer and Communication Technology (ICCCT)', '', '', '149-152', 2010, 'Other', 'T', 'Amit Kumar Jaiswal and Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('cb40fe92-96c5-589c-b4d5-78bd3739ca4a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('77c14583-0d28-58de-88ee-eb60f55ab049', 'Text summarization using modified generative adversarial network & vol. 46, no. 3', 'JOURNAL', NULL, NULL, 'Journal of Intelligent & Fuzzy Systems', '', '', '', 2024, 'SCI(E)', 'T', 'Jyoti Srivastava, Ashish Kumar Srivastava, B. Muthu Kumar, S.P. Anandaraj', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('77c14583-0d28-58de-88ee-eb60f55ab049', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5622adde-d8f6-5d11-acd3-961504912374', 'Fingerprint image quality assessment and scoring using minutiae centered local patches', 'JOURNAL', '10.1117/1.JEI.28.1.013016', NULL, 'Journal of Electronic Imaging', '28', '1', '', 2018, 'SCI(E)', 'T', 'Ram Prakash Sharma and Somnath Dey', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5622adde-d8f6-5d11-acd3-961504912374', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1238b44a-a80f-5c4f-910e-aaa770933a77', 'Fingerprint liveness detection using local quality features', 'JOURNAL', '10.1007/s00371-018-01618-x', NULL, 'The Visual Computer', '35', '', '1393–1410', 2018, 'SCI(E)', 'T', 'Ram Prakash Sharma and Somnath Dey', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1238b44a-a80f-5c4f-910e-aaa770933a77', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7acb4991-169e-54d4-9583-b4ee83dd6422', 'Two-stage quality adaptive fingerprint image enhancement using Fuzzy c-means clustering based fingerprint quality analysis', 'JOURNAL', '10.1016/j.imavis.2019.02.006', NULL, 'Image and Vision Computing', '83-84', '', '', 2019, 'SCI(E)', 'T', 'Ram Prakash Sharma and Somnath Dey', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7acb4991-169e-54d4-9583-b4ee83dd6422', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('02d0332b-032a-53d5-98c1-e5629045a29e', 'A comparative study of local texture descriptors for fingerprint liveness detection under real-world scenarios', 'JOURNAL', '10.1007/s11042-020-10136-9', NULL, 'Multimedia Tools and Applications', '80', '', '9993–1001', 2021, 'SCI(E)', 'T', 'Ram Prakash Sharma and Somnath Dey', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('02d0332b-032a-53d5-98c1-e5629045a29e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f10d2e37-6b6a-522b-9d82-9d0518e4795a', 'An open patch generator based fingerprint presentation attack detection using generative adversarial network', 'JOURNAL', '10.1007/s11042-023-16503-6', NULL, 'Multimedia Tools and Applications', '83', '', '27723–27746', 2023, 'SCI(E)', 'T', 'Anuj Rai, Ashutosh Anshul, Ashwini Jha, Prayag Jain, Ram Prakash Sharma, Somnath Dey', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f10d2e37-6b6a-522b-9d82-9d0518e4795a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0ed8f911-3e0a-58d2-8996-c2414e26fdff', 'An Enhanced Generative Adversarial Network Model for Fingerprint Presentation Attack Detection', 'JOURNAL', '10.1007/s42979-023-01861-7', NULL, 'SN Computer Science', '4', '', '', 2023, 'Scopus', 'T', 'Ashutosh Anshul, Ashwini Jha, Prayag Jain, Anuj Rai, Ram Prakash Sharma, Somnath Dey', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0ed8f911-3e0a-58d2-8996-c2414e26fdff', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('64977322-8858-5257-94a2-891c58d2e9ee', 'Local Contrast Phase Descriptor for Quality Assessment of Fingerprint Images', 'CONFERENCE', '10.1007/978-3-030-34869-4_55', NULL, '8th International Conference on Pattern Recognition and Machine Intelligence (PReMI), Tezpur, India', '', '', '507–514', 2019, 'Scopus', 'T', 'Ram Prakash Sharma and Somnath Dey', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('64977322-8858-5257-94a2-891c58d2e9ee', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c8f034a9-9222-5330-a580-0233713e7f9b', 'Quality Analysis of Fingerprint Images Using Local Phase Quantization', 'CONFERENCE', '10.1007/978-3-030-29888-3_53', NULL, '18th International Conference on Computer Analysis of Images and Patters (CAIP), Salerno, Italy', '', '', '648–658', 2019, 'Scopus', 'T', 'Ram Prakash Sharma and Somnath Dey', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c8f034a9-9222-5330-a580-0233713e7f9b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b1d62e3d-a3a6-515b-b90c-8d3c7d8cd287', 'Quality Assessment of Fingerprint Images using Local Texture Descriptors', 'CONFERENCE', '10.1007/978-3-030-66187-8_15', NULL, '7th International Conference on Mining Intelligence and Knowledge Exploration (MIKE), Goa, India', '', '', '153–164', 2020, 'Scopus', 'T', 'Ram Prakash Sharma and Somnath Dey', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b1d62e3d-a3a6-515b-b90c-8d3c7d8cd287', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('dff062a1-77eb-5315-b8f3-c324189f6fcf', 'Investigating Fingerprint Quality Features for Liveness Detection', 'CONFERENCE', '10.1007/978-3-030-66187-8_28', NULL, '7th International Conference on Mining Intelligence and Knowledge Exploration (MIKE), Goa, India', '', '', '296–307', 2020, 'Scopus', 'T', 'Ram Prakash Sharma, Ashutosh Jha, Ashiwin Anshul and Somnath Dey', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('dff062a1-77eb-5315-b8f3-c324189f6fcf', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b991e5a7-1e03-5edf-8226-50c22c4434e2', 'xDFPAD: Explainable Tabular Deep Learning for Fingerprint Presentation Attack Detection', 'CONFERENCE', '10.1007/978-3-031-58174-8_22', NULL, '8th International Conference on Computer Vision and Image Processing (CVIP), Jammu, India', '', '', '', 2024, 'Scopus', 'T', 'Shaik Dastagiri, Kongara Sireesh and Ram Prakash Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b991e5a7-1e03-5edf-8226-50c22c4434e2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5a217052-8432-5830-9af6-fb2f8abaf8c9', 'An evaluation study of non-contact fingerprint presentation attack detection', 'CONFERENCE', '10.1109/CVMI61877.2024.10782562', NULL, 'IEEE International Conference on Computer Vision and Machine Intelligence (CVMI)', '', '', '', 2024, 'Scopus', 'T', 'Tanuj, Ram Prakash Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5a217052-8432-5830-9af6-fb2f8abaf8c9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9d7f1de7-ba13-59a0-b387-fd8bd4297a8f', 'Improved multi-class brain tumor mri classification with ds-net: a patch-based deep supervision approach', 'JOURNAL', '10.1007/s11042-025-20668-7', NULL, 'Multimedia Tools and Applications', '', '', '1-34', 2025, 'Scopus', 'Q1', 'Akash Verma, Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9d7f1de7-ba13-59a0-b387-fd8bd4297a8f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9cab9102-ec0d-5dd4-8c07-b441d9c0920b', 'FusionNet: Dual Input Feature Fusion Network with Ensemble Based Filter Feature Selection for Enhanced Brain Tumor Classification', 'JOURNAL', '10.1016/j.brainres.2025.149507', NULL, 'Brain Research', '1852', '149507', '1-16', 2025, 'SCI(E)', 'Q2', 'Akash Verma, Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9cab9102-ec0d-5dd4-8c07-b441d9c0920b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('19eda655-9dd6-5a5d-a689-4baed29a0d8b', 'A Hybrid Model Integrating LDA, BERT, and Clustering for Enhanced Topic Modeling', 'JOURNAL', '10.1007/s11135-025-02077-y', NULL, 'Quality & Quantity', '', '', '1-28', 2025, 'Scopus', 'Q1', 'Arun Kumar Yadav, Tushar Gupta, Mohit Kumar and Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('19eda655-9dd6-5a5d-a689-4baed29a0d8b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('df9b301b-b63d-5535-9c21-95613a9b43ba', 'Character-Level Encoding based Neural Machine Translation for Hindi language', 'JOURNAL', '10.1007/s11063-025-11718-0', NULL, 'Neural Processing Letters', '57', '23', '1-21', 2025, 'SCI(E)', 'Q2', 'Divya Rathod, Arun Kumar Yadav, Mohit Kumar, Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('df9b301b-b63d-5535-9c21-95613a9b43ba', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b03aaae6-d944-5638-bfb2-3ea4efcca684', 'Leveraging Sentiment Analysis to Detect Fake Reviews Using Deep Learning', 'JOURNAL', '10.1007/s42979-025-03792-x', NULL, 'SN Computer Science', '6', '3', '1-9', 2025, 'Scopus', 'Q1', 'Mohit Kumar, Adarsh Ran, Arun Kumar Yadav, Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b03aaae6-d944-5638-bfb2-3ea4efcca684', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6fe03687-f8ec-5a0d-9331-0d6c702d020d', 'Retinal blood vessel segmentation using a deep learning method based monmodified U-NET model', 'JOURNAL', '10.1007/s11042-024-18696-w', NULL, 'Multimedia Tools and Applications', '83', '35', '82659-82678', 2024, 'Scopus', 'Q1', 'Sanjeewani,Arun Kumar Yadav, Mohd Akbar, Mohit Kumar,Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6fe03687-f8ec-5a0d-9331-0d6c702d020d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0592352d-4cdb-52a1-b36b-86a18f258cab', 'Analyzing the Complexity of US Federal Debt: A Mathematical Approach', 'JOURNAL', '10.4018/IJBAN.360380', NULL, 'International Journal of Business Analytics (IJBAN)', '11', '1', '1-22', 2024, 'Scopus', 'Q3', 'John Wang, Arti Jain, Arun Kumar Yadav, Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0592352d-4cdb-52a1-b36b-86a18f258cab', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('74186ac7-678b-59fa-999c-ec67702fb89c', 'Novel approach for depression detection on Reddit post', 'JOURNAL', '10.1504/IJDATS.2024.142486', NULL, 'International Journal of Data Analysis Techniques and Strategies', '16', '4', '367-385', 2024, 'Scopus', 'Q3', 'Sonam Gupta, Lipika Goel, Arun Kumar Yadav, and Pradeep Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('74186ac7-678b-59fa-999c-ec67702fb89c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('69b8f667-9145-53a5-8604-dfe1f48fdeaa', 'Automatic Brain Tumor segmentation from MRI images using variants of U-Net model.', 'CONFERENCE', '10.1007/978-981-97-1961-7_24', NULL, 'International conference on Advanced Computing and Intelligent Technologies', '', '', '367-377', 2024, 'Scopus', 'T', 'Akash Verma, Arun Kumar Yadav, Akshay Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('69b8f667-9145-53a5-8604-dfe1f48fdeaa', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('61644562-8914-597a-97d9-e538b5eb8ac5', 'A Systematic Review of Wavelet Tree Compression Techniques', 'CONFERENCE', '10.1007/978-981-97-3466-5_19', NULL, '2nd International Conference on Innovations in Data Analytics (ICIDA 2023)', '', '', '259-270', 2024, 'Scopus', 'T', 'Utkarsh Dixit, Sonam Gupta, Arun Kumar Yadav, Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('61644562-8914-597a-97d9-e538b5eb8ac5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d3afbb1a-2e99-5e53-a371-de594da42fb8', 'Dual radio based cooperative caching for wireless sensor networks', 'CONFERENCE', '10.1109/ICON.2008.4772565', NULL, 'IEEE', '', '', '1-7', 2009, 'Scopus', 'T', 'T.P. Sharma; R.C. Joshi; Manoj Misra', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d3afbb1a-2e99-5e53-a371-de594da42fb8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9bd2c46b-f44c-5c4f-9752-124586b4c033', 'Tuning Data Reporting and Sensing for Continuous Monitoring in Wireless Sensor Networks', 'CONFERENCE', '10.1109/PCCC.2008.4745084', NULL, 'IEEE', '', '', '412-417', 2009, 'Scopus', 'T', 'T.P. Sharma, R.C. Joshi, Manoj Misra', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9bd2c46b-f44c-5c4f-9752-124586b4c033', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2197e1a4-0ade-58c8-a8b3-5236e41efb6d', 'GBDD: Grid based data dissemination in wireless sensor networks', 'CONFERENCE', '10.1109/ADCOM.2008.4760454', NULL, 'IEEE', '', '', '234-240', 2009, 'Scopus', 'T', 'T.P. Sharma; R.C. Joshi; Manoj Misra', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2197e1a4-0ade-58c8-a8b3-5236e41efb6d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('204e6a4a-4fd1-5b8f-968a-492797c5302f', 'FTEP: A fault tolerant election protocol for multi-level clustering in homogeneous wireless sensor networks', 'CONFERENCE', '10.1109/ICON.2008.4772563', NULL, 'IEEE', '', '', '1-6', 2009, 'Scopus', 'T', 'Nidhi Bansal; T. P. Sharma; Manoj Misra; R. C. Joshi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('204e6a4a-4fd1-5b8f-968a-492797c5302f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('74a9ee00-585d-5fd7-9dad-d335c0a526f0', 'Cooperative caching for homogeneous wireless sensor networks', 'JOURNAL', '10.1504/IJCNDS.2009.026557', NULL, 'International Journal of Autonomous and Adaptive Communications Systems', '2', '4', '424-451', 2009, 'Scopus', 'T', 'T.P. Sharma, R.C. Joshi and Manoj Misra', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('74a9ee00-585d-5fd7-9dad-d335c0a526f0', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('aa169977-cdcf-5b64-99c6-dad550073419', 'Data filtering and dynamic sensing for continuous monitoring in wireless sensor networks', 'JOURNAL', '10.1504/ijaacs.2010.033382', NULL, 'International Journal of Autonomous and Adaptive Communications Systems', '3', '3', '239-264', 2010, 'Scopus', 'T', 'T.P. Sharma, R.C. Joshi and Manoj Misra', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('aa169977-cdcf-5b64-99c6-dad550073419', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c5ddcc10-2338-5e47-bd0d-9d07d35f259c', 'FTTCP: Fault Tolerant Two level Clustering Protocol for WSN', 'JOURNAL', '01.IJNS.01.03.177', NULL, 'International Journal on Network Security', '1', '3', '28-33', 2010, 'Other', 'T', 'Amarjeet Kaur, T.P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c5ddcc10-2338-5e47-bd0d-9d07d35f259c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('13948d71-37db-5d74-8edd-d354a259a1f3', 'AFDEP: Agreement Based CH Failure Detection and Election Protocol for a WSN', 'CONFERENCE', '10.1007/978-3-642-15766-0_36', NULL, 'Springer Berlin Heidelberg', '101 CCIS', '', '249-257', 2010, 'Scopus', 'T', 'Amarjeet Kaur & T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('13948d71-37db-5d74-8edd-d354a259a1f3', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('63f84194-89e2-59fd-8101-05c8fa3cbc9a', 'Time synchronization protocol for wireless sensor networks using clustering', 'CONFERENCE', '10.1109/ICRTIT.2011.5972293', NULL, 'IEEE', '', '', '417-422', 2011, 'Scopus', 'T', 'Gopal Chand Gautam; T. P. Sharma; Vivek Katiyar; Anil Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('63f84194-89e2-59fd-8101-05c8fa3cbc9a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('bd4046fa-2e74-5a9a-8bf5-f916ed25b168', 'Energy efficient time synchronization protocol for wireless sensor networks', 'CONFERENCE', '10.1007/978-3-642-22709-7_42', NULL, 'Communications in Computer and Information Science', '190 CCIS', '1', '421-430', 2011, 'Scopus', 'T', 'Gopal Chand Gautam & T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('bd4046fa-2e74-5a9a-8bf5-f916ed25b168', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5620d4a2-bb7a-5634-baa7-a9ba4b1613b6', 'Detecting and reducing the denial of service attacks in WLANs', 'CONFERENCE', '10.1109/WICT.2011.6141379', NULL, 'IEEE', '', '', '968-973', 2012, 'Scopus', 'T', 'Rajeev Singh; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5620d4a2-bb7a-5634-baa7-a9ba4b1613b6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3577d328-d18c-50a5-8c27-9c36211ce584', 'Proof of the Authentication Property of Secure WLAN Authentication Scheme (SWAS) using Protocol Composition Logic (PCL)', 'JOURNAL', '10.5120/13913-1791', NULL, 'International Journal of Computer Applications', '80', '12', '18-26', 2013, 'Other', 'T', 'Rajeev Singh; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3577d328-d18c-50a5-8c27-9c36211ce584', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d6b7a814-2207-52ad-be38-b846a30d8fcc', 'A sequence number based WLAN authentication scheme for reducing the MIC field overhead', 'CONFERENCE', '10.1109/wocn.2013.6616215', NULL, 'IEEE', '', '', '1-4', 2013, 'Scopus', 'T', 'Rajeev Singh; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d6b7a814-2207-52ad-be38-b846a30d8fcc', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e276496a-a908-544c-aaf6-0f40bd6707c1', 'A key refreshing technique to reduce 4-way handshake latency in 802.11i based networks', 'CONFERENCE', '10.1109/iccct.2013.6749620', NULL, 'IEEE', '', '', '157-162', 2014, 'Scopus', 'T', 'Rajeev Singh; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e276496a-a908-544c-aaf6-0f40bd6707c1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('fe6ff536-73b9-5509-91fc-0fc8cc9eafcd', 'Simulated analysis of a cryptographic solution for wlans against DoS attacks', 'JOURNAL', 'ISSN: 18234690', NULL, 'Journal of Engineering Science and Technology', '9', '', '57-67', 2014, 'Scopus', 'T', 'R. Singh and T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('fe6ff536-73b9-5509-91fc-0fc8cc9eafcd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('068a69a7-3508-55bc-b5b2-9a2fdd924096', 'A survey on area coverage in wireless sensor networks', 'CONFERENCE', '10.1109/iccicct.2014.6993073', NULL, 'IEEE', '', '', '829-836', 2014, 'Scopus', 'T', 'Abhiram Singh; T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('068a69a7-3508-55bc-b5b2-9a2fdd924096', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ebc2ae11-6e9c-55bc-a695-8f6cb069c4ff', 'A key hiding communication scheme for enhancing the wireless LAN security', 'JOURNAL', '10.1007/s11277-013-1559-0', NULL, 'Wireless Personal Communications', '77', '2', '1145-1165', 2013, 'Scopus', 'T', 'Rajeev Singh & Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ebc2ae11-6e9c-55bc-a695-8f6cb069c4ff', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e31a3d7c-502f-5d51-a211-a6d26ff45553', 'A throughput descent and energy efficient mechanism for fault detection in WSNs', 'CONFERENCE', '10.1109/IIC.2015.7150759', NULL, 'IEEE', '', '', '311-316', 2015, 'Scopus', 'T', 'Krishna P. Sharma; T.P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e31a3d7c-502f-5d51-a211-a6d26ff45553', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('438bcd64-5f13-5e66-998f-5c2c834ada39', 'Position and hop-count assisted full coverage control in dense sensor networks', 'JOURNAL', '10.1007/s11276-014-0810-2', NULL, 'Wireless Networks', '21', '2', '625-638', 2014, 'Scopus', 'T', 'Abhiram Singh & T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('438bcd64-5f13-5e66-998f-5c2c834ada39', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('14453788-390f-550d-820a-f8a83ec4ec57', 'On the IEEE 802.11i security: A denial-of-service perspective', 'JOURNAL', '10.1002/sec.1079', NULL, 'Security and Communication Networks', '8', '7', '1378-1407', 2014, 'Scopus', 'T', 'Rajeev Singh; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('14453788-390f-550d-820a-f8a83ec4ec57', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('458d1693-b9bc-5bf0-8d62-0e636cb45eef', 'Novel sequence number based secure authentication scheme for wireless LANs', 'JOURNAL', '10.3969/j.issn.1674-862x.2015.02.011', NULL, 'Journal of Electronic Science and Technology', '13', '2', '144-152', 2015, 'Scopus', 'T', 'Rajeev Singh; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('458d1693-b9bc-5bf0-8d62-0e636cb45eef', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('87d574d0-31e5-5252-924a-67a0406c2bcd', 'CPFR: Coverage preserving failure recovery in wireless sensor networks', 'CONFERENCE', '10.1109/icacea.2015.7164716', NULL, 'IEEE', '', '', '284-289', 2015, 'Scopus', 'T', 'Krishna P. Sharma; T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('87d574d0-31e5-5252-924a-67a0406c2bcd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3776a841-e8d6-521a-ae4d-fad87c685765', 'An efficient mobile data collector based data aggregation scheme for wireless sensor networks', 'CONFERENCE', '10.1109/cict.2015.78', NULL, 'IEEE', '', '', '292-298', 2015, 'Scopus', 'T', 'Upasana Sharma; C. Rama Krishna; T.P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3776a841-e8d6-521a-ae4d-fad87c685765', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('530b29cb-ada2-5189-9fc3-af4c75d6f62c', 'A location-based method for restricting the flooding DoS effect in WLANs', 'JOURNAL', '10.1080/17489725.2015.1119318', NULL, 'Journal of Location Based Services', '9', '4', '273-295', 2016, 'Scopus', 'T', 'Rajeev Singh; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('530b29cb-ada2-5189-9fc3-af4c75d6f62c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('09f79457-f656-5404-b791-525b928c6f4f', 'Review article On the IEEE 802.11i security: A denial-of-service perspective', 'JOURNAL', NULL, NULL, 'Security and Communication Networks', '8', '7', '1378-1407', 2014, 'Scopus', 'T', 'Rajeev Singh; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('09f79457-f656-5404-b791-525b928c6f4f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0c252b42-4605-59c3-aea9-396af71181c6', 'Distributed connectivity restoration in networks of movable sensor nodes', 'JOURNAL', '10.1016/j.compeleceng.2016.10.014', NULL, 'Computers and Electrical Engineering', '56', '', '608-629', 2016, 'Scopus', 'T', 'Krishna P. Sharma , T.P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0c252b42-4605-59c3-aea9-396af71181c6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9f2b9910-4f55-5cca-8eb7-0632f2901224', 'A reactive scheme for detecting soft faults in wireless sensor networks', 'CONFERENCE', '10.1109/ngct.2015.7375115', NULL, 'IEEE', '', '', '217-222', 2016, 'Scopus', 'T', 'Krishna P. Sharma; T.P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9f2b9910-4f55-5cca-8eb7-0632f2901224', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('060d186a-fb64-5fd3-b6f3-f203332c35f3', 'ZBFR: zone based failure recovery in WSNs by utilizing mobility and coverage overlapping', 'JOURNAL', '10.1007/s11276-016-1291-2', NULL, 'Wireless Networks', '23', '7', '2263-2280', 2016, 'Scopus', 'T', 'Krishna Pal Sharma & Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('060d186a-fb64-5fd3-b6f3-f203332c35f3', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d4c68311-e65f-5165-8c68-a1882f742f4e', 'rDFD: reactive distributed fault detection in wireless sensor networks', 'JOURNAL', '10.1007/s11276-016-1207-1', NULL, 'Wireless Networks', '23', '4', '1145-1165', 2016, 'Scopus', 'T', 'Krishna P. Sharma & T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d4c68311-e65f-5165-8c68-a1882f742f4e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('980a2062-f56a-595b-9b01-f1018c168ef7', 'FDR: fault detection and recovery scheme for wireless sensor networks using virtual grid', 'JOURNAL', '10.1080/17445760.2016.1219909', NULL, 'International Journal of Parallel, Emergent and Distributed Systems', '32', '6', '617-631', 2016, 'Scopus', 'T', 'Kulwardhan Singh; T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('980a2062-f56a-595b-9b01-f1018c168ef7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('79b5d89f-1ee5-567f-86f9-ee82bfdfa73d', 'A dynamic threshold based algorithm for improving security and performance of AODV under black-hole attack in MANET', 'JOURNAL', 'https://link.springer.com/article/10.1007/s11276-017-1622-y', NULL, 'Wireless Networks', '25', '5.1', '1685-1695', 2019, 'SCI(E)', 'T', 'Shashi Gurung, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('79b5d89f-1ee5-567f-86f9-ee82bfdfa73d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f5cf809b-1913-5b98-a53f-d3efd071283d', 'A novel approach for mitigating route request flooding attack in MANET', 'JOURNAL', 'https://link.springer.com/article/10.1007/s11276-017-1515-0', NULL, 'Wireless Networks', '24', '8', '2899-2914', 2018, 'SCI(E)', 'T', 'Shashi Gurung, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f5cf809b-1913-5b98-a53f-d3efd071283d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('25c3698c-c0ee-5315-a54f-25f3d7a2203d', 'A novel heterogeneous clustering protocol for lifetime maximization of wireless sensor network', 'JOURNAL', 'https://link.springer.com/article/10.1007/s11277-020-07898-8', NULL, 'Wireless Personal Communications', '117', '', '825-841', 2021, 'SCI(E)', 'T', 'Piyush Rawat, Siddhartha Chauhan, Rahul Priyadarshi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('25c3698c-c0ee-5315-a54f-25f3d7a2203d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('dcfe7ccd-8e63-5b80-aaf2-c36630305e02', 'Probability based cluster routing protocol for wireless sensor network', 'JOURNAL', 'https://link.springer.com/article/10.1007/s12652-020-02307-1', NULL, 'Journal of Ambient Intelligence and Humanized Computing', '12', '2', '2065-2077', 2021, 'SCI(E)', 'T', 'Piyush Rawat, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('dcfe7ccd-8e63-5b80-aaf2-c36630305e02', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('509eab4e-139f-5fd1-867c-87ae058f7110', 'Sensor fusion for distributed detection of mobile intruders in surveillance wireless sensor networks', 'JOURNAL', 'https://ieeexplore.ieee.org/abstract/document/9142268/', NULL, 'IEEE Sensors Journal', '20', '24', '15224-15231', 2020, 'SCI(E)', 'T', 'Anamika Sharma, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('509eab4e-139f-5fd1-867c-87ae058f7110', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('bb131e42-40a6-5768-a341-5b11f1327586', 'Human activity recognition with deep learning: Overview, challenges & possibilities', 'JOURNAL', 'https://scholar.archive.org/work/dgrw2qpvw5hc5bwywxcwq7vape/access/wayback/https://www.preprints.org/manuscript/202102.0349/v2/download', NULL, 'CCF Transactions on Pervasive Computing and Interaction', '3', '3', '339', 2021, 'SCI(E)', 'T', 'Pranjal Kumar, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('bb131e42-40a6-5768-a341-5b11f1327586', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('236fc8fd-096b-561b-939e-6710dc94819b', 'A survey on clustering protocols in wireless sensor network: taxonomy, comparison, and future scope', 'JOURNAL', 'https://link.springer.com/article/10.1007/s12652-021-03381-9', NULL, 'Journal of Ambient Intelligence and Humanized Computing', '14', '3', '1543-1589', 2023, 'SCI(E)', 'T', 'Piyush Rawat, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('236fc8fd-096b-561b-939e-6710dc94819b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('94086c61-b433-51e5-9512-2251daf69055', 'Particle swarm optimization based sleep scheduling and clustering protocol in wireless sensor network', 'JOURNAL', 'https://link.springer.com/article/10.1007/s12083-022-01307-6', NULL, 'Peer-to-Peer Networking and Applications', '15', '3', '1417-1436', 2022, 'SCI(E)', 'T', 'Piyush Rawat, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('94086c61-b433-51e5-9512-2251daf69055', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('384d2fa0-6e2e-53a4-b1e4-a75a653f9f01', 'A review of black-hole attack mitigation techniques and its drawbacks in mobile ad-hoc network', 'JOURNAL', 'https://ieeexplore.ieee.org/abstract/document/8300186/', NULL, '2017 International Conference on Wireless Communications, Signal Processing and Networking (WiSPNET)', '', '', '', 2017, 'Other', 'T', 'Shashi Gurung, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('384d2fa0-6e2e-53a4-b1e4-a75a653f9f01', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('047c84da-0c60-53f8-a018-7c1ede615014', 'A novel cluster head selection and data aggregation protocol for heterogeneous wireless sensor network', 'JOURNAL', 'https://link.springer.com/article/10.1007/s13369-021-06135-z', NULL, 'Arabian Journal for Science and Engineering', '', '4', '45673', 2022, 'Other', 'T', 'Piyush Rawat, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('047c84da-0c60-53f8-a018-7c1ede615014', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('667747c6-a687-53de-a8bf-7ee9dfe23475', 'Target coverage computation protocols in wireless sensor networks: a comprehensive review', 'JOURNAL', 'https://www.tandfonline.com/doi/abs/10.1080/1206212X.2019.1663382', NULL, 'International Journal of Computers and Applications', '43', '1', '1065-1087', 2021, 'SCI(E)', 'T', 'Anamika Sharma, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('667747c6-a687-53de-a8bf-7ee9dfe23475', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8eb6440b-12fb-5f26-a1f3-7c179c69de48', 'Energy efficient clustering in heterogeneous environment', 'JOURNAL', 'https://ieeexplore.ieee.org/abstract/document/8473296/', NULL, 'Second International Conference on Inventive Communication and Computational Technologies (ICICCT)', '', '', '388-392', 2018, 'SCI(E)', 'T', 'Piyush Rawat, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8eb6440b-12fb-5f26-a1f3-7c179c69de48', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d9ce7b64-d02e-55ed-875f-dc194664f87d', 'Fuzzy logic and particle swarm optimization-based clustering protocol in wireless sensor network', 'JOURNAL', 'https://link.springer.com/article/10.1007/s00500-023-07833-6', NULL, 'Soft Computing', '27', '9', '5177-5193', 2023, 'SCI(E)', 'T', 'Piyush Rawat, Pranjal Kumar, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d9ce7b64-d02e-55ed-875f-dc194664f87d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('468d3d68-8ce3-536a-b870-94374a8e8a76', 'Performance analysis of RNC clustering protocol in wireless sensor network', 'JOURNAL', 'https://www.ingentaconnect.com/content/ben/swcc/2020/00000010/00000006/art00015', NULL, 'International Journal of Sensors Wireless Communications and Control', '10', '6', '957-966', 2020, 'SCI(E)', 'T', 'Piyush Rawat, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('468d3d68-8ce3-536a-b870-94374a8e8a76', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('309ed5e8-15cf-59ae-ad4f-8c1fb4dc2f6e', 'Cluster based task scheduling in wireless sensor network', 'JOURNAL', 'https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=3a959b659ca85cc75b9ff679b37d2d8e7d4f4ba1', NULL, 'International Journal of Computer Applications', '978', '', '8887', 2011, 'SCI(E)', 'T', 'Siddhartha Chauhan, Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('309ed5e8-15cf-59ae-ad4f-8c1fb4dc2f6e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('57e96d97-e6c0-57cf-9bc6-ff0b611edc31', 'TBEE: Tier based energy efficient protocol providing sink and source mobility in wireless sensor networks', 'JOURNAL', 'https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=29e5acb9561b06c5fe357d381905d45fbcf9ac53#page=280', NULL, 'International Journal of Computer Science Issues (IJCSI)', '8', '6', '281', 2011, 'Scopus', 'T', 'Siddhartha Chauhan, Lalit Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('57e96d97-e6c0-57cf-9bc6-ff0b611edc31', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('421de6f0-47e5-50ce-bf50-963a01139a8b', 'Ensemble LOF-based detection of false data injection in smart grid demand response system', 'JOURNAL', 'https://www.sciencedirect.com/science/article/pii/S0045790624001162', NULL, 'Computers and Electrical Engineering', '116', '', '116', 2024, 'SCI(E)', 'T', 'Aschalew Tirulo, Siddhartha Chauhan, Biju Issac', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('421de6f0-47e5-50ce-bf50-963a01139a8b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2ce57c2c-50c3-58d8-9f9d-381df425fbbd', 'Reinforcement learning-based technique to restore coverage holes with minimal coverage overlap in wireless sensor networks', 'JOURNAL', 'https://link.springer.com/article/10.1007/s13369-022-06858-7', NULL, 'Arabian Journal for Science and Engineering', '47', '', '10847-10863', 2022, 'SCI(E)', 'T', 'Nilanshi Chauhan, Piyush Rawat, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2ce57c2c-50c3-58d8-9f9d-381df425fbbd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('55f92940-8b65-5ce6-a6fc-7dde821a7dc6', 'Analysis and simulation of second-order statistics with modified characteristic function parameters in a multipath fading environment', 'JOURNAL', 'https://link.springer.com/article/10.1007/s11277-018-5352-y', NULL, 'Wireless Personal Communications', '100', '', '851-862', 2018, 'SCI(E)', 'T', 'Arvind Dhaka, Siddhartha Chauhan, Vidhyacharan Bhaskar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('55f92940-8b65-5ce6-a6fc-7dde821a7dc6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e6167a13-faff-5fd0-82e5-b097758506fc', 'Energy Efficient Data Gathering Protocol for Wireless Sensor Networks', 'JOURNAL', 'https://scholar.google.com/scholar?cluster=3109590412281592535&hl=en&oi=scholarr', NULL, '', '', '', '535', 2011, 'Other', 'T', 'Siddhartha Chauhan, LK Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e6167a13-faff-5fd0-82e5-b097758506fc', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0924e874-e192-5862-997b-fd55da7a1220', 'Optimal threshold coverage area (OTCA) algorithm for random deployment of sensor nodes in large asymmetrical terrain', 'JOURNAL', 'ps://link.springer.com/chapter/10.1007/978-981-13-1813-9_4', NULL, 'Advances in Computing and Data Sciences', '', '', '34-42', 2018, 'Scopus', 'T', 'Anamika Sharma, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0924e874-e192-5862-997b-fd55da7a1220', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b9b68d3a-d6d2-55c3-b3d6-7724f7a61e11', 'Energy-Efficient and reliable routing protocol for wireless sensor networks', 'JOURNAL', 'https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=6151ee30d38878841ea4fd1e24ce4cec1d9edab3', NULL, 'International Journal of Computer Applications', '43', '11', '33-37', 2012, 'Scopus', 'T', 'Arvind Kumar, Ravi Kant Sahu, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b9b68d3a-d6d2-55c3-b3d6-7724f7a61e11', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('cfc2e316-2f2b-5bd9-a161-df16b4b47445', 'An energy efficient cycle stealing algorithm for best effort services in wireless sensor networks', 'JOURNAL', 'https://www.inderscienceonline.com/doi/abs/10.1504/IJCNDS.2014.060624', NULL, 'International Journal of Communication Networks and Distributed Systems', '12', '3', '275-298', 2014, 'SCI(E)', 'T', 'Siddhartha Chauhan, Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('cfc2e316-2f2b-5bd9-a161-df16b4b47445', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e0b799c7-2f8e-500d-80bd-b763a5b37ab5', 'Analysing Outage Probability and Diversity for Matrix Based Shadowed Attenuation in Multipath Fading Environment', 'JOURNAL', 'https://link.springer.com/article/10.1007/s11277-020-07946-3', NULL, 'Wireless Personal Communications', '117', '', '1797-1814', 2021, 'SCI(E)', 'T', 'Arvind Dhaka, Vidhyacharan Bhaskar, Siddhartha Chauhan, Amita Nandal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e0b799c7-2f8e-500d-80bd-b763a5b37ab5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('12b5e7c1-569e-5b88-b2c9-e1268e26b73c', 'Grid scrutinize based heuristic sensor node scheduling protocol with partial coverage constraint in WSN', 'JOURNAL', 'https://link.springer.com/chapter/10.1007/978-3-030-39875-0_22', NULL, 'Internet of Things and Connected Technologies', '1122', '', '204-213', 2020, 'Scopus', 'T', 'Anamika Sharma, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('12b5e7c1-569e-5b88-b2c9-e1268e26b73c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3c12eac2-4f33-548d-9085-a8a705c8d2ba', 'Performance Analysis of RN-LEACH Protocol over LEACH Protocol', 'JOURNAL', '10.14257/ijfgcn.2018.11.5.01', NULL, 'International Journal of Future Generation Communication and Networking', '11', '', '1-10', 2018, 'ESCI', 'T', 'Piyush Rawat and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3c12eac2-4f33-548d-9085-a8a705c8d2ba', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d26251c2-8f64-5cda-aa8b-33aa9f53e0e7', 'Analysis and Simulation of Second-Order Statistics with Modified Characteristic', 'JOURNAL', NULL, NULL, 'Wireless Personal Communications-Springer', '100', '', '851-862', 2018, 'SCI(E)', 'T', 'Arvind Dhaka, Siddhartha Chauhan, and Vidhyacharan Bhaskar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d26251c2-8f64-5cda-aa8b-33aa9f53e0e7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f1119754-958e-578b-b265-86e609d11ce2', 'Effect of Matrix Partitioning on Second Order Statistics of Fading Channels', 'JOURNAL', 'https://link.springer.com/article/10.1007/s11277-018-5353-x', NULL, 'Wireless Personal Communications-Springer', '100', '', '863-875', 2018, 'SCI(E)', 'T', 'Arvind Dhaka, Siddhartha Chauhan, and Vidhyacharan Bhaskar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f1119754-958e-578b-b265-86e609d11ce2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ea2cce08-8fda-51e1-85b6-bb920e533138', 'Statistical Approach for Performance Analysis of Multipath Scattering Environment', 'JOURNAL', 'https://link.springer.com/article/10.1007/s11277-017-4893-9', NULL, 'Wireless Personal Communications-Springer', '98', '', '743-757', 2017, 'SCI(E)', 'T', 'Arvind Dhaka, Siddhartha Chauhan, Vidhyacharan Bhaskar and Amita Nandal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ea2cce08-8fda-51e1-85b6-bb920e533138', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5ced4af2-6d08-58c0-9ff3-36cbaac6aed0', 'Statistical Analysis of Modified Fading Simulator in Rayleigh Fading Environment', 'JOURNAL', 'http://article.nadiapub.com/IJGDC/vol11_no4/6.pdf', NULL, '', '11', '', '59-70', 2018, 'Scopus', 'T', 'Arvind Dhaka and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5ced4af2-6d08-58c0-9ff3-36cbaac6aed0', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4c0bc009-1d6a-54d2-991d-cd2d606ee3d9', 'Succinct Review on MAC Protocols for Wireless Body Area Networks', 'JOURNAL', 'http://article.nadiapub.com/IJGDC/vol11_no1/7.pdf', NULL, 'International Journal of Grid and Distributed Computing', '11', '', '65-80', 2018, 'Scopus', 'T', 'Deepshikha and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4c0bc009-1d6a-54d2-991d-cd2d606ee3d9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('39516016-04d3-54cb-8e8f-379991f7c3ec', 'Improving Bounds on Outage Probability in Correlated Rayleigh Fading Environment', 'JOURNAL', 'https://link.springer.com/article/10.1007/s12046-019-1120-2', NULL, 'Sadhana- Springer', '44', '', '', 2019, 'SCI(E)', 'T', 'Arvind Dhaka, Siddhartha Chauhan, Vidhyacharan Bhaskar and Amita Nandal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('39516016-04d3-54cb-8e8f-379991f7c3ec', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('05aaa68f-9259-563a-8969-2476010e9e4a', 'Multi-Stage Context-Aware Data Filtering Technique for Body Sensor Networks (BSNs)', 'JOURNAL', 'https://jardcs.org/abstract.php?id=1870', NULL, 'Journal of Advanced Research in Dynamical and Control Systems', '11', '7', '943-953', 2019, 'Scopus', 'T', 'Deepshikha and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('05aaa68f-9259-563a-8969-2476010e9e4a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3cf2b130-642b-5276-b8f4-4288131e2fda', 'Two-Step Verification Technique for Isolation of Black Hole Attack in MANETs', 'JOURNAL', 'https://www.ijrte.org/wp-content/uploads/papers/v8i4/D7107118419.pdf', NULL, 'International Journal of Recent Technology and Engineering', '8', '4', '491-495', 2019, 'Scopus', 'T', 'A Sai Venkateshwar Rao and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3cf2b130-642b-5276-b8f4-4288131e2fda', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('eb32b85a-c250-5c1c-9b22-6436fe16e03e', 'Sensor fusion for Distributed Detection of Passive Targets in Surveillance Wireless Sensor Network', 'JOURNAL', 'https://ieeexplore.ieee.org/abstract/document/9142268', NULL, 'IEEE Sensor Journal', '20', '24', '15224-15231', 2020, 'SCI(E)', 'T', 'Anamika Sharma and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('eb32b85a-c250-5c1c-9b22-6436fe16e03e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('64cfc7ac-01bb-59dc-b26a-ec99e5428280', 'Energy Efficient Clusterhead Selection Scheme in Heterogeneous Wireless Sensor Network', 'JOURNAL', 'https://www.worldscientific.com/doi/abs/10.1142/S0218126620502047', NULL, 'J. Circuits, Syst. Comput.,', '29', '', '', 2020, 'SCI(E)', 'T', 'Piyush Rawat and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('64cfc7ac-01bb-59dc-b26a-ec99e5428280', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4525f626-6f74-5264-b80a-195d34ef7e2c', 'A novel area coverage technique for maximizing the wireless sensor network lifetime', 'JOURNAL', 'https://link.springer.com/article/10.1007/s13369-020-05182-2', NULL, 'Arabian Journal of Science and Engineering', '46', '', '3329-3343', 2021, 'SCI(E)', 'T', 'Nilanshi Chauhan and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4525f626-6f74-5264-b80a-195d34ef7e2c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3c0a0191-a4df-5b6f-aa56-9091d100594b', 'Study on temperature (τ) variation for SimCLR-based activity recognition', 'JOURNAL', 'https://link.springer.com/article/10.1007/s11760-021-02122-x', NULL, 'Signal, Image and Video Processing', '16', '', '1667-1672', 2022, 'SCI(E)', 'T', 'Pranjal Kumar and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3c0a0191-a4df-5b6f-aa56-9091d100594b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4e22ca35-e07c-510a-86e6-af980e9a5ab9', 'Energy‑efficient cluster‑based routing protocol for heterogeneous wireless sensor network', 'JOURNAL', 'https://link.springer.com/article/10.1007/s12243-024-01015-7', NULL, 'Annals of Telecommunications', '80', '', '109-122', 2024, 'SCI(E)', 'T', 'Piyush Rawat, Gopal Singh Rawat, Harish Rawat, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4e22ca35-e07c-510a-86e6-af980e9a5ab9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('227f45f8-ac1f-5676-a10d-315a8348dacc', 'Analytic Evaluation of Non-uniformities for Coverage Probability Computation of Randomly Deployed Wireless Sensor Network', 'JOURNAL', 'https://www.inderscienceonline.com/doi/abs/10.1504/IJSNET.2020.109712', NULL, 'International Journal of Sensor Networks', '34', '1', '', 2020, 'SCI(E)', 'T', 'Anamika Sharma and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('227f45f8-ac1f-5676-a10d-315a8348dacc', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('acefcea7-bce3-55de-886c-d5d449fa99bf', 'A new approach layered architecture based clustering for prolong life of wireless sensor network (WSN)', 'JOURNAL', 'https://www.academia.edu/download/67189994/pxc3872542.pdf', NULL, 'International Journal of Computer Applications', '15', '1', '40-45', 2011, 'SCI(E)', 'T', 'Babu Ram, Narottam Chand, Prateek Gupta, Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('acefcea7-bce3-55de-886c-d5d449fa99bf', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1684956c-5559-5c60-95e6-3ea31da55270', 'Energy-hole avoidance and lifetime enhancement of a WSN through load factor', 'JOURNAL', '10.3906/elk-1508-162', NULL, 'Turkish Journal of Electrical Engineering and Computer Sciences', '25', '2', '1375-1387', 2017, 'Scopus', 'T', 'KP Sharma, TP Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1684956c-5559-5c60-95e6-3ea31da55270', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('db370d95-5fd0-5448-bab5-03a9faa1da5f', 'Cooperative data caching in MANETs and WSNs: A survey', 'CONFERENCE', '10.1109/icicict1.2017.8342787', NULL, 'IEEE', '', '', '1473-1479', 2017, 'Scopus', 'T', 'Shivangi Gupta; T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('db370d95-5fd0-5448-bab5-03a9faa1da5f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('fa305a29-9fc7-5dac-9827-bddf5907899e', 'Present Status of Distributed Denial of service (DDoS) attacks in internet world', 'JOURNAL', '10.33889/ijmems.2019.4.4-080', NULL, 'International Journal of Mathematical, Engineering and Management Sciences', '4', '4', '1008-1017', 2019, 'Scopus', 'T', 'Rajeev Singh; T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('fa305a29-9fc7-5dac-9827-bddf5907899e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c2b1f475-a4d1-55d6-a997-cfb106856aad', 'Modeling and performance evaluation of computational DoS attack on an access point in Wireless LANs', 'JOURNAL', '10.1201/9781003337034', NULL, 'Advanced Mathematical Techniques in Science and Engineering', '', '', '101-120', 2018, 'Scopus', 'T', 'Rajeev Singh; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c2b1f475-a4d1-55d6-a997-cfb106856aad', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5b3add93-6d8c-5d63-9912-cc7d1d5a2f50', 'Dynamic load tuning for energy-hole avoidance in corona model for a wireless sensor network', 'JOURNAL', '10.1504/ijsnet.2019.099234', NULL, 'International Journal of Sensor Networks', '30', '1', '56-68', 2019, 'Scopus', 'T', 'Krishna Pal Sharma; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5b3add93-6d8c-5d63-9912-cc7d1d5a2f50', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('80101a9d-48cd-57a3-bfea-69c8858ebb1a', 'An overview of wlan security', 'JOURNAL', 'https://www.ijstr.org/final-print/nov2019/An-Overview-Of-Wlan-Security.pdf', NULL, 'International Journal of Scientific and Technology Research', '8', '11', '1348-1352', 2019, 'Scopus', 'T', 'Rajeev Singh, T.P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('80101a9d-48cd-57a3-bfea-69c8858ebb1a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b4a90073-e049-5d88-b6ba-a1f0d4f684ae', 'Global Snapshot of a Large Wireless Sensor Network', 'CONFERENCE', '10.1007/978-3-030-24318-0_84', NULL, 'Learning and Analytics in Intelligent Systems', '4', '', '741-752', 2019, 'Scopus', 'T', 'Surabhi Sharma, T. P. Sharma & Kavitha Kadarala', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b4a90073-e049-5d88-b6ba-a1f0d4f684ae', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f8d9190a-f5c9-562a-8629-7fb70db53d77', 'TVDD: Topology based vehicular data dissemination scheme for stability optimisation in IoV', 'JOURNAL', '10.1504/ijsnet.2021.10037354', NULL, 'International Journal of Sensor Networks', '35', '4', '243-257', 2021, 'Scopus', 'T', 'Richa Sharma; T.P. Sharma; Ajay K. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f8d9190a-f5c9-562a-8629-7fb70db53d77', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a7ffc80b-115a-5352-8d96-90914949c366', 'Reputation-Based Stable Grouping Strategy for Holistic Content Distribution in IoV', 'CONFERENCE', '10.1007/978-981-15-6067-5_68', NULL, 'Advances in Intelligent Systems and Computing', '1189', '', '604-612', 2020, 'Scopus', 'T', 'Richa Sharma, T. P. Sharma & Ajay Kumar Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a7ffc80b-115a-5352-8d96-90914949c366', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('24bd3bad-8cfb-5cb3-9602-9441a21572e3', 'Influence of Internal and External Sources on Information Diffusion at Twitter', 'CONFERENCE', '10.1007/978-981-15-6067-5_48', NULL, 'Advances in Intelligent Systems and Computing', '1189', '', '430-436', 2020, 'Scopus', 'T', 'Mohammad Ahsan & T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('24bd3bad-8cfb-5cb3-9602-9441a21572e3', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('67105ba2-41bf-5f28-9c80-d0fd79bb4888', 'Trust assessment-based stable and attack resistant grouping strategy for data dissemination in IoV', 'JOURNAL', '10.1504/ijsnet.2022.127108', NULL, 'International Journal of Sensor Networks', '40', '3', '160-174', 2022, 'Scopus', 'T', 'Richa Sharma; Teek Parval Sharma; Ajay Kumar Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('67105ba2-41bf-5f28-9c80-d0fd79bb4888', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('aaae03c0-ec71-5d0f-a358-abf32e8c24b1', 'Spams classification and their diffusibility prediction on Twitter through sentiment and topic models', 'JOURNAL', '10.1080/1206212x.2020.1758430', NULL, 'International Journal of Computers and Applications', '44', '4', '365-375', 2020, 'Scopus', 'T', 'Mohammad Ahsan & T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('aaae03c0-ec71-5d0f-a358-abf32e8c24b1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('dce31197-47d2-5d3e-ac1c-c2b27406ec7b', 'Detecting and Preventing Misbehaving Intruders in the Internet of Vehicles', 'JOURNAL', '10.4018/ijcac.295242', NULL, 'International Journal of Cloud Applications and Computing', '12', '1', '1-21', 2022, 'Scopus', 'T', 'Richa Sharma; T.P. Sharma; Ajay K. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('dce31197-47d2-5d3e-ac1c-c2b27406ec7b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e2563238-0219-53a5-a454-9f33c8de9e18', 'A Theoretical Aspect on Fault-Tolerant Data Dissemination in IoT Enabled Systems', 'CONFERENCE', '10.1007/978-3-031-07012-9_15', NULL, 'Communications in Computer and Information Science', '1591 CCIS', '', '169-181', 2022, 'Scopus', 'T', 'Vishnu Kumar Prajapati, T. P. Sharma & Lalit Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e2563238-0219-53a5-a454-9f33c8de9e18', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('807384dc-56a7-5cec-8f61-333da859cdc7', 'An Energy Aware Dispatch Scheme for WSNs', 'CONFERENCE', 'https://www.semanticscholar.org/paper/An-Energy-Aware-Dispatch-Scheme-WSNs-Chauhan-Pandey/c6e6342de717dd8de4296cc40e74a0d2e002d2b3', NULL, 'International Conference on Computer, Communication and Information Sciences and Engineering (ICCCISE - 2013) during 27-28, June 2013, Paris, France.', '', '', '54-58', 2013, 'Other', 'T', 'Siddhartha Chauhan and Nitin Kumar Kotania', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('807384dc-56a7-5cec-8f61-333da859cdc7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('67b6f791-f3d0-5796-8c48-17a324d51de7', 'A Virtual Grid Based Energy Efficient Data Gathering Scheme for Heterogeneous Sensor Networks', 'CONFERENCE', 'https://ieeexplore.ieee.org/document/10502989', NULL, 'VIII. International Science Conference (WASET-2014) during 30-31, July 2014, Zurich, Switzerland', '2', '', '1-4', 2014, 'Other', 'T', 'Nilanshi Chauhan and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('67b6f791-f3d0-5796-8c48-17a324d51de7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c4f14a95-0efd-5580-adf7-88bedd98c074', 'SRS: Scalable and Robust Snapshot Algorithm for Wireless Sensor Networks', 'CONFERENCE', '10.1109/conit59222.2023.10205714', NULL, 'IEEE', '', '', '1-8', 2023, 'Scopus', 'T', 'Raghvendra Mishra ; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c4f14a95-0efd-5580-adf7-88bedd98c074', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('596de1c1-fba8-57d4-83a9-4ce95a4521d4', 'In-Network Storage Management in Large Scale Wireless Sensor Networks -A Survey', 'CONFERENCE', '10.1063/5.0177693', NULL, 'AIP Conference Proceedings', '2916', '1', '', 2023, 'Scopus', 'T', 'Rakhi Puri; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('596de1c1-fba8-57d4-83a9-4ce95a4521d4', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b9e0e757-997c-54ad-822b-9330a4ddf127', 'Enhancing Wave Function Collapse Algorithm using Bitwise Operations', 'CONFERENCE', '10.1109/ic2e357697.2023.10262419', NULL, 'IEEE', '', '', '', 2023, 'Scopus', 'T', 'Yash Punia; Priyanka; T.P Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b9e0e757-997c-54ad-822b-9330a4ddf127', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e330dd92-e1ad-50b5-b44b-55c1ac8b9b2b', 'A review on quality of service in surveillance WSN and related challenges', 'CONFERENCE', 'https://ieeexplore.ieee.org/document/10402263', NULL, 'ISTE Annual Convention (SAC-2015), on Challenges of Technical Education in Nation Building during 30th September-1st October, 2015, Hamirpur, India', '', '', '503-506', 2015, 'Other', 'T', 'Siddhartha Chauhan Kumar S. Pandey and Prateek Chandra', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e330dd92-e1ad-50b5-b44b-55c1ac8b9b2b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('54a4ec87-2476-5d7d-a488-b779e1806f54', 'Comparative Analysis of Time-series Models vs ML Tools for yearly average Indian Rainfall Forecasting', 'CONFERENCE', '10.1049/icp.2023.1523', NULL, 'IET Conference Proceedings', '2023', '5', '399-403', 2023, 'Scopus', 'T', 'V. Maniyal ; T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('54a4ec87-2476-5d7d-a488-b779e1806f54', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e788a11a-f8c2-580a-bfa3-d2aeba2aa8f4', 'Detection of Plant Diseases in Hydroponics Farming Using Deep Learning Techniques', 'CONFERENCE', '10.1109/icsses62373.2024.10561290', NULL, 'IEEE', '', '', '1-6', 2024, 'Scopus', 'T', 'Ashish Kundal; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e788a11a-f8c2-580a-bfa3-d2aeba2aa8f4', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('773e5843-0e46-543a-921e-728375c4deb0', 'Data Dissemination Framework for Optimizing Overhead in IoT-Enabled Systems Using Tabu-RPL', 'JOURNAL', '10.1007/s42979-024-02694-8', NULL, 'SN Computer Science', '5', '4', '', 2024, 'Scopus', 'T', 'Vishnu Kumar Prajapati, T. P. Sharma & Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('773e5843-0e46-543a-921e-728375c4deb0', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2ce0d4c8-340d-55af-bf9d-acd015639f29', 'A Review of Adaptive Hierarchical Data Dissemination Method in Mobile Wireless Sensor Network', 'CONFERENCE', '10.1109/iccae59995.2024.10569362', NULL, 'IEEE', '', '', '648-652', 2024, 'Scopus', 'T', 'Rakhi; Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2ce0d4c8-340d-55af-bf9d-acd015639f29', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('bdfd3a3b-461e-5fe0-a506-d12c993aa377', 'Building Dominating Sets to Minimize Energy Wastage in Wireless Sensor Networks', 'CONFERENCE', 'https://link.springer.com/chapter/10.1007/978-981-15-1384-8_1#citeas', NULL, '4th International Conference Information, Communication & Computing Technology (ICICCT-2019), New Delhi India', '1025', '', '3-11', 2019, 'Scopus', 'T', 'Anamika Sharma and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('bdfd3a3b-461e-5fe0-a506-d12c993aa377', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7f4e2b8c-a262-50ed-828e-c45a1e39e2b9', 'Information Fusion based Intruder Detection Techniques in Surveillance Wireless Sensor Network', 'CONFERENCE', 'https://link.springer.com/chapter/10.1007/978-981-15-6067-5_12', NULL, 'Advances in Intelligent System and Computing', '1189', '', '93-99', 2020, 'Other', 'T', 'Anamika Sharma and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7f4e2b8c-a262-50ed-828e-c45a1e39e2b9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4138e5c3-8fc5-5abf-a657-b85373fff180', 'CNN-LSTM for Secure Distributed Demand Response in Smart Grid', 'CONFERENCE', 'https://ieeexplore.ieee.org/abstract/document/10537651', NULL, '7th International Conference on Image Information Processing at JUIT, Waknaghat, Solan, India', '', '', '234-242', 2024, 'Other', 'T', 'Aschalew Tirulo and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4138e5c3-8fc5-5abf-a657-b85373fff180', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5910a1f6-d69d-5675-98dc-93e6969935ad', 'A Deep Learning Based Hybrid Structure for the Intrusion Detection', 'CONFERENCE', '10.1109/ICCCNT61001.2024.10724076', NULL, 'IEEE', '', '', '1-11', 2024, 'Scopus', 'T', 'Pranit Verma; T.P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5910a1f6-d69d-5675-98dc-93e6969935ad', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2e2d0ad8-16db-5925-b6e7-a89857488359', 'Wireless Sensor Networks: Form Theory to Applications (Title: Data Aggregation and Data Gathering)', 'BOOK_CHAPTER', NULL, NULL, 'CRC Press', '', '', '41-58', 2014, 'Scopus', 'T', 'Lalit Kumar Awasthi and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2e2d0ad8-16db-5925-b6e7-a89857488359', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2f74f3b6-7eaa-54ea-9f0c-02ef2012c947', 'Detection and Tracking of Mobile Intruder in Harsh Geographical Terrains using Surveillance Wireless Sensor Networks', 'BOOK_CHAPTER', '10.1007/978-3-030-40305-8_21', NULL, 'Springer', '', '', '417-437', 2020, 'Other', 'T', 'Anamika Sharma and Siddhartha Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2f74f3b6-7eaa-54ea-9f0c-02ef2012c947', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4f292046-795d-5e13-b414-b0651c050ad6', 'Selected practical and effective techniques to combat distributed denial-of-service (DDoS) attacks', 'BOOK_CHAPTER', '10.1515/9783110619751-007', NULL, 'Distributed Denial of Service Attacks: Concepts, Mathematical and Cryptographic Solutions', '', '', '159-172', 2021, 'Scopus', 'T', 'Rajeev Singh and T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4f292046-795d-5e13-b414-b0651c050ad6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6dfea3c8-244c-58dd-8005-ad46eb2f2ac1', 'Security in Wireless Local Area Networks (WLANs)', 'BOOK_CHAPTER', '10.5772/intechopen.89857', NULL, 'Computer and Network Security', '', '', '', 2019, 'Scopus', 'T', 'Rajeev Singh and Teek Parval Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6dfea3c8-244c-58dd-8005-ad46eb2f2ac1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('48d1b5d9-4213-5394-bec0-c06adc34aa8d', 'Achieving QoS Upper Bounds for Various MAC Parameters in the VANET', 'BOOK_CHAPTER', '10.1007/978-3-030-44372-6_7', NULL, 'Lecture Notes on Data Engineering and Communications Technologies', '51', '', '81-90', 2020, 'Scopus', 'T', 'Richa Sharma, Teek Parval Sharma & Ajay Kumar Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('48d1b5d9-4213-5394-bec0-c06adc34aa8d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1735c78e-493e-5169-9f60-2f26167ef99f', 'Lightweight Encryption Algorithms, Technologies, and Architectures in Internet of Things: A Survey', 'BOOK_CHAPTER', '10.1007/978-981-15-2043-3_39', NULL, 'Lecture Notes in Networks and Systems', '103', '', '341-351', 2020, 'Scopus', 'T', 'Rishabh & T. P. Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1735c78e-493e-5169-9f60-2f26167ef99f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b95266a9-a16b-5b18-82cc-ee517af2b475', 'Heterogeneous-internet of vehicles (Het-IoV) in twenty-first century: A comprehensive study', 'BOOK_CHAPTER', '10.1007/978-3-030-22277-2_22', NULL, 'Handbook of Computer Networks and Cyber Security: Principles and Paradigms', '', '', '555-584', 2020, 'Scopus', 'T', 'Richa, T. P. Sharma & Ajay Kumar Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b95266a9-a16b-5b18-82cc-ee517af2b475', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('13dc2ccc-601e-5035-83bc-a66a165f1aa3', 'Secure Data aggregation in Wireless Sensor Network: A Survey', 'CONFERENCE', 'https://www.researchgate.net/publication/50946296_Secure_Data_aggregation_in_Wireless_Sensor_Network_A_Survey', NULL, 'International Journal of Engineering Science and Technology', '3', '', '', 2011, 'Scopus', 'T', 'Mukesh Jha and T.P Sharma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('13dc2ccc-601e-5035-83bc-a66a165f1aa3', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f4a9bd2e-daeb-5326-a74f-8bbda53681ae', 'Flood Early Detection System Using Internet of Things and Artificial Neural', 'CONFERENCE', NULL, NULL, 'International Conference on Innovative Computing and Communications', '', '', '297–305', 2018, 'Scopus', 'T', 'A Subeesh, Prashant Kumar, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f4a9bd2e-daeb-5326-a74f-8bbda53681ae', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0296168b-44e5-5b36-97b1-44fbc1325459', 'ProACT: Probabilistic Analysis and Countermeasures Tool for Blockchain Supply Chains With Smart Contracts Composition', 'JOURNAL', '10.1002/cpe.70004', NULL, 'Concurrency and Computation: Practice and Experience', '37', '4-5', '', 2025, 'SCI(E)', 'T', 'Rangu Manjula, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0296168b-44e5-5b36-97b1-44fbc1325459', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('597d0de2-e1cb-55ba-b0b2-c23381509d96', 'Enhanced Hybrid Congestion Mitigation Strategy for ‘6LoWPAN-RPL based patient-centric IoHT’', 'JOURNAL', '10.1016/j.comnet.2024.110862', NULL, 'Computer Networks', '255', '', '', 2024, 'SCI(E)', 'T', 'Himanshu Verma, Naveen Chauhan, Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('597d0de2-e1cb-55ba-b0b2-c23381509d96', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('96b84733-130a-59d8-be56-82248413ea54', 'Implementation of IoT and Fuzzy Logic Driven Real-Time Smart Storage Monitoring System', 'CONFERENCE', '10.1109/ICCCNT61001.2024.10724998', NULL, '15th International Conference on Computing Communication and Networking Technologies (ICCCNT)', '', '', '1-7', 2024, 'Scopus', 'T', 'Rahul Prasad, Suman Raj, Machireddy Akash, Harshit Shashni, A Subeesh, Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('96b84733-130a-59d8-be56-82248413ea54', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e033a1eb-dbb2-53e5-8f59-15b169cf6b6a', 'Blockchain-Driven Decentralized Healthcare Data Management with IPFS and Elasticsearch', 'CONFERENCE', '10.1109/IC2E362166.2024.10827793', NULL, 'Electronics, Electrical Engineering & their Applications (IC2E3)', '', '', '', 2024, 'Scopus', 'T', 'Kratika Mittal; Rajeev Kumar; Naveen Chauhan', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e033a1eb-dbb2-53e5-8f59-15b169cf6b6a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a49650ab-063e-584d-9144-ae353ebde7fd', 'Brain tumor segmentation with deep learning: Current approaches and future perspectives', 'JOURNAL', '10.1016/j.jneumeth.2025.110424', NULL, 'Journal of Neuroscience Methods', '418', '110424', '1-33', 2025, 'SCI(E)', 'Q3', 'Akash Verma, Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a49650ab-063e-584d-9144-ae353ebde7fd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('47ace1b0-5f8e-5d35-90fa-78455298ac81', 'Performance Analysis of IEEE 802.11p in the Presence of Hidden Terminals', 'JOURNAL', '10.1007/s11277-016-3252-6', NULL, 'IEEE', '89', '', '61-70', 2016, 'SCI(E)', 'T', 'Rathee Priyanka, Singh, R . and Kumar, S .', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('47ace1b0-5f8e-5d35-90fa-78455298ac81', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('99583095-12e6-568c-8f0d-ce0e8ff489ef', 'Performance Analysis of IEEE 802.11p using continuous time Markov Chain', 'JOURNAL', '10.1016/j.procs.2019.05.012', NULL, 'IEEE', '152', '', '195-203', 2019, 'SCI(E)', 'T', 'Priyanka', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('99583095-12e6-568c-8f0d-ce0e8ff489ef', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2727e943-26af-505a-a11f-dbed3b0aa47e', 'Analytical Modelling of Back-off Process of IEEE 802.11p using Continuous Markov Chain in VANETs', 'JOURNAL', NULL, NULL, 'International Journal of Computer Applications', '172', '', '14-20', 2017, 'Other', 'T', 'Priyanka, Singh, R. and Kumar, S.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2727e943-26af-505a-a11f-dbed3b0aa47e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('072feee4-00f3-509d-8695-5dce3a51450c', 'Performance Analysis of IEEE 802.11 p Protocol with Retry Limit in VANETs: An Analytical study', 'JOURNAL', '10.1016/j.procs.2019.05.043', NULL, 'Procedia Computer Science', '152', '', '195-203', 2019, 'SCI(E)', 'T', 'Priyanka, Singh, R . and Kumar, S .', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('072feee4-00f3-509d-8695-5dce3a51450c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7a1dea55-d859-51c0-b554-91c911449859', 'Effect of Imperfect Sensing on the Protection of Primary User and Performance of Multi-Users Environment', 'CONFERENCE', NULL, NULL, 'Fifth International Conference on Advanced Computing and Communication Technologies (ACCT)', '', '', '304-308', 2015, 'Other', 'T', 'Indu, Singh, R., and Priyanka', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7a1dea55-d859-51c0-b554-91c911449859', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8a665df3-b9ac-5d24-bad6-0a1099b717dd', 'Performance Analysis of IEEE 802.11 in the Presence of Hidden Terminal for Wireless Networks', 'CONFERENCE', NULL, NULL, 'Computational Intelligence in Data Mining', '1', '', '665-677', 2015, 'Other', 'T', 'Anita, Singh, R., Priyanka, Indu', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8a665df3-b9ac-5d24-bad6-0a1099b717dd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('75441bcc-9c95-5aa5-96ec-7dd2e0c06088', 'Performance Analysis of IEEE 802.11P with retry limits using CTMC', 'CONFERENCE', NULL, NULL, 'Proceedings of WRFER International Conference', '1', '', '48-52', 2017, 'Other', 'T', 'Priyanka, Singh, R. & Kumar, S', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('75441bcc-9c95-5aa5-96ec-7dd2e0c06088', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5a81e645-76ee-5204-a267-8b9d7e69d24b', 'Skin cancer detection using Deep Learning Approach', 'CONFERENCE', NULL, NULL, 'Seventh international conference on Smart Trends for Computing and Communication (SmartCom)', '', '', '521-531', 2023, 'Scopus', 'T', 'Ankush, Samridhi Singh, Nagendra Pratap Singh, Priyanka', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5a81e645-76ee-5204-a267-8b9d7e69d24b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5aa3afac-e074-5f2a-b703-b8bdb30b0aaf', 'Bell-pepper leaf bacterial spot detection using AlexNet and VGG-16', 'CONFERENCE', NULL, NULL, 'Seventh international conference on Smart Trends for Computing and Communication (SmartCom)', '', '', '507-519', 2023, 'Scopus', 'T', 'Kritarth Kapoor, Samridhi Singh, Nagendra Pratap Singh, Priyanka', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5aa3afac-e074-5f2a-b703-b8bdb30b0aaf', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8336f6e8-677f-5cf9-8a0f-f3ab4d1573e8', 'Augmentation of Medical Image Dataset using GAN', 'CONFERENCE', NULL, NULL, 'International conference on Artificial Intelligence, Blockchain, Computing and Security (ICABCS-2023)', '', '', '908-912', 2023, 'Scopus', 'T', 'Harsh Seth, Samridhi Singh, Nagendra Pratap Singh, Priyanka', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8336f6e8-677f-5cf9-8a0f-f3ab4d1573e8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b618b7ad-1149-5c08-bb65-e7aeb89c3cec', 'A Review on Security Challenges: Cryptography and Blockchain for Internet of Things.', 'CONFERENCE', NULL, NULL, 'International Conference on Deep Learning, Artificial Intelligence and Robotics (ICDLAIR) 2023', '1001', '', '789–795', 2024, 'Other', 'T', 'Praveen Prakash, Priyanka, Lalit Kumar Awasthi, Krishan Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b618b7ad-1149-5c08-bb65-e7aeb89c3cec', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b93bfcd1-1f27-584e-a74f-7fd318b0abcc', 'Basic Principles of an Operating System', 'BOOK', NULL, NULL, 'BPB', '', '', '', 2019, 'Scopus', 'T', 'Priyanka Rathee', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b93bfcd1-1f27-584e-a74f-7fd318b0abcc', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7cdeced2-9422-5235-9d2a-ccd07fe52bc6', 'Proceedings of National Conference, Emerging Trends in Computing and Communication (ETCC08)', 'BOOK', '10.1007/978-81-322-1817-3', NULL, '(ETCC08)', '1', '', '', 2008, 'Scopus', 'T', 'Prof. Lalit Kumar Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7cdeced2-9422-5235-9d2a-ccd07fe52bc6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1f1dde8c-61ce-50dc-b5b8-03cdef6a68c8', 'Discrete Mathematics and Logic Design 1st Edition, Kindle Edition', 'BOOK', 'https://www.amazon.in/Discrete-Mathematics-Logic-Design-Awasthi-ebook/dp/B01N7RWEAC', '13 978-8126924103', 'Kindle Edition', '1', '', '390', 2019, 'Other', 'T', 'Raman Kumar, Lalit K. Awasthi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1f1dde8c-61ce-50dc-b5b8-03cdef6a68c8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e8331eae-dd87-57a1-9534-2296e9242999', 'Operations Management and Data Analytics Modelling Economic Crises Perspective', 'BOOK', '10.1201/9781003181644', NULL, 'Taylor and Francis', '1', '', '', 2021, 'Scopus', 'T', 'Lalit Kumar Awasthi, Sushendra Kumar Misra, Dilbagh Panchal, Mohit Tyagi', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e8331eae-dd87-57a1-9534-2296e9242999', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b10ca798-e94b-514a-a26c-87c7cd87c6f9', 'Proceedings of International Conference on Internet Computing and Information Communications ICICIC Global 2012', 'BOOK', '10.1007/978-81-322-1299-7', NULL, 'ICICIC Global 2012', '1', '', '', 2012, 'Scopus', 'T', 'S. Sathiakumar and L. K. Awasthi and R. Masillamani and S. S. Sridhar.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b10ca798-e94b-514a-a26c-87c7cd87c6f9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6e5e66e2-2ea4-5fb9-9057-62c04b062450', 'Analyzing The Impact of Extractive Summarization Techniques On Legal Text', 'CONFERENCE', '10.1007/978-981-99-6544-1_44', NULL, '4th International Conference on Data Analytics & Management (ICDAM-2023)', '', '', '', 2023, 'Scopus', 'T', 'Utkarsh Dixit, Sonam Gupta, Arun Kumar Yadav, Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6e5e66e2-2ea4-5fb9-9057-62c04b062450', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('78a26602-2175-5821-b19a-6873e3c923b9', 'Classification and Clustering Algorithms for Medical Data.', 'BOOK_CHAPTER', '10.1201/9781003516859', 'ISBN9781003516859', 'In Predictive Data Modelling for Biomedical Data and Imaging, River Publishers', '', '', '75-105', 2024, 'Scopus', 'T', 'Utkarsh Dixit, Sonam Gupta, Arun Kumar Yadav, Divakar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('78a26602-2175-5821-b19a-6873e3c923b9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('81078677-70ef-527c-9a34-c91a9b34f609', 'Identification, Analysis, and Recommendation of the Sitting Posture of School Kids.', 'BOOK_CHAPTER', NULL, 'ISBN9781003516859', 'In Predictive Data Modelling for Biomedical Data and Imaging. River Publishers', '', '', '249-277', 2024, 'Scopus', 'T', 'Pathak, S., Bhatia, M., Yadav, A., Hooda, M.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('81078677-70ef-527c-9a34-c91a9b34f609', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b1402ac3-cb79-50eb-97a6-c72e98e713a9', 'Hinglish: code switching, code mixing and indigenization in multilingual environment in Lingua et Linguistica, 1.2, 2007 (UK) edited by Graeme Davis', 'BOOK_CHAPTER', NULL, '1847991297', 'Lulu Enterprises, UK Ltd', '', '', '', 2007, 'Other', 'T', 'Saroj Thakur, Kamlesh Dutta and Aushima Thakur', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b1402ac3-cb79-50eb-97a6-c72e98e713a9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d9acb1c3-7666-5b02-9c3c-71a0d70869d0', 'Security Issues in Mobile Ad Hoc Network: A Survey, chapter 9 Security, Privacy, Trust, and Resource Management in Mobile and Wireless Communications', 'BOOK_CHAPTER', NULL, '1466646918', 'IGI Global', '', '', '', 2013, 'Other', 'T', 'Sunil Kumar and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d9acb1c3-7666-5b02-9c3c-71a0d70869d0', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('97bc955c-42d0-5cab-8065-c2933b38470d', 'Attacks in WSN and their Countermeasure, book chapter in Case Studies in Secure Computing – Achievements and Trends', 'BOOK_CHAPTER', NULL, '9781138034136', 'CRC Press, Taylor and Francis group', '', '', '', 2016, 'Other', 'T', 'CRC Press, Taylor and Francis group', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('97bc955c-42d0-5cab-8065-c2933b38470d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4f7d7fb2-9372-50b1-be5c-3ca3d7fca263', 'Securing IoMT-Based Healthcare System: Issues, Challenges, and Solutions in Artificial Intelligence and Cybersecurity in Healthcare edited by Ganesh Gopal Devarajan, and Rajiva Ranjan Divivedi Series: Advances in Cyber Security', 'BOOK_CHAPTER', NULL, '9781394229796', 'Scrivener Publishing', '', '', '', 2025, 'Other', 'T', 'Ashok Kumar, Rahul Gupta, Sunil Kumar, Kamlesh Dutta and Mukesh Rani', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4f7d7fb2-9372-50b1-be5c-3ca3d7fca263', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ee215971-8091-5ddf-b233-5fc11c5eed28', 'An Adaptive Ant Colony Optimization for Oblivious Routing Problem', 'CONFERENCE', NULL, NULL, '13th International Conference on Soft Computing for Problem Solving(SocPros 2025), IIT Roorkee, India', '13', '', '8', 2025, 'Scopus', 'T', 'Shivansh Dixit, Akshith Badugu, Satish Chander and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ee215971-8091-5ddf-b233-5fc11c5eed28', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('75a668db-6d9f-51cf-9ef5-6fd55ecaa442', 'Enhancing Search Strategies for Maximum Independent Set with Grey Wolf Optimization-Genetic Algorithm', 'CONFERENCE', NULL, NULL, 'The 39th International Conference on Advanced Information Networking and Applications (AINA-2025), Open University of Catalonia, Barcelona, Spain', '39', '', '10', 2025, 'Scopus', 'T', 'Ritika Verma and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('75a668db-6d9f-51cf-9ef5-6fd55ecaa442', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a5119da5-f32f-5ea5-8d5e-937bb2be65e8', 'Degree-Oriented Deterministic Approach for Maximum Independent Set', 'CONFERENCE', NULL, NULL, 'The 39th International Conference on Advanced Information Networking and Applications (AINA-2025), Open University of Catalonia, Barcelona, Spain', '39', '', '10', 2025, 'Scopus', 'T', 'Ritika Verma and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a5119da5-f32f-5ea5-8d5e-937bb2be65e8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('619ac685-ac9f-50c1-99a9-b7c400288c5b', 'Abstractive Summarization using Gated Graph Attention Networks', 'CONFERENCE', NULL, NULL, 'The 39th International Conference on Advanced Information Networking and Applications (AINA-2025), Open University of Catalonia, Barcelona, Spain', '39', '', '10', 2025, 'Scopus', 'T', 'Divya Jyoti, Jyoti Srivastava and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('619ac685-ac9f-50c1-99a9-b7c400288c5b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('aa8166ef-8ed4-55bb-81b1-2aac62b69ec4', 'BERT and BiLSTM model for Multi-Document Summarization', 'CONFERENCE', NULL, NULL, 'The 39th International Con- ference on Advanced Information Networking and Applications (AINA- 2025), Open University of Catalonia, Barcelona, Spain', '39', '', '10', 2025, 'Scopus', 'T', 'Divya Jyoti, Jyoti Srivastava and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('aa8166ef-8ed4-55bb-81b1-2aac62b69ec4', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9830e58c-b4c8-5154-9de7-f62c83d839bf', 'Implementing T5 for Text Summarization: An Algorithmic Approach', 'CONFERENCE', NULL, NULL, 'The 39th International Conference on Information Networking, Chiang Mai, Thailand', '39', '', '12', 2025, 'Scopus', 'T', 'Divya Jyoti, Jyoti Srivastava and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9830e58c-b4c8-5154-9de7-f62c83d839bf', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6ccd9071-c0f1-5f47-bff2-7d3e501c09ce', 'Finding Maximum Independent Set Using Particle Swarm Optimization', 'CONFERENCE', NULL, NULL, 'The 39th International Conference on Information Networking, Chiang Mai, Thailand', 'Single', '', '12', 2025, 'Scopus', 'T', 'Ritika Verma and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6ccd9071-c0f1-5f47-bff2-7d3e501c09ce', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('dbf93fd4-387c-5105-96b1-19a21dc46701', 'Maximum Independent Set using Humming Bird Optimization', 'CONFERENCE', NULL, NULL, '4th International Conference on Advance Network Technologies and Intelligent Computing (19-21 December 2024) organized by Department of Computer Science, Institute of Science, Banaras Hindu University, Varanasi, India', '4', '', '16', 2024, 'Scopus', 'T', 'Ritika Verma and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('dbf93fd4-387c-5105-96b1-19a21dc46701', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('495ce988-a264-5fd2-855e-fec3dadf7315', 'Load Balanced Trans- action Scheduling using Gaussian mixture model-ant colony optimization', 'CONFERENCE', NULL, NULL, '4th International Conference on Advance Network Technologies and Intelligent Computing (19-21 December 2024) organized by Department of Com- puter Science, Institute of Science, Banaras Hindu University, Varanasi, India', '4', '', '16', 2024, 'Scopus', 'T', 'Amisha Gupta, Satish Chander Sharma, Divya Jyoti, Ritika Verma, Mohammad Azeem and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('495ce988-a264-5fd2-855e-fec3dadf7315', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('48e02b73-d2de-5bca-8ab9-87735f86069e', 'Citation Based Scientific Document Summarization using Deep Learning', 'CONFERENCE', NULL, NULL, '4th International Conference on Advance Network Technologies and Intelligent Computing (19-21 December 2024) organized by Department of Computer Science, Institute of Science, Banaras Hindu University, Varanasi, India', '4', '', '14', 2024, 'Scopus', 'T', 'Divya Jyoti, Jyoti Srivastava and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('48e02b73-d2de-5bca-8ab9-87735f86069e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('403ab120-da78-5776-b47f-0241461fd53d', 'Encoder - Based Trusted Routing Algorithm for Underwater Wireless Sensor Networks', 'CONFERENCE', NULL, NULL, '4th International Conference on Advance Network Technologies and Intelligent Computing (19-21 December 2024) organized by Department of Computer Science, Institute of Science, Banaras Hindu University, Varanasi, India', '4', '', '14', 2024, 'Scopus', 'T', 'Aatreya Kapoor, Sangeeta Sharma, Sanat Thakur, Ankush Kumar and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('403ab120-da78-5776-b47f-0241461fd53d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f9efc733-6c33-5624-b716-10c5ab3a199c', 'Task scheduling in distributed real-time systems using hybrid model based on ACO-GA', 'CONFERENCE', NULL, NULL, '4th International Conference on Ad- vance Network Technologies and Intelligent Computing (19-21 December 2024) organized by Department of Computer Science, Institute of Science, Banaras Hindu University, Varanasi, India', '4', '', '12', 2024, 'Scopus', 'T', 'Anchal Sharma, Sangeeta Sharma, Sanat Thakur, Ankush Kumar and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f9efc733-6c33-5624-b716-10c5ab3a199c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9de864ca-53bc-5ccc-a40a-11853198c531', 'Enhancing Box Type Solar Cooker Performance with Optimal Reflecting Sidewall Angles using Genetic Algorithm', 'CONFERENCE', NULL, NULL, '4th International Conference on Advance Network Technologies and Intelligent Computing (19-21 December 2024) organized by Department of Computer Science, Institute of Science, Banaras Hindu University, Varanasi, India', '4', '', '16', 2024, 'Scopus', 'T', 'Akshat, Narender Singh Thakur, Sanat Thakur, Ankush Kumar and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9de864ca-53bc-5ccc-a40a-11853198c531', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1b18c700-0a50-5354-95a0-2dd4a411eb58', 'Machine Learning for Waste-to-Energy: Optimization and Predictive Analytics', 'CONFERENCE', NULL, NULL, '4th International Conference on Advance Network Tech- nologies and Intelligent Computing (19-21 December 2024) organized by Department of Computer Science, Institute of Science, Banaras Hindu University, Varanasi, India', '4', '', '12', 2024, 'Scopus', 'T', 'Sanskar Rana, Narender Singh Thakur, Divya Jyoti and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1b18c700-0a50-5354-95a0-2dd4a411eb58', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5859a4c4-ee48-59bd-a50b-f581f966aec8', 'Finding Maximum Independent Sets using ACO_GA Algorithm', 'CONFERENCE', NULL, NULL, 'The 29th Annual International Conference on Advanced Computing and Communications (ADCOM 2024) during 18 − 20 December 2024, IIIT Bangalore', '29', '', '16', 2024, 'Scopus', 'T', 'Ritika Verma and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5859a4c4-ee48-59bd-a50b-f581f966aec8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('36072ee1-99c2-58b3-9ae8-8df683c40db2', 'Ant Colony Optimization-Enhanced MPR Selection for Efficient FANET Routing', 'CONFERENCE', NULL, NULL, 'The 27th International Symposium on Wireless Personal Multi- media Communications (WPMC-2024)– “Secure 6G – AI Nexus: Where Technology Meets Humanity”, 17-20 November 2024 Sharda University, Greater Noida (NCR-Delhi), India', '27', '', '22', 2024, 'Scopus', 'T', 'Shiksha Meena, Sanat Thakur, Ankush Kumar, and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('36072ee1-99c2-58b3-9ae8-8df683c40db2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0d6c0d02-4543-5a99-b603-b6cb763ea51a', 'Multi-hop Data Transmission Using Honey Bee Optimization Algorithm in Underwater Wireless Sensor Network', 'CONFERENCE', NULL, NULL, 'The 3rd International Conference on Advanced Communication and Intelligent Systems (ICACIS 2024) || May 16-17, 2024 || Jawaharlal Nehru University, New Delhi, India', '3', '', '20', 2024, 'Scopus', 'T', 'Piyush Dhiman, Sanat Thakur, Ankush Kumar, and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0d6c0d02-4543-5a99-b603-b6cb763ea51a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0e48f564-c694-5647-bd27-29ce4afde255', 'Mathematical Modelling of COVID-19 using ODEs', 'CONFERENCE', NULL, NULL, 'The 38th International Conference on Advanced Information Networking and Applications (AINA-2024) Kitakyushu International Convention Center, Kitakyushu, Japan', '38', '', '20', 2024, 'Scopus', 'T', 'Dharmendra Prasad Mahato and Radha Rani', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0e48f564-c694-5647-bd27-29ce4afde255', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0ace0919-c7ab-54f8-81cd-42b1f5660fcf', 'Honey Bee Inspired Routing Algorithm for Sparse Unstructured P2P Networks', 'CONFERENCE', NULL, NULL, 'The 38th International Conference on Advanced Information Networking and Applications (AINA-2024) Kitakyushu International Convention Center, Kitakyushu, Japan', '38', '', '20', 2024, 'Scopus', 'T', 'Aman Verma, Sanat Thakur and Ankush Kumar and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0ace0919-c7ab-54f8-81cd-42b1f5660fcf', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('4e188db9-c851-5fd0-8720-8946cec1f9a4', 'Adaptive Consensus:Enhancing Robustness in Dynamic Environments', 'CONFERENCE', NULL, NULL, 'The 38th International Con- ference on Advanced Information Networking and Applications (AINA- 2024) Kitakyushu International Convention Center, Kitakyushu, Japan', '38', '', '20', 2024, 'Scopus', 'T', 'Kshitij Mandyal and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('4e188db9-c851-5fd0-8720-8946cec1f9a4', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('fa160272-a3f0-5036-b84e-0595e82a99a9', 'Advancing Multi Writer Snapshots Algorithm', 'CONFERENCE', NULL, NULL, 'The 38th International Conference on Advanced Information Networking and Applications (AINA-2024) Kitakyushu In- ternational Convention Center, Kitakyushu, Japan', '38', '', '16', 2024, 'Scopus', 'T', 'Sudhanshu Sharma and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('fa160272-a3f0-5036-b84e-0595e82a99a9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('85501a34-2b83-52e2-9e7b-eb77af0dc1d4', 'Zero-day exploits framework of supply chain networks', 'CONFERENCE', NULL, NULL, '3rd International Conference on Advance Network Technologies and Intelligent Computing (20-22 December 2023) organized by Department of Computer Science, Institute of Science, Banaras Hindu University, Varanasi, India', '3', '', '16', 2023, 'Scopus', 'T', 'Abhi Khandelwal and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('85501a34-2b83-52e2-9e7b-eb77af0dc1d4', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('20ad2e6e-e6c1-5458-b7ea-a1867df94d8a', 'Hop-Constrained Oblivious Routing using Prim’s-Sollin’s Algorithm', 'CONFERENCE', NULL, NULL, 'The 38th International Conference on Advanced Information Networking and Applications (AINA-2024) Kitakyushu International Convention Center, Kitakyushu, Japan', '38', '', '16', 2024, 'Scopus', 'T', 'Mehak and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('20ad2e6e-e6c1-5458-b7ea-a1867df94d8a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('517290ca-4773-54e8-a5bc-dc5622784761', 'An Insider Threat Resilient Framework Based on Honey Traps in a Function-Based Access Control Environment', 'CONFERENCE', NULL, NULL, '3rd International Conference on Advance Network Technologies and Intelligent Computing (20-22 December 2023) organized by Department of Computer Science, Institute of Science, Banaras Hindu University, Varanasi, India', '3', '', '15', 2023, 'Scopus', 'T', 'Kartikey Jangir and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('517290ca-4773-54e8-a5bc-dc5622784761', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1985bbfd-3bab-50ff-a375-dccd0231fc13', 'Reduced Competitive ratio of Sparse Semi-oblivious routing using social spider algorithm', 'CONFERENCE', NULL, NULL, '3rd International Conference on Advance Network Technologies and Intelligent Computing (20-22 December 2023) organized by Department of Com- puter Science, Institute of Science, Banaras Hindu University, Varanasi, India', '3', '', '15', 2023, 'Scopus', 'T', 'Abhishek Dhiman and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1985bbfd-3bab-50ff-a375-dccd0231fc13', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('83f9d767-f749-5ba2-8a75-2c18451a2025', 'Secure and Embedded Processing Framework for Payload Scattering in Image Steganography with Low Computation Time, Vol. 130, pp. 2679–2695, 2023.', 'JOURNAL', '10.1007/s11277-023-10398-0', NULL, 'Wireless Personal Communication (Springer)', 'Vol. 130', '4', '2679 - 2695', 2023, 'SCI(E)', 'T', 'Sandeep Rathor, Subhas Chandra Agrawal, Robin Singh Bhadoria, Praphula Kumar Jain', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('83f9d767-f749-5ba2-8a75-2c18451a2025', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('aef520c1-1583-528a-aad3-8baa1b3a4fd1', 'A New Adaptive Fault Tolerant Framework in the Cloud, Vol. 69, Issue 5, pp. 2897-2909, 2023', 'JOURNAL', '10.1080/03772063.2021.1907231', NULL, 'IETE Journal of Research (Taylor & Francis)', 'Vol. 69', 'Issue 5,', 'pp. 2897-2909, 2023', 2023, 'SCI(E)', 'T', 'Ajay Rawat, Rama Sushil, Amit Agarwal, Afzal Sikander, Robin Singh Bhadoria', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('aef520c1-1583-528a-aad3-8baa1b3a4fd1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('cca5f819-5980-57a0-a63e-585d0b4e36ee', 'An Energy‑Efficient Clustering Algorithm for Maximizing Lifetime of Wireless Sensor Networks using Machine Learning, Vol. 28, pp. 853–867, 2023', 'JOURNAL', '10.1007/s11036-023-02109-7', NULL, 'Mobile Networks & Applications (Springer)', 'Volume 28', '', '853-867', 2023, 'SCI(E)', 'T', 'Kumar Debasis, Lakhan Dev Sharma, Vijay Bohat, Robin Singh Bhadoria', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('cca5f819-5980-57a0-a63e-585d0b4e36ee', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ecfc5d5b-ef3d-5a6d-ba13-e880a5426432', 'Outbreak trends of fatality rate into coronavirus disease-2019 using deep learning', 'JOURNAL', '10.1504/IJMEI.2023.127256 PDF', NULL, 'International Journal of Medical Engineering and Informatics (Inder Science)', 'Vol. 15', 'No. 1', 'pp.70–83', 2022, 'Scopus', 'T', 'Robin Singh Bhadoria, Yash Gupta, Ivan Perl', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ecfc5d5b-ef3d-5a6d-ba13-e880a5426432', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('30298e4a-9c4b-52a6-a14a-cca579a17329', 'Time-Series based Prediction for Energy Consumption of Smart Home Data Using Hybrid Convolution-Recurrent Neural Network,', 'JOURNAL', '10.1016/j.tele.2022.10190', NULL, 'Telematics & Informatics (Elsevier)', 'Vol. 75,', 'C', 'p.101907, 2022.', 2022, 'SCI(E)', 'T', 'Naman Bhoj, Robin Singh Bhadoria,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('30298e4a-9c4b-52a6-a14a-cca579a17329', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('68b2695e-96a3-5665-8afd-b0f2dc5ef852', 'A machine learning framework for security and privacy issues in building trust for social networking', 'JOURNAL', '10.1007/s10586-022-03787-w', NULL, 'Cluster Computing (Springer)', 'Vol. 26', '6', 'pp. 3907–3930', 2022, 'SCI(E)', 'T', 'Robin Singh Bhadoria, Naman Bhoj, "Manoj Kumar Srivastav, Rahul Kumar, Balasubramanian Raman', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('68b2695e-96a3-5665-8afd-b0f2dc5ef852', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f3690fc9-1e67-5618-a58c-90675e780249', 'Cone Model in Resource Provisioning for Service-Oriented Architecture System: An Effective Network Management to the Internet of Things, Vol. 10, pp.61385-61397, June 2022', 'JOURNAL', '10.1109/ACCESS.2022.3181546', NULL, 'IEEE ACCESS', '10', '', '61385-61397', 2022, 'SCI(E)', 'T', 'Robin Singh Bhadoria, Hatim G. Zaini, Manzer Nezami,Md. Danish Equbal, Elfatih Elmubarak Mustafa, Sherif S. Ghoneim', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f3690fc9-1e67-5618-a58c-90675e780249', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9192dea6-add7-53c2-9fc0-8e5609752961', 'Bunch graph based dimensionality reduction using auto-encoder for character recognition', 'JOURNAL', '10.1007/s11042-022-12907-y', NULL, 'Multimedia Tools & Applications (Springer)', 'Vol.81,', 'No. 22,', 'pp. 32093–32115, 2022.', 2022, 'SCI(E)', 'T', 'Robin Singh Bhadoria, Sovan Samanta, Yadhunath Pathak, Piyush Kumar Shukla, Ahmad Ali Zubi, Manjit Kaur', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9192dea6-add7-53c2-9fc0-8e5609752961', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2ff66b04-e2fe-585e-aeb6-6df9607b4a2f', '"RVFR: Random Vector Forest Regression Model for Integrated & Enhanced Approach in Forest Fires Predictions, Vol. 66, p.101471, 2021.', 'JOURNAL', '10.1016/j.ecoinf.2021.101471', NULL, 'Ecological Informatics (Elsevier)', 'Vol. 66,', '', 'p.101471, 2021.', 2021, 'SCI(E)', 'T', 'Robin Singh Bhadoria, Manish Kumar Pandey, Pradeep Kundu', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2ff66b04-e2fe-585e-aeb6-6df9607b4a2f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0084984c-b187-510a-ab71-8894c5adc0ec', 'Performance Evaluation of an Adopted Model based on Big-Bang Big-Crunch and Artificial Neural Networks for Cloud Applications, Vol. 48, No. 04, pp. 1-13, 2021.', 'JOURNAL', '10.48129/kjs.v48i4.9664', NULL, 'Kuwait Journal of Science', 'Vol. 48', 'No. 4', 'pp. 1-13, 2021.', 2021, 'SCI(E)', 'T', 'Pradeep Singh Rawat, Robin Singh Bhadoria, Puneet Gupta and G. P. Saroha', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0084984c-b187-510a-ab71-8894c5adc0ec', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('39dcdc87-fb5e-5102-8053-fa58bc78d4a2', 'An Enhanced Deep Image Learning Model for Glaucoma Diagnosis using Feature based Detection in Retinal Fundus, Vol. 59, No. 02, pp. 333-353, 2021.', 'JOURNAL', '10.1007/s11517-020-02307-5', NULL, 'Medical & Biological Engineering & Computing (Springer)', 'Vol. 59', 'No. 2', 'pp. 333-353, 2021.', 2021, 'SCI(E)', 'T', 'Law Kumar Singh, Pooja, Hitendra Garg, Munish Khanna, and Robin Singh Bhadoria', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('39dcdc87-fb5e-5102-8053-fa58bc78d4a2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('c9b76566-f805-5549-a7f1-3c49afb50db1', 'Stabilizing Sensor Data Collection for Control of Environment-Friendly Clean Technologies using Internet of Things, Vol. 108, Issue 1, pp. 493-510, 2019.', 'JOURNAL', '10.1007/s11277-019-06414', NULL, 'Wireless Personal Communication (Springer)', 'Vol. 108', 'Issue 1,', 'pp. 493-510, 2019.', 2019, 'SCI(E)', 'T', 'Robin Singh Bhadoria and Dhananjai Bajpai', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('c9b76566-f805-5549-a7f1-3c49afb50db1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2f873112-6d08-533b-a0b0-eeb0220bd94e', 'Pragmatic Sensory Data Semantics with Service-Oriented Computing, Vol. 31, No. 02, pp. 22-36, 2019 SCI', 'JOURNAL', '10.4018/JOEUC.2019040102', NULL, 'Journal of Organisational and End User Computing (IGI Global)', 'Vol. 31,', 'No. 02,', 'pp. 22-36, 2019', 2019, 'SCI(E)', 'T', 'Robin Singh Bhadoria and Narendra S Chaudhari', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2f873112-6d08-533b-a0b0-eeb0220bd94e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d3d902f7-4345-573b-989b-30dbffb54a1c', 'Analyzing the Role of Interfaces in Enterprise Service Bus: A Middleware Epitome for Service-Oriented Systems, Vol. 55, pp. 146-155, 2018', 'JOURNAL', '10.1016/j.csi.2017.08.001', NULL, 'Computer Standards & Interface (Elsevier)', 'Vol. 55,', '', 'pp. 146-155, 2018', 2018, 'SCI(E)', 'T', 'Robin Singh Bhadoria, Narendra S. Chaudhari, Tharinda Nishantha Vidanagama', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d3d902f7-4345-573b-989b-30dbffb54a1c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0a5b28f8-e834-5f2f-a0d6-57c5206a8b14', 'Uncertainty in Sensor Data Acquisition for SOA System, Vol. 30, No. 10, pp. 3177–3187, 2018', 'JOURNAL', '10.1007/s00521-017-2910-2', NULL, 'Neural Computing and Applications (Springer)', 'Vol. 30,', 'No. 10,', 'pp. 3177–3187, 2018', 2018, 'SCI(E)', 'T', 'Robin Singh Bhadoria, Narendra S Chaudhari, Sovan Samanta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0a5b28f8-e834-5f2f-a0d6-57c5206a8b14', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f0d3492c-2d27-5fb9-ab86-80cbfdee02f0', 'The Performance Metric for Enterprise Service Bus (ESB) in SOA System: theoretical underpinnings and empirical illustrations for information processing, Vol. 65, pp. 158-171, 2017', 'JOURNAL', '10.1016/j.is.2016.12.005', NULL, 'Information Systems (Elsevier)', 'Volume 65,', '', 'Pages 158-171', 2017, 'SCI(E)', 'T', 'Robin Singh Bhadoria, Narendra S Chaudhari, & Geetam Singh Tomar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f0d3492c-2d27-5fb9-ab86-80cbfdee02f0', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8d82ea83-ca09-5943-9baf-1e33c1dc286b', 'Secure and Traceable QR Code Using Blockchain enabled Certificates', 'CONFERENCE', '10.1109/CSNT54456.2022.9787566', NULL, 'IEEE International Conference on Communication System & Network Technologies (CSNT 2022), Indore (MP)', '', '', '', 2022, 'Scopus', 'T', 'Robin Singh Bhadoria , Akshat Goyal , Arka Prabha Das, Abul Bashar , Mohammed Zikria', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8d82ea83-ca09-5943-9baf-1e33c1dc286b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3937cfee-c4a1-572f-a4c9-0cf3f0b79983', 'Comparative Study of the Virtual Machine Scheduling Approaches in Cloud Environment', 'CONFERENCE', '10.1007/978-981-16-2877-1_37', NULL, 'Springer Smart Systems: Innovations in Computing (SSIC 2021), Jaipur (RJ)', 'vol 235.', '', 'pp 411–418', 2021, 'Scopus', 'T', 'Robin Singh Bhadoria, Akshat Goyal, Arka P. Das, Abul Bashar, M. Aikria', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3937cfee-c4a1-572f-a4c9-0cf3f0b79983', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0f5c424a-3397-5e23-a13f-dc242cb71b2f', 'Accuracy Estimation for Fault Classification in Virtual Machine using Deep Learning', 'CONFERENCE', '10.1109/ICSCCC51823.2021.9478157.', NULL, 'IEEE International Conference on Secure Cyber Computing and Communication (ICSCCC), Jalandhar (PB)', '', '', 'pp. 320-325', 2021, 'Scopus', 'T', 'Pradeep Singh Rawat, Robin Singh Bhadoria, Puneet Gupta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0f5c424a-3397-5e23-a13f-dc242cb71b2f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('656f6ba2-210f-5853-9c97-8d8e28bbbb60', 'Analysis of the Indian IT Sector–Investigating the Role of Technology for Software Process Improvement through Knowledge Management', 'CONFERENCE', '10.1109/CSNT51715.2021.9509563', NULL, 'IEEE International Conference on Communication System & Network Technologies (CSNT 2021), Bhopal (MP)', '', '', 'pp. 815-820', 2021, 'Scopus', 'T', 'Ajay Rawat and Robin Singh Bhadoria', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('656f6ba2-210f-5853-9c97-8d8e28bbbb60', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('db449425-372e-5c47-86e2-3bb0eaf4087d', 'Multi-Objective Emperor Penguin Optimizer for Tuning the Quality-of-Service in Cloud Computing', 'CONFERENCE', '10.1109/CSNT51715.2021.9509727', NULL, 'IEEE International Conference on Communication System & Network Technologies (CSNT 2021), Bhopal (MP)', '', '', 'pp. 95-98', 2021, 'Scopus', 'T', 'Mitali Chugh and Robin Singh Bhadoria', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('db449425-372e-5c47-86e2-3bb0eaf4087d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f8e25713-83b9-5f29-a95b-d03ba449d104', 'Blockchain Technology for Secure Social Media Computing', 'BOOK_CHAPTER', '10.1049/PBSE019E', '9781839535437', 'IET Press, UK', '', '', 'p. i–i (20)', 2023, 'SCI(E)', 'T', 'Robin Singh Bhadoria, Neetesh Saxena, Bharti Nagpal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f8e25713-83b9-5f29-a95b-d03ba449d104', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a2dc97f0-4d5c-591a-8426-3c88ab60594f', 'Predictive Data Security using AI Insights and Issues of Blockchain, IoT, and DevOps', 'BOOK_CHAPTER', '10.1007/978-981-19-6290-5', '9789811962899', 'Springer Singapore', '', '', 'XII, 216', 2022, 'Scopus', 'T', 'Hirren K. Thakkar, Mayank Swarnkar, Robin Singh Bhadoria', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a2dc97f0-4d5c-591a-8426-3c88ab60594f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('08923b31-1204-53d1-9550-2492b21ac698', '5G and Beyond: The Future of IoT', 'BOOK_CHAPTER', '10.1201/9781003045809', '9781032963495', 'CRC Press, (Taylor & Francis Group)', '', '', '', 2022, 'SCI(E)', 'T', 'Parag Chatterjee, Robin Singh Bhadoria, Yadunath Pathak', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('08923b31-1204-53d1-9550-2492b21ac698', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2c7a7524-0c2f-5e41-81b9-3f8a519c324f', 'The Biometric Computing: Recognition and Registration', 'BOOK_CHAPTER', '10.1201/9781351013437', '9780815393641', 'CRC Press, (Taylor & Francis Group)', '', '', '', 2019, 'SCI(E)', 'T', 'Karm Veer Arya and Robin Singh Bhadoria', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2c7a7524-0c2f-5e41-81b9-3f8a519c324f', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('92cd187a-7d6c-5c63-9ddf-41f3003ebb95', 'Emerging Wireless Communication & Network Technologies: Principle, Paradigm, and Performance', 'BOOK_CHAPTER', '10.1007/978-981-13-0396-8', '978-981-13-0395-1', 'Springer Singapore', '', '', 'IX, 360', 2018, 'SCI(E)', 'T', 'Karm Veer Arya, Robin Singh Bhadoria and Narendra S. Chaudhari', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('92cd187a-7d6c-5c63-9ddf-41f3003ebb95', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5f1e1d0d-8f2e-58ef-977b-73ff5b2a3e0b', 'Distributed Computing in Big Data Analytics: Concepts, Technologies, and Applications', 'BOOK_CHAPTER', '10.1007/978-3-319-59834-5', '978-3-319-59833-8', 'Springer Cham', '', '', 'X, 162', 2017, 'Scopus', 'T', 'Sourav Mazumdar, Robin Singh Bhadoria, Ganesh Chandra Deka', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5f1e1d0d-8f2e-58ef-977b-73ff5b2a3e0b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8c102cf3-748a-549a-886b-558336b0a55d', 'Exploring Enterprise Service Bus in the Service-Oriented Architecture Paradigm', 'BOOK_CHAPTER', '10.4018/978-1-5225-2157-0', '9781522521570', 'IGI Global Inc, USA', '', '', '14-25', 2017, 'Scopus', 'T', 'Robin Singh Bhadoria, Narendra S Chaudhari, Geetam Singh Tomar, Shailendra Singh.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8c102cf3-748a-549a-886b-558336b0a55d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('158c04bb-1969-540c-98e7-2b532e0f5ffd', 'The Internet of Things: Foundation for Smart City, eHealth and Ubiquitous Computing', 'BOOK_CHAPTER', '10.1201/9781315156026', 'ISBN: 9781498789028', 'CRC Press, (Taylor & Francis Group)', '', '', '', 2017, 'Scopus', 'T', 'Ricardo Armentano, Robin Singh Bhadoria, Parag Chatterjee, Ganesh Chandra Deka.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('158c04bb-1969-540c-98e7-2b532e0f5ffd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e6b99af6-e327-52da-af76-ec42da0ebdd1', 'The Human Elements of Big Data: Issues, Analytics & Performance', 'BOOK_CHAPTER', '10.1201/9781315368061', '9781498754156', 'CRC Press, (Taylor & Francis Group)', '', '', '', 2016, 'Scopus', 'T', 'Geetam Singh Tomar, Narendra S Chaudhari, Robin Singh Bhadoria, Ganesh Chandra Deka', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e6b99af6-e327-52da-af76-ec42da0ebdd1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b0f6843f-29ff-525e-b073-3ff562ae778b', 'Underwater Wireless Sensor Network Based on Multi-hop Transmission using Ant Colony Optimization Algorithm', 'CONFERENCE', NULL, NULL, '3rd International Conference on Advance Network Technologies and Intelligent Computing (20-22 December 2023) organized by Department of Computer Science, Institute of Science, Banaras Hindu University, Varanasi, India', '3', '', '5', 2023, 'Scopus', 'T', 'Nitin Kowshik and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b0f6843f-29ff-525e-b073-3ff562ae778b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a2916794-94e4-5cce-8fd9-7732feaa10dd', 'Dijkstra’s Shortest Path in Sleeping Model', 'CONFERENCE', NULL, NULL, '8th International Conference on Computing in Engineering and Technology (ICCET 2023) during July 14-15, 2023, at NIT Patna', '8', '', '8', 2023, 'Scopus', 'T', 'Nilansh Panchani and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a2916794-94e4-5cce-8fd9-7732feaa10dd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('aa85f4cf-36d2-5a04-8856-5098c2fdb1d9', 'Effective Scheduling and Nature Inspired Hybrid Load Balancing in VANETs', 'CONFERENCE', NULL, NULL, '8th International Conference on Computing in Engineering and Technology (ICCET 2023) during July 14-15, 2023, at NIT Patna,', '8', '', '9', 2023, 'Scopus', 'T', 'Tejasvi Mehta and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('aa85f4cf-36d2-5a04-8856-5098c2fdb1d9', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5d13b54d-7a4d-5b64-ac2b-4dfcbcec6f23', 'High Utility Sequence Mining Using Cuckoo Search Algorithm', 'CONFERENCE', NULL, NULL, '8th International Con- ference on Computing in Engineering and Technology (ICCET 2023) during July 14-15, 2023, at NIT Patna', '8', '', '8', 2023, 'Scopus', 'T', 'Sarthak Gupta, Kuldeep Singh and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5d13b54d-7a4d-5b64-ac2b-4dfcbcec6f23', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('342cb172-4b3c-5422-963f-12d1d35b789d', 'volutionary Technique for High Utility Sequential Pattern Mining', 'CONFERENCE', NULL, NULL, '8th International Conference on Computing in Engineering and Technology (ICCET 2023) during July 14-15, 2023, at NIT Patna', '8', '', '9', 2023, 'Scopus', 'T', 'Anshul, Kuldeep Singh and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('342cb172-4b3c-5422-963f-12d1d35b789d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('428050ec-5141-56a6-af9c-96762db3c8fa', 'A Cascading-Failure-Aware Distributed Computing System with Performance Sharing: Reliability and Robustness Analysis', 'CONFERENCE', NULL, NULL, '12th International Conference on Soft Computing for Problem Solving (SocProS 2023)', '12', '', '8', 2023, 'Scopus', 'T', 'Ankit Gupta and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('428050ec-5141-56a6-af9c-96762db3c8fa', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ec5e2f75-9933-5c87-a2fd-8ec86e28dfaa', 'On scheduling transactions in grid computing system using Gaussian ACO considering load', 'CONFERENCE', NULL, NULL, '27th annual International Conference on Advanced Com- puting and Communications (ADCOM 2022) at Bangalore during 9th−11th March 2023', '27', '', '6', 2023, 'Scopus', 'T', 'Dharmendra Prasad Mahato, Radha Rani, Prakratey Rai and Pham Van Huy', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ec5e2f75-9933-5c87-a2fd-8ec86e28dfaa', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ab6cb241-0198-5135-ba1d-5bf92d34611d', 'A Deterministic Distributed Algorithm for All Pairs Shortest Paths in Linear Time', 'CONFERENCE', NULL, NULL, 'The 27th annual International Conference on Advanced Computing and Communications (ADCOM 2022) at Bangalore during 9th − 11th March 2023', '27', '', '9', 2023, 'Scopus', 'T', 'Dharmendra Prasad Mahato, Radha Rani and Aman Pratap Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ab6cb241-0198-5135-ba1d-5bf92d34611d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('072ba906-5c99-5698-b8c3-509a13adbdcf', 'Dependability Analysis for Transaction Processing in On-Demand Computing System', 'CONFERENCE', NULL, NULL, '18th International Conference on Distributed Computing and Intelligent Technology held on 19th − 23rd January 2022, KIIT University, Bhubaneswar, Odisha, India', '18', '', '10', 2023, 'Scopus', 'T', 'Dharmendra Prasad Mahato and Ravi Shankar Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('072ba906-5c99-5698-b8c3-509a13adbdcf', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9b5a802e-7181-561a-800c-9fc317e745e1', 'IoT based oxygen concentrators', 'CONFERENCE', '0.1109/COMSNETS53615.2022.966836', NULL, 'Demo & Exhibits Track, COMSNETS 2022 in 14th International Conference on COMmunication Systems & NETworkS January 3 − 9, Hybrid Conference, Bengaluru, India', '14', '', '9', 2022, 'Scopus', 'T', 'Shubham Thakur and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9b5a802e-7181-561a-800c-9fc317e745e1', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1f3c580f-17f3-5f9e-95f4-bda0b8f58829', 'QR-AR based Smart Indoor Navigation with Crowd Management', 'CONFERENCE', '10.1145/3491003.3500926', NULL, 'The 23rd International Conference on Distributed Computing & Networking (ICDCN 2022), held during 4-7th January, 2022, New Delhi', '23', '', '8', 2022, 'Scopus', 'T', 'Shivam Sood and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1f3c580f-17f3-5f9e-95f4-bda0b8f58829', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d6eb7645-20b7-566e-b9fa-5343ea74d49b', 'Grey Wolf Optimizer for Load Balancing in Cloud Computing', 'CONFERENCE', '.1201/9781003320333', NULL, 'The International Con- ference on Advanced Network Technologies and Intelligent Computing (ANTIC-2021) to be held during 17-18 December, 2021, Organized by Department of Computer Science, Institute of Science, Banaras Hindu University India', '25', '', '7', 2021, 'Scopus', 'T', 'Muskan, Dharmendra Prasad Mahato, and Van Huy Pham', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d6eb7645-20b7-566e-b9fa-5343ea74d49b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('9cf2f3fc-982c-57e6-83ad-68a6b0b72c86', 'The Online k-Taxi Problem', 'CONFERENCE', '10.1007/978-3-030-96040-7_60', NULL, 'The International Conference on Advanced Network Technologies and Intelligent Computing (ANTIC-2021) to be held during 17-18 Decem- ber, 2021, Organized by Department of Computer Science, Institute of Science, Banaras Hindu University India', '25', '', '14', 2021, 'Scopus', 'T', 'Kapil, Dharmendra Prasad Mahato and Van Huy Pham', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('9cf2f3fc-982c-57e6-83ad-68a6b0b72c86', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('7c620292-f6b8-50da-b119-fe747083cab2', 'Antlion optimizer based load-balanced transaction scheduling for maximizing reliability', 'CONFERENCE', '10.1007/978-3-030-75075-6_6', NULL, 'The 35th Interna- tional Conference on Advanced Information Networking and Applications (AINA-2021) to be held from May 12, 2021 to May 14, 2021 at Ryer- son University,Toronto, Canada', '35', '', '14', 2021, 'Scopus', 'T', 'Dharmendra Prasad Mahato and Pham Van Huy', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('7c620292-f6b8-50da-b119-fe747083cab2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('265d3d00-8939-5379-88c7-0340513b32a5', 'On Scheduling Transaction in Grid Process- ing System considering Load using Fuzzy Ant Colony Optimization', 'CONFERENCE', '10.1007/978-3-030-44041-1_88', NULL, 'The 34th International Conference on Advanced Information Networking and Applications (AINA-2020) at University of Campania "Luigi Vanvitelli", Caserta, Italy', '34', '', '18', 2020, 'Scopus', 'T', 'Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('265d3d00-8939-5379-88c7-0340513b32a5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d90d63b7-3be7-555e-8eb0-f91ac31b0cd8', 'Distributed Routing for Underwater Wireless Sensor Networks Using Cuckoo Search-Ant Colony Optimization', 'CONFERENCE', '10.1145/3369740.3372757', NULL, 'The 9th Inter- national Workshop on Computing and Networking for IoT and Beyond in conjunction with the 21st International Conference on Distributed Computing & Networking (ICDCN 2020)', '9', '', '22', 2020, 'Scopus', 'T', 'Dharmendra Prasad Mahato, Jasminder Kaur Sandhu, Gitanshu and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d90d63b7-3be7-555e-8eb0-f91ac31b0cd8', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1e23f1b1-cae3-594e-9b61-96079be253ff', 'Reliability Maximization of Grid Transac- tion Processing System using Cuckoo Search-Ant Colony Optimization', 'CONFERENCE', '10.1145/3369740.3372756', NULL, 'The 9th International Workshop on Computing and Networking for IoT and Beyond in conjunction with the 21st International Conference on Distributed Computing & Networking (ICDCN 2020) Jadavpur Univer- sity, Kolkata, India,', '9', '', '14', 2020, 'Scopus', 'T', 'Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1e23f1b1-cae3-594e-9b61-96079be253ff', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('111acdc2-d00f-52af-b2a7-22a1eb8c1f87', 'File-less Malware Detection Model using CPN', 'CONFERENCE', NULL, NULL, 'The International Conference on Networks and Cryptology (NetCrypt), Jawaharlal Nehru University, New Delhi', '12', '', '12', 2020, 'Scopus', 'T', 'Radha Rani, Kamlesh Dutta and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('111acdc2-d00f-52af-b2a7-22a1eb8c1f87', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('77a61d14-4743-5211-bb68-3f85793af199', 'Dependability Analysis for On-Demand Computing based Transaction Processing System', 'CONFERENCE', '10.1007/978-3-030-15032-7_17', NULL, 'The 33rd International Con- ference on Advanced Information Networking and Applications (AINA- 2019), Kunibiki Messe, Matsue, Japan', '33', '', '13', 2019, 'Scopus', 'T', 'Dharmendra Prasad Mahato, Jasminder Kaur Sandhu, Nagendra Pratap Singh and Kamlesh Dutta', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('77a61d14-4743-5211-bb68-3f85793af199', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('70ca5285-6a96-5c0b-ad24-e3370a2607a7', 'Load Balanced Transaction Scheduling in On-demand Computing using Cuckoo Search-Ant Colony Optimization', 'CONFERENCE', '10.1145/3288599.3298791', NULL, 'The 8th International Workshop on Computing and Networking for IoT and Beyond in conjunction with the 20th International Conference on Distributed Computing & Networking (ICDCN 2019) Indian Institute of Science (IISc), Bangalore, India', '8', '', '13', 2019, 'Scopus', 'T', 'Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('70ca5285-6a96-5c0b-ad24-e3370a2607a7', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('98fa2fc9-32cf-5fe1-a47d-21998ef49045', 'Distributed Routing for Underwater Wireless Sensor Networks Using Cuckoo Search-Ant Colony Optimization', 'CONFERENCE', NULL, NULL, 'he 13th ACM International Conference on Underwater Networks & Systems (WUWNet’18) December 3-5, 2018, Shenzhen, China', '13', '', '9', 2018, 'Scopus', 'T', 'Dharmendra Prasad Mahato, Jasminder Kaur Sandhu and Anantha Raj P', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('98fa2fc9-32cf-5fe1-a47d-21998ef49045', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('69087f77-abd0-57cc-bd8c-c303ce47c38c', 'Load Balanced Transaction Scheduling in On-demand Computing using Cuckoo Search-Ant Colony Optimization', 'CONFERENCE', NULL, NULL, 'The IEEE ISPA 2018 (The 16th IEEE International Symposium on Parallel and Distributed Processing with Applications), 11-13 Dec. 2018, Melbourne, Australia', '16', '', '16', 2018, 'Scopus', 'T', 'Dharmendra Prasad Mahato, Jasminder Kaur Sandhu and Raghunandan Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('69087f77-abd0-57cc-bd8c-c303ce47c38c', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d295bce0-3520-523c-9dde-c7d0d8883ccf', 'Deep Learning-Based Scientific Document Summarization Considering Citation', 'JOURNAL', '10.1007/s42979-025-03821-9', NULL, 'SN COMPUTER SCIENCE, SPRINGER (Published on March 19, 2025)', '1', '', '20', 2025, 'Scopus', 'T', 'Divya Jyoti, D.P Mahato & Jyoti Srivastava', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d295bce0-3520-523c-9dde-c7d0d8883ccf', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f33f7759-b37e-5ba9-9fdd-02d146a0a308', 'Routing Algorithm for Sparse Unstructured P2P Networks using Honey Bee Behaviour', 'JOURNAL', '10.1002/dac.5978', NULL, 'International Journal of Communication Systems, Wiley (Accepted on August 22, 2024)', '1', '', '26', 2024, 'Scopus', 'T', 'Aman Verma, Sanat Thakur, Ankush Kumar and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f33f7759-b37e-5ba9-9fdd-02d146a0a308', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('dc9b4a40-0c74-5871-b95f-38a3b4e52b4e', 'A randomized algorithm for the wait-free consensus problem', 'JOURNAL', '10.1007/s11227-022-04774-z', NULL, 'Journal of Supercomputing, Springer, SCI', '86', '', '25', 2022, 'SCI(E)', 'T', 'Radha Rani and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('dc9b4a40-0c74-5871-b95f-38a3b4e52b4e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('a14b903e-44d9-5b87-afe9-8bab6d4654cd', 'Survey on Wait Free Consensus Protocol in Distributed Systems', 'JOURNAL', '10.1504/IJCNDS.2023.10049439', NULL, 'International Journal of Communication Networks and Distributed Systems,Inderscience Publishers', '25', '', '35', 2022, 'Scopus', 'T', 'Radha Rani and Dharmendra Prasad Mahato', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('a14b903e-44d9-5b87-afe9-8bab6d4654cd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('73aaa8b9-712e-5a5f-ab49-441cccd3b874', 'Reliability Analysis in Grid System Considering Load', 'JOURNAL', '10.1007/s10586-021-03241-3', NULL, 'Cluster Computing, Springer, SCI', '24', '2', '24', 2021, 'SCI(E)', 'T', 'Dharmendra Prasad Mahato and Van Huy Pham', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('73aaa8b9-712e-5a5f-ab49-441cccd3b874', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3f5e9b0a-faf4-5a7e-9cad-bd56339bc97b', 'On scheduling transaction in grid computing using cuckoo search-ant colony optimization considering load', 'JOURNAL', '10.1007/s10586-019-03016-x', NULL, 'Cluster Computing, Springer, SCI', '24', '2', '22', 2019, 'SCI(E)', 'T', 'Dharmendra Prasad Mahato, Jasminder Kaur Sandhu, Nagendra Pratap Singh and Vishal Kaushal', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3f5e9b0a-faf4-5a7e-9cad-bd56339bc97b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1ffc5f98-6bf5-575e-ae7b-4b6fff0fa773', 'Load balanced scheduling and reliability modelling of grid transac- tion processing system using coloured petri nets', 'JOURNAL', '10.1016/j.isatra.2018.08.022', NULL, 'ISA Transactions, Elsevier, SCI', '84', '', '12', 2019, 'SCI(E)', 'T', 'Dharmendra Prasad Mahato and Ravi Shankar Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1ffc5f98-6bf5-575e-ae7b-4b6fff0fa773', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f2122ff2-ce64-530b-a461-6bdc297a2335', 'On maximizing reliability of grid transaction processing system considering balanced task allocation using social spider optimization', 'JOURNAL', '10.1016/j.swevo.2017.07.011', NULL, 'Swarm and Evolutionary Computation, Elsevier, SCI', '38', '', '16', 2019, 'SCI(E)', 'T', 'Dharmendra Prasad Mahato and Ravi Shankar Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f2122ff2-ce64-530b-a461-6bdc297a2335', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('67b49ae1-180e-5c3d-9682-9f9ee9691695', 'On Scheduling Transactions in a Grid Processing System considering load through Ant Colony Optimization', 'JOURNAL', '10.1016/j.asoc.2017.08.047', NULL, 'Applied Soft Computing, Elsevier, SCI', '61', '', '17', 2018, 'SCI(E)', 'T', 'Dharmendra Prasad Mahato, Ravi Shankar Singh, Anil Kumar Tripathi, and Ashish Kumar Maurya', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('67b49ae1-180e-5c3d-9682-9f9ee9691695', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('0bbbd8e4-ae56-585a-8f16-cdcf99858f79', 'Load Balanced Transaction Scheduling using Honey Bee Optimization Considering Per- formability in On-demand Computing System', 'JOURNAL', '10.1002/cpe.4253', NULL, 'Concurrency and Com- putation: Practice and Experience, Wiley Online Library', '29', '', '16', 2018, 'SCI(E)', 'T', 'Dharmendra Prasad Mahato and Ravi Shankar Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('0bbbd8e4-ae56-585a-8f16-cdcf99858f79', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('59b087ae-8a74-54dc-b1be-35613cecfd4a', 'alanced task allocation in the on-demand computing based transaction processing system using social spider optimization', 'JOURNAL', '0.1002/cpe.4214', NULL, 'Concurrency and Computation: Practice and Experience, Wiley Online Library', '29', '', '26', 2018, 'SCI(E)', 'T', 'Dharmendra Prasad Mahato and Ravi Shankar Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('59b087ae-8a74-54dc-b1be-35613cecfd4a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('6ba8a4e3-feec-5480-bfd3-15abfa766c8d', 'Maximizing availability for task scheduling in on-demand computing based trans- action processing system using ant colony optimization', 'JOURNAL', '10.1002/cpe.4405', NULL, 'Concurrency and Computation: Practice and Experience, Wiley Online Library', '30', '', '27', 2017, 'SCI(E)', 'T', 'Dharmendra Prasad Mahato and Ravi Shankar Singh,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('6ba8a4e3-feec-5480-bfd3-15abfa766c8d', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('87df716c-a95a-5700-aa50-1d6a96f21fdb', 'Recovery of Failures in Transaction Oriented Composite Grid Service', 'JOURNAL', NULL, NULL, 'IJCA Proceedings on Computing Communication and Sensor Network', '2', '', '38', 2013, 'SCI(E)', 'T', 'Dharmendra Prasad Mahato, Lokendra Singh Umrao and Ravi Shankar Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('87df716c-a95a-5700-aa50-1d6a96f21fdb', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('25fa6964-ec9b-5865-a1e5-18bc0cb21b3b', 'Scalable Leader Election considering Load Balancing', 'BOOK_CHAPTER', '10.1007/978-3-030-75078-7_27', '78-3-030-75078-7', 'Barolli L., Woungang I., Enokido T. (eds) Advanced Information Networking and Applications. AINA 2021', '227', '', '25', 2021, 'Scopus', 'T', 'Radha Rani, Saurabh Rashpa, Dharmendra Prasad Mahato and Van Huy Pham', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('25fa6964-ec9b-5865-a1e5-18bc0cb21b3b', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1a772bb4-785b-5cd8-834a-7f6a1c07e801', 'Assessing U-Net Architectures for Effective Brain Tumor Segmentation in MRI', 'CONFERENCE', 'https://ieeexplore.ieee.org/document/10940673', NULL, 'IEEE', '', '', '1-5', 2025, 'Scopus', 'T', 'Akash Verma, Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1a772bb4-785b-5cd8-834a-7f6a1c07e801', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('f7eb4e05-2676-58e4-88a7-72c050ec3b9a', 'Video Emotion Recognition Using 3D-Convolutional Neural Network', 'CONFERENCE', '10.1007/978-981-96-3358-6_16', NULL, 'Proceedings of Data Analytics and Management, Lecture Notes in Networks and Systems 1299', '', '', '203-214', 2025, 'Scopus', 'T', 'Harsh Sharma, Arun Kumar Yadav and Mohit Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('f7eb4e05-2676-58e4-88a7-72c050ec3b9a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b02de7fb-afa4-5c83-9487-ffc7d8e74e09', 'Speech signal’s phase information based Alzheimer’s disease detection using deep learning', 'JOURNAL', '10.1007/s10772-025-10193-1', NULL, 'International Journal of Speech Technology', '', '', '', 2025, 'Scopus', 'Q1', 'Mohit Kumar, Sushant, Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b02de7fb-afa4-5c83-9487-ffc7d8e74e09', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('8fe8523c-4a9f-5ae2-ac1b-1f96db27b577', 'Neural Machine Translation for Punjabi-English language pair using word-based tokenization', 'CONFERENCE', 'https://ieeexplore.ieee.org/document/10969291', NULL, '2025 3rd International Conference on Intelligent Systems, Advanced Computing and Communication (ISACC)', '', '', '918-923', 2025, 'Scopus', 'T', 'Harmanpreet Singh, Arun Kumar Yadav, Mohit Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('8fe8523c-4a9f-5ae2-ac1b-1f96db27b577', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('b57cfe23-fc1d-51b0-b370-09f42fa89299', 'Heart Disease Prediction Evaluation of Machine Learning Models with PSO-Optimized K-Fold Cross-Validation', 'CONFERENCE', '10.1109/TENSYMP61132.2024.10752215', NULL, 'IEEE Region 10 Symposium (TENSYMP)', '', '', '', 2024, 'Scopus', 'T', 'Nikita Gupta, Kuldeep Singh Jadon, Preeti Soni, Nitin Gupta, Sanjay Kumar Dhurandher', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('b57cfe23-fc1d-51b0-b370-09f42fa89299', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('5e7cc9df-9d3f-51a6-a8d5-59bf2a994c5a', 'Cybersecurity attack-resilience authentication mechanism for intelligent healthcare system, volume 19', 'JOURNAL', '10.1109/TII.2022.3179429', NULL, 'IEEE Transactions on Industrial Informatics', '19', '1', '830-840', 2022, 'SCI(E)', 'T', 'Preeti Soni, Jitesh Pradhan, Arup Kumar Pal, SK Hafizul Islam,', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('5e7cc9df-9d3f-51a6-a8d5-59bf2a994c5a', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d818cb7b-02d6-5c37-8685-d33fafca3308', 'Provably secure and biometric-based secure access of E-Governance services using mobile devices', 'JOURNAL', '10.1016/j.jisa.2021.103016', NULL, 'Journal of Information Security and Applications', '63', '', '103016', 2021, 'SCI(E)', 'T', 'Preeti Soni, Arup Kumar Pal, SK Hafizul Islam, Aadarsh Singh, Priyanshu Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d818cb7b-02d6-5c37-8685-d33fafca3308', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e979b87a-00a8-5985-8555-f7773854a715', 'Survey of AI-driven techniques for ovarian cancer detection: state-of-the-art methods and open challenges.', 'JOURNAL', '10.1007/s13721-024-00491-0', NULL, 'Network Modeling Analysis in Health Informatics and Bioinformatics', '13', '56', '', 2024, 'Scopus', 'T', 'Samridhi Singh, Rajeev Kumar, Malti Kumari Maurya, Nagendra Pratap Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e979b87a-00a8-5985-8555-f7773854a715', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('023c3298-36f7-539a-881b-9ab0085df3fb', 'Fusion of Handcrafted and Deep Convolution Networks Learned Features for Image Retrieval', 'CONFERENCE', '10.1109/RAIT65068.2025.11088972', NULL, 'IEEE 6th International Conference on Recent Advances in Information Technology (RAIT)', '266', '', '1-6', 2025, 'Scopus', 'T', 'Sourabh Sharma and Ajay Kumar Mallick', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('023c3298-36f7-539a-881b-9ab0085df3fb', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('1d91ef4e-c2b1-530f-afe4-a6a18f73e0b6', 'Advancements in Cyberbullying Detection for Hindi Text: A Comprehensive Analysis of Machine and Deep Learning Techniques', 'CONFERENCE', 'https://link.springer.com/chapter/10.1007/978-981-96-3284-8_25', NULL, 'Cyber Security and Digital Forensics. redcysec 2024. Lecture Notes in Networks and Systems, Springer', '1287', '', '33-343', 2025, 'Scopus', 'T', 'Anant Verma,Arun Kumar Yadav, Mohit Kumar, Mohd.Khalid Pandit', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('1d91ef4e-c2b1-530f-afe4-a6a18f73e0b6', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('2f839c6f-efd9-50c2-b69d-2f315d434967', 'AttentiveFP: An Attention-Guided Deep Learning Approach for Fingerprint Liveness Detection', 'CONFERENCE', '10.1109/IC2E365635.2025.11166886', NULL, 'IEEE International Conference on Computer, Electronics, Electrical Engineering & their Applications (IC2E3)', '', '', '1-6', 2025, 'Scopus', 'T', 'Atul Sharma and Ajay Kumar Mallick', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('2f839c6f-efd9-50c2-b69d-2f315d434967', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('93f8e758-b23a-5d5f-acb2-9beb4052944e', 'Pothole detection and localisation from images using deep learning', 'JOURNAL', 'https://www.inderscienceonline.com/doi/abs/10.1504/IJIDS.2025.150097', NULL, 'Int. J. Information and Decision Sciences', '17', '4', '357-370', 2025, 'Scopus', 'Q4', 'Archit Dhiman, Mohit Kumar and Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('93f8e758-b23a-5d5f-acb2-9beb4052944e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('ad46f00d-0f1b-51b5-a8c5-1efe25bb61ad', 'Optimized U-Net Architecture with Enhanced Chimp Optimization Algorithm for Brain Tumor Segmentation', 'JOURNAL', 'https://link.springer.com/article/10.1007/s12559-025-10530-1', NULL, 'Cognitive Computation', '17', '123', '1-23', 2025, 'SCI(E)', 'T', 'Akash Verma, Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('ad46f00d-0f1b-51b5-a8c5-1efe25bb61ad', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('54c6e257-3315-5d09-bf77-ff3e089f4f63', 'A panorama of text summarization research: bibliometric trends and developments (2000–2024)', 'JOURNAL', '10.1007/s00521-025-11562-2', NULL, 'Neural Computing and Applications', '37', '', '20917–20956', 2025, 'Scopus', 'T', 'Namrata Kumari, Pardeep Singh', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('54c6e257-3315-5d09-bf77-ff3e089f4f63', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('289f3e2c-a93d-5650-8fcc-93175c32bd33', 'Fusion of Deep Cross Block Stage and YOLOv9 for Enhanced Small Object Detection in Aerial Imagery', 'CONFERENCE', '10.1109/IC2E365635.2025.11167338', NULL, 'IEEE International Conference on Computer, Electronics, Electrical Engineering \& their Applications (IC2E3)', '', '', '1-6', 2025, 'Scopus', 'T', 'Sameer Mirza, and Ajay Kumar Mallick', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('289f3e2c-a93d-5650-8fcc-93175c32bd33', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('d60864df-e195-50d9-9a7b-4ce808cb05e2', 'A Hybrid Word and Sentence Alignment Approach for Unsupervised Multilingual Machine Translation Using Pre-Trained Cross-Lingual Encoder', 'JOURNAL', '10.1145/3796235', NULL, 'ACM Transactions on Asian and Low-Resource Language Information Processing', '25', '4(32)', '32:1-32-17', 2026, 'SCI(E)', 'Q2', 'Mumtaz Ali, Arun Kumar Yadav and Mohit Kumar', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('d60864df-e195-50d9-9a7b-4ce808cb05e2', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('e64352b5-4021-5c18-8afe-d3f8def280b5', 'Potato Late Blight Leaf Disease Detection Using YOLO', 'CONFERENCE', 'https://ieeexplore.ieee.org/abstract/document/11325135', NULL, 'Springer', '', '', '1-5', 2026, 'Scopus', 'T', 'Singh, P. K., Yadav, A. K., Yadav, D., Chandel, A., & Tiwari, S.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('e64352b5-4021-5c18-8afe-d3f8def280b5', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('098ed513-d09a-582d-9b6a-29140e711b0e', 'Systematic Performance Evaluation of Machine Learning and Deep Learning Methods on HateXplain Dataset for Cyberbullying Detectio', 'CONFERENCE', 'https://link.springer.com/chapter/10.1007/978-3-032-13757-9_15', NULL, 'dvances in Computing and Data Sciences. ICACDS 2025', '', '', '205-217', 2026, 'Scopus', 'T', 'Yadav, V., Yadav, A.K., Kumar, M., Singh, M.K., Kushwaha, A.K.', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('098ed513-d09a-582d-9b6a-29140e711b0e', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('90b86da3-03a0-59a3-9f74-fb499aa5ffbd', 'Topic Modeling with Latent Dirichlet Allocation (LDA) using TF-IDF and Bag of Words', 'CONFERENCE', 'https://link.springer.com/chapter/10.1007/978-981-96-3361-6_1', NULL, '5th International Conference on Data Analytics & Management (ICDAM-2024),held on June 14-15, 2024, in WSG University, Bydgoszcz, Poland, Europe', '', '', '1-12', 2025, 'Scopus', 'T', 'Tushar Gupta,Arun Kumar Yadav, Mohit Kuma', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('90b86da3-03a0-59a3-9f74-fb499aa5ffbd', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('075835e9-bdba-54ee-abc5-8a979538e136', 'Brain Tumor Volume Estimation Using Ellipsoid Approximation with Shape Correction Method', 'CONFERENCE', 'https://link.springer.com/chapter/10.1007/978-3-032-14041-8_7', NULL, 'In International Conference on Computer Vision and Robotics (pp. 85-95). Cham: Springer Nature Switzerland', '', '', '85-95', 2026, 'Scopus', 'T', 'Akash Verma, Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('075835e9-bdba-54ee-abc5-8a979538e136', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
+INSERT INTO publications (id, title, publication_type, doi, isbn, venue, volume, issue, pages, year, indexing, quartile, raw_authors, status)
+VALUES ('3530597b-0fb4-5e4a-9e8a-622ff6b42152', 'ABRB-Net: enhancing medical image segmentation with attention based boundary refinement', 'JOURNAL', 'https://link.springer.com/article/10.1007/s12530-026-09828-8', NULL, 'Evolving Systems', '17', '74', '1-23', 2026, 'SCI(E)', 'Q1', 'Akash Verma, Arun Kumar Yadav', 'PUBLISHED')
+ON CONFLICT (id) DO NOTHING;
+INSERT INTO publication_departments (publication_id, department_id) VALUES ('3530597b-0fb4-5e4a-9e8a-622ff6b42152', '22222222-2222-2222-2222-222222222222') ON CONFLICT (publication_id, department_id) DO NOTHING;
 INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
 VALUES ('041aa59a-3d28-5a72-bb01-f27d9a36c386', '3d607ef3-b375-5ece-9f8b-84feb2ed4a16', 'Faculty Co-Author', 1)
 ON CONFLICT (publication_id, author_order) DO NOTHING;
@@ -1639,6 +4047,2064 @@ VALUES ('89803d05-f1b0-56ce-9a00-53af25170f34', 'bfb209c7-3e80-531b-ab07-7e9829b
 ON CONFLICT (publication_id, author_order) DO NOTHING;
 INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
 VALUES ('1ae5db5f-e03f-500d-b158-5f3c7c9e24bd', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('bb38e77a-27d4-5f0e-acca-e5104a955e1e', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f1a6148b-52ac-5871-b03a-a60eefaff6c7', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4614baf7-53b3-57f3-925b-fa55941a2779', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('940e0190-caa3-5c36-80c2-8f44c0c385c5', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('520ff9f4-bc26-5cc5-9013-f9eeb88723ca', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('895b55be-7ed7-5059-8324-660444c41646', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d43a18d9-35aa-5758-a980-1af35aa0fb98', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cdafd286-f333-500a-8802-33b29d57741e', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('19f33f5d-adf9-56a0-8d5b-22fdd985dfa9', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8e109ed6-2e45-5524-8148-6f196e223713', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ca45831f-3542-5adb-8922-ce4a0dbcfd24', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b2c3f8a6-7768-5e7d-b386-2d4eaffc6f2f', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('81465738-346c-5919-a4e8-7123bf267d01', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0fef78e1-d3a0-5320-a754-a4817a1649cf', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('20500cff-c1d4-5778-9319-32f8d14a3eef', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('20500cff-c1d4-5778-9319-32f8d14a3eef', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('96c0acd3-5d50-5b1a-82f6-b098c0fa5bab', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8d498bf9-85ee-514d-a3be-f0eb71c3aad5', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('110262d7-934e-5fc9-b576-56b9da8dceba', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8e24395c-1608-5497-a7b0-28d687c68836', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4331cabf-f2dd-53e7-aa79-a96ff79199bf', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1679750a-d0f3-57b0-903d-69631e890b39', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0ea073fa-ef90-5770-9f1a-64b1345b1941', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1eb743f1-54bf-55e1-9790-d8cee4f37ba3', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('869f8a37-bef8-54d2-9a70-c737732d14c1', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('24d55a66-c465-5814-8766-d771091890be', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f239a47a-148f-5f44-8775-cbf2189d68b9', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a33f3ff5-121b-559f-bcab-fa9297963481', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('aa7aed56-54ab-5bdc-b9ef-93d3d65f1bc6', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fca349bf-6dff-5048-a827-dd6b6fbc4ec8', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fca349bf-6dff-5048-a827-dd6b6fbc4ec8', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d659548b-27fa-5e02-811b-10afd5b5b42c', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d659548b-27fa-5e02-811b-10afd5b5b42c', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4f2bd990-355f-5f2e-a35c-93014647a61c', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4f2bd990-355f-5f2e-a35c-93014647a61c', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1aeb83f9-d228-50fe-a05b-3f5e15d1e22c', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1aeb83f9-d228-50fe-a05b-3f5e15d1e22c', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fbd01cfd-c281-58a5-bd36-fcf0d2a1ce03', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8daa2e7e-b6b1-53c4-9dbe-c8adfbe87e1c', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('eed5e198-6825-59b5-a86d-1ec32f306ffc', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('eed5e198-6825-59b5-a86d-1ec32f306ffc', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9f21ab00-a012-5df8-afd2-40b497f44385', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4f15b0cb-4afd-52bf-8d5c-5af9141bf580', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1d3598ad-ca9d-54dc-a096-60a618318551', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('595e0d7c-1bad-549c-bb37-20578f9f532b', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cc2f6b32-56e3-5433-834b-04c6ad4d0f1c', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cc2f6b32-56e3-5433-834b-04c6ad4d0f1c', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8d06d9a5-c30b-5752-abc9-4f2cd9c33d0c', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5311ba0c-a0b0-5121-9a5f-900e01527923', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a8a737a6-aba7-5097-bbc6-7f91036a266c', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('01ad22fc-eb11-536c-b406-4a99611ea22f', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('76b48d56-6ef6-5c2f-ae89-369e4e6632de', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ee517b2e-530a-5ea1-bc99-c87c5f2f1a1a', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('772a60c0-9335-5a02-81db-eee3c3ef92fe', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('772a60c0-9335-5a02-81db-eee3c3ef92fe', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('548a6e28-3fe8-5f94-8500-7dab9fc8b317', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ccf09839-efa7-5df0-bf5b-015d6ef53d51', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9fffb2c9-3b4b-5269-9ee3-bdcbee1ff699', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1e3ecabf-442a-5275-b5b2-add0f80c58b5', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f1987d17-1424-5619-817f-0a2da32a96c5', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7476be41-ad6e-53c6-ad93-2b10bc3ad688', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9ad9b7b9-3f32-5a9d-a4df-21e9342b835b', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9970122c-4652-5a71-9f47-9ade3814a3da', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2e137e0e-7ad7-50e3-be6f-718ccd8da826', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('837eb761-cb82-5f2e-94f2-56b2e89d342a', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a0eb3f25-e72b-5f57-9a76-1b81fad7c868', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a0eb3f25-e72b-5f57-9a76-1b81fad7c868', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('06b923e6-8bc8-5b97-bdf0-24753627ea39', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6682dae4-3f82-5293-a610-7bb1ad1fd1aa', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f0fa371b-0f2d-5aff-b2bd-dab1ce55a139', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5707d0e1-726d-50b1-ba65-42271b0b566e', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('41332d04-53cd-54dc-a1a9-07f09a9f319b', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2786ae98-c795-5e82-971a-aa712d3e62bb', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e7154fec-5fa1-5c81-9431-5ab77696d357', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('57474613-ea38-5937-b2df-8d917ef5069e', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('45a32d5c-c95c-5c47-b562-79359d4809b0', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('70771151-e8cd-530a-bbfa-587df748a007', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('70771151-e8cd-530a-bbfa-587df748a007', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3dad416c-a9ec-5a05-a8b7-02c8103544b6', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3dad416c-a9ec-5a05-a8b7-02c8103544b6', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a1a6ee5d-8a76-52e2-b3e3-e03a5156edc8', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7a72bdf8-a07a-56cc-b7e3-f09e71a99294', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5936951d-2c41-5d87-a754-985efdd38509', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5936951d-2c41-5d87-a754-985efdd38509', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('45779149-225a-51f3-839c-101bbd1b9e83', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('776ede73-4b66-55bd-b4dc-a7dc9ae7280c', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('776ede73-4b66-55bd-b4dc-a7dc9ae7280c', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d881b509-2b78-52de-b67d-688770f434c7', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9b3cc5d8-2dec-5c3f-95f9-da0e3f7dfe02', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b4531854-1d70-533f-ab29-746b85332660', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9d660cc8-bd3a-5eb6-8178-f128a84be87a', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('723ee85b-cc11-5fcb-91a7-c01f80c47c84', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4c480e8d-a576-558b-b867-756ea98fa361', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('70467145-7fbf-50cd-9ffd-06b94e1b3fae', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9c88983c-1bbf-5ba4-9c5a-1c5c7bb2d1ad', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('357a2da1-5b93-5067-8a72-bd74a258881f', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4defce29-1242-5a6b-9de8-f680c2d95639', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ba0a0225-c504-5b64-ac04-b4bcbb535977', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ba0a0225-c504-5b64-ac04-b4bcbb535977', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e52996fe-d2a7-5b21-bbef-db04db259cc8', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e52996fe-d2a7-5b21-bbef-db04db259cc8', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('34ca0ab8-7d14-573d-8e86-4f1cc932eafb', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('34ca0ab8-7d14-573d-8e86-4f1cc932eafb', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a297ff9f-6287-59af-9f21-4d50e17e3538', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b7f3b088-07ef-5090-977d-7ea65fc118fe', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fb230d5c-15c1-535c-9b41-df258ef21353', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7f718682-6b60-518d-a1ed-b7dd7e3aa7b4', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('94aafe77-ccfe-5574-9e97-c36ad26837c8', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a4da878f-96f3-50e7-a58b-3dcdb3fa7083', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('47535d49-6a0b-5ff7-81aa-c3e55a0c5646', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b68c079c-7eb5-56e4-941b-807e413538e9', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d1680b13-da1a-5718-a517-1e69315ed3a7', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9b2dd9ef-7962-5d97-abde-b8dae41b0cd3', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9b2dd9ef-7962-5d97-abde-b8dae41b0cd3', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d5f6fc4f-2790-53be-9841-d5b8ed62e46d', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c2f71d64-53c2-5812-bdbd-898d09443212', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e0947dea-f83a-5c0d-9e8a-0239d2f24694', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('77a2e234-80de-5978-8dea-4284ed0fb56e', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2bc553e9-7460-5ec3-a6ee-91accb8c0e75', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0e21ae7f-c052-5bfb-a295-59126ed28045', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1b1f4544-575a-531e-82d9-c9a8af453487', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('88ff8b50-8131-549f-948e-2deb63df39b6', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f1d43ea7-3d3a-57e0-8828-009e8867a1b7', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d0146dc5-77f2-5872-a6c3-aed23aec9557', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c94777b0-218c-5a60-9a71-3a33e8e7fcea', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9a262ff0-c3f7-579a-87c9-b5b20d71cbcf', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a594cc6a-0c6c-5655-adb6-cf026e844992', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a594cc6a-0c6c-5655-adb6-cf026e844992', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b292eda7-1c89-5a49-b015-fd9a2bc5e66b', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b292eda7-1c89-5a49-b015-fd9a2bc5e66b', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('24c5ecb2-1bf1-548b-82a0-1a61f9c5dc06', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('24c5ecb2-1bf1-548b-82a0-1a61f9c5dc06', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0db1e006-e3e4-5b5d-903d-fcb31a2bad85', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0db1e006-e3e4-5b5d-903d-fcb31a2bad85', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('13a0b98c-cabf-59aa-a31a-a43f45a46132', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b1d322d4-65f8-57ec-add7-4499881ecbaa', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b1d322d4-65f8-57ec-add7-4499881ecbaa', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4e40cad0-674f-5c00-aad0-47b76554b23f', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4e40cad0-674f-5c00-aad0-47b76554b23f', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4a17afca-41b8-56d6-9f06-1239e30248e4', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4a17afca-41b8-56d6-9f06-1239e30248e4', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('16e2d2b5-650f-55c0-b008-8a2125fa85ad', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4cc47c0a-bdd0-5310-9ec2-43278b207cef', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3e3968b7-4b89-5d43-940f-e8b94cc67fbd', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9b3fc9f2-5f7b-5659-aff6-d622265bb5b7', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0ca54eb4-8b27-5551-ae06-60a555da188a', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('600cfeb0-db5c-5114-84a9-2cde08903677', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7965b4fa-0fe2-51e3-9893-332499f947c6', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('36bf913c-624b-5b4d-97d1-8f0268843c22', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ea798147-41c2-5ea3-8181-22feab4e0a9f', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f9fe8d10-f2be-50b4-a1c8-a2b289447262', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fa0490e6-45b7-5c77-9184-98a1eb62b9f9', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ce4b7f71-de5e-5e83-9f76-bee084a0b7ab', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('bd08fa10-4f50-54b9-be54-4a3efe1d0f53', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('bd08fa10-4f50-54b9-be54-4a3efe1d0f53', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('750569b1-02e3-5b7c-804f-3554d9d0789c', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c671baec-02de-5644-9b05-270ada660b86', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cf908721-8784-5c87-96f7-e8e1e5473cf0', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('01a1c6be-3832-5343-8162-5ca0a09404db', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e896437a-2607-56a7-ae0c-00cb10715448', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c376b322-fee0-5d99-8689-b394f7dc3b37', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('664230f4-a063-5719-b97a-4b170656d904', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('bd41dbca-f618-54c5-9ccd-edc69f421671', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('89b06f79-2aa8-51a2-9189-fc11d64ac1f1', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e8471be5-90af-58ac-bfe0-66ba51582250', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('11a28708-b41d-53a1-aef8-9e42b1d2801f', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ca69359d-191b-58f8-b48f-780bd90e69a3', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1d919159-0c7e-5d26-9537-7667972da81a', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('48ee598a-8daf-53be-a77e-07ffd2f47536', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('bac5e947-f27a-5f59-8728-2387394e1fb8', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8bd16d52-a9cb-54c5-8e7e-1575d6f935c5', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('327ce3d7-297a-50e4-8511-b4f3876e76eb', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('06927c3b-7e71-5c40-9a8a-62d25cae3525', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ba4f1f82-4dc1-5a72-bb2c-4c102cbab409', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ebcb6c00-9700-50e0-a403-634ad66ad1cc', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ccc20cda-4a0e-577c-b189-a0769a5f3be3', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8dc73100-57d6-5e25-be03-17e48bf68a15', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('189e53ad-0bfa-505e-988f-79d3ba596dd2', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cd74486a-abd7-559b-8fda-b80cf00e7f5b', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d755e981-feff-5076-8f9f-d26080de0b6b', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ca8af180-d746-5e78-a09e-605bbd54afd2', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('bd1d5368-7c1c-5e07-91f1-7017ca9bc79c', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('931bb5d4-7978-5a08-8d15-8f22bd52886b', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d2999a75-67ef-5d0e-a9fc-0d483ac2e8f8', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9b24e4bf-9c94-5cce-981e-1016329cec16', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9b24e4bf-9c94-5cce-981e-1016329cec16', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5762bb43-0a2d-5b62-beb6-cdc71734eaa0', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('04fdaeda-51a7-58b9-84bc-94849f3c2f3b', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('30bbafb3-2a81-5bee-b834-c66f661010ba', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6a0007d7-2860-57c5-aab2-762bfa43f29b', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a8e5608f-0a58-5987-aa28-6abcf7170cdc', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('483b3cd0-03e9-561e-852a-47fd9882f35a', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ba943df3-87b2-5522-be4c-c66be675516d', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('51e58e19-a365-5856-bffa-142e3696a387', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('77c6e4a2-83db-5a64-a37d-0b5614569ec6', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('77c6e4a2-83db-5a64-a37d-0b5614569ec6', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5212fd66-6908-5ac7-b9e4-dfc32f6ed94d', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('498eb597-705e-5346-8ed2-6e9c102bcfc5', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a7c0f0b4-5151-5afc-87ed-0adc8332474e', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c64bee48-85cf-5728-80a7-379a6b29e2d2', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('76cd299c-d8cf-5928-8d15-830e9c45e326', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('76cd299c-d8cf-5928-8d15-830e9c45e326', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a3b9a79f-c246-5031-a205-21220ceb7ca1', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('98d8d2fa-1cc0-5d9c-8bfc-e256aa823ead', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d383058c-7acb-5b14-bec9-1a9552908719', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('642d234e-822c-5ed0-ad4d-bb680d6b513c', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ea8517bd-d3c4-5b90-8056-715ddd4daec7', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('360d66ee-a715-57a4-97c3-537cd6092a58', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f1e92b20-e60a-5277-be61-c37aee41a29b', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b2bc71fb-ca44-5972-bdc5-80c7f06d25a7', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9dac9baf-4bfb-513b-a1a5-e93ab08b4009', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3efeab92-a72f-5fbe-b629-ba2a261ccfac', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('841f8914-dea5-5df8-b5ab-19889ead4378', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('75de0a98-e7bc-5818-a3dc-bb349cdfd258', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('75de0a98-e7bc-5818-a3dc-bb349cdfd258', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('20b360e5-6b35-5880-bfaa-72f6fb0c9ae9', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('20b360e5-6b35-5880-bfaa-72f6fb0c9ae9', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7ab182ce-cbc6-5b73-a40d-24566f19cfc2', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7ab182ce-cbc6-5b73-a40d-24566f19cfc2', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1fc8498b-815a-57fb-acea-a45ec43b6ad5', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('079ceaee-572a-5387-9e09-5dd622cfdfdb', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8c3b61fb-4fd4-534f-8989-e26042d72e2e', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d3225363-c4f0-533a-adec-1fbc271b6343', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('546d5b4e-4a09-5c28-952e-6506a79704a1', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('017c3b78-92f2-595a-bf0f-a76d5927b66f', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7371f005-f0da-5c43-98da-d59d94927903', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('297a19a5-9864-5950-b88f-5bbd668312bd', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b1744c9b-5243-5a4d-822d-b8e03bc5930f', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c3e2f44c-01f9-50e2-9748-09e97dfd072d', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('303ef2e4-33d1-50e7-b5e2-4282fe7000c5', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e87bebd5-b059-5abf-bc03-be77bd9d9a24', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2d3e51a2-4182-5377-867e-354557f1112e', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f757c7ae-d3da-51bf-9d10-7cbbf67f4b7b', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('39c7a9e0-b248-5270-97e5-24b9cee2c43a', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('20127c4f-700d-5924-a7c8-b52d9f3ec6ae', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('23e6c6fb-f37c-581d-97ba-75aeda83a13c', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('eb2d2a93-7214-5bb5-a814-590f04fa417b', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ef002a21-2cd3-5721-9a2d-c4cac58fb714', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('da6a7552-cb57-5563-80d9-952cc8c4e7ac', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2cf7dd77-6d76-516a-a10e-17912fa1948a', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('887ccc57-4d20-56bb-91a3-9e521b2b638b', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c5273a94-25c4-5844-9dc6-157c8311641d', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('23749742-1007-5643-8189-304b1de9855b', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('62e8acb9-41e3-5912-b52d-af0090fe99ea', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('00b439f7-f0c6-5790-8a4d-3ee310492e6b', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ba994c63-db99-5547-855c-f187554071a5', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('17464340-c5d2-5027-abc3-9e0686fdf49c', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6d6b3de7-1607-52a3-ae9b-c8acebfb7624', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('96c2c221-b7ab-58eb-99c0-770bbdf38d75', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9715730f-2d00-5819-8aa3-88a6d67327db', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('bd956e1f-3208-508f-a499-3df41ca034a7', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('495573c0-0982-527b-a676-8825b76fcc57', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f8702406-0906-50a6-b183-ded9b5538e96', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b42d567f-d131-513f-a851-d9e248fa7377', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c69bec6a-3568-5a00-97b0-a748ba029635', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('69af838e-b6a5-517b-a4b0-8ec42fa20a3d', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6b08c3ed-9096-5a4c-9f99-20e1fff03688', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('628cd82b-c480-5e95-b53f-fe88440c8d07', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b67a7589-ca9a-54fb-af0e-23ef503c6e55', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b9fa29c0-0d52-54b8-9ee7-fa95b79a14ce', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('29d9c54d-98a4-55f2-b449-64291926b6b0', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('dc01c071-39ab-5445-a516-def2ff9d2593', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8b4c6ec5-b567-54f8-afe4-d5b7dec1e248', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d576b425-2bcb-5cf4-ae28-60025e741ce0', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8c86d1ab-252c-5378-a288-4c6a21b8b4a7', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1f0d00a6-3ad7-526c-ba6d-c0c50fd2ab5e', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0cacbcb0-38e8-5c34-b479-c75cc873624f', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('612a1156-238a-51ef-8e6e-d83d8283baed', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('31be47dd-38fa-5151-bbb0-6e7b6cca097c', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c8f3fd16-e10c-5d28-9923-1a9b51614e62', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fd77a4d5-b084-511e-b614-9cbacfcdef2b', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('199d4cda-d595-5b4d-81c9-859c1d364b2b', 'f78d864c-94e1-5cdf-9672-b2c891bb2abb', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2f70567a-4983-5ebe-afc4-d9c24e4457df', '3d607ef3-b375-5ece-9f8b-84feb2ed4a16', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1d1343db-9e4a-5b2e-a31b-f61d48b7b610', '3d607ef3-b375-5ece-9f8b-84feb2ed4a16', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('59deee9f-e2c2-5c5c-a0e4-5d20b16313bd', '3d607ef3-b375-5ece-9f8b-84feb2ed4a16', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('97751bd9-b8ef-5be6-ac99-21c63bddc872', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('489990f1-bdcb-55e7-bd35-5dac838fe343', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('489990f1-bdcb-55e7-bd35-5dac838fe343', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0e3997df-878f-597d-b396-e6a24e396fb2', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('54b56107-6281-53f8-a31a-54c38c19a324', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3a697bdc-66d3-53a2-9b79-5cc480df5e4d', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b5a3f425-4d85-56cd-97c8-ffc7f1855df6', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b267e73d-8c74-5e7d-933d-36fd8c7ceef8', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b267e73d-8c74-5e7d-933d-36fd8c7ceef8', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('56e02706-255e-555e-b923-b6b27aebdcac', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('56e02706-255e-555e-b923-b6b27aebdcac', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('69ca6238-fe4d-54cd-8d86-84291bd32616', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2ec0384c-930a-5073-86ea-7b68c64c03b5', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2ec0384c-930a-5073-86ea-7b68c64c03b5', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('00526c64-010f-5388-8153-dddd47c8d01f', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('00526c64-010f-5388-8153-dddd47c8d01f', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('642f8c74-aa5c-5f4b-9fee-9430c5ea6b06', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('642f8c74-aa5c-5f4b-9fee-9430c5ea6b06', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6cd699d4-a169-55d1-bef8-f99cb0d026bf', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6cd699d4-a169-55d1-bef8-f99cb0d026bf', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5d974808-e021-54ea-9575-6372c5fd1577', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('03f45e28-9fbd-5049-974c-76210976ed4b', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('03f45e28-9fbd-5049-974c-76210976ed4b', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3e80627b-4eb7-538e-bfe4-0c310dee7aa7', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3e80627b-4eb7-538e-bfe4-0c310dee7aa7', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e07064d8-bce1-5a6f-9f7a-6d53a5ae3a17', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ccd5d2ce-8dd7-5193-8b40-96cf6400d216', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6bfffb33-04d8-551a-a884-a4f09852b59f', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5f80b7cd-b256-593a-8bd5-6bc5160f83cc', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8d17e1c7-8eac-5299-a2fa-83188eb9537b', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f686244f-7242-5ddd-974a-78fe1346bf74', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ebb5a6d8-a4ff-544a-93e9-dae88e01ab01', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ba719367-f174-5a1f-b136-7ad06b01bd7c', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ab01d719-9bb2-531f-a098-841d29c0b9a3', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('dba7b272-787a-58d4-9348-5f68ffa5a1f8', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('dba7b272-787a-58d4-9348-5f68ffa5a1f8', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fbdd9a82-3ee6-5bdb-96c3-2e34ca84d574', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fbdd9a82-3ee6-5bdb-96c3-2e34ca84d574', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('88ae0bb5-a9d8-531c-ac92-57c83a3dfd90', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('88ae0bb5-a9d8-531c-ac92-57c83a3dfd90', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cf451a28-fc27-5f09-b55b-0f191064b534', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cf451a28-fc27-5f09-b55b-0f191064b534', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cf451a28-fc27-5f09-b55b-0f191064b534', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 3)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('03d17cc5-9ef7-5a7b-9f77-af61bacb1be9', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a8c9ff1d-e207-5d51-9582-8f7cafccd9f3', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('96248b9d-2c0b-5e18-855a-74120eb49856', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6d39e853-f850-5a9e-b75f-489cedf4684d', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1912b935-77fa-5fe9-87a0-dfbaa856112d', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('24549954-bb34-54a0-bd45-0ab06e753b78', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9e204f69-1ef6-5264-a46d-f51d3e4b60f2', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7438b27b-3201-5438-a691-9aca746d32ee', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fb870db5-e39a-5b32-8696-3b8c99484cf7', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('54d48bb2-6cc7-564a-b408-168d88cad33c', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a06f4572-ab7d-5b70-a3c4-6877ef212046', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('934cd797-ff42-509a-af18-7e4a5e11a388', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('05d731ba-4778-5cba-b8d0-0ca9ada37428', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('05d731ba-4778-5cba-b8d0-0ca9ada37428', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('321d8373-4638-5731-97e5-1395a6494b3a', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('45c5a495-d01c-51af-a848-719f358449ee', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('65bae99f-23a5-5aaa-82eb-58b945c2643c', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('65bae99f-23a5-5aaa-82eb-58b945c2643c', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('752efcc7-73c2-59a2-987f-e7ab01807582', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('752efcc7-73c2-59a2-987f-e7ab01807582', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('39aa0c28-2126-53a7-8115-32582508852d', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('39aa0c28-2126-53a7-8115-32582508852d', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5c5abc95-e720-53cb-945e-fb32874581bd', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5632843e-9407-5a47-824c-3d8304f82546', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5632843e-9407-5a47-824c-3d8304f82546', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0abcaa8f-0ebb-5e53-8089-7dd8417b96fa', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0abcaa8f-0ebb-5e53-8089-7dd8417b96fa', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5d5f2aa5-d298-5707-9c90-26587fa0a71c', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('77b43fa1-5258-5878-ad85-2a06ff45b80b', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('77b43fa1-5258-5878-ad85-2a06ff45b80b', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b1f9d0fe-8b60-5b83-97d1-7c6b78354420', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7bc121c2-856c-5f13-a6b7-decc274dfd9e', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9c86443c-eccf-56e0-bf1e-26ccf7172e78', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5840cebe-70ac-5b48-9ea5-c4858bdbed4f', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5840cebe-70ac-5b48-9ea5-c4858bdbed4f', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('304273aa-4a35-5333-8d98-219ce4100de3', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('304273aa-4a35-5333-8d98-219ce4100de3', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9ecf8d02-fe87-5cf0-9ba2-2a35ea36fbb4', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9ecf8d02-fe87-5cf0-9ba2-2a35ea36fbb4', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('60e07b08-2849-5113-b777-9567b9d2659a', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d0caba68-3f16-5d4e-95db-aeca6de3f01e', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6b3cac60-511a-57aa-acbf-6db44c2ac24a', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('39583ed1-ecd0-514c-8bf7-187dcfb38a0a', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('99ef8dbf-16f4-56c7-9d00-81dd16e359e1', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('109cba5d-c529-5c35-86ff-cc1bfdaf2efe', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b591991c-e00e-5148-8583-861f8709174c', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f67f9ad3-eb91-5f02-a3c7-427d666941b2', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ff509c40-546d-5a6e-a272-ecee6163a19d', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('21a79a44-6fe3-5fe1-8c8a-8514dd7d3de4', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('282b1730-6595-5173-8873-85a2e4a3c8e2', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('05cd7544-7590-5ce8-a1c5-55e5ec57898c', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('05cd7544-7590-5ce8-a1c5-55e5ec57898c', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('bedba520-9ad6-5afb-b55d-e99e8ffc2bc7', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('00eeb22f-b175-5bab-9a1c-426a75533593', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('92676bcd-cc3d-5189-adf4-9e85bd0bc34a', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e66fcc65-e8ef-570c-8c9b-48dba2d9d050', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9c5a612b-8751-509f-bea6-ed696faa79b0', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f057e07a-f1bf-5d58-a4d2-6a63b5ca5803', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7a7a42f0-d537-59d0-83e6-f9f43a06d6be', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5ceec5b4-ca36-515e-873d-ceed40d52ace', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8288850c-ceac-50d0-9e8a-82193bb1d6e7', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a1eee5c1-e0a0-5120-9d23-6a3292b14b04', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6cbbe6c1-547f-5a64-b373-1b5670ed5d8e', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('02d1fc24-96a9-5d68-9bef-2f4f4912902c', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('86dff06f-351d-51c0-a395-3683d8005096', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('805d719e-a3a7-5f20-92b0-359c920e1941', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('805d719e-a3a7-5f20-92b0-359c920e1941', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6b389091-adb1-568c-ae29-5b7f0648540e', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cb40fe92-96c5-589c-b4d5-78bd3739ca4a', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('77c14583-0d28-58de-88ee-eb60f55ab049', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5622adde-d8f6-5d11-acd3-961504912374', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1238b44a-a80f-5c4f-910e-aaa770933a77', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7acb4991-169e-54d4-9583-b4ee83dd6422', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('02d0332b-032a-53d5-98c1-e5629045a29e', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f10d2e37-6b6a-522b-9d82-9d0518e4795a', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0ed8f911-3e0a-58d2-8996-c2414e26fdff', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('64977322-8858-5257-94a2-891c58d2e9ee', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c8f034a9-9222-5330-a580-0233713e7f9b', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b1d62e3d-a3a6-515b-b90c-8d3c7d8cd287', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('dff062a1-77eb-5315-b8f3-c324189f6fcf', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b991e5a7-1e03-5edf-8226-50c22c4434e2', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5a217052-8432-5830-9af6-fb2f8abaf8c9', '56b955eb-618e-5dcb-ac02-f8404a61a048', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9d7f1de7-ba13-59a0-b387-fd8bd4297a8f', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9cab9102-ec0d-5dd4-8c07-b441d9c0920b', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('19eda655-9dd6-5a5d-a689-4baed29a0d8b', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('19eda655-9dd6-5a5d-a689-4baed29a0d8b', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('df9b301b-b63d-5535-9c21-95613a9b43ba', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('df9b301b-b63d-5535-9c21-95613a9b43ba', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b03aaae6-d944-5638-bfb2-3ea4efcca684', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b03aaae6-d944-5638-bfb2-3ea4efcca684', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6fe03687-f8ec-5a0d-9331-0d6c702d020d', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6fe03687-f8ec-5a0d-9331-0d6c702d020d', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0592352d-4cdb-52a1-b36b-86a18f258cab', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('74186ac7-678b-59fa-999c-ec67702fb89c', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('69b8f667-9145-53a5-8604-dfe1f48fdeaa', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('61644562-8914-597a-97d9-e538b5eb8ac5', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d3afbb1a-2e99-5e53-a371-de594da42fb8', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9bd2c46b-f44c-5c4f-9752-124586b4c033', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2197e1a4-0ade-58c8-a8b3-5236e41efb6d', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('204e6a4a-4fd1-5b8f-968a-492797c5302f', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('74a9ee00-585d-5fd7-9dad-d335c0a526f0', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('aa169977-cdcf-5b64-99c6-dad550073419', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c5ddcc10-2338-5e47-bd0d-9d07d35f259c', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('13948d71-37db-5d74-8edd-d354a259a1f3', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('63f84194-89e2-59fd-8101-05c8fa3cbc9a', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('bd4046fa-2e74-5a9a-8bf5-f916ed25b168', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5620d4a2-bb7a-5634-baa7-a9ba4b1613b6', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3577d328-d18c-50a5-8c27-9c36211ce584', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d6b7a814-2207-52ad-be38-b846a30d8fcc', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e276496a-a908-544c-aaf6-0f40bd6707c1', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fe6ff536-73b9-5509-91fc-0fc8cc9eafcd', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('068a69a7-3508-55bc-b5b2-9a2fdd924096', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ebc2ae11-6e9c-55bc-a695-8f6cb069c4ff', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e31a3d7c-502f-5d51-a211-a6d26ff45553', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('438bcd64-5f13-5e66-998f-5c2c834ada39', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('14453788-390f-550d-820a-f8a83ec4ec57', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('458d1693-b9bc-5bf0-8d62-0e636cb45eef', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('87d574d0-31e5-5252-924a-67a0406c2bcd', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3776a841-e8d6-521a-ae4d-fad87c685765', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('530b29cb-ada2-5189-9fc3-af4c75d6f62c', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('09f79457-f656-5404-b791-525b928c6f4f', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0c252b42-4605-59c3-aea9-396af71181c6', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9f2b9910-4f55-5cca-8eb7-0632f2901224', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('060d186a-fb64-5fd3-b6f3-f203332c35f3', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d4c68311-e65f-5165-8c68-a1882f742f4e', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('980a2062-f56a-595b-9b01-f1018c168ef7', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('79b5d89f-1ee5-567f-86f9-ee82bfdfa73d', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f5cf809b-1913-5b98-a53f-d3efd071283d', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('25c3698c-c0ee-5315-a54f-25f3d7a2203d', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('dcfe7ccd-8e63-5b80-aaf2-c36630305e02', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('509eab4e-139f-5fd1-867c-87ae058f7110', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('bb131e42-40a6-5768-a341-5b11f1327586', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('236fc8fd-096b-561b-939e-6710dc94819b', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('94086c61-b433-51e5-9512-2251daf69055', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('384d2fa0-6e2e-53a4-b1e4-a75a653f9f01', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('047c84da-0c60-53f8-a018-7c1ede615014', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('667747c6-a687-53de-a8bf-7ee9dfe23475', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8eb6440b-12fb-5f26-a1f3-7c179c69de48', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d9ce7b64-d02e-55ed-875f-dc194664f87d', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('468d3d68-8ce3-536a-b870-94374a8e8a76', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('309ed5e8-15cf-59ae-ad4f-8c1fb4dc2f6e', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('309ed5e8-15cf-59ae-ad4f-8c1fb4dc2f6e', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('57e96d97-e6c0-57cf-9bc6-ff0b611edc31', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('57e96d97-e6c0-57cf-9bc6-ff0b611edc31', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('421de6f0-47e5-50ce-bf50-963a01139a8b', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2ce57c2c-50c3-58d8-9f9d-381df425fbbd', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('55f92940-8b65-5ce6-a6fc-7dde821a7dc6', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e6167a13-faff-5fd0-82e5-b097758506fc', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e6167a13-faff-5fd0-82e5-b097758506fc', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0924e874-e192-5862-997b-fd55da7a1220', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b9b68d3a-d6d2-55c3-b3d6-7724f7a61e11', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cfc2e316-2f2b-5bd9-a161-df16b4b47445', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cfc2e316-2f2b-5bd9-a161-df16b4b47445', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e0b799c7-2f8e-500d-80bd-b763a5b37ab5', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('12b5e7c1-569e-5b88-b2c9-e1268e26b73c', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3c12eac2-4f33-548d-9085-a8a705c8d2ba', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d26251c2-8f64-5cda-aa8b-33aa9f53e0e7', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f1119754-958e-578b-b265-86e609d11ce2', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ea2cce08-8fda-51e1-85b6-bb920e533138', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5ced4af2-6d08-58c0-9ff3-36cbaac6aed0', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4c0bc009-1d6a-54d2-991d-cd2d606ee3d9', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('39516016-04d3-54cb-8e8f-379991f7c3ec', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('05aaa68f-9259-563a-8969-2476010e9e4a', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3cf2b130-642b-5276-b8f4-4288131e2fda', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('eb32b85a-c250-5c1c-9b22-6436fe16e03e', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('64cfc7ac-01bb-59dc-b26a-ec99e5428280', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4525f626-6f74-5264-b80a-195d34ef7e2c', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3c0a0191-a4df-5b6f-aa56-9091d100594b', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4e22ca35-e07c-510a-86e6-af980e9a5ab9', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('227f45f8-ac1f-5676-a10d-315a8348dacc', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('acefcea7-bce3-55de-886c-d5d449fa99bf', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1684956c-5559-5c60-95e6-3ea31da55270', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('db370d95-5fd0-5448-bab5-03a9faa1da5f', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fa305a29-9fc7-5dac-9827-bddf5907899e', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c2b1f475-a4d1-55d6-a997-cfb106856aad', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5b3add93-6d8c-5d63-9912-cc7d1d5a2f50', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('80101a9d-48cd-57a3-bfea-69c8858ebb1a', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b4a90073-e049-5d88-b6ba-a1f0d4f684ae', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f8d9190a-f5c9-562a-8629-7fb70db53d77', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a7ffc80b-115a-5352-8d96-90914949c366', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('24bd3bad-8cfb-5cb3-9602-9441a21572e3', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('67105ba2-41bf-5f28-9c80-d0fd79bb4888', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('aaae03c0-ec71-5d0f-a358-abf32e8c24b1', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('dce31197-47d2-5d3e-ac1c-c2b27406ec7b', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e2563238-0219-53a5-a454-9f33c8de9e18', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e2563238-0219-53a5-a454-9f33c8de9e18', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('807384dc-56a7-5cec-8f61-333da859cdc7', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('67b6f791-f3d0-5796-8c48-17a324d51de7', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c4f14a95-0efd-5580-adf7-88bedd98c074', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('596de1c1-fba8-57d4-83a9-4ce95a4521d4', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b9e0e757-997c-54ad-822b-9330a4ddf127', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b9e0e757-997c-54ad-822b-9330a4ddf127', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e330dd92-e1ad-50b5-b44b-55c1ac8b9b2b', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('54a4ec87-2476-5d7d-a488-b779e1806f54', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e788a11a-f8c2-580a-bfa3-d2aeba2aa8f4', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('773e5843-0e46-543a-921e-728375c4deb0', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('773e5843-0e46-543a-921e-728375c4deb0', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2ce0d4c8-340d-55af-bf9d-acd015639f29', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('bdfd3a3b-461e-5fe0-a506-d12c993aa377', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7f4e2b8c-a262-50ed-828e-c45a1e39e2b9', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4138e5c3-8fc5-5abf-a657-b85373fff180', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5910a1f6-d69d-5675-98dc-93e6969935ad', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2e2d0ad8-16db-5925-b6e7-a89857488359', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2f74f3b6-7eaa-54ea-9f0c-02ef2012c947', '9cf82300-a051-548f-b5b1-f2dfd9a1f263', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4f292046-795d-5e13-b414-b0651c050ad6', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6dfea3c8-244c-58dd-8005-ad46eb2f2ac1', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('48d1b5d9-4213-5394-bec0-c06adc34aa8d', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1735c78e-493e-5169-9f60-2f26167ef99f', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b95266a9-a16b-5b18-82cc-ee517af2b475', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('13dc2ccc-601e-5035-83bc-a66a165f1aa3', '8f3440cb-d43b-5454-a7fd-9f9179831f9f', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f4a9bd2e-daeb-5326-a74f-8bbda53681ae', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0296168b-44e5-5b36-97b1-44fbc1325459', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('597d0de2-e1cb-55ba-b0b2-c23381509d96', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('96b84733-130a-59d8-be56-82248413ea54', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e033a1eb-dbb2-53e5-8f59-15b169cf6b6a', '3d84f2ba-e5ae-5995-90ed-576fc675f3e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a49650ab-063e-584d-9144-ae353ebde7fd', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('47ace1b0-5f8e-5d35-90fa-78455298ac81', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('99583095-12e6-568c-8f0d-ce0e8ff489ef', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2727e943-26af-505a-a11f-dbed3b0aa47e', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('072feee4-00f3-509d-8695-5dce3a51450c', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7a1dea55-d859-51c0-b554-91c911449859', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8a665df3-b9ac-5d24-bad6-0a1099b717dd', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('75441bcc-9c95-5aa5-96ec-7dd2e0c06088', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5a81e645-76ee-5204-a267-8b9d7e69d24b', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5aa3afac-e074-5f2a-b703-b8bdb30b0aaf', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8336f6e8-677f-5cf9-8a0f-f3ab4d1573e8', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b618b7ad-1149-5c08-bb65-e7aeb89c3cec', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b93bfcd1-1f27-584e-a74f-7fd318b0abcc', '7ea23dd5-a666-543f-b04d-fdc4563b500c', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7cdeced2-9422-5235-9d2a-ccd07fe52bc6', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1f1dde8c-61ce-50dc-b5b8-03cdef6a68c8', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e8331eae-dd87-57a1-9534-2296e9242999', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b10ca798-e94b-514a-a26c-87c7cd87c6f9', 'bfb209c7-3e80-531b-ab07-7e9829b6f9be', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6e5e66e2-2ea4-5fb9-9057-62c04b062450', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('78a26602-2175-5821-b19a-6873e3c923b9', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('81078677-70ef-527c-9a34-c91a9b34f609', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b1402ac3-cb79-50eb-97a6-c72e98e713a9', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d9acb1c3-7666-5b02-9c3c-71a0d70869d0', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('97bc955c-42d0-5cab-8065-c2933b38470d', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4f7d7fb2-9372-50b1-be5c-3ca3d7fca263', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ee215971-8091-5ddf-b233-5fc11c5eed28', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('75a668db-6d9f-51cf-9ef5-6fd55ecaa442', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a5119da5-f32f-5ea5-8d5e-937bb2be65e8', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('619ac685-ac9f-50c1-99a9-b7c400288c5b', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('619ac685-ac9f-50c1-99a9-b7c400288c5b', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('aa8166ef-8ed4-55bb-81b1-2aac62b69ec4', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('aa8166ef-8ed4-55bb-81b1-2aac62b69ec4', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9830e58c-b4c8-5154-9de7-f62c83d839bf', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9830e58c-b4c8-5154-9de7-f62c83d839bf', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6ccd9071-c0f1-5f47-bff2-7d3e501c09ce', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('dbf93fd4-387c-5105-96b1-19a21dc46701', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('495ce988-a264-5fd2-855e-fec3dadf7315', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('48e02b73-d2de-5bca-8ab9-87735f86069e', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('48e02b73-d2de-5bca-8ab9-87735f86069e', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('403ab120-da78-5776-b47f-0241461fd53d', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('403ab120-da78-5776-b47f-0241461fd53d', 'f78d864c-94e1-5cdf-9672-b2c891bb2abb', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f9efc733-6c33-5624-b716-10c5ab3a199c', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f9efc733-6c33-5624-b716-10c5ab3a199c', 'f78d864c-94e1-5cdf-9672-b2c891bb2abb', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9de864ca-53bc-5ccc-a40a-11853198c531', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1b18c700-0a50-5354-95a0-2dd4a411eb58', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5859a4c4-ee48-59bd-a50b-f581f966aec8', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('36072ee1-99c2-58b3-9ae8-8df683c40db2', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0d6c0d02-4543-5a99-b603-b6cb763ea51a', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0e48f564-c694-5647-bd27-29ce4afde255', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0ace0919-c7ab-54f8-81cd-42b1f5660fcf', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('4e188db9-c851-5fd0-8720-8946cec1f9a4', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('fa160272-a3f0-5036-b84e-0595e82a99a9', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('85501a34-2b83-52e2-9e7b-eb77af0dc1d4', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('20ad2e6e-e6c1-5458-b7ea-a1867df94d8a', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('517290ca-4773-54e8-a5bc-dc5622784761', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1985bbfd-3bab-50ff-a375-dccd0231fc13', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('83f9d767-f749-5ba2-8a75-2c18451a2025', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('aef520c1-1583-528a-aad3-8baa1b3a4fd1', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('cca5f819-5980-57a0-a63e-585d0b4e36ee', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ecfc5d5b-ef3d-5a6d-ba13-e880a5426432', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('30298e4a-9c4b-52a6-a14a-cca579a17329', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('68b2695e-96a3-5665-8afd-b0f2dc5ef852', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f3690fc9-1e67-5618-a58c-90675e780249', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9192dea6-add7-53c2-9fc0-8e5609752961', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2ff66b04-e2fe-585e-aeb6-6df9607b4a2f', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0084984c-b187-510a-ab71-8894c5adc0ec', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('39dcdc87-fb5e-5102-8053-fa58bc78d4a2', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('c9b76566-f805-5549-a7f1-3c49afb50db1', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2f873112-6d08-533b-a0b0-eeb0220bd94e', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d3d902f7-4345-573b-989b-30dbffb54a1c', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0a5b28f8-e834-5f2f-a0d6-57c5206a8b14', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f0d3492c-2d27-5fb9-ab86-80cbfdee02f0', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8d82ea83-ca09-5943-9baf-1e33c1dc286b', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3937cfee-c4a1-572f-a4c9-0cf3f0b79983', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0f5c424a-3397-5e23-a13f-dc242cb71b2f', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('656f6ba2-210f-5853-9c97-8d8e28bbbb60', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('db449425-372e-5c47-86e2-3bb0eaf4087d', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f8e25713-83b9-5f29-a95b-d03ba449d104', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a2dc97f0-4d5c-591a-8426-3c88ab60594f', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('08923b31-1204-53d1-9550-2492b21ac698', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2c7a7524-0c2f-5e41-81b9-3f8a519c324f', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('92cd187a-7d6c-5c63-9ddf-41f3003ebb95', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5f1e1d0d-8f2e-58ef-977b-73ff5b2a3e0b', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8c102cf3-748a-549a-886b-558336b0a55d', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('158c04bb-1969-540c-98e7-2b532e0f5ffd', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e6b99af6-e327-52da-af76-ec42da0ebdd1', '7f377458-de96-52a7-b8cf-04e50369469a', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b0f6843f-29ff-525e-b073-3ff562ae778b', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a2916794-94e4-5cce-8fd9-7732feaa10dd', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('aa85f4cf-36d2-5a04-8856-5098c2fdb1d9', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('5d13b54d-7a4d-5b64-ac2b-4dfcbcec6f23', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('342cb172-4b3c-5422-963f-12d1d35b789d', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('428050ec-5141-56a6-af9c-96762db3c8fa', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ec5e2f75-9933-5c87-a2fd-8ec86e28dfaa', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ab6cb241-0198-5135-ba1d-5bf92d34611d', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('072ba906-5c99-5698-b8c3-509a13adbdcf', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9b5a802e-7181-561a-800c-9fc317e745e1', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1f3c580f-17f3-5f9e-95f4-bda0b8f58829', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d6eb7645-20b7-566e-b9fa-5343ea74d49b', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('9cf2f3fc-982c-57e6-83ad-68a6b0b72c86', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('7c620292-f6b8-50da-b119-fe747083cab2', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('265d3d00-8939-5379-88c7-0340513b32a5', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d90d63b7-3be7-555e-8eb0-f91ac31b0cd8', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d90d63b7-3be7-555e-8eb0-f91ac31b0cd8', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1e23f1b1-cae3-594e-9b61-96079be253ff', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('111acdc2-d00f-52af-b2a7-22a1eb8c1f87', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('111acdc2-d00f-52af-b2a7-22a1eb8c1f87', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('77a61d14-4743-5211-bb68-3f85793af199', '33007428-2ecd-5b52-93aa-b6849142c098', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('77a61d14-4743-5211-bb68-3f85793af199', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('70ca5285-6a96-5c0b-ad24-e3370a2607a7', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('98fa2fc9-32cf-5fe1-a47d-21998ef49045', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('69087f77-abd0-57cc-bd8c-c303ce47c38c', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d295bce0-3520-523c-9dde-c7d0d8883ccf', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d295bce0-3520-523c-9dde-c7d0d8883ccf', 'e3ef51f2-e033-53bd-81ed-6bb1109a1b1e', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f33f7759-b37e-5ba9-9fdd-02d146a0a308', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('dc9b4a40-0c74-5871-b95f-38a3b4e52b4e', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('a14b903e-44d9-5b87-afe9-8bab6d4654cd', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('73aaa8b9-712e-5a5f-ab49-441cccd3b874', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3f5e9b0a-faf4-5a7e-9cad-bd56339bc97b', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1ffc5f98-6bf5-575e-ae7b-4b6fff0fa773', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f2122ff2-ce64-530b-a461-6bdc297a2335', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('67b49ae1-180e-5c3d-9682-9f9ee9691695', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('0bbbd8e4-ae56-585a-8f16-cdcf99858f79', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('59b087ae-8a74-54dc-b1be-35613cecfd4a', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('6ba8a4e3-feec-5480-bfd3-15abfa766c8d', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('87df716c-a95a-5700-aa50-1d6a96f21fdb', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('25fa6964-ec9b-5865-a1e5-18bc0cb21b3b', '6fca9444-24e9-5214-8602-158f38f353ec', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1a772bb4-785b-5cd8-834a-7f6a1c07e801', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f7eb4e05-2676-58e4-88a7-72c050ec3b9a', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('f7eb4e05-2676-58e4-88a7-72c050ec3b9a', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b02de7fb-afa4-5c83-9487-ffc7d8e74e09', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b02de7fb-afa4-5c83-9487-ffc7d8e74e09', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8fe8523c-4a9f-5ae2-ac1b-1f96db27b577', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('8fe8523c-4a9f-5ae2-ac1b-1f96db27b577', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('b57cfe23-fc1d-51b0-b370-09f42fa89299', '6ba9979b-078d-563a-ae15-44354e3c8fb0', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e979b87a-00a8-5985-8555-f7773854a715', '8baebe79-6e19-545b-a306-0d8b8ca2382b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('023c3298-36f7-539a-881b-9ab0085df3fb', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1d91ef4e-c2b1-530f-afe4-a6a18f73e0b6', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1d91ef4e-c2b1-530f-afe4-a6a18f73e0b6', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('1d91ef4e-c2b1-530f-afe4-a6a18f73e0b6', '3d607ef3-b375-5ece-9f8b-84feb2ed4a16', 'Faculty Co-Author', 3)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('2f839c6f-efd9-50c2-b69d-2f315d434967', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('93f8e758-b23a-5d5f-acb2-9beb4052944e', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('93f8e758-b23a-5d5f-acb2-9beb4052944e', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('ad46f00d-0f1b-51b5-a8c5-1efe25bb61ad', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('54c6e257-3315-5d09-bf77-ff3e089f4f63', '4a251956-1179-50e2-bf7e-f3be7d5574e2', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('289f3e2c-a93d-5650-8fcc-93175c32bd33', '0bdba158-8848-57a1-8223-ccdf001d9c5b', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d60864df-e195-50d9-9a7b-4ce808cb05e2', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('d60864df-e195-50d9-9a7b-4ce808cb05e2', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('e64352b5-4021-5c18-8afe-d3f8def280b5', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('098ed513-d09a-582d-9b6a-29140e711b0e', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('098ed513-d09a-582d-9b6a-29140e711b0e', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('90b86da3-03a0-59a3-9f74-fb499aa5ffbd', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('90b86da3-03a0-59a3-9f74-fb499aa5ffbd', '88d09aab-214e-509e-8038-c6bd8ddb63c7', 'Faculty Co-Author', 2)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('075835e9-bdba-54ee-abc5-8a979538e136', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
+ON CONFLICT (publication_id, author_order) DO NOTHING;
+INSERT INTO publication_authors (publication_id, faculty_id, author_name, author_order)
+VALUES ('3530597b-0fb4-5e4a-9e8a-622ff6b42152', 'bab88791-e99c-561e-986e-2a99c8c84b19', 'Faculty Co-Author', 1)
 ON CONFLICT (publication_id, author_order) DO NOTHING;
 
 -- 11. Sponsored Projects
@@ -5844,13 +10310,13 @@ VALUES ('22222222-2222-2222-2222-222222222222', 'Umeshwar Singhg', '', '', 'Dr. 
 
 -- 18. Staff Registry
 INSERT INTO staff (department_id, full_name, designation, email, phone, photo_url, time_note)
-VALUES ('22222222-2222-2222-2222-222222222222', 'ANURAG DHIMAN', 'TECHNICIAN', 'anuragd@nith.ac.in', '7889075826', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427384/jbrhj2lfyzeah8wsekdo.jpg', '');
+VALUES ('22222222-2222-2222-2222-222222222222', 'ANURAG DHIMAN', 'TECHNICIAN', 'anuragd@nith.ac.in', '7889075826', 'https://res.cloudinary.com/dha8atrgz/image/upload/v1722102504/289599C8-3365-4180-B5F0-D17ED36A6243_-_Mr._Anurag_Dhiman_bem8gs.jpg', '');
 INSERT INTO staff (department_id, full_name, designation, email, phone, photo_url, time_note)
-VALUES ('22222222-2222-2222-2222-222222222222', 'Piyush Pathania', 'Junior Assistant', 'piyush@nith.ac.in', '9149598033', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427386/o0ivt6lj564ct70n815r.jpg', '');
+VALUES ('22222222-2222-2222-2222-222222222222', 'Piyush Pathania', 'Junior Assistant', 'piyush@nith.ac.in', '9149598033', 'https://res.cloudinary.com/dha8atrgz/image/upload/v1722102594/IMG_20210506_132421_copy_212x292_-_Piyush_Pathania_pvhfef.jpg', '');
 INSERT INTO staff (department_id, full_name, designation, email, phone, photo_url, time_note)
-VALUES ('22222222-2222-2222-2222-222222222222', 'Jiwan kumar', 'Technician SG II', 'jiwannit@gmail.com', '8894961433', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427388/td4slvfwp3w0vniqvrvu.jpg', '');
+VALUES ('22222222-2222-2222-2222-222222222222', 'Jiwan kumar', 'Technician SG II', 'jiwannit@gmail.com', '8894961433', 'https://res.cloudinary.com/dha8atrgz/image/upload/v1722102643/jeevan_sir_cse_-_Jiwan_Kumar_pfn3qt.jpg', '');
 INSERT INTO staff (department_id, full_name, designation, email, phone, photo_url, time_note)
-VALUES ('22222222-2222-2222-2222-222222222222', 'Sanjeev Kumar Thakur', 'Technical Assistant SG-I', 'sanjeev@nith.ac.in', '', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427492/m1cbcpvdgccqevqvldf3.jpg', '');
+VALUES ('22222222-2222-2222-2222-222222222222', 'Sanjeev Kumar Thakur', 'Technical Assistant SG-I', 'sanjeev@nith.ac.in', '', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1744802170/eml63kocxmmelbpw5c4v.jpg', '');
 
 -- 19. Labs & Equipment
 INSERT INTO equipment (department_id, name, quantity, stock_in_use, purchase_value, purchase_date, vendor_name, invoice_number, indenter_name, contact_details)
@@ -5922,27 +10388,27 @@ VALUES ('22222222-2222-2222-2222-222222222222', 'achievement', 'Bootcamp On Mobi
 INSERT INTO hod_messages (department_id, hod_name, message, image_url)
 VALUES ('22222222-2222-2222-2222-222222222222', 'Dr. Siddhartha Chauhan', 'It is with great pleasure that I write this in the capacity of the Head of the Department (HOD) of the Computer Science and Engineering (CSE) Department at NIT Hamirpur. I thank all the faculty members, students, and staff of our esteemed department for their continuous efforts every day in maintaining the excellence and reputation of our department', 'https://portfolios.nith.ac.in/uploads/member_details/62.jpg');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427452/vhzurtmaxoray1q0oe6q.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dtxjhtjv2/image/upload/v1726560953/1_vrhhbu.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427450/t1lfnxduqhnkj48oohoz.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dtxjhtjv2/image/upload/v1726560951/2_olfa2q.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427455/duizaz9gglgx3qkvmymb.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dtxjhtjv2/image/upload/v1727629275/Departmental-Website-Inauguration_1_wxnswg.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427495/p5qtua1zvw6iozwpby9l.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013579/luoszkppvjhxboiettqs.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427498/alqnfjbp6qsdoaefudcm.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013596/qforn6yvutj2lquzltif.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427501/flnke4ag8rep0klteys8.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013611/pd0v4cmnhjgixissttgl.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427503/ozq8xoxrgyubfhqrnqgv.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013697/uzflivcqzwx5zowzusbv.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427505/ylj8ljw3wpdcnjceuakn.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749013709/gva8oahffjnnhrxy1yjj.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427513/pe1xbnbukasxueyxsfkp.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749211054/z3hutohh0p6xro1vp7qm.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427516/rkpiaicfz9jc94oozcpx.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749468582/hpz76jipbtrc2zxrhzzh.png');
 INSERT INTO home_slides (department_id, image_url)
-VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427518/ebekk51czvq3uk4lrhuq.png');
+VALUES ('22222222-2222-2222-2222-222222222222', 'https://res.cloudinary.com/dvnrlqqpq/image/upload/v1749468653/snbuwfwxpplfftowidmh.png');
 
 -- 23. Refresh Materialized Views
 REFRESH MATERIALIZED VIEW v_faculty_kpis;
