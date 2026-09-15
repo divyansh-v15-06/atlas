@@ -103,7 +103,7 @@ func TestPasswordHashingAndLogin(t *testing.T) {
 	}
 
 	repo := &mockIdentityRepo{user: user}
-	svc := identity.NewService(repo, "test-jwt-secret-key-32-characters-min", 24)
+	svc := identity.NewService(repo, "test-jwt-secret-key-32-characters-min", 24, nil, "http://localhost:3000")
 
 	// Correct password
 	resp, err := svc.Login(context.Background(), &identity.LoginRequest{
