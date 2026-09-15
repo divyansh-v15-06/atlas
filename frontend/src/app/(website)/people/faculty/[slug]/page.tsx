@@ -81,6 +81,7 @@ import {
   isMatchingRecord,
 } from "@/lib/faculty-storage";
 import { useDepartment } from "@/context/department-context";
+import CoAuthorsInput, { CoAuthorInternal } from "@/components/faculty/CoAuthorsInput";
 
 export type TabKey =
   | "facultyInfo"
@@ -288,6 +289,7 @@ export default function FacultyPortfolioPage({
   const [editingItem, setEditingItem] = useState<any>(null);
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [selectedAssociatedFaculty, setSelectedAssociatedFaculty] = useState<any[]>([]);
+  const [externalAuthors, setExternalAuthors] = useState<string[]>([]);
   const [isCustomIndexing, setIsCustomIndexing] = useState(false);
   const [customIndexingText, setCustomIndexingText] = useState("");
   const [facultySearchQuery, setFacultySearchQuery] = useState("");
@@ -704,6 +706,7 @@ export default function FacultyPortfolioPage({
     setFormMode("add");
     setEditingItem(null);
     setSelectedAssociatedFaculty([]);
+    setExternalAuthors([]);
     setIsCustomIndexing(false);
     setCustomIndexingText("");
     setFacultySearchQuery("");
@@ -881,6 +884,11 @@ export default function FacultyPortfolioPage({
       );
     }
     setSelectedAssociatedFaculty(matchedFaculties);
+    if (Array.isArray(item.external_authors)) {
+      setExternalAuthors(item.external_authors);
+    } else {
+      setExternalAuthors([]);
+    }
 
     setIsDetailsModalOpen(false);
     setIsFormModalOpen(true);
@@ -976,10 +984,62 @@ export default function FacultyPortfolioPage({
         abstract_text: formData.abstract_text || "",
         faculty_ids: assignedFacultyIds,
         associated_faculty: associatedFaculty,
+        internal_authors: selectedAssociatedFaculty,
+        external_authors: externalAuthors,
       };
 
       syncMultiFacultyRecord(baseFaculty, "publications", record, selectedAssociatedFaculty, false);
       setAllFacultyPubs(getStoredData(baseFaculty, "publications", baseFaculty.publications || []));
+
+      // Dispatch to Go backend API for PostgreSQL M:N join persistence
+      try {
+        const token = typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
+        const authorsPayload = [
+          {
+            faculty_id: baseFaculty.id,
+            author_name: baseFaculty.full_name,
+            author_order: 1,
+            is_corresponding: true,
+          },
+          ...selectedAssociatedFaculty.map((f: any, idx: number) => ({
+            faculty_id: f.id || null,
+            author_name: f.full_name,
+            author_order: idx + 2,
+            is_corresponding: false,
+          })),
+          ...externalAuthors.map((extName: string, idx: number) => ({
+            faculty_id: null,
+            author_name: extName,
+            author_order: selectedAssociatedFaculty.length + idx + 2,
+            is_corresponding: false,
+          })),
+        ];
+
+        fetch(`${apiUrl}/publications`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify({
+            title: record.title,
+            publication_type: (typeMap[activeTab].type || "JOURNAL").toUpperCase().replace(" ", "_"),
+            doi: canonicalDoi || undefined,
+            isbn: record.isbn || undefined,
+            venue: record.journal_or_conference_name,
+            publisher: record.journal_or_conference_name,
+            volume: record.volume || undefined,
+            issue: record.issue || undefined,
+            pages: record.page_range || undefined,
+            publication_date: `${record.year}-01-01T00:00:00Z`,
+            indexing: record.indexing,
+            raw_authors: record.author_text,
+            authors: authorsPayload,
+          }),
+        }).catch(() => {});
+      } catch {}
+
       toast.success(`${typeMap[activeTab].type} record saved & synced with associated faculty!`);
     } else if (activeTab === "patents") {
       const canonicalAppNum = (formData.application_number || "").trim();
@@ -3142,16 +3202,22 @@ export default function FacultyPortfolioPage({
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
-                  <div className="space-y-1 sm:col-span-2">
-                    <label className="font-bold text-neutral-700">Authors (comma separated) *</label>
-                    <input
-                      type="text"
-                      name="author_text"
-                      required
-                      placeholder="e.g. Lalit Kumar, Parveen Kumar, RK Chauhan"
-                      value={formData.author_text || formData.authors || ""}
-                      onChange={handleInputChange}
-                      className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
+                  <div className="sm:col-span-2">
+                    <CoAuthorsInput
+                      currentFaculty={baseFaculty}
+                      internalAuthors={selectedAssociatedFaculty}
+                      externalAuthors={externalAuthors}
+                      onChange={({ internalAuthors, externalAuthors: extAuthors, combinedAuthorText }) => {
+                        setSelectedAssociatedFaculty(internalAuthors);
+                        setExternalAuthors(extAuthors);
+                        setFormData((prev) => ({
+                          ...prev,
+                          author_text: combinedAuthorText,
+                          authors: combinedAuthorText,
+                        }));
+                      }}
+                      label="Authors & Co-Authors (Dual Picker: College Colleagues & External Authors)"
+                      helperText="Choose colleagues from NIT Hamirpur (Option 1) to cross-sync to their portfolios, and add external co-authors outside the institute (Option 2)."
                     />
                   </div>
                   <div className="space-y-1 sm:col-span-2">
@@ -3332,7 +3398,6 @@ export default function FacultyPortfolioPage({
                       className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none"
                     />
                   </div>
-                  {renderAssociatedFacultyPicker("Associated Faculty (Co-Authors)")}
                 </div>
               )}
 

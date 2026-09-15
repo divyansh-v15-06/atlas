@@ -89,8 +89,6 @@ const LabsUpdateModal = ({
             }
         }
         onSubmit(updatedFormData, initialData.id)
-        onClose()
-    }
         setFormData({
             title: "",
             description: "",
@@ -99,8 +97,7 @@ const LabsUpdateModal = ({
             technician: "",
             image: null
         })
-
-
+        onClose()
     }
 
 

@@ -21,6 +21,7 @@ import {
   Trophy,
   Briefcase,
   Layers,
+  Server,
   ChevronRight,
   Quote,
   TrendingUp,
@@ -71,6 +72,14 @@ export default function AboutUsPage() {
       icon: GraduationCap,
       badge: "NEP-2020 Aligned",
       gradient: "from-amber-900 to-[#85261e]",
+    },
+    {
+      title: "Computing Assets & Equipment",
+      href: "/aboutus/equipment",
+      desc: "Live inventory of departmental supercomputing nodes, GPU clusters, and high-performance laboratory equipment.",
+      icon: Server,
+      badge: "Lab Assets",
+      gradient: "from-[#4a1814] to-[#85261e]",
     },
     {
       title: "Frequently Asked Questions",
@@ -841,7 +850,7 @@ export default function AboutUsPage() {
               </h2>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
               {quickNav.map((item) => (
                 <Link
                   key={item.href}
