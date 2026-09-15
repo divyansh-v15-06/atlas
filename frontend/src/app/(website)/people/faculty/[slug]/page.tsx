@@ -179,8 +179,26 @@ export default function FacultyPortfolioPage({
   const [allHonors, setAllHonors] = useState<any[]>(baseFaculty?.honors || []);
   const [allTalks, setAllTalks] = useState<any[]>(baseFaculty?.expert_talks || []);
   const [allExposures, setAllExposures] = useState<any[]>(baseFaculty?.exposures || []);
-  const [allConsultancies, setAllConsultancies] = useState<any[]>([]);
-  const [allEvents, setAllEvents] = useState<any[]>([]);
+  const [allConsultancies, setAllConsultancies] = useState<any[]>(
+    baseFaculty
+      ? MOCK_CONSULTANCIES.filter(
+          (c: any) =>
+            c.faculty_ids &&
+            (c.faculty_ids.includes(baseFaculty.id) ||
+              (baseFaculty.legacy_id && c.faculty_ids.includes(baseFaculty.legacy_id)))
+        )
+      : []
+  );
+  const [allEvents, setAllEvents] = useState<any[]>(
+    baseFaculty
+      ? MOCK_EVENTS.filter(
+          (e: any) =>
+            e.faculty_ids &&
+            (e.faculty_ids.includes(baseFaculty.id) ||
+              (baseFaculty.legacy_id && e.faculty_ids.includes(baseFaculty.legacy_id)))
+        )
+      : []
+  );
 
   // Load and synchronize stored data
   useEffect(() => {
@@ -197,23 +215,86 @@ export default function FacultyPortfolioPage({
       setAllTalks(getStoredData(baseFaculty, "expert_talks", baseFaculty.expert_talks || []));
       setAllExposures(getStoredData(baseFaculty, "exposures", baseFaculty.exposures || []));
 
-      const lastName = (baseFaculty.full_name || "").split(" ").pop()?.toLowerCase() || "";
-      
-      // Match consultancies from seed and stored
+      // Match consultancies from seed and stored strictly by faculty IDs
       const defaultConsultancies = MOCK_CONSULTANCIES.filter((c: any) =>
-        (c.faculty_ids && c.faculty_ids.includes(baseFaculty.id)) ||
-        (lastName.length > 2 && c.author_text?.toLowerCase().includes(lastName))
+        c.faculty_ids && (c.faculty_ids.includes(baseFaculty.id) || (baseFaculty.legacy_id && c.faculty_ids.includes(baseFaculty.legacy_id)))
       );
       setAllConsultancies(getStoredData(baseFaculty, "consultancies", defaultConsultancies));
 
-      // Match events from seed and stored
+      // Match events from seed and stored strictly by faculty IDs (exact 8 events for Dr. Arun Kumar Yadav)
       const defaultEvents = MOCK_EVENTS.filter((e: any) =>
-        (e.faculty_ids && e.faculty_ids.includes(baseFaculty.id)) ||
-        (lastName.length > 2 && (e.convenor?.toLowerCase().includes(lastName) || e.coordinator?.toLowerCase().includes(lastName)))
+        e.faculty_ids && (e.faculty_ids.includes(baseFaculty.id) || (baseFaculty.legacy_id && e.faculty_ids.includes(baseFaculty.legacy_id)))
       );
       setAllEvents(getStoredData(baseFaculty, "events", defaultEvents));
     }
   }, [baseFaculty]);
+
+  // Live synchronization from Backend API (if available)
+  useEffect(() => {
+    if (!baseFaculty?.id) return;
+    const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || "/backend/api/v1";
+    const apiUrl = rawApiUrl.endsWith("/") ? rawApiUrl.slice(0, -1) : rawApiUrl;
+
+    // Fetch live publications
+    fetch(`${apiUrl}/publications?faculty_id=${baseFaculty.id}&limit=200`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (json?.data && Array.isArray(json.data) && json.data.length > 0) {
+          const mapped = json.data.map((p: any) => {
+            const rtype =
+              p.publication_type === "JOURNAL"
+                ? 1
+                : p.publication_type === "CONFERENCE"
+                ? 2
+                : p.publication_type === "BOOK"
+                ? 3
+                : 4;
+            const ptype =
+              p.publication_type === "JOURNAL"
+                ? "Journal"
+                : p.publication_type === "CONFERENCE"
+                ? "Conference"
+                : p.publication_type === "BOOK"
+                ? "Book"
+                : "Book Chapter";
+            return {
+              ...p,
+              venue_name: p.venue || p.venue_name,
+              journal_or_conference_name: p.venue || p.journal_or_conference_name,
+              page_range: p.pages || p.page_range,
+              author_text: p.raw_authors || p.author_text,
+              journal_quartile: p.quartile || p.journal_quartile || "T",
+              publication_type: ptype,
+              type: p.publication_type,
+              research_type_id: rtype,
+            };
+          });
+          setAllFacultyPubs(getStoredData(baseFaculty, "publications", mapped));
+        }
+      })
+      .catch(() => {});
+
+    // Fetch live events
+    fetch(`${apiUrl}/events?faculty_id=${baseFaculty.id}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (json?.data && Array.isArray(json.data) && json.data.length > 0) {
+          const mapped = json.data.map((e: any) => ({
+            id: e.id,
+            title: e.title,
+            event_type: e.event_type,
+            venue: e.venue,
+            start_date: e.start_date,
+            end_date: e.end_date,
+            convenor: e.coordinators?.map((c: any) => c.coordinator_name).join(", ") || "",
+            coordinator: e.coordinators?.map((c: any) => c.coordinator_name).join(", ") || "",
+            faculty_ids: e.coordinators?.map((c: any) => c.faculty_id).filter(Boolean) || [baseFaculty.id],
+          }));
+          setAllEvents(getStoredData(baseFaculty, "events", mapped));
+        }
+      })
+      .catch(() => {});
+  }, [baseFaculty?.id]);
 
   // Reactive synchronization across profiles & tabs
   useEffect(() => {
@@ -360,7 +441,10 @@ export default function FacultyPortfolioPage({
       (p: any) =>
         p.publication_type?.toUpperCase() === "BOOK CHAPTER" ||
         p.publication_type?.toUpperCase() === "BOOK_CHAPTER" ||
+        p.publication_type?.toUpperCase() === "BOOKCHAPTER" ||
+        p.type?.toUpperCase() === "BOOK CHAPTER" ||
         p.type?.toUpperCase() === "BOOK_CHAPTER" ||
+        p.type?.toUpperCase() === "BOOKCHAPTER" ||
         p.research_type_id === 4 ||
         p.research_type_id === "4"
     );

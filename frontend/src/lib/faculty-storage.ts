@@ -221,18 +221,14 @@ export function resolveFacultyBaseline(faculty: any, section: string): any[] {
   }
 
   if (section === "consultancies") {
-    const lastName = (baseFaculty.full_name || "").split(" ").pop()?.toLowerCase() || "";
     return MOCK_CONSULTANCIES.filter((c: any) =>
-      (c.faculty_ids && c.faculty_ids.includes(baseFaculty.id)) ||
-      (lastName.length > 2 && c.author_text?.toLowerCase().includes(lastName))
+      c.faculty_ids && (c.faculty_ids.includes(baseFaculty.id) || (baseFaculty.legacy_id && c.faculty_ids.includes(baseFaculty.legacy_id)))
     );
   }
 
   if (section === "events") {
-    const lastName = (baseFaculty.full_name || "").split(" ").pop()?.toLowerCase() || "";
     return MOCK_EVENTS.filter((e: any) =>
-      (e.faculty_ids && e.faculty_ids.includes(baseFaculty.id)) ||
-      (lastName.length > 2 && (e.convenor?.toLowerCase().includes(lastName) || e.coordinator?.toLowerCase().includes(lastName)))
+      e.faculty_ids && (e.faculty_ids.includes(baseFaculty.id) || (baseFaculty.legacy_id && e.faculty_ids.includes(baseFaculty.legacy_id)))
     );
   }
 
