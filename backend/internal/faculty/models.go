@@ -127,15 +127,15 @@ type FacultyMetricSnapshot struct {
 }
 
 type FacultyPortfolioResponse struct {
-	Faculty                   *Faculty                 `json:"faculty"`
-	Profile                   *FacultyProfile          `json:"profile,omitempty"`
-	Qualifications            []FacultyQualification   `json:"qualifications"`
-	TeachingExperiences       []FacultyTeachingExp     `json:"teaching_experiences"`
-	AdministrativeExperiences []FacultyAdminExp        `json:"administrative_experiences"`
-	Honors                    []FacultyHonor           `json:"honors"`
-	Exposures                 []FacultyExposure        `json:"exposures"`
-	ExpertTalks               []ExpertTalk             `json:"expert_talks"`
-	LatestMetrics             []FacultyMetricSnapshot  `json:"latest_metrics"`
+	Faculty                   *Faculty                `json:"faculty"`
+	Profile                   *FacultyProfile         `json:"profile,omitempty"`
+	Qualifications            []FacultyQualification  `json:"qualifications"`
+	TeachingExperiences       []FacultyTeachingExp    `json:"teaching_experiences"`
+	AdministrativeExperiences []FacultyAdminExp       `json:"administrative_experiences"`
+	Honors                    []FacultyHonor          `json:"honors"`
+	Exposures                 []FacultyExposure       `json:"exposures"`
+	ExpertTalks               []ExpertTalk            `json:"expert_talks"`
+	LatestMetrics             []FacultyMetricSnapshot `json:"latest_metrics"`
 }
 
 type CreateFacultyRequest struct {
