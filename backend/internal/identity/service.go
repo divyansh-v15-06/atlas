@@ -4,11 +4,13 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"github.com/institute-portal/backend/internal/platform/httperr"
+	"github.com/institute-portal/backend/internal/platform/mailer"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -24,13 +26,17 @@ type service struct {
 	repo               Repository
 	jwtSecret          string
 	jwtExpirationHours int
+	mailer             *mailer.Mailer
+	frontendURL        string
 }
 
-func NewService(repo Repository, jwtSecret string, jwtExpirationHours int) Service {
+func NewService(repo Repository, jwtSecret string, jwtExpirationHours int, m *mailer.Mailer, frontendURL string) Service {
 	return &service{
 		repo:               repo,
 		jwtSecret:          jwtSecret,
 		jwtExpirationHours: jwtExpirationHours,
+		mailer:             m,
+		frontendURL:        frontendURL,
 	}
 }
 
@@ -182,6 +188,24 @@ func (s *service) ForgotPassword(ctx context.Context, req *ForgotPasswordRequest
 		return "", err
 	}
 
+	// Send real email if SMTP is configured; otherwise return token for dev use
+	if s.mailer != nil && s.mailer.IsConfigured() {
+		resetURL := fmt.Sprintf("%s/reset-password/%s", s.frontendURL, rawToken)
+		toName := user.FullName
+		if toName == "" {
+			toName = user.Email
+		}
+		// Fire-and-forget — don't block the HTTP response on email delivery
+		go func() {
+			if emailErr := s.mailer.SendPasswordReset(user.Email, toName, resetURL); emailErr != nil {
+				// Log but don't surface to caller — token is already stored
+				_ = emailErr
+			}
+		}()
+		return "", nil // Don't expose token when email is sent
+	}
+
+	// Dev mode: return raw token so the frontend can show a direct link
 	return rawToken, nil
 }
 

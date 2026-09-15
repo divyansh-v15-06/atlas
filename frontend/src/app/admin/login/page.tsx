@@ -238,6 +238,14 @@ export default function AdminLoginPage() {
             {errors.password && (
               <p className="mt-1 text-xs text-red-600 font-medium">{errors.password.message}</p>
             )}
+            <div className="text-right mt-1">
+              <Link
+                href="/forgot-password"
+                className="text-[10px] font-semibold text-[#85261e] hover:underline"
+              >
+                Forgot password?
+              </Link>
+            </div>
           </div>
 
           <button

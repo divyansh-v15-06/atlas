@@ -21,6 +21,14 @@ type Config struct {
 	CORSAllowedOrigins   string
 	DefaultInstitutionID string
 	DefaultDepartmentID  string
+
+	// SMTP / Email
+	SMTPHost     string
+	SMTPPort     string
+	SMTPUser     string
+	SMTPPassword string
+	SMTPFrom     string
+	FrontendURL  string
 }
 
 func Load() *Config {
@@ -45,6 +53,13 @@ func Load() *Config {
 		CORSAllowedOrigins:   getEnv("CORS_ALLOWED_ORIGINS", "*"),
 		DefaultInstitutionID: getEnv("DEFAULT_INSTITUTION_ID", "11111111-1111-1111-1111-111111111111"),
 		DefaultDepartmentID:  getEnv("DEFAULT_DEPARTMENT_ID", "22222222-2222-2222-2222-222222222222"),
+
+		SMTPHost:     getEnv("SMTP_HOST", "smtp.gmail.com"),
+		SMTPPort:     getEnv("SMTP_PORT", "587"),
+		SMTPUser:     getEnv("SMTP_USER", ""),
+		SMTPPassword: getEnv("SMTP_PASSWORD", ""),
+		SMTPFrom:     getEnv("SMTP_FROM", "NIT Hamirpur Portal <24bcs042@nith.ac.in>"),
+		FrontendURL:  getEnv("FRONTEND_URL", "https://tempcse.nith.ac.in"),
 	}
 }
 

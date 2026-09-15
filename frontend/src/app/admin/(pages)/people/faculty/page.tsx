@@ -90,34 +90,8 @@ export default function AdminFacultyPage() {
   const currentSlug = activeDepartment?.slug || "cse";
   const isCse = currentSlug === "cse";
 
-  const [facultyList, setFacultyList] = useState<any[]>(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(`nith_admin_faculty_list_${currentSlug}`);
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            return parsed.map((item: any) => normalizeFaculty(item, activeDepartment?.code || "CSE"));
-          }
-        } catch {}
-      }
-      if (isCse) {
-        const legacy = localStorage.getItem("nith_admin_faculty_list");
-        if (legacy) {
-          try {
-            const parsed = JSON.parse(legacy);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-              return parsed.map((item: any) => normalizeFaculty(item, "CSE"));
-            }
-          } catch {}
-        }
-        return MOCK_FACULTY.map((item: any) => normalizeFaculty(item, "CSE"));
-      }
-      return [];
-    }
-    return isCse ? MOCK_FACULTY.map((item: any) => normalizeFaculty(item, "CSE")) : [];
-  });
-  const [isLoading, setIsLoading] = useState(false);
+  const [facultyList, setFacultyList] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [designationFilter, setDesignationFilter] = useState("all");
   const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
@@ -624,6 +598,7 @@ export default function AdminFacultyPage() {
                 <th className="px-4 py-3.5">Code</th>
                 <th className="px-4 py-3.5">Designation</th>
                 <th className="px-4 py-3.5">Official Email</th>
+                <th className="px-4 py-3.5">Specialization</th>
                 <th className="px-4 py-3.5">Research Specialization</th>
                 <th className="px-3 py-3.5 text-center">Status</th>
                 <th className="px-5 py-3.5 text-right">Actions</th>
@@ -631,7 +606,27 @@ export default function AdminFacultyPage() {
             </thead>
 
             <tbody className="divide-y divide-[#eedfd8]">
-              {filtered.length === 0 ? (
+              {isLoading ? (
+                Array.from({ length: 6 }).map((_, i) => (
+                  <tr key={i} className="animate-pulse">
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-xl bg-[#eedfd8]" />
+                        <div className="space-y-1.5">
+                          <div className="h-3 w-32 bg-[#eedfd8] rounded" />
+                          <div className="h-2.5 w-20 bg-[#eedfd8]/60 rounded" />
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4"><div className="h-3 w-12 bg-[#eedfd8] rounded" /></td>
+                    <td className="px-4 py-4"><div className="h-3 w-36 bg-[#eedfd8] rounded" /></td>
+                    <td className="px-4 py-4"><div className="h-3 w-44 bg-[#eedfd8] rounded" /></td>
+                    <td className="px-4 py-4"><div className="h-3 w-28 bg-[#eedfd8] rounded" /></td>
+                    <td className="px-4 py-4"><div className="h-3 w-16 bg-[#eedfd8] rounded" /></td>
+                    <td className="px-4 py-4 text-right"><div className="h-3 w-20 bg-[#eedfd8] rounded ml-auto" /></td>
+                  </tr>
+                ))
+              ) : filtered.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="px-6 py-14 text-center space-y-3">
                     <div className="w-12 h-12 rounded-2xl bg-[#fff9f6] border border-[#eedfd8] mx-auto flex items-center justify-center text-neutral-400 shadow-2xs">
