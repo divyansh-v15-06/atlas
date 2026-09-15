@@ -233,17 +233,17 @@ export function AdminSidebar() {
             );
 
             return (
-              <div key={item.id || i} className="pt-1.5">
+              <div key={item.id || i} className="pt-2">
                 <button
                   type="button"
                   onClick={() => toggleSection(item.id)}
-                  className="flex w-full items-center justify-between px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#85261e]/70 hover:text-[#85261e] rounded-lg transition group cursor-pointer"
+                  className="flex w-full items-center justify-between px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#85261e]/80 hover:text-[#85261e] rounded-lg transition group cursor-pointer"
                 >
                   <span className="truncate">{item.section}</span>
                   {isCollapsed ? (
-                    <ChevronRight className="w-3 h-3 text-neutral-400 group-hover:text-[#85261e] transition" />
+                    <ChevronRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[#85261e] transition" />
                   ) : (
-                    <ChevronDown className="w-3 h-3 text-neutral-400 group-hover:text-[#85261e] transition" />
+                    <ChevronDown className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[#85261e] transition" />
                   )}
                 </button>
 
@@ -257,7 +257,7 @@ export function AdminSidebar() {
                           key={link.href}
                           href={link.href}
                           className={cn(
-                            "flex items-center justify-between rounded-xl px-2.5 py-1.5 text-[11.5px] font-semibold transition-all duration-150 group",
+                            "flex items-center justify-between rounded-xl px-2.5 py-2 text-xs font-semibold transition-all duration-150 group",
                             isActive
                               ? "bg-[#33110e] text-white shadow-xs"
                               : "text-[#6b5c58] hover:bg-[#fff9f6] hover:text-[#33110e]"
@@ -266,16 +266,16 @@ export function AdminSidebar() {
                           <div className="flex items-center gap-2.5 truncate">
                             <link.icon
                               className={cn(
-                                "h-3.5 w-3.5 flex-shrink-0 transition",
+                                "h-4 w-4 flex-shrink-0 transition",
                                 isActive
                                   ? "text-amber-300"
-                                  : "text-[#85261e]/60 group-hover:text-[#85261e]"
+                                  : "text-[#85261e]/70 group-hover:text-[#85261e]"
                               )}
                             />
                             <span className="truncate">{link.label}</span>
                           </div>
                           {link.badge && (
-                            <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-amber-400/20 text-amber-300">
+                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-amber-400/20 text-amber-300">
                               {link.badge}
                             </span>
                           )}
@@ -294,7 +294,7 @@ export function AdminSidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-2.5 rounded-xl px-3 py-2 text-[12px] font-semibold transition-all duration-150",
+                "flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold transition-all duration-150",
                 isActive
                   ? "bg-[#33110e] text-white shadow-xs"
                   : "text-[#6b5c58] hover:bg-[#fff9f6] hover:text-[#33110e]"
@@ -303,7 +303,7 @@ export function AdminSidebar() {
               <item.icon
                 className={cn(
                   "h-4 w-4 flex-shrink-0",
-                  isActive ? "text-amber-300" : "text-[#85261e]/60"
+                  isActive ? "text-amber-300" : "text-[#85261e]/70"
                 )}
               />
               <span className="truncate">{item.label}</span>
