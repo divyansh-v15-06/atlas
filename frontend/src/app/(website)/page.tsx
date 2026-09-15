@@ -119,10 +119,16 @@ export default function HomePage() {
   );
   const [metrics, setMetrics] = useState({
     faculty: isCse ? 27 : 0,
-    publications: isCse ? 715 : 0,
+    staff: isCse ? 4 : 0,
+    publications: isCse ? 713 : 0,
     students: isCse ? 621 : 0,
+    ugStudents: isCse ? 495 : 0,
+    pgStudents: isCse ? 71 : 0,
+    phdScholars: isCse ? 106 : 0,
+    pursuingPhd: isCse ? 55 : 0,
+    passedPhd: isCse ? 51 : 0,
     highestPackage: isCse ? 1.51 : 0,
-    patents: isCse ? 17 : 0,
+    patents: isCse ? 15 : 0,
     projects: isCse ? 8 : 0,
   });
   const [isClient, setIsClient] = useState(false);
@@ -143,17 +149,18 @@ export default function HomePage() {
           const json = await res.json();
           if (json && json.data && !isCancelled) {
             const d = json.data;
-            const totalStudents =
-              (d.bachelorStudent || 0) +
-              (d.dualdegreeStudent || 0) +
-              (d.masterStudent || 0) +
-              (d.pursuingPhdScholar || 0);
+            const ugCount = (d.bachelorStudent || 0) + (d.dualdegreeStudent || 0);
+            const pgCount = d.masterStudent || 0;
+            const pursuingPhd = d.pursuingPhdScholar || 0;
+            const passedPhd = d.passedPhdScholar || 0;
+            const phdTotal = pursuingPhd + passedPhd;
+            const totalStudents = ugCount + pgCount + pursuingPhd;
 
-            const pubCount = typeof d.publication === "number" ? d.publication : 0;
-            const facCount = typeof d.faculty === "number" ? d.faculty : 0;
-            const stuCount = totalStudents;
-            const patentCount = typeof d.Patent === "number" ? d.Patent : 0;
-            const projectCount = typeof d.Project === "number" ? d.Project : 0;
+            const pubCount = typeof d.publication === "number" ? d.publication : (isCse ? 713 : 0);
+            const facCount = typeof d.faculty === "number" ? d.faculty : (isCse ? 27 : 0);
+            const staffCount = typeof d.staff === "number" ? d.staff : (isCse ? 4 : 0);
+            const patentCount = typeof d.Patent === "number" ? d.Patent : (isCse ? 15 : 0);
+            const projectCount = typeof d.Project === "number" ? d.Project : (isCse ? 8 : 0);
 
             let highestPkg = isCse ? 1.51 : 0;
             try {
@@ -174,8 +181,14 @@ export default function HomePage() {
             if (!isCancelled) {
               setMetrics({
                 faculty: facCount,
+                staff: staffCount,
                 publications: pubCount,
-                students: stuCount,
+                students: totalStudents,
+                ugStudents: ugCount,
+                pgStudents: pgCount,
+                phdScholars: phdTotal > 0 ? phdTotal : (isCse ? 106 : 0),
+                pursuingPhd: pursuingPhd,
+                passedPhd: passedPhd,
                 highestPackage: highestPkg,
                 patents: patentCount,
                 projects: projectCount,
@@ -191,10 +204,16 @@ export default function HomePage() {
       if (!isCancelled) {
         setMetrics({
           faculty: isCse ? 27 : 0,
-          publications: isCse ? 715 : 0,
+          staff: isCse ? 4 : 0,
+          publications: isCse ? 713 : 0,
           students: isCse ? 621 : 0,
+          ugStudents: isCse ? 495 : 0,
+          pgStudents: isCse ? 71 : 0,
+          phdScholars: isCse ? 106 : 0,
+          pursuingPhd: isCse ? 55 : 0,
+          passedPhd: isCse ? 51 : 0,
           highestPackage: isCse ? 1.51 : 0,
-          patents: isCse ? 17 : 0,
+          patents: isCse ? 15 : 0,
           projects: isCse ? 8 : 0,
         });
       }
@@ -617,9 +636,10 @@ export default function HomePage() {
 
           {/* 3. Department Analytics & Metric Numbers Strip */}
           <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-2">
-            <div className="bg-[#1c110c] text-white rounded-xl p-6 shadow-md border border-[#33110e]">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-neutral-800">
-                <div className="pt-3 md:pt-0">
+            <div className="bg-[#1c110c] text-white rounded-xl p-6 sm:p-8 shadow-md border border-[#33110e]">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
+                {/* 1. Faculty */}
+                <div className="pt-2">
                   <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
                     {isClient ? (
                       <CountUp
@@ -634,13 +654,16 @@ export default function HomePage() {
                       metrics.faculty
                     )}
                   </div>
-                  <p className="text-xs text-neutral-300 uppercase tracking-wider font-bold mt-1">
+                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
                     Faculty Members
                   </p>
-                  <span className="text-[11px] text-neutral-400 font-medium">Distinguished Professors &amp; Scholars</span>
+                  <span className="text-[11px] text-neutral-400 font-medium">
+                    {metrics.staff > 0 ? `27 Faculty • ${metrics.staff} Staff Members` : "Distinguished Professors & Scholars"}
+                  </span>
                 </div>
 
-                <div className="pt-3 md:pt-0">
+                {/* 2. Publications */}
+                <div className="pt-2">
                   <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
                     {isClient ? (
                       <CountUp
@@ -655,34 +678,38 @@ export default function HomePage() {
                       metrics.publications
                     )}
                   </div>
-                  <p className="text-xs text-neutral-300 uppercase tracking-wider font-bold mt-1">
+                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
                     Publications
                   </p>
                   <span className="text-[11px] text-neutral-400 font-medium">Scopus / SCI Indexed Papers</span>
                 </div>
 
-                <div className="pt-3 md:pt-0">
+                {/* 3. Ph.D. Scholars */}
+                <div className="pt-2">
                   <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
                     {isClient ? (
                       <CountUp
-                        key={`stu-${activeDepartment.id}-${metrics.students}`}
+                        key={`phd-${activeDepartment.id}-${metrics.phdScholars}`}
                         start={0}
-                        end={metrics.students}
-                        duration={2.4}
+                        end={metrics.phdScholars}
+                        duration={2.3}
                         enableScrollSpy={true}
                         scrollSpyOnce={false}
                       />
                     ) : (
-                      metrics.students
+                      metrics.phdScholars
                     )}
                   </div>
-                  <p className="text-xs text-neutral-300 uppercase tracking-wider font-bold mt-1">
-                    Enrolled Students
+                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
+                    Ph.D. Scholars
                   </p>
-                  <span className="text-[11px] text-neutral-400 font-medium">B.Tech, Dual Degree &amp; Ph.D.</span>
+                  <span className="text-[11px] text-neutral-400 font-medium">
+                    {metrics.pursuingPhd > 0 ? `${metrics.pursuingPhd} Pursuing • ${metrics.passedPhd} Conferred` : "Doctoral Research Scholars"}
+                  </span>
                 </div>
 
-                <div className="pt-3 md:pt-0">
+                {/* 4. Highest Package */}
+                <div className="pt-2">
                   <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
                     {isClient ? (
                       metrics.highestPackage > 0 ? (
@@ -706,10 +733,98 @@ export default function HomePage() {
                       metrics.highestPackage > 0 ? `₹${metrics.highestPackage} Cr` : "—"
                     )}
                   </div>
-                  <p className="text-xs text-neutral-300 uppercase tracking-wider font-bold mt-1">
+                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
                     Highest Package
                   </p>
                   <span className="text-[11px] text-neutral-400 font-medium">100% Core Placement Record</span>
+                </div>
+
+                {/* 5. Undergraduate & Dual Degree */}
+                <div className="pt-6 border-t border-neutral-800">
+                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                    {isClient ? (
+                      <CountUp
+                        key={`ug-${activeDepartment.id}-${metrics.ugStudents}`}
+                        start={0}
+                        end={metrics.ugStudents}
+                        duration={2.4}
+                        enableScrollSpy={true}
+                        scrollSpyOnce={false}
+                      />
+                    ) : (
+                      metrics.ugStudents
+                    )}
+                  </div>
+                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
+                    Undergraduate Students
+                  </p>
+                  <span className="text-[11px] text-neutral-400 font-medium">B.Tech &amp; Dual Degree Programmes</span>
+                </div>
+
+                {/* 6. Postgraduate Students */}
+                <div className="pt-6 border-t border-neutral-800">
+                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                    {isClient ? (
+                      <CountUp
+                        key={`pg-${activeDepartment.id}-${metrics.pgStudents}`}
+                        start={0}
+                        end={metrics.pgStudents}
+                        duration={2.2}
+                        enableScrollSpy={true}
+                        scrollSpyOnce={false}
+                      />
+                    ) : (
+                      metrics.pgStudents
+                    )}
+                  </div>
+                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
+                    Postgraduate Students
+                  </p>
+                  <span className="text-[11px] text-neutral-400 font-medium">M.Tech Specializations</span>
+                </div>
+
+                {/* 7. Patents */}
+                <div className="pt-6 border-t border-neutral-800">
+                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                    {isClient ? (
+                      <CountUp
+                        key={`pat-${activeDepartment.id}-${metrics.patents}`}
+                        start={0}
+                        end={metrics.patents}
+                        duration={2.3}
+                        enableScrollSpy={true}
+                        scrollSpyOnce={false}
+                      />
+                    ) : (
+                      metrics.patents
+                    )}
+                  </div>
+                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
+                    Patents
+                  </p>
+                  <span className="text-[11px] text-neutral-400 font-medium">Granted &amp; Published Inventions</span>
+                </div>
+
+                {/* 8. Sponsored Projects */}
+                <div className="pt-6 border-t border-neutral-800">
+                  <div className="text-3xl sm:text-4xl font-extrabold text-amber-400 font-mono tracking-tight">
+                    {isClient ? (
+                      <CountUp
+                        key={`prj-${activeDepartment.id}-${metrics.projects}`}
+                        start={0}
+                        end={metrics.projects}
+                        duration={2.1}
+                        enableScrollSpy={true}
+                        scrollSpyOnce={false}
+                      />
+                    ) : (
+                      metrics.projects
+                    )}
+                  </div>
+                  <p className="text-xs text-neutral-200 uppercase tracking-wider font-bold mt-1">
+                    Ongoing R&amp;D Projects
+                  </p>
+                  <span className="text-[11px] text-neutral-400 font-medium">Sponsored by MeitY, DST &amp; DRDO</span>
                 </div>
               </div>
             </div>
