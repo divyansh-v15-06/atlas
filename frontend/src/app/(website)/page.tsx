@@ -113,7 +113,6 @@ export default function HomePage() {
   const hasData = activeDepartment.slug === "cse";
   const isCse = activeDepartment.slug === "cse";
   const [activeSlide, setActiveSlide] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
   const [slides, setSlides] = useState<{ src: string; alt?: string; title?: string; subtitle?: string }[]>(() =>
     isCse ? TEMPCSE_HERO_SLIDES : DEFAULT_DEPARTMENT_SLIDES(activeDepartment.name, activeDepartment.code)
   );
@@ -153,13 +152,25 @@ export default function HomePage() {
     };
   }, [activeDepartment.id, activeDepartment.slug, activeDepartment.name, activeDepartment.code, isCse]);
 
+  // Preload all slide images into browser cache so auto-transitions are instant
   useEffect(() => {
-    if (isHovered || slides.length <= 1) return;
+    if (typeof window === "undefined") return;
+    slides.forEach((slide) => {
+      if (slide.src) {
+        const img = new window.Image();
+        img.src = slide.src;
+      }
+    });
+  }, [slides]);
+
+  // Continuously advance carousel slides on its own every 4 seconds
+  useEffect(() => {
+    if (slides.length <= 1) return;
     const timer = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
+    }, 4000);
     return () => clearInterval(timer);
-  }, [slides.length, isHovered]);
+  }, [slides.length, activeSlide]);
 
   // Department-specific announcements
   const departmentAnnouncements = [
@@ -372,11 +383,15 @@ export default function HomePage() {
               </div>
 
               {/* Center Column: Department Hero Carousel */}
-              <div
-                className="lg:col-span-6 rounded-xl overflow-hidden border border-[#eedfd8] relative shadow-xs h-[430px] bg-[#f6f0ea] group select-none"
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
+              <div className="lg:col-span-6 rounded-xl overflow-hidden border border-[#eedfd8] relative shadow-xs h-[430px] bg-[#f6f0ea] group select-none">
+                {/* Auto-advance progress indicator line */}
+                <div className="absolute top-0 left-0 right-0 h-1 z-30 bg-black/25 overflow-hidden">
+                  <div
+                    key={activeSlide}
+                    className="h-full bg-gradient-to-r from-amber-400 via-amber-300 to-[#85261e] animate-carousel-progress"
+                  />
+                </div>
+
                 {slides.map((slide, idx) => (
                   <div
                     key={slide.src + idx}
@@ -389,7 +404,8 @@ export default function HomePage() {
                       src={slide.src}
                       alt={slide.alt || `Carousel Banner ${idx + 1}`}
                       className="w-full h-full object-cover object-center"
-                      loading={idx === 0 ? "eager" : "lazy"}
+                      loading="eager"
+                      draggable={false}
                     />
                     {slide.title && (
                       <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent flex flex-col justify-end p-6 sm:p-8 text-white">

@@ -84,3 +84,16 @@ body {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+@keyframes carouselProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-carousel-progress {
+  animation: carouselProgress 4s linear forwards;
+}
