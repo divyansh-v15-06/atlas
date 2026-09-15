@@ -109,9 +109,9 @@ export function PublicHeader() {
   return (
     <>
       {/* 1. Top Utility Notification Bar (#33110e) */}
-      <div className="bg-[#33110e] text-white text-xs py-1.5 px-4 sm:px-8 font-sans border-b border-[#4a1814]">
-        <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2 text-[11px]">
-          <div className="flex items-center space-x-3 text-neutral-300">
+      <div className="bg-[#33110e] text-white py-2 px-4 sm:px-8 font-sans border-b border-[#4a1814]">
+        <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2 text-xs sm:text-[13px] font-medium">
+          <div className="flex items-center space-x-3 text-neutral-200">
             <span className="text-amber-400 font-semibold hidden sm:inline">
               National Institute of Technology Hamirpur
             </span>
@@ -120,9 +120,9 @@ export function PublicHeader() {
               href="https://portfolios.nith.ac.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-white transition flex items-center gap-1"
+              className="hover:text-white transition flex items-center gap-1.5"
             >
-              Faculty Portfolio <ExternalLink className="w-2.5 h-2.5 opacity-60" />
+              Faculty Portfolio <ExternalLink className="w-3 h-3 opacity-70" />
             </a>
             <span className="text-neutral-500 hidden md:inline">|</span>
             <a
@@ -135,20 +135,20 @@ export function PublicHeader() {
             </a>
           </div>
 
-          <div className="flex items-center space-x-3 text-neutral-300">
+          <div className="flex items-center space-x-3 text-neutral-200">
             <Link
               href="/faculty/login"
-              className="hover:text-white transition flex items-center gap-1 font-medium bg-[#4a1814] px-2.5 py-0.5 rounded text-[11px]"
+              className="hover:text-white transition flex items-center gap-1.5 font-semibold bg-[#4a1814] hover:bg-[#5c1e19] px-3 py-1 rounded text-xs"
             >
-              <UserCheck className="w-3 h-3 text-amber-400" />
+              <UserCheck className="w-3.5 h-3.5 text-amber-400" />
               Faculty Portal
             </Link>
             <span className="text-neutral-500">|</span>
             <Link
               href="/admin/login"
-              className="hover:text-white transition flex items-center gap-1 font-medium bg-[#4a1814] px-2.5 py-0.5 rounded text-[11px]"
+              className="hover:text-white transition flex items-center gap-1.5 font-semibold bg-[#4a1814] hover:bg-[#5c1e19] px-3 py-1 rounded text-xs"
             >
-              <Lock className="w-3 h-3 text-amber-400" />
+              <Lock className="w-3.5 h-3.5 text-amber-400" />
               Admin Portal
             </Link>
           </div>
@@ -288,21 +288,21 @@ export function PublicHeader() {
                 >
                   <Link
                     href={item.href}
-                    className="px-3.5 py-3 text-[13px] font-semibold text-neutral-200 hover:text-white hover:bg-[#33110e] flex items-center gap-1 transition tracking-wide uppercase"
+                    className="px-4 py-3.5 text-sm font-bold text-neutral-100 hover:text-white hover:bg-[#33110e] flex items-center gap-1.5 transition tracking-wide uppercase"
                   >
                     {item.label}
                     {item.children && (
-                      <ChevronDown className="w-3.5 h-3.5 text-neutral-400 group-hover:rotate-180 transition duration-200" />
+                      <ChevronDown className="w-4 h-4 text-neutral-400 group-hover:rotate-180 transition duration-200" />
                     )}
                   </Link>
 
                   {item.children && openDropdown === item.label && (
-                    <div className="absolute left-0 top-full w-56 bg-white text-[#1c110c] rounded-b-md shadow-xl border border-[#eedfd8] py-2 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div className="absolute left-0 top-full w-60 bg-white text-[#1c110c] rounded-b-md shadow-xl border border-[#eedfd8] py-2 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
                       {item.children.map((child) => (
                         <Link
                           key={child.label}
                           href={child.href}
-                          className="block px-4 py-2 text-xs font-medium text-neutral-700 hover:bg-[#fff9f6] hover:text-[#33110e] hover:pl-5 transition-all border-b border-neutral-100 last:border-0"
+                          className="block px-4 py-2.5 text-sm font-semibold text-neutral-700 hover:bg-[#fff9f6] hover:text-[#33110e] hover:pl-5 transition-all border-b border-neutral-100 last:border-0"
                         >
                           {child.label}
                         </Link>

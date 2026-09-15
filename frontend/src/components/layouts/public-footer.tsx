@@ -19,20 +19,20 @@ export function PublicFooter() {
                 />
               </div>
               <div>
-                <h3 className="font-bold text-sm leading-tight text-neutral-100">
+                <h3 className="font-bold text-base leading-tight text-neutral-100">
                   National Institute of Technology Hamirpur
                 </h3>
-                <p className="text-xs text-neutral-400">Himachal Pradesh - 177005, India</p>
+                <p className="text-sm text-neutral-400">Himachal Pradesh - 177005, India</p>
               </div>
             </div>
-            <p className="text-xs text-neutral-300 leading-relaxed">
+            <p className="text-sm text-neutral-300 leading-relaxed">
               Empowering innovators and technical leaders through world-class computer science education, research, and industry collaboration.
             </p>
             <div className="flex items-center gap-3 pt-2 text-neutral-400 text-xs">
-              <span className="bg-[#33110e] px-2.5 py-1 rounded text-amber-300 font-semibold">
+              <span className="bg-[#33110e] px-3 py-1 rounded text-amber-300 font-semibold text-xs">
                 NIRF Top Ranked
               </span>
-              <span className="bg-[#33110e] px-2.5 py-1 rounded text-amber-300 font-semibold">
+              <span className="bg-[#33110e] px-3 py-1 rounded text-amber-300 font-semibold text-xs">
                 NBA Accredited
               </span>
             </div>
@@ -43,7 +43,7 @@ export function PublicFooter() {
             <h4 className="font-bold text-sm tracking-wider uppercase text-amber-400 border-b border-neutral-800 pb-2">
               Quick Links
             </h4>
-            <ul className="space-y-1.5 text-xs text-neutral-300">
+            <ul className="space-y-2 text-sm text-neutral-300">
               <li>
                 <Link href="/aboutus" className="hover:text-amber-300 transition">
                   About Department
@@ -77,7 +77,7 @@ export function PublicFooter() {
             <h4 className="font-bold text-sm tracking-wider uppercase text-amber-400 border-b border-neutral-800 pb-2">
               Research & Portals
             </h4>
-            <ul className="space-y-1.5 text-xs text-neutral-300">
+            <ul className="space-y-2 text-sm text-neutral-300">
               <li>
                 <Link href="/research/publications" className="hover:text-amber-300 transition">
                   Research Publications (110+)
@@ -94,13 +94,13 @@ export function PublicFooter() {
                 </Link>
               </li>
               <li>
-                <Link href="/faculty/login" className="hover:text-amber-300 transition flex items-center gap-1">
-                  Faculty Login Portal <ExternalLink className="w-3 h-3 opacity-60" />
+                <Link href="/faculty/login" className="hover:text-amber-300 transition flex items-center gap-1.5">
+                  Faculty Login Portal <ExternalLink className="w-3.5 h-3.5 opacity-60" />
                 </Link>
               </li>
               <li>
-                <Link href="/admin/login" className="hover:text-amber-300 transition flex items-center gap-1">
-                  Admin Control Panel <ExternalLink className="w-3 h-3 opacity-60" />
+                <Link href="/admin/login" className="hover:text-amber-300 transition flex items-center gap-1.5">
+                  Admin Control Panel <ExternalLink className="w-3.5 h-3.5 opacity-60" />
                 </Link>
               </li>
             </ul>
@@ -111,9 +111,9 @@ export function PublicFooter() {
             <h4 className="font-bold text-sm tracking-wider uppercase text-amber-400 border-b border-neutral-800 pb-2">
               Contact Department
             </h4>
-            <div className="space-y-2 text-xs text-neutral-300">
+            <div className="space-y-2.5 text-sm text-neutral-300">
               <p className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-amber-400 flex-shrink-0 mt-1" />
                 <span>Department of Computer Science & Engineering, NIT Hamirpur, Himachal Pradesh – 177005, India</span>
               </p>
               <p className="flex items-center gap-2">
@@ -134,9 +134,9 @@ export function PublicFooter() {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-neutral-800 text-center text-xs text-neutral-400 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="mt-10 pt-6 border-t border-neutral-800 text-center text-sm text-neutral-400 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p>© {new Date().getFullYear()} National Institute of Technology Hamirpur. All Rights Reserved.</p>
-          <p className="text-[11px] text-neutral-500">
+          <p className="text-xs text-neutral-500">
             Maintained by Department of Computer Science & Engineering, NIT Hamirpur.
           </p>
         </div>

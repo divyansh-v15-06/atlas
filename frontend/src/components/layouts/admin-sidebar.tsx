@@ -190,7 +190,7 @@ export function AdminSidebar() {
   };
 
   return (
-    <aside className="sticky top-0 flex h-screen w-64 flex-shrink-0 flex-col border-r border-[#eedfd8] bg-white text-[#1c110c] font-sans shadow-xs select-none">
+    <aside className="sticky top-0 flex h-screen w-72 flex-shrink-0 flex-col border-r border-[#eedfd8] bg-white text-[#1c110c] font-sans shadow-xs select-none">
       {/* Brand Header */}
       <div className="flex h-16 items-center gap-3 border-b border-[#eedfd8] px-4 bg-[#fff9f6] flex-shrink-0">
         <div className="w-10 h-10 rounded-full bg-white border border-[#eedfd8] p-1 shadow-2xs flex items-center justify-center flex-shrink-0">
@@ -203,19 +203,19 @@ export function AdminSidebar() {
         </div>
         <div className="min-w-0">
           <div className="flex items-center gap-1.5">
-            <span className="text-xs font-extrabold text-[#33110e] tracking-tight block truncate uppercase">
+            <span className="text-sm font-black text-[#33110e] tracking-tight block truncate uppercase">
               {isHod ? "HOD Admin Panel" : "System IT Console"}
             </span>
             <span
               className={cn(
-                "text-[8px] font-extrabold uppercase px-1.5 py-0.2 rounded font-mono",
+                "text-[10px] font-extrabold uppercase px-1.5 py-0.2 rounded font-mono",
                 isHod ? "bg-rose-100 text-rose-800" : "bg-amber-100 text-amber-900"
               )}
             >
               {isHod ? "HOD" : "ROOT"}
             </span>
           </div>
-          <span className="text-[10px] font-semibold text-[#85261e] block truncate">
+          <span className="text-xs font-semibold text-[#85261e] block truncate">
             {isHod
               ? `NIT Hamirpur • ${activeDepartment?.code || "CSE"} Dept`
               : "NIT Hamirpur • Central IT Console"}
@@ -237,13 +237,13 @@ export function AdminSidebar() {
                 <button
                   type="button"
                   onClick={() => toggleSection(item.id)}
-                  className="flex w-full items-center justify-between px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-[0.14em] text-[#85261e]/80 hover:text-[#85261e] rounded-lg transition group cursor-pointer"
+                  className="flex w-full items-center justify-between px-2.5 py-1.5 text-xs font-black uppercase tracking-[0.12em] text-[#85261e] hover:text-[#33110e] rounded-lg transition group cursor-pointer"
                 >
                   <span className="truncate">{item.section}</span>
                   {isCollapsed ? (
-                    <ChevronRight className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[#85261e] transition" />
+                    <ChevronRight className="w-4 h-4 text-neutral-400 group-hover:text-[#85261e] transition" />
                   ) : (
-                    <ChevronDown className="w-3.5 h-3.5 text-neutral-400 group-hover:text-[#85261e] transition" />
+                    <ChevronDown className="w-4 h-4 text-neutral-400 group-hover:text-[#85261e] transition" />
                   )}
                 </button>
 
@@ -257,7 +257,7 @@ export function AdminSidebar() {
                           key={link.href}
                           href={link.href}
                           className={cn(
-                            "flex items-center justify-between rounded-xl px-2.5 py-2 text-xs font-semibold transition-all duration-150 group",
+                            "flex items-center justify-between rounded-xl px-3 py-2 text-sm font-semibold transition-all duration-150 group",
                             isActive
                               ? "bg-[#33110e] text-white shadow-xs"
                               : "text-[#6b5c58] hover:bg-[#fff9f6] hover:text-[#33110e]"
@@ -275,7 +275,7 @@ export function AdminSidebar() {
                             <span className="truncate">{link.label}</span>
                           </div>
                           {link.badge && (
-                            <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-amber-400/20 text-amber-300">
+                            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300">
                               {link.badge}
                             </span>
                           )}
@@ -294,7 +294,7 @@ export function AdminSidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-bold transition-all duration-150",
+                "flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-bold transition-all duration-150",
                 isActive
                   ? "bg-[#33110e] text-white shadow-xs"
                   : "text-[#6b5c58] hover:bg-[#fff9f6] hover:text-[#33110e]"
@@ -318,20 +318,20 @@ export function AdminSidebar() {
         <Link
           href={`/?dept=${activeDepartment?.slug || "cse"}`}
           target="_blank"
-          className="flex items-center justify-between rounded-lg px-2.5 py-1 text-[10px] font-bold text-[#85261e] hover:bg-white hover:shadow-2xs transition"
+          className="flex items-center justify-between rounded-lg px-2.5 py-1.5 text-xs font-bold text-[#85261e] hover:bg-white hover:shadow-2xs transition"
         >
           <span className="flex items-center gap-1.5">
-            <ExternalLink className="w-3 h-3 text-[#85261e]" />
+            <ExternalLink className="w-3.5 h-3.5 text-[#85261e]" />
             Public Department Site
           </span>
-          <span className="text-[9px] text-neutral-400 font-mono">↗</span>
+          <span className="text-xs text-neutral-400 font-mono">↗</span>
         </Link>
 
         {/* Admin Info Card */}
-        <div className="flex items-center gap-2 rounded-xl bg-white border border-[#eedfd8] p-2 shadow-2xs">
+        <div className="flex items-center gap-2.5 rounded-xl bg-white border border-[#eedfd8] p-2.5 shadow-2xs">
           <div
             className={cn(
-              "flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-extrabold flex-shrink-0",
+              "flex h-8 w-8 items-center justify-center rounded-full text-xs font-extrabold flex-shrink-0",
               isHod ? "bg-[#85261e] text-white" : "bg-[#33110e] text-amber-300"
             )}
           >
@@ -339,11 +339,11 @@ export function AdminSidebar() {
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1">
-              <p className="text-[11px] font-bold text-[#33110e] truncate leading-tight">
+              <p className="text-xs font-bold text-[#33110e] truncate leading-tight">
                 {adminUser?.full_name || (isHod ? "Head of Department" : "System Administrator")}
               </p>
             </div>
-            <p className="text-[9px] text-[#6b5c58] truncate font-mono leading-tight">
+            <p className="text-[11px] text-[#6b5c58] truncate font-mono leading-tight mt-0.5">
               {adminUser?.email || (isHod ? "hod@nith.ac.in" : "admin@nith.ac.in")}
             </p>
           </div>
@@ -353,9 +353,9 @@ export function AdminSidebar() {
         <button
           type="button"
           onClick={handleLogout}
-          className="flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#eedfd8] bg-white py-1.5 text-[10.5px] font-bold text-[#85261e] hover:bg-[#85261e] hover:text-white transition cursor-pointer shadow-2xs"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#eedfd8] bg-white py-2 text-xs font-bold text-[#85261e] hover:bg-[#85261e] hover:text-white transition cursor-pointer shadow-2xs"
         >
-          <LogOut className="h-3 w-3" />
+          <LogOut className="h-3.5 w-3.5" />
           Sign Out of Console
         </button>
       </div>

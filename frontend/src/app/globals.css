@@ -49,7 +49,7 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 18px;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -58,9 +58,31 @@ body {
   color: var(--foreground);
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  line-height: 1.55;
-  font-size: 0.9375rem;
+  line-height: 1.6;
+  font-size: 1rem;
   letter-spacing: -0.006em;
+}
+
+/* Micro typography readability boost: prevent unreadably small fonts everywhere */
+.text-xs,
+[class*="text-[8px]"],
+[class*="text-[9px]"],
+[class*="text-[10px]"],
+[class*="text-[11px]"] {
+  font-size: 0.8125rem !important; /* ~14.6px minimum */
+  line-height: 1.4 !important;
+}
+
+[class*="text-[12px]"] {
+  font-size: 0.875rem !important; /* ~15.75px */
+  line-height: 1.4 !important;
+}
+
+.text-sm,
+[class*="text-[13px]"],
+[class*="text-[14px]"] {
+  font-size: 0.95rem !important; /* ~17.1px */
+  line-height: 1.45 !important;
 }
 
 .no-scrollbar::-webkit-scrollbar {
