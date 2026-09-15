@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import Papa from "papaparse";
-import { formatINR } from "@/lib/utils";
+import { formatINR, formatCompactINR } from "@/lib/utils";
 import { MOCK_LABS } from "@/lib/mock-data";
 
 interface EquipmentAsset {
@@ -478,23 +478,25 @@ export default function AdminEquipmentsPage() {
 
       {/* Metric Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="rounded-xl border border-[#eedfd8] bg-white p-4 shadow-2xs">
-          <span className="text-xs font-bold text-[#85261e] uppercase tracking-wider">Total Value</span>
-          <p className="text-2xl font-black text-[#85261e] mt-1">{formatINR(totalAssetValue)}</p>
+        <div className="rounded-xl border border-[#eedfd8] bg-white p-4 shadow-2xs min-w-0 overflow-hidden" title={formatINR(totalAssetValue)}>
+          <span className="text-xs font-bold text-[#85261e] uppercase tracking-wider truncate block">Total Value</span>
+          <p className="text-xl sm:text-2xl font-black text-[#85261e] mt-1 font-mono tracking-tight truncate">
+            {formatCompactINR(totalAssetValue)}
+          </p>
         </div>
-        <div className="rounded-xl border border-[#eedfd8] bg-white p-4 shadow-2xs">
-          <span className="text-xs font-bold text-[#85261e] uppercase tracking-wider">Total Assets</span>
-          <p className="text-2xl font-black text-[#1c110c] mt-1">{equipments.length}</p>
+        <div className="rounded-xl border border-[#eedfd8] bg-white p-4 shadow-2xs min-w-0 overflow-hidden">
+          <span className="text-xs font-bold text-[#85261e] uppercase tracking-wider truncate block">Total Assets</span>
+          <p className="text-xl sm:text-2xl font-black text-[#1c110c] mt-1 font-mono tracking-tight truncate">{equipments.length}</p>
         </div>
-        <div className="rounded-xl border border-[#eedfd8] bg-white p-4 shadow-2xs">
-          <span className="text-xs font-bold text-[#85261e] uppercase tracking-wider">Operational</span>
-          <p className="text-2xl font-black text-[#1c110c] mt-1">
+        <div className="rounded-xl border border-[#eedfd8] bg-white p-4 shadow-2xs min-w-0 overflow-hidden">
+          <span className="text-xs font-bold text-[#85261e] uppercase tracking-wider truncate block">Operational</span>
+          <p className="text-xl sm:text-2xl font-black text-[#1c110c] mt-1 font-mono tracking-tight truncate">
             {equipments.filter((e) => e.status === "Operational").length}
           </p>
         </div>
-        <div className="rounded-xl border border-[#eedfd8] bg-white p-4 shadow-2xs">
-          <span className="text-xs font-bold text-[#85261e] uppercase tracking-wider">Labs Covered</span>
-          <p className="text-2xl font-black text-[#1c110c] mt-1">
+        <div className="rounded-xl border border-[#eedfd8] bg-white p-4 shadow-2xs min-w-0 overflow-hidden">
+          <span className="text-xs font-bold text-[#85261e] uppercase tracking-wider truncate block">Labs Covered</span>
+          <p className="text-xl sm:text-2xl font-black text-[#1c110c] mt-1 font-mono tracking-tight truncate">
             {new Set(equipments.map((e) => e.lab)).size}
           </p>
         </div>

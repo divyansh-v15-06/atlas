@@ -50,7 +50,7 @@ import {
   MOCK_PROJECTS,
   MOCK_STUDENTS,
 } from "@/lib/mock-data";
-import { formatINR, cn } from "@/lib/utils";
+import { formatINR, formatCompactINR, cn } from "@/lib/utils";
 import { useDepartment } from "@/context/department-context";
 import { toast } from "sonner";
 import Dashboard from "@/components/dashboard";
@@ -697,6 +697,7 @@ export default function AdminDashboardPage() {
             {
               label: "Faculty Members",
               value: facultyList.length,
+              fullValue: `${facultyList.length} Faculty Members`,
               icon: Users,
               color: "text-[#85261e]",
               bg: "bg-[#85261e]/10",
@@ -706,6 +707,7 @@ export default function AdminDashboardPage() {
             {
               label: "Enrolled Students",
               value: isCse ? MOCK_DEPARTMENT_KPIS.total_students : 0,
+              fullValue: `${isCse ? MOCK_DEPARTMENT_KPIS.total_students : 0} Enrolled Students`,
               icon: GraduationCap,
               color: "text-emerald-600",
               bg: "bg-emerald-500/10",
@@ -715,6 +717,7 @@ export default function AdminDashboardPage() {
             {
               label: "Publications Output",
               value: isCse ? MOCK_PUBLICATIONS.length : 0,
+              fullValue: `${isCse ? MOCK_PUBLICATIONS.length : 0} Indexed Publications`,
               icon: BookOpen,
               color: "text-blue-600",
               bg: "bg-blue-500/10",
@@ -723,7 +726,8 @@ export default function AdminDashboardPage() {
             },
             {
               label: "Sanctioned Grants",
-              value: isCse ? formatINR(MOCK_DEPARTMENT_KPIS.total_sanctioned_amount) : "₹0",
+              value: isCse ? formatCompactINR(MOCK_DEPARTMENT_KPIS.total_sanctioned_amount) : "₹0",
+              fullValue: isCse ? formatINR(MOCK_DEPARTMENT_KPIS.total_sanctioned_amount) : "₹0",
               icon: Lightbulb,
               color: "text-amber-600",
               bg: "bg-amber-500/10",
@@ -734,22 +738,35 @@ export default function AdminDashboardPage() {
             <Link
               key={kpi.label}
               href={kpi.href}
-              className="rounded-2xl border border-[#eedfd8] bg-white p-5 shadow-2xs hover:shadow-md hover:border-[#85261e]/40 transition duration-200 group block cursor-pointer"
+              className="rounded-2xl border border-[#eedfd8] bg-white p-4 sm:p-5 shadow-2xs hover:shadow-md hover:border-[#85261e]/40 transition duration-200 group flex flex-col justify-between cursor-pointer min-w-0 overflow-hidden"
+              title={kpi.fullValue || String(kpi.value)}
             >
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-[#6b5c58]">
+              <div className="flex items-center justify-between gap-2 min-w-0">
+                <span className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-[#6b5c58] truncate">
                   {kpi.label}
                 </span>
-                <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${kpi.bg} group-hover:scale-110 transition`}>
+                <div className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl ${kpi.bg} group-hover:scale-110 transition shrink-0`}>
                   <kpi.icon className={`h-4 w-4 ${kpi.color}`} />
                 </div>
               </div>
-              <p className={`mt-2 text-2xl font-extrabold font-mono ${kpi.color}`}>{kpi.value}</p>
-              <div className="mt-1 flex items-center justify-between">
-                <span className="text-[10px] text-[#6b5c58] font-medium flex items-center gap-1">
-                  <TrendingUp className="w-3 h-3 text-emerald-500" /> {kpi.trend}
+              <div className="my-2 min-w-0">
+                <p 
+                  className={`text-xl sm:text-2xl font-extrabold font-mono tracking-tight truncate ${kpi.color}`}
+                  title={kpi.fullValue || String(kpi.value)}
+                >
+                  {kpi.value}
+                </p>
+                {kpi.fullValue && kpi.fullValue !== String(kpi.value) && (
+                  <p className="text-[10px] text-neutral-400 font-mono tracking-tight truncate mt-0.5">
+                    {kpi.fullValue}
+                  </p>
+                )}
+              </div>
+              <div className="mt-auto flex items-center justify-between gap-1 min-w-0 pt-1">
+                <span className="text-[10px] text-[#6b5c58] font-medium flex items-center gap-1 truncate">
+                  <TrendingUp className="w-3 h-3 text-emerald-500 shrink-0" /> <span className="truncate">{kpi.trend}</span>
                 </span>
-                <span className="text-[10px] text-[#85261e] font-bold opacity-0 group-hover:opacity-100 transition">
+                <span className="text-[10px] text-[#85261e] font-bold opacity-0 group-hover:opacity-100 transition shrink-0">
                   Manage →
                 </span>
               </div>

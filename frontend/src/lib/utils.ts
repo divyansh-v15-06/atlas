@@ -24,14 +24,48 @@ export function formatDate(date: string | Date | null | undefined): string {
 
 /**
  * Format currency in INR (Indian Rupees).
+ * Omit unnecessary decimal zeroes for integer amounts (e.g. ₹3,85,00,000 instead of ₹3,85,00,000.00).
  */
 export function formatINR(amount: number | null | undefined): string {
-  if (amount == null) return "—";
+  if (amount == null || isNaN(Number(amount))) return "—";
+  const num = Number(amount);
+  const hasDecimals = num % 1 !== 0;
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
+    minimumFractionDigits: hasDecimals ? 2 : 0,
     maximumFractionDigits: 2,
-  }).format(amount);
+  }).format(num);
+}
+
+/**
+ * Format currency compactly in INR (e.g. ₹3.85 Cr, ₹45.2 L, ₹25 K).
+ */
+export function formatCompactINR(amount: number | null | undefined): string {
+  if (amount == null || isNaN(Number(amount))) return "—";
+  const num = Number(amount);
+  const abs = Math.abs(num);
+  const sign = num < 0 ? "-" : "";
+
+  if (abs >= 10000000) {
+    // Crores (>= 1,00,00,000 = 10^7)
+    const cr = abs / 10000000;
+    const formatted = cr % 1 === 0 ? cr.toFixed(0) : cr.toFixed(2).replace(/\.?0+$/, "");
+    return `${sign}₹${formatted} Cr`;
+  }
+  if (abs >= 100000) {
+    // Lakhs (>= 1,00,000 = 10^5)
+    const lk = abs / 100000;
+    const formatted = lk % 1 === 0 ? lk.toFixed(0) : lk.toFixed(2).replace(/\.?0+$/, "");
+    return `${sign}₹${formatted} L`;
+  }
+  if (abs >= 1000) {
+    // Thousands (>= 1,000 = 10^3)
+    const k = abs / 1000;
+    const formatted = k % 1 === 0 ? k.toFixed(0) : k.toFixed(1).replace(/\.?0+$/, "");
+    return `${sign}₹${formatted} K`;
+  }
+  return formatINR(num);
 }
 
 /**
