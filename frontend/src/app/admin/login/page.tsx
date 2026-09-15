@@ -14,9 +14,7 @@ import {
   ArrowRight,
   Eye,
   EyeOff,
-  Sparkles,
   ArrowLeft,
-  KeyRound,
 } from "lucide-react";
 import Link from "next/link";
 import apiClient from "@/lib/api-client";
@@ -49,71 +47,33 @@ export default function AdminLoginPage() {
   const onSubmit = async (data: AdminLoginInput) => {
     setLoading(true);
     try {
-      // 1. Authenticate against live backend API
-      try {
-        const res = await apiClient.post("/auth/login", {
-          email: data.email,
-          password: data.password,
-        });
-        if (res.data?.data?.token) {
-          localStorage.setItem("auth_token", res.data.data.token);
-          localStorage.setItem(
-            "auth_user",
-            JSON.stringify(res.data.data.user || { role: "ADMIN", email: data.email })
-          );
-          toast.success("Signed in to Department Admin Console!");
-          router.push("/admin");
-          return;
-        }
-      } catch (err) {
-        console.warn("Backend API unavailable, using administrator auth fallback:", err);
-      }
-
-      // 2. Client-side authentication fallback for admin console
-      if (data.password !== "admin*123") {
-        toast.error("Invalid credentials. Admin password is admin*123");
-        return;
-      }
-
-      const isHod = data.email.toLowerCase().includes("hod");
-      const isAdmin = data.email.toLowerCase().includes("admin") || data.email === "admin@nith.ac.in";
-
-      if (isHod || isAdmin) {
-        localStorage.setItem("auth_token", isHod ? "mock-hod-jwt-token-2026" : "mock-sysadmin-jwt-token-2026");
+      const res = await apiClient.post("/auth/login", {
+        email: data.email,
+        password: data.password,
+      });
+      const token = res.data?.data?.token;
+      if (token) {
+        localStorage.setItem("auth_token", token);
         localStorage.setItem(
           "auth_user",
-          JSON.stringify({
-            id: isHod ? "44444444-4444-4444-4444-444444444444" : "33333333-3333-3333-3333-333333333333",
-            email: data.email,
-            full_name: isHod ? "Dr. Siddhartha Chauhan (Head of Department)" : "System Administrator",
-            role: isHod ? "HOD_ADMIN" : "SYSTEM_ADMIN",
-            roles: isHod ? ["HOD_ADMIN", "DEPARTMENT_ADMIN"] : ["SYSTEM_ADMIN", "INSTITUTE_ADMIN"],
-            department: isHod ? "CSE" : undefined,
-          })
+          JSON.stringify(res.data.data.user || { role: "ADMIN", email: data.email })
         );
         if (typeof window !== "undefined") {
           window.dispatchEvent(new Event("storage"));
           window.dispatchEvent(new CustomEvent("nith_faculty_storage_update"));
         }
-        if (isHod) {
-          toast.success("Welcome back, Dr. Siddhartha Chauhan (Head of Department)!");
-        } else {
-          toast.success("Welcome back, System Administrator (Central IT Console)!");
-        }
+        toast.success("Signed in to Department Admin Console!");
         router.push("/admin");
-      } else {
-        toast.error("Invalid admin email. Use admin@nith.ac.in (System Admin) or hod@nith.ac.in (HOD Admin)");
+        return;
       }
+    } catch (err: any) {
+      const msg = err?.response?.data?.error || err?.response?.data?.message || "Invalid administrator email or password";
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleQuickFill = (email: string, pass: string, roleName: string) => {
-    setValue("email", email);
-    setValue("password", pass);
-    toast.info(`Filled credentials for ${roleName} — Password: admin*123`);
-  };
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-[#1c110c] via-[#33110e] to-[#4a1814] px-4 py-12 text-neutral-900 font-sans selection:bg-[#85261e] selection:text-white">
@@ -146,53 +106,7 @@ export default function AdminLoginPage() {
           </div>
         </div>
 
-        {/* Quick Demo Credentials Panel */}
-        <div className="rounded-2xl border border-[#eedfd8] bg-[#fff9f6] p-3 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#33110e]">
-              <Sparkles className="w-3 h-3 text-[#85261e]" /> Select Login Persona
-            </span>
-            <span className="text-[9px] text-[#85261e] font-mono font-bold bg-white px-1.5 py-0.5 rounded border border-[#eedfd8]">
-              Password: admin*123
-            </span>
-          </div>
 
-          <div className="grid grid-cols-2 gap-2 pt-0.5">
-            <button
-              type="button"
-              onClick={() => handleQuickFill("admin@nith.ac.in", "admin*123", "System Administrator")}
-              className="text-left rounded-xl border border-[#eedfd8] bg-white p-2.5 text-[#33110e] hover:bg-[#33110e] hover:text-white transition duration-150 shadow-2xs group cursor-pointer"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-[10px] group-hover:text-amber-300">System Admin</span>
-                <span className="text-[8px] font-extrabold uppercase px-1 py-0.2 rounded bg-amber-100 text-amber-900 group-hover:bg-amber-400/30 group-hover:text-amber-200">Central IT</span>
-              </div>
-              <div className="text-[9px] text-neutral-500 group-hover:text-neutral-200 truncate font-mono mt-0.5">
-                admin@nith.ac.in
-              </div>
-              <div className="text-[8px] text-neutral-400 group-hover:text-neutral-300 mt-1">
-                Multi-dept, users & audit logs
-              </div>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleQuickFill("hod@nith.ac.in", "admin*123", "HOD Admin (CSE)")}
-              className="text-left rounded-xl border border-[#eedfd8] bg-white p-2.5 text-[#33110e] hover:bg-[#33110e] hover:text-white transition duration-150 shadow-2xs group cursor-pointer"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-[10px] group-hover:text-amber-300">HOD Admin</span>
-                <span className="text-[8px] font-extrabold uppercase px-1 py-0.2 rounded bg-rose-100 text-rose-900 group-hover:bg-rose-400/30 group-hover:text-rose-200">CSE Dept</span>
-              </div>
-              <div className="text-[9px] text-neutral-500 group-hover:text-neutral-200 truncate font-mono mt-0.5">
-                hod@nith.ac.in
-              </div>
-              <div className="text-[8px] text-neutral-400 group-hover:text-neutral-300 mt-1">
-                HOD desk, courses & faculty
-              </div>
-            </button>
-          </div>
-        </div>
 
         {/* Login Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5 pt-0.5">
