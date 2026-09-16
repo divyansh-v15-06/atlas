@@ -2,8 +2,10 @@ package middleware
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -185,6 +187,9 @@ func OptionalAuthenticate(jwtSecret string) func(http.Handler) http.Handler {
 			if len(parts) == 2 && strings.EqualFold(parts[0], "Bearer") {
 				tokenStr := parts[1]
 				token, err := jwt.Parse(tokenStr, func(t *jwt.Token) (any, error) {
+					if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
+						return nil, httperr.Unauthorized("Invalid signing algorithm")
+					}
 					return []byte(jwtSecret), nil
 				})
 				if err == nil && token.Valid {
@@ -269,4 +274,87 @@ func GetAuthUser(ctx context.Context) *AuthUser {
 		return u
 	}
 	return nil
+}
+
+type IPRateLimiter struct {
+	sync.Mutex
+	requests map[string][]time.Time
+	limit    int
+	window   time.Duration
+}
+
+func NewIPRateLimiter(limit int, window time.Duration) *IPRateLimiter {
+	limiter := &IPRateLimiter{
+		requests: make(map[string][]time.Time),
+		limit:    limit,
+		window:   window,
+	}
+	go func() {
+		for {
+			time.Sleep(5 * time.Minute)
+			limiter.Lock()
+			cutoff := time.Now().Add(-window)
+			for ip, times := range limiter.requests {
+				var valid []time.Time
+				for _, t := range times {
+					if t.After(cutoff) {
+						valid = append(valid, t)
+					}
+				}
+				if len(valid) == 0 {
+					delete(limiter.requests, ip)
+				} else {
+					limiter.requests[ip] = valid
+				}
+			}
+			limiter.Unlock()
+		}
+	}()
+	return limiter
+}
+
+func (limiter *IPRateLimiter) Middleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ip := r.Header.Get("X-Real-IP")
+		if ip == "" {
+			ip = r.Header.Get("X-Forwarded-For")
+		}
+		if ip == "" {
+			ip = r.RemoteAddr
+		}
+		if strings.Contains(ip, ",") {
+			parts := strings.Split(ip, ",")
+			ip = parts[0]
+		}
+		if strings.Contains(ip, ":") {
+			parts := strings.Split(ip, ":")
+			ip = parts[0]
+		}
+		ip = strings.TrimSpace(ip)
+
+		now := time.Now()
+		cutoff := now.Add(-limiter.window)
+
+		limiter.Lock()
+		times := limiter.requests[ip]
+		var valid []time.Time
+		for _, t := range times {
+			if t.After(cutoff) {
+				valid = append(valid, t)
+			}
+		}
+
+		if len(valid) >= limiter.limit {
+			limiter.Unlock()
+			w.Header().Set("Retry-After", fmt.Sprintf("%d", int(limiter.window.Seconds())))
+			response.Error(w, r, httperr.New(http.StatusTooManyRequests, "TOO_MANY_REQUESTS", "Too many attempts. Please wait a minute and try again."))
+			return
+		}
+
+		valid = append(valid, now)
+		limiter.requests[ip] = valid
+		limiter.Unlock()
+
+		next.ServeHTTP(w, r)
+	})
 }

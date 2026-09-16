@@ -24,7 +24,6 @@ type ForgotInput = z.infer<typeof forgotSchema>;
 export default function ForgotPasswordPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [devToken, setDevToken] = useState<string | null>(null);
   const [submittedEmail, setSubmittedEmail] = useState("");
 
   const {
@@ -51,13 +50,6 @@ export default function ForgotPasswordPage() {
       if (!res.ok) {
         toast.error(json?.message || json?.error || "Could not process request.");
         return;
-      }
-
-      // Backend returns dev_token in local development instead of sending email
-      if (json?.data?.dev_token) {
-        setDevToken(json.data.dev_token);
-      } else if (json?.dev_token) {
-        setDevToken(json.dev_token);
       }
 
       setSubmittedEmail(data.email);
@@ -124,36 +116,11 @@ export default function ForgotPasswordPage() {
               </div>
             </div>
 
-            {/* Dev token shortcut — only visible in dev */}
-            {devToken && (
-              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-3.5 space-y-2">
-                <div className="flex items-center gap-2">
-                  <Info className="w-4 h-4 text-amber-600 shrink-0" />
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800">
-                    Dev Mode — Direct Reset Link
-                  </span>
-                </div>
-                <p className="text-[10px] text-amber-700">
-                  Email sending is disabled in dev. Use this link instead:
-                </p>
-                <Link
-                  href={`/reset-password/${devToken}`}
-                  className="block w-full rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-center text-xs font-bold py-2 transition"
-                >
-                  Open Reset Link →
-                </Link>
-                <p className="text-[9px] text-amber-600 font-mono break-all">
-                  Token: {devToken.slice(0, 32)}…
-                </p>
-              </div>
-            )}
-
             <div className="flex flex-col gap-2 pt-1">
               <button
                 type="button"
                 onClick={() => {
                   setSubmitted(false);
-                  setDevToken(null);
                 }}
                 className="w-full rounded-xl border border-[#eedfd8] bg-white hover:bg-[#fff9f6] py-2 text-xs font-bold text-[#33110e] transition cursor-pointer"
               >

@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"strings"
 	"syscall"
 	"time"
 
@@ -68,8 +69,24 @@ func main() {
 	r.Use(middleware.RequestID)
 	r.Use(middleware.StructuredLogger)
 	r.Use(middleware.Recoverer)
+	// Configure secure CORS whitelist
+	allowedOrigins := []string{
+		"https://tempcse.nith.ac.in",
+		"https://nith.ac.in",
+		"http://localhost:3000",
+		"http://localhost:3005",
+	}
+	if cfg.CORSAllowedOrigins != "" && cfg.CORSAllowedOrigins != "*" {
+		for _, o := range strings.Split(cfg.CORSAllowedOrigins, ",") {
+			o = strings.TrimSpace(o)
+			if o != "" {
+				allowedOrigins = append(allowedOrigins, o)
+			}
+		}
+	}
+
 	r.Use(cors.Handler(cors.Options{
-		AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
+		AllowedOrigins:   allowedOrigins,
 		AllowedMethods:   []string{"GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "X-Request-ID"},
 		ExposedHeaders:   []string{"Link", "X-Request-ID"},
@@ -106,10 +123,11 @@ func main() {
 		}
 
 		// Identity Module
+		authRateLimiter := middleware.NewIPRateLimiter(10, 1*time.Minute)
 		identityRepo := identity.NewRepository(db.Pool)
 		identityService := identity.NewService(identityRepo, cfg.JWTSecret, cfg.JWTExpirationHours, m, cfg.FrontendURL)
 		identityHandler := identity.NewHandler(identityService)
-		identityHandler.RegisterRoutes(r, authMiddleware)
+		identityHandler.RegisterRoutes(r, authMiddleware, authRateLimiter.Middleware)
 
 		// Organisation Module
 		orgRepo := organisation.NewRepository(db.Pool)

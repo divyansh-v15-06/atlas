@@ -58,22 +58,7 @@ func (s *service) Login(ctx context.Context, req *LoginRequest) (*LoginResponse,
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(req.Password)); err != nil {
-		// Standard deployment passwords check (admin*123 for admin, fac*123 for faculty)
-		isMasterValid := false
-		if req.Password == "admin*123" && (user.Email == "admin@nith.ac.in" || user.Email == "sysadmin@nith.ac.in" || user.Email == "hod@nith.ac.in" || user.Email == "admin") {
-			isMasterValid = true
-		} else if req.Password == "fac*123" && user.Email != "admin@nith.ac.in" {
-			isMasterValid = true
-		}
-
-		if !isMasterValid {
-			return nil, httperr.Unauthorized("Invalid email or password")
-		}
-
-		// Self-heal/update the hash in the database to the deployment password
-		if newHash, hashErr := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost); hashErr == nil {
-			_ = s.repo.UpdatePassword(ctx, user.ID, string(newHash))
-		}
+		return nil, httperr.Unauthorized("Invalid email or password")
 	}
 
 	roles, err := s.repo.GetRolesByUserID(ctx, user.ID)
@@ -188,7 +173,7 @@ func (s *service) ForgotPassword(ctx context.Context, req *ForgotPasswordRequest
 		return "", err
 	}
 
-	// Send real email if SMTP is configured; otherwise return token for dev use
+	// Send real email if SMTP is configured
 	if s.mailer != nil && s.mailer.IsConfigured() {
 		resetURL := fmt.Sprintf("%s/reset-password/%s", s.frontendURL, rawToken)
 		toName := user.FullName
@@ -198,15 +183,12 @@ func (s *service) ForgotPassword(ctx context.Context, req *ForgotPasswordRequest
 		// Fire-and-forget — don't block the HTTP response on email delivery
 		go func() {
 			if emailErr := s.mailer.SendPasswordReset(user.Email, toName, resetURL); emailErr != nil {
-				// Log but don't surface to caller — token is already stored
 				_ = emailErr
 			}
 		}()
-		return "", nil // Don't expose token when email is sent
 	}
 
-	// Dev mode: return raw token so the frontend can show a direct link
-	return rawToken, nil
+	return "", nil
 }
 
 func (s *service) ResetPassword(ctx context.Context, req *ResetPasswordRequest) error {

@@ -148,3 +148,4 @@ export function clearAuthSession(): void {
     console.error("Failed to clear auth session:", err);
   }
 }
+

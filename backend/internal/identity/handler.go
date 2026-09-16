@@ -19,11 +19,16 @@ func NewHandler(service Service) *Handler {
 	return &Handler{service: service}
 }
 
-func (h *Handler) RegisterRoutes(r chi.Router, authMiddleware func(http.Handler) http.Handler) {
+func (h *Handler) RegisterRoutes(r chi.Router, authMiddleware func(http.Handler) http.Handler, rateLimitMiddleware ...func(http.Handler) http.Handler) {
 	r.Route("/api/v1/auth", func(r chi.Router) {
-		r.Post("/login", h.Login)
-		r.Post("/forgot-password", h.ForgotPassword)
-		r.Post("/reset-password", h.ResetPassword)
+		r.Group(func(r chi.Router) {
+			for _, rl := range rateLimitMiddleware {
+				r.Use(rl)
+			}
+			r.Post("/login", h.Login)
+			r.Post("/forgot-password", h.ForgotPassword)
+			r.Post("/reset-password", h.ResetPassword)
+		})
 
 		r.Group(func(r chi.Router) {
 			r.Use(authMiddleware)
@@ -108,21 +113,15 @@ func (h *Handler) ForgotPassword(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rawToken, err := h.service.ForgotPassword(r.Context(), &req)
+	_, err := h.service.ForgotPassword(r.Context(), &req)
 	if err != nil {
 		response.Error(w, r, err)
 		return
 	}
 
-	// For local development convenience, we return the token if in dev mode
-	resp := map[string]any{
+	response.JSON(w, http.StatusOK, map[string]any{
 		"message": "If the email is registered, a password reset link has been dispatched.",
-	}
-	if rawToken != "" {
-		resp["dev_token"] = rawToken
-	}
-
-	response.JSON(w, http.StatusOK, resp)
+	})
 }
 
 func (h *Handler) ResetPassword(w http.ResponseWriter, r *http.Request) {

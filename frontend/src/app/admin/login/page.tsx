@@ -81,34 +81,8 @@ export default function AdminLoginPage() {
         return;
       }
     } catch (err: any) {
-      // Fallback for valid administrator accounts
-      const isAdminAccount =
-        emailLower === "admin@nith.ac.in" ||
-        emailLower === "sysadmin@nith.ac.in" ||
-        emailLower === "hod@nith.ac.in" ||
-        emailLower === "admin";
-
-      if (isAdminAccount && (data.password === "admin*123" || data.password === "admin123")) {
-        const fallbackUser = {
-          id: "admin-root",
-          email: emailLower.includes("@") ? emailLower : "admin@nith.ac.in",
-          full_name: emailLower.startsWith("hod") ? "Head of Department (HOD)" : "Department Administrator",
-          role: "ADMIN",
-          roles: ["ADMIN", "HOD", "FACULTY"],
-        };
-        localStorage.setItem("auth_token", "jwt_admin_session_token");
-        localStorage.setItem("auth_user", JSON.stringify(fallbackUser));
-        if (typeof window !== "undefined") {
-          window.dispatchEvent(new Event("storage"));
-          window.dispatchEvent(new CustomEvent("nith_faculty_storage_update"));
-        }
-        toast.success("Signed in to Department Admin Console!");
-        router.push(getRedirectDestination("/admin"));
-        return;
-      }
-
-      const msg = err?.response?.data?.error || err?.response?.data?.message || "Invalid administrator email or password";
-      toast.error(msg);
+      const msg = err?.response?.data?.error?.message || err?.response?.data?.error || err?.response?.data?.message || "Invalid administrator email or password";
+      toast.error(typeof msg === "string" ? msg : "Invalid administrator email or password");
     } finally {
       setLoading(false);
     }

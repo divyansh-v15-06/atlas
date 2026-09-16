@@ -127,6 +127,23 @@ export function academicSession(year: number): string {
  * Returns the secure URL of the uploaded image.
  */
 export async function uploadToCloudinary(file: File | Blob): Promise<string> {
+  const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+  if (file.size > MAX_FILE_SIZE) {
+    throw new Error("File size exceeds 10MB limit. Please choose a smaller file.");
+  }
+
+  const allowedMimeTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/gif",
+    "image/avif",
+    "application/pdf",
+  ];
+  if (file.type && !allowedMimeTypes.includes(file.type.toLowerCase())) {
+    throw new Error(`Unsupported file format (${file.type}). Allowed formats: JPG, PNG, WEBP, GIF, PDF.`);
+  }
+
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || "eqvhqx5q";
   const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET || "faculty_nith";
 
