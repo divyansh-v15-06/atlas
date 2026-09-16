@@ -1,19 +1,69 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Mail, Phone, UserCog, Search, Building2, Wrench, ShieldCheck } from "lucide-react";
 import { MOCK_STAFF } from "@/lib/mock-data";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
 
+const normalizeStaff = (s: any) => ({
+  ...s,
+  id: s.id || Math.random().toString(),
+  name: s.name || s.full_name || "Staff Member",
+  designation: s.designation || "Technical Assistant",
+  email: s.email || "",
+  phone: s.phone || "+91-1972-254000",
+  photo_url: s.photo_url || s.photo || "",
+  room_no: s.room_no || "CSE Block",
+  qualification: s.qualification || "",
+});
+
 export default function StaffPage() {
   const { activeDepartment } = useDepartment();
+  const [staffList, setStaffList] = useState<any[]>(() => MOCK_STAFF.map(normalizeStaff));
   const [search, setSearch] = useState("");
   const hasData = activeDepartment.slug === "cse";
 
+  useEffect(() => {
+    const loadStaff = async () => {
+      // 1. First check localStorage
+      let initialList = MOCK_STAFF.map(normalizeStaff);
+      try {
+        const saved = localStorage.getItem("nith_admin_staff");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            initialList = parsed.map(normalizeStaff);
+            setStaffList(initialList);
+          }
+        }
+      } catch {}
+
+      // 2. Query live Go backend API
+      try {
+        const res = await fetch("/api/v1/staff");
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+            const liveList = json.data.map(normalizeStaff);
+            const existingEmails = new Set(liveList.map((s: any) => s.email?.toLowerCase()).filter(Boolean));
+            const extraLocal = initialList.filter(
+              (s: any) => !existingEmails.has(s.email?.toLowerCase())
+            );
+            setStaffList([...liveList, ...extraLocal]);
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch live staff from backend", err);
+      }
+    };
+
+    loadStaff();
+  }, [activeDepartment.slug]);
+
   const filteredStaff = useMemo(() => {
     if (!hasData) return [];
-    return MOCK_STAFF.filter((staff) => {
+    return staffList.filter((staff) => {
       const q = search.toLowerCase();
       return (
         !search ||
@@ -22,7 +72,7 @@ export default function StaffPage() {
         staff.email.toLowerCase().includes(q)
       );
     });
-  }, [search, hasData]);
+  }, [search, hasData, staffList]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-8 py-8 space-y-6 bg-white min-h-[85vh] font-sans">
@@ -63,7 +113,7 @@ export default function StaffPage() {
             </div>
 
             <span className="text-xs text-neutral-600 font-semibold">
-              Showing {filteredStaff.length} of {MOCK_STAFF.length} staff members
+              Showing {filteredStaff.length} of {staffList.length} staff members
             </span>
           </div>
 

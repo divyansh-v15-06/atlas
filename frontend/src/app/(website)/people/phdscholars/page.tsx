@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import {
   Search,
@@ -25,8 +25,40 @@ import { DepartmentEmptyState } from "@/components/common/department-empty-state
 
 const ITEMS_PER_PAGE = 24;
 
+const normalizeScholar = (p: any) => {
+  const statusStr = String(p.status || "").toLowerCase();
+  const isPassed =
+    statusStr === "passed" ||
+    statusStr === "completed" ||
+    statusStr === "alumni" ||
+    statusStr.includes("award");
+  return {
+    ...p,
+    id: p.id || p.enrollment_number || p.roll_number || Math.random().toString(),
+    name: p.name || p.full_name || "Ph.D. Scholar",
+    enrollment_number: p.enrollment_number || p.roll_number || "",
+    status: isPassed ? ("passed" as const) : ("pursuing" as const),
+    supervisor: p.supervisor || p.supervisor_name || "Faculty Supervisor",
+    co_supervisor: p.co_supervisor || p.co_supervisor_name || "",
+    last_qualification: p.last_qualification || "Ph.D. Scholar",
+    research_area: p.research_area || p.area_of_research || "",
+    topic: p.topic || p.dissertation_title || "",
+    dissertation_title: p.dissertation_title || p.topic || "",
+    email: p.email || "",
+    photo_url: p.photo_url || p.image_url || p.photo || "",
+    registration_year:
+      p.registration_year ||
+      p.admission_year ||
+      (p.registration_date ? String(p.registration_date).split("-")[0] : ""),
+    end_date: p.end_date || p.defense_date || "",
+    linkedin_url: p.linkedin_url || p.linkedin || "",
+    google_scholar_url: p.google_scholar_url || p.google_scholar || "",
+    scopus_url: p.scopus_url || p.scopus || "",
+  };
+};
+
 interface ScholarCardProps {
-  sch: (typeof MOCK_PHD_SCHOLARS)[0];
+  sch: any;
 }
 
 function ScholarCard({ sch }: ScholarCardProps) {
@@ -197,6 +229,9 @@ function ScholarCard({ sch }: ScholarCardProps) {
 
 export default function PhdScholarsPage() {
   const { activeDepartment } = useDepartment();
+  const [scholarsList, setScholarsList] = useState<any[]>(() =>
+    MOCK_PHD_SCHOLARS.map(normalizeScholar)
+  );
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
   const [search, setSearch] = useState<string>("");
   const [supervisorFilter, setSupervisorFilter] = useState<string>("ALL");
@@ -204,29 +239,66 @@ export default function PhdScholarsPage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const hasData = activeDepartment.slug === "cse";
 
+  useEffect(() => {
+    const loadScholars = async () => {
+      // 1. First check localStorage (for any additions/edits made in Admin)
+      let initialList = MOCK_PHD_SCHOLARS.map(normalizeScholar);
+      try {
+        const saved = localStorage.getItem("nith_admin_phd_scholars");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            initialList = parsed.map(normalizeScholar);
+            setScholarsList(initialList);
+          }
+        }
+      } catch {}
+
+      // 2. Query live Go backend API
+      try {
+        const res = await fetch("/api/v1/phd-scholars");
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+            const liveList = json.data.map(normalizeScholar);
+            const existingRolls = new Set(liveList.map((s: any) => s.enrollment_number || s.id));
+            const extraLocal = initialList.filter(
+              (s: any) => !existingRolls.has(s.enrollment_number) && !existingRolls.has(s.id)
+            );
+            setScholarsList([...liveList, ...extraLocal]);
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch live PhD scholars from backend", err);
+      }
+    };
+
+    loadScholars();
+  }, [activeDepartment.slug]);
+
   // Extract unique supervisors list
   const supervisorsList = useMemo(() => {
     if (!hasData) return [];
     const set = new Set<string>();
-    MOCK_PHD_SCHOLARS.forEach((p) => {
+    scholarsList.forEach((p) => {
       if (p.supervisor && p.supervisor !== "Faculty Supervisor") {
         set.add(p.supervisor);
       }
     });
     return Array.from(set).sort();
-  }, [hasData]);
+  }, [hasData, scholarsList]);
 
   const countByStatus = useMemo(() => {
     if (!hasData) return { total: 0, pursuing: 0, passed: 0 };
-    const total = MOCK_PHD_SCHOLARS.length;
-    const pursuing = MOCK_PHD_SCHOLARS.filter((p) => p.status === "pursuing").length;
-    const passed = MOCK_PHD_SCHOLARS.filter((p) => p.status === "passed").length;
+    const total = scholarsList.length;
+    const pursuing = scholarsList.filter((p) => p.status === "pursuing").length;
+    const passed = scholarsList.filter((p) => p.status === "passed").length;
     return { total, pursuing, passed };
-  }, [hasData]);
+  }, [hasData, scholarsList]);
 
   const filteredScholars = useMemo(() => {
     if (!hasData) return [];
-    return MOCK_PHD_SCHOLARS.filter((sch) => {
+    return scholarsList.filter((sch) => {
       const q = search.toLowerCase();
       const matchesSearch =
         !search ||
@@ -248,7 +320,7 @@ export default function PhdScholarsPage() {
 
       return matchesSearch && matchesStatus && matchesSupervisor;
     });
-  }, [search, statusFilter, supervisorFilter, hasData]);
+  }, [search, statusFilter, supervisorFilter, hasData, scholarsList]);
 
   const totalPages = Math.ceil(filteredScholars.length / ITEMS_PER_PAGE) || 1;
   const paginatedScholars = useMemo(() => {

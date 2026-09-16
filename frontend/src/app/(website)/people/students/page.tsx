@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search, Users, ChevronLeft, ChevronRight, GraduationCap } from "lucide-react";
 import { MOCK_STUDENTS } from "@/lib/mock-data";
 import { useDepartment } from "@/context/department-context";
@@ -8,23 +8,88 @@ import { DepartmentEmptyState } from "@/components/common/department-empty-state
 
 const ITEMS_PER_PAGE = 50;
 
+const normalizeStudent = (s: any) => {
+  let progName = s.programme_name || "";
+  if (!progName) {
+    if (s.programme_id === "66666666-6666-6666-6666-666666666661" || s.programme_code === "BTECH_CSE") progName = "B.Tech CSE";
+    else if (s.programme_id === "66666666-6666-6666-6666-666666666662" || s.programme_code === "MTECH_CSE") progName = "M.Tech CSE";
+    else if (s.programme_id === "66666666-6666-6666-6666-666666666663" || s.programme_code === "DUAL_CSE") progName = "Dual Degree CSE";
+    else progName = "B.Tech CSE";
+  }
+
+  const rollMatch = typeof s.roll_number === "string" ? s.roll_number.match(/^(\d{2})/) : null;
+  const inferredYear = rollMatch ? 2000 + parseInt(rollMatch[1], 10) : 2024;
+  const batchYear = Number(s.batch_year || s.admission_year || inferredYear);
+
+  return {
+    ...s,
+    id: s.id || s.roll_number || Math.random().toString(),
+    name: s.name || s.full_name || "Student",
+    roll_number: s.roll_number || "",
+    batch_year: batchYear,
+    current_semester: s.current_semester || 1,
+    programme_name: progName,
+    email: s.email || `${s.roll_number || "student"}@nith.ac.in`,
+  };
+};
+
 export default function StudentsPage() {
   const { activeDepartment } = useDepartment();
+  const [studentsList, setStudentsList] = useState<any[]>(() =>
+    MOCK_STUDENTS.map(normalizeStudent)
+  );
   const [search, setSearch] = useState("");
   const [progFilter, setProgFilter] = useState("ALL");
   const [batchFilter, setBatchFilter] = useState("ALL");
   const [currentPage, setCurrentPage] = useState(1);
   const hasData = activeDepartment.slug === "cse";
 
+  useEffect(() => {
+    const loadStudents = async () => {
+      // 1. First check localStorage (for any additions/bulk CSV imports made in Admin)
+      let initialList = MOCK_STUDENTS.map(normalizeStudent);
+      try {
+        const saved = localStorage.getItem("nith_admin_students");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            initialList = parsed.map(normalizeStudent);
+            setStudentsList(initialList);
+          }
+        }
+      } catch {}
+
+      // 2. Query live Go backend API
+      try {
+        const res = await fetch("/api/v1/students");
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+            const liveList = json.data.map(normalizeStudent);
+            const existingRolls = new Set(liveList.map((s: any) => s.roll_number || s.id));
+            const extraLocal = initialList.filter(
+              (s: any) => !existingRolls.has(s.roll_number) && !existingRolls.has(s.id)
+            );
+            setStudentsList([...liveList, ...extraLocal]);
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch live students from backend", err);
+      }
+    };
+
+    loadStudents();
+  }, [activeDepartment.slug]);
+
   const batches = useMemo(() => {
     if (!hasData) return [];
-    const set = new Set(MOCK_STUDENTS.map((s) => s.batch_year).filter(Boolean));
+    const set = new Set(studentsList.map((s) => s.batch_year).filter(Boolean));
     return Array.from(set).sort((a, b) => b - a);
-  }, [hasData]);
+  }, [hasData, studentsList]);
 
   const filtered = useMemo(() => {
     if (!hasData) return [];
-    return MOCK_STUDENTS.filter((s) => {
+    return studentsList.filter((s) => {
       const searchLower = search.toLowerCase();
       const matchesSearch =
         !search ||
@@ -43,7 +108,7 @@ export default function StudentsPage() {
 
       return matchesSearch && matchesProg && matchesBatch;
     });
-  }, [search, progFilter, batchFilter, hasData]);
+  }, [search, progFilter, batchFilter, hasData, studentsList]);
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
   const paginated = useMemo(() => {
