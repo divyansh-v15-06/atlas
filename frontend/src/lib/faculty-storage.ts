@@ -262,11 +262,9 @@ export function resolveFacultyBaseline(faculty: any, section: string): any[] {
   }
 
   if (section === "events") {
-    if (Array.isArray(baseFaculty.events)) {
-      return baseFaculty.events;
-    }
+    const allEvents = getStoredEvents();
     const legacyId = baseFaculty.legacy_id;
-    return MOCK_EVENTS.filter((e: any) =>
+    return allEvents.filter((e: any) =>
       (e.faculty_ids && e.faculty_ids.includes(baseFaculty.id)) ||
       (legacyId && e.faculty_legacy_ids && e.faculty_legacy_ids.includes(legacyId))
     );
@@ -644,4 +642,153 @@ export function resolveFacultyDepartment(faculty: any, user?: any) {
   }
 
   return departmentsRegistry[0]; // CSE default
+}
+
+/**
+ * Retrieves all stored events from localStorage (or fallback to MOCK_EVENTS).
+ */
+export function getStoredEvents(): any[] {
+  if (typeof window !== "undefined") {
+    try {
+      const raw = localStorage.getItem("nith_admin_events");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.error("Error reading stored events:", e);
+    }
+  }
+  return MOCK_EVENTS;
+}
+
+/**
+ * Persists events to localStorage and broadcasts update events.
+ */
+export function saveStoredEvents(events: any[]): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem("nith_admin_events", JSON.stringify(events));
+    window.dispatchEvent(new Event("nith_events_updated"));
+    window.dispatchEvent(new Event("nith_faculty_storage_update"));
+  } catch (err) {
+    console.error("Error saving events to localStorage:", err);
+  }
+}
+
+/**
+ * Deletes an event by ID from storage.
+ */
+export function deleteStoredEvent(id: string): any[] {
+  const current = getStoredEvents();
+  const filtered = current.filter((e: any) => String(e.id) !== String(id));
+  saveStoredEvents(filtered);
+  return filtered;
+}
+
+/**
+ * Updates an existing event or adds a new one.
+ */
+export function updateOrAddStoredEvent(event: any): any[] {
+  const current = getStoredEvents();
+  const eventId = event.id || `event-${Date.now()}`;
+  const normalizedEvent = { ...event, id: eventId };
+  const idx = current.findIndex((e: any) => String(e.id) === String(eventId));
+  let updated: any[];
+  if (idx >= 0) {
+    updated = [...current];
+    updated[idx] = { ...updated[idx], ...normalizedEvent };
+  } else {
+    updated = [normalizedEvent, ...current];
+  }
+  saveStoredEvents(updated);
+  return updated;
+}
+
+/**
+ * Scans events for duplicates (matching normalized title and start date).
+ * Consolidates metadata and faculty associations onto the most complete copy,
+ * and deletes all duplicate clones.
+ */
+export function deduplicateStoredEvents(): { cleaned: any[]; removedCount: number } {
+  const current = getStoredEvents();
+  const groups = new Map<string, any[]>();
+
+  current.forEach((ev: any) => {
+    // Generate key based on normalized title and start_date
+    const normTitle = (ev.title || "").trim().toLowerCase().replace(/\s+/g, " ");
+    const startDate = (ev.start_date || "").trim();
+    const key = `${normTitle}:::${startDate}`;
+    if (!groups.has(key)) {
+      groups.set(key, []);
+    }
+    groups.get(key)!.push(ev);
+  });
+
+  let removedCount = 0;
+  const cleaned: any[] = [];
+
+  groups.forEach((items) => {
+    if (items.length === 1) {
+      cleaned.push(items[0]);
+      return;
+    }
+
+    // Multiple duplicate copies found
+    removedCount += items.length - 1;
+
+    // Pick the best primary record (most non-empty fields and faculty_ids)
+    let best = items[0];
+    let bestScore = -1;
+
+    items.forEach((item) => {
+      let score = 0;
+      if (item.link_url) score += 5;
+      if (item.convenor) score += 3;
+      if (item.coordinator) score += 3;
+      if (item.venue && item.venue !== "NIT Hamirpur") score += 2;
+      if (Array.isArray(item.faculty_ids) && item.faculty_ids.length > 0) score += item.faculty_ids.length * 4;
+      if (Array.isArray(item.faculty_legacy_ids) && item.faculty_legacy_ids.length > 0) score += item.faculty_legacy_ids.length * 2;
+      if (score > bestScore) {
+        bestScore = score;
+        best = item;
+      }
+    });
+
+    // Merge faculty_ids and missing fields from all duplicate copies into the best record
+    const allFacultyIds = new Set<string>(Array.isArray(best.faculty_ids) ? best.faculty_ids : []);
+    const allLegacyIds = new Set<number>(Array.isArray(best.faculty_legacy_ids) ? best.faculty_legacy_ids : []);
+    let mergedConvenor = best.convenor || "";
+    let mergedCoordinator = best.coordinator || "";
+    let mergedLink = best.link_url || "";
+    let mergedVenue = best.venue || "";
+
+    items.forEach((item) => {
+      if (Array.isArray(item.faculty_ids)) {
+        item.faculty_ids.forEach((fid: string) => allFacultyIds.add(fid));
+      }
+      if (Array.isArray(item.faculty_legacy_ids)) {
+        item.faculty_legacy_ids.forEach((lid: number) => allLegacyIds.add(lid));
+      }
+      if (!mergedConvenor && item.convenor) mergedConvenor = item.convenor;
+      if (!mergedCoordinator && item.coordinator) mergedCoordinator = item.coordinator;
+      if (!mergedLink && item.link_url) mergedLink = item.link_url;
+      if ((!mergedVenue || mergedVenue === "NIT Hamirpur") && item.venue) mergedVenue = item.venue;
+    });
+
+    cleaned.push({
+      ...best,
+      convenor: mergedConvenor,
+      coordinator: mergedCoordinator,
+      link_url: mergedLink,
+      venue: mergedVenue || "NIT Hamirpur",
+      faculty_ids: Array.from(allFacultyIds),
+      faculty_legacy_ids: Array.from(allLegacyIds),
+    });
+  });
+
+  saveStoredEvents(cleaned);
+  return { cleaned, removedCount };
 }

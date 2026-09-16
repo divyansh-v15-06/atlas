@@ -31,6 +31,7 @@ import {
   ChevronRight,
   Sparkles,
   Building2,
+  Calendar,
 } from "lucide-react";
 import { useDepartment } from "@/context/department-context";
 
@@ -83,6 +84,7 @@ const hodSidebarLinks: SidebarItem[] = [
       { label: "Publications", href: "/admin/research/publications", icon: FileText },
       { label: "Patents", href: "/admin/research/patents", icon: Shield },
       { label: "R&D Projects", href: "/admin/research/projects", icon: Lightbulb },
+      { label: "Conferences & Events", href: "/admin/research/events", icon: Calendar, badge: "Events" },
     ],
   },
   {
@@ -154,6 +156,7 @@ const sysAdminSidebarLinks: SidebarItem[] = [
       { label: "Students Roster", href: "/admin/people/students", icon: GraduationCap },
       { label: "Staff Members", href: "/admin/people/staff", icon: UserCog },
       { label: "Course Catalogue", href: "/admin/academics/courses", icon: BookOpen },
+      { label: "Conferences & Events", href: "/admin/research/events", icon: Calendar },
       { label: "HOD Message CMS", href: "/admin/hod", icon: MessageSquare },
       { label: "Hero Carousel", href: "/admin/home/carousel", icon: Image },
     ],
