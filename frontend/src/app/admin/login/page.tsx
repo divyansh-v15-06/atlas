@@ -81,7 +81,15 @@ export default function AdminLoginPage() {
         return;
       }
     } catch (err: any) {
-      const msg = err?.response?.data?.error?.message || err?.response?.data?.error || err?.response?.data?.message || "Invalid administrator email or password";
+      if (!err?.response) {
+        toast.error("Network error: Unable to reach authentication server. Please check your connection.");
+        return;
+      }
+      const msg =
+        err?.response?.data?.error?.message ||
+        err?.response?.data?.error ||
+        err?.response?.data?.message ||
+        "Invalid administrator email or password";
       toast.error(typeof msg === "string" ? msg : "Invalid administrator email or password");
     } finally {
       setLoading(false);

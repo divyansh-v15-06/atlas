@@ -83,8 +83,16 @@ export default function FacultyLoginPage() {
         return;
       }
     } catch (err: any) {
-      const msg = err?.response?.data?.error || err?.response?.data?.message || "Invalid faculty code/email or password";
-      toast.error(msg);
+      if (!err?.response) {
+        toast.error("Network error: Unable to reach authentication server. Please check your connection.");
+        return;
+      }
+      const msg =
+        err?.response?.data?.error?.message ||
+        err?.response?.data?.error ||
+        err?.response?.data?.message ||
+        "Invalid faculty code/email or password";
+      toast.error(typeof msg === "string" ? msg : "Invalid faculty code/email or password");
     } finally {
       setLoading(false);
     }

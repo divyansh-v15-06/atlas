@@ -8,17 +8,32 @@ import axios from "axios";
  * - Automatic 401 → redirect to login
  * - Standardized error extraction
  */
+/**
+ * Dynamically resolves the backend API URL.
+ * In browser on remote servers (e.g. tempcse.nith.ac.in), routes to /backend/api/v1 so Nginx handles proxying.
+ */
+export function getApiUrl(): string {
+  if (typeof window !== "undefined") {
+    const hostname = window.location.hostname;
+    if (hostname !== "localhost" && hostname !== "127.0.0.1") {
+      return "/backend/api/v1";
+    }
+  }
+  return process.env.NEXT_PUBLIC_API_URL || "/backend/api/v1";
+}
+
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1",
+  baseURL: getApiUrl(),
   timeout: 15000,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Request interceptor — attach JWT token
+// Request interceptor — attach JWT token and ensure correct baseURL
 apiClient.interceptors.request.use(
   (config) => {
+    config.baseURL = getApiUrl();
     if (typeof window !== "undefined") {
       const token =
         localStorage.getItem("auth_token") ||
