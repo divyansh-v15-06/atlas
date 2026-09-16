@@ -20,8 +20,11 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("auth_token");
-      if (token) {
+      const token =
+        localStorage.getItem("auth_token") ||
+        localStorage.getItem("token") ||
+        localStorage.getItem("admin_token");
+      if (token && token.trim() && token !== "null" && token !== "undefined") {
         config.headers.Authorization = `Bearer ${token}`;
       }
     }
@@ -34,17 +37,21 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    const isLoginEndpoint = error.config?.url?.includes("/auth/login") || error.config?.url?.includes("/login");
+    const isLoginEndpoint =
+      error.config?.url?.includes("/auth/login") ||
+      error.config?.url?.includes("/login");
     if (error.response?.status === 401 && !isLoginEndpoint && typeof window !== "undefined") {
       localStorage.removeItem("auth_token");
       localStorage.removeItem("auth_user");
+      localStorage.removeItem("token");
+      localStorage.removeItem("admin_token");
 
       // Determine which portal we're on for redirect (avoid reloading if already on login page)
       const path = window.location.pathname;
       if (path.startsWith("/admin") && path !== "/admin/login") {
-        window.location.href = "/admin/login";
+        window.location.href = `/admin/login?error=session_expired&redirect=${encodeURIComponent(path)}`;
       } else if (path.startsWith("/faculty") && path !== "/faculty/login") {
-        window.location.href = "/faculty/login";
+        window.location.href = `/faculty/login?error=session_expired&redirect=${encodeURIComponent(path)}`;
       }
     }
     return Promise.reject(error);

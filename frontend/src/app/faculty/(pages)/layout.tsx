@@ -9,7 +9,8 @@ import { resolveFacultyDepartment } from "@/lib/faculty-storage";
 import Link from "next/link";
 import { Download, ExternalLink, Loader2, ShieldAlert } from "lucide-react";
 import { toast } from "sonner";
-import { getStoredAuthToken, getStoredAuthUser, isFacultyUser } from "@/lib/auth-guard";
+import { getStoredAuthToken, getStoredAuthUser, isFacultyUser, clearAuthSession } from "@/lib/auth-guard";
+import apiClient from "@/lib/api-client";
 
 /**
  * Authenticated faculty pages layout — enforces faculty authentication & authorization.
@@ -41,6 +42,28 @@ export default function FacultyPagesLayout({ children }: { children: ReactNode }
 
     setUser(currentUser);
     setAuthState("authorized");
+
+    // Background validation with backend to detect revoked/expired tokens
+    apiClient
+      .get("/auth/me")
+      .then((res) => {
+        if (res.data?.data) {
+          const freshUser = res.data.data;
+          setUser(freshUser);
+          try {
+            localStorage.setItem("auth_user", JSON.stringify(freshUser));
+          } catch {}
+        }
+      })
+      .catch((err) => {
+        if (err?.response?.status === 401) {
+          setAuthState("unauthorized");
+          clearAuthSession();
+          toast.error("Your faculty session has expired. Please sign in again.");
+          const target = pathname && pathname !== "/faculty/login" ? `/faculty/login?error=session_expired&redirect=${encodeURIComponent(pathname)}` : "/faculty/login";
+          router.replace(target);
+        }
+      });
   }, [pathname, router]);
 
   useEffect(() => {

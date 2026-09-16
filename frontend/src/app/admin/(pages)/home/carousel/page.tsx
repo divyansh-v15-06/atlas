@@ -1,9 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { Plus, Trash2, Image as ImageIcon, ExternalLink, RefreshCw, Loader2, Upload, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { uploadToCloudinary } from "@/lib/utils";
+import apiClient from "@/lib/api-client";
+import { getStoredAuthToken, clearAuthSession } from "@/lib/auth-guard";
 import { Dialog, DialogOverlay, DialogContent } from "@reach/dialog";
 import "@reach/dialog/styles.css";
 
@@ -26,14 +29,23 @@ interface HomeSlide {
 
 const DEFAULT_DEPARTMENTS: Department[] = [
   { id: "22222222-2222-2222-2222-222222222222", name: "Computer Science & Engineering", code: "CSE" },
-  { id: "33333333-3333-3333-3333-333333333333", name: "Electronics & Communication Engineering", code: "ECE" },
-  { id: "44444444-4444-4444-4444-444444444444", name: "Electrical Engineering", code: "EE" },
-  { id: "55555555-5555-5555-5555-555555555555", name: "Mechanical Engineering", code: "ME" },
-  { id: "66666666-6666-6666-6666-666666666666", name: "Civil Engineering", code: "CE" },
-  { id: "77777777-7777-7777-7777-777777777777", name: "Chemical Engineering", code: "CHE" },
+  { id: "22222222-2222-2222-2222-222222222223", name: "Electronics & Communication Engineering", code: "ECE" },
+  { id: "22222222-2222-2222-2222-222222222224", name: "Electrical Engineering", code: "EE" },
+  { id: "22222222-2222-2222-2222-222222222225", name: "Mechanical Engineering", code: "ME" },
+  { id: "22222222-2222-2222-2222-222222222226", name: "Civil Engineering", code: "CE" },
+  { id: "22222222-2222-2222-2222-222222222227", name: "Chemical Engineering", code: "CHE" },
+  { id: "22222222-2222-2222-2222-222222222228", name: "Material Science & Engineering", code: "MSE" },
+  { id: "22222222-2222-2222-2222-222222222229", name: "Department of Architecture", code: "ARCH" },
+  { id: "22222222-2222-2222-2222-222222222230", name: "Mathematics & Scientific Computing", code: "MATHS" },
+  { id: "22222222-2222-2222-2222-222222222231", name: "Physics & Photonics Science", code: "PHYSICS" },
+  { id: "22222222-2222-2222-2222-222222222232", name: "Department of Chemistry", code: "CHEM" },
+  { id: "22222222-2222-2222-2222-222222222233", name: "Humanities & Social Sciences", code: "HSS" },
+  { id: "22222222-2222-2222-2222-222222222234", name: "Department of Management Studies", code: "DOMS" },
+  { id: "22222222-2222-2222-2222-222222222235", name: "Centre for Energy Studies", code: "CES" },
 ];
 
 export default function AdminCarouselPage() {
+  const router = useRouter();
   const [departments, setDepartments] = useState<Department[]>(DEFAULT_DEPARTMENTS);
   const [selectedDeptId, setSelectedDeptId] = useState<string>("22222222-2222-2222-2222-222222222222");
   const [slides, setSlides] = useState<HomeSlide[]>([]);
@@ -55,12 +67,13 @@ export default function AdminCarouselPage() {
 
   // Fetch departments list from API if available
   useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
-    fetch(`${apiUrl}/departments`)
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (data && Array.isArray(data.data) && data.data.length > 0) {
-          setDepartments(data.data);
+    apiClient
+      .get("/departments")
+      .then((res) => {
+        const raw = res.data;
+        const list = Array.isArray(raw?.data) ? raw.data : Array.isArray(raw) ? raw : [];
+        if (list.length > 0) {
+          setDepartments(list);
         }
       })
       .catch(() => {});
@@ -70,18 +83,16 @@ export default function AdminCarouselPage() {
   const fetchSlides = async (deptId: string) => {
     try {
       setIsLoading(true);
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
-      const res = await fetch(`${apiUrl}/cms/home-slides?department_id=${encodeURIComponent(deptId)}`);
-      if (res.ok) {
-        const json = await res.json();
-        const data = Array.isArray(json.data) ? json.data : Array.isArray(json) ? json : [];
-        setSlides(data);
-      } else {
-        setSlides([]);
-      }
-    } catch (err) {
+      const res = await apiClient.get(`/cms/home-slides?department_id=${encodeURIComponent(deptId)}`);
+      const raw = res.data;
+      const data = Array.isArray(raw?.data) ? raw.data : Array.isArray(raw) ? raw : [];
+      setSlides(data);
+    } catch (err: any) {
       console.error("Failed to load slides:", err);
-      toast.error("Could not load slides from server");
+      if (err?.response?.status !== 401) {
+        toast.error("Could not load slides from server");
+      }
+      setSlides([]);
     } finally {
       setIsLoading(false);
     }
@@ -115,17 +126,23 @@ export default function AdminCarouselPage() {
       return;
     }
 
+    const token = getStoredAuthToken();
+    if (!token) {
+      toast.error("Session expired. Please log in again to upload slides.");
+      router.push("/admin/login?redirect=/admin/home/carousel");
+      return;
+    }
+
     try {
       setIsSubmitting(true);
       // 1. Upload to Cloudinary (eqvhqx5q / nith)
+      toast.loading("Uploading slide image...", { id: "upload-slide" });
       const uploadedImageUrl = await uploadToCloudinary(selectedFile);
+      toast.dismiss("upload-slide");
 
-      // 2. Post to Go backend API
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
-      const token = localStorage.getItem("token") || localStorage.getItem("auth_token");
-
+      // 2. Post to Go backend API using apiClient
       const payload = {
-        department_id: formData.department_id || selectedDeptId,
+        department_id: formData.department_id || selectedDeptId || "22222222-2222-2222-2222-222222222222",
         title: formData.title.trim() ? formData.title.trim() : null,
         link_url: formData.link_url.trim() ? formData.link_url.trim() : null,
         image_url: uploadedImageUrl,
@@ -133,18 +150,7 @@ export default function AdminCarouselPage() {
         is_active: true,
       };
 
-      const res = await fetch(`${apiUrl}/cms/home-slides`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        throw new Error("Server rejected new slide creation");
-      }
+      await apiClient.post("/cms/home-slides", payload);
 
       toast.success("New event slide uploaded and published to homepage!");
       setIsModalOpen(false);
@@ -161,7 +167,19 @@ export default function AdminCarouselPage() {
       fetchSlides(selectedDeptId);
     } catch (err: any) {
       console.error("Slide creation error:", err);
-      toast.error(err?.message || "Failed to create slide");
+      const serverMsg =
+        err?.response?.data?.error?.message ||
+        err?.response?.data?.message ||
+        err?.response?.data?.error ||
+        err?.message;
+
+      if (err?.response?.status === 401) {
+        toast.error("Administrator session expired. Please sign in again.");
+        clearAuthSession();
+        router.push("/admin/login?error=session_expired&redirect=/admin/home/carousel");
+      } else {
+        toast.error(typeof serverMsg === "string" ? serverMsg : "Failed to create slide on server");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -172,25 +190,19 @@ export default function AdminCarouselPage() {
     if (!confirm("Are you sure you want to delete this slide from the homepage?")) return;
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
-      const token = localStorage.getItem("token") || localStorage.getItem("auth_token");
-
-      const res = await fetch(`${apiUrl}/cms/home-slides/${id}`, {
-        method: "DELETE",
-        headers: {
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-      });
-
-      if (res.ok) {
-        toast.success("Slide removed successfully");
-        setSlides((prev) => prev.filter((s) => s.id !== id));
-      } else {
-        toast.error("Failed to delete slide from server");
-      }
-    } catch (err) {
+      await apiClient.delete(`/cms/home-slides/${id}`);
+      toast.success("Slide removed successfully");
+      setSlides((prev) => prev.filter((s) => s.id !== id));
+    } catch (err: any) {
       console.error("Delete slide error:", err);
-      toast.error("Error deleting slide");
+      if (err?.response?.status === 401) {
+        toast.error("Session expired. Please sign in again.");
+        clearAuthSession();
+        router.push("/admin/login?error=session_expired&redirect=/admin/home/carousel");
+      } else {
+        const msg = err?.response?.data?.error?.message || err?.response?.data?.message || "Failed to delete slide from server";
+        toast.error(typeof msg === "string" ? msg : "Failed to delete slide");
+      }
     }
   };
 

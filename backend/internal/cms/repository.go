@@ -3,7 +3,9 @@ package cms
 import (
 	"context"
 	"errors"
+	"strings"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -357,13 +359,34 @@ func (r *pgRepository) ListHomeSlides(ctx context.Context, deptID string) ([]Hom
 }
 
 func (r *pgRepository) CreateHomeSlide(ctx context.Context, req *CreateHomeSlideRequest) (*HomeSlide, error) {
+	var deptID *string = req.DepartmentID
+	if deptID != nil && strings.TrimSpace(*deptID) != "" && *deptID != "null" && *deptID != "undefined" {
+		cleaned := strings.TrimSpace(*deptID)
+		if _, err := uuid.Parse(cleaned); err != nil {
+			// Not a valid UUID - resolve by slug or code
+			var resolvedID string
+			err := r.pool.QueryRow(ctx, "SELECT id FROM departments WHERE slug ILIKE $1 OR code ILIKE $1 LIMIT 1", cleaned).Scan(&resolvedID)
+			if err == nil {
+				deptID = &resolvedID
+			} else {
+				defID := "22222222-2222-2222-2222-222222222222"
+				deptID = &defID
+			}
+		} else {
+			deptID = &cleaned
+		}
+	} else {
+		defID := "22222222-2222-2222-2222-222222222222"
+		deptID = &defID
+	}
+
 	querySQL := `
 		INSERT INTO home_slides (department_id, title, link_url, image_url, sort_order, is_active)
 		VALUES ($1, $2, $3, $4, $5, $6)
 		RETURNING id, department_id, title, link_url, image_url, sort_order, is_active, created_at, updated_at
 	`
 	var s HomeSlide
-	err := r.pool.QueryRow(ctx, querySQL, req.DepartmentID, req.Title, req.LinkURL, req.ImageURL, req.SortOrder, req.IsActive).Scan(
+	err := r.pool.QueryRow(ctx, querySQL, deptID, req.Title, req.LinkURL, req.ImageURL, req.SortOrder, req.IsActive).Scan(
 		&s.ID, &s.DepartmentID, &s.Title, &s.LinkURL, &s.ImageURL, &s.SortOrder, &s.IsActive, &s.CreatedAt, &s.UpdatedAt,
 	)
 	if err != nil {
