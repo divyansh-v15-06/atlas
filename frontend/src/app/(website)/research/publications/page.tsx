@@ -156,22 +156,21 @@ export default function PublicationsPage() {
         const selInd = selectedIndexing.toLowerCase();
 
         if (selInd === "sci(e)" || selInd === "sci" || selInd === "scie") {
-          const isSci =
-            (pubInd.includes("sci") && !pubInd.includes("esci")) || pub.is_sci === true;
-          if (!isSci) return false;
+          if (!pubInd.includes("sci") || pubInd.includes("esci")) {
+            return false;
+          }
         } else if (selInd === "scopus") {
-          const isScopus = pubInd.includes("scopus") || pub.is_scopus === true;
-          if (!isScopus) return false;
+          if (!pubInd.includes("scopus")) {
+            return false;
+          }
         } else if (selInd === "esci") {
-          if (!pubInd.includes("esci")) return false;
+          if (!pubInd.includes("esci")) {
+            return false;
+          }
         } else if (selInd === "other") {
-          const isKnown =
-            pubInd.includes("sci") ||
-            pubInd.includes("scopus") ||
-            pubInd.includes("esci") ||
-            pub.is_sci === true ||
-            pub.is_scopus === true;
-          if (isKnown) return false;
+          if (pubInd !== "other") {
+            return false;
+          }
         } else if (pubInd !== selInd) {
           return false;
         }
