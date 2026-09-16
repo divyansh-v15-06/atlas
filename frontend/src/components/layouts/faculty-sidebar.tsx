@@ -28,6 +28,7 @@ import {
   Bell,
 } from "lucide-react";
 import { MOCK_FACULTY } from "@/lib/mock-data";
+import { clearAuthSession } from "@/lib/auth-guard";
 
 type SidebarLink =
   | { label: string; href: string; icon: any }
@@ -91,8 +92,7 @@ export function FacultySidebar() {
   const facultyDept = resolveFacultyDepartment(activeFaculty, currentUser);
 
   const handleLogout = () => {
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("auth_user");
+    clearAuthSession();
     router.push("/faculty/login");
   };
 

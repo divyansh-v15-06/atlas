@@ -1,33 +1,63 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { AdminSidebar } from "@/components/layouts/admin-sidebar";
 import Link from "next/link";
-import { Bell, ExternalLink, Settings, ShieldCheck } from "lucide-react";
+import { Bell, ExternalLink, Settings, ShieldCheck, ShieldAlert, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-/**
- * Authenticated admin pages layout — sidebar + content area.
- */
 import { useDepartment } from "@/context/department-context";
 import { toast } from "sonner";
+import { getStoredAuthToken, getStoredAuthUser, isAdminUser } from "@/lib/auth-guard";
 
+/**
+ * Authenticated admin pages layout — enforces administrative authentication & authorization.
+ */
 export default function AdminPagesLayout({ children }: { children: ReactNode }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [authState, setAuthState] = useState<"checking" | "authorized" | "unauthorized">("checking");
   const [adminUser, setAdminUser] = useState<any>(null);
-  const { activeDepartment } = useDepartment();
+  const { activeDepartment, departments, selectDepartmentBySlug, setActiveDepartmentBySlug } = useDepartment();
+
+  const verifyAdminAccess = useCallback(() => {
+    const token = getStoredAuthToken();
+    const user = getStoredAuthUser();
+
+    if (!token || !user) {
+      setAuthState("unauthorized");
+      const target = pathname && pathname !== "/admin/login" ? `/admin/login?redirect=${encodeURIComponent(pathname)}` : "/admin/login";
+      router.replace(target);
+      return;
+    }
+
+    if (!isAdminUser(user)) {
+      setAuthState("unauthorized");
+      toast.error("Administrative privileges required. Please sign in with an administrator account.");
+      const target = pathname && pathname !== "/admin/login" ? `/admin/login?error=unauthorized&redirect=${encodeURIComponent(pathname)}` : "/admin/login";
+      router.replace(target);
+      return;
+    }
+
+    setAdminUser(user);
+    setAuthState("authorized");
+  }, [pathname, router]);
 
   useEffect(() => {
-    const raw = localStorage.getItem("auth_user");
-    if (raw) {
-      try {
-        setAdminUser(JSON.parse(raw));
-      } catch {}
-    }
-  }, []);
+    verifyAdminAccess();
 
-  const isHod = adminUser?.role === "HOD_ADMIN" || adminUser?.roles?.includes("HOD_ADMIN");
-  const { departments, selectDepartmentBySlug, setActiveDepartmentBySlug } = useDepartment();
+    const handleStorageChange = () => {
+      verifyAdminAccess();
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    window.addEventListener("nith_faculty_storage_update", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("nith_faculty_storage_update", handleStorageChange);
+    };
+  }, [verifyAdminAccess]);
 
   const handleSelectDepartment = (slug: string) => {
     const fn = selectDepartmentBySlug || setActiveDepartmentBySlug;
@@ -35,6 +65,50 @@ export default function AdminPagesLayout({ children }: { children: ReactNode }) 
       fn(slug);
     }
   };
+
+  // 1. Session verification in progress
+  if (authState === "checking") {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#faf6f3] px-4 font-sans selection:bg-[#85261e] selection:text-white">
+        <div className="flex flex-col items-center gap-4 rounded-3xl border border-[#eedfd8] bg-white p-8 sm:p-10 shadow-xl max-w-sm text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#fff9f6] border border-[#eedfd8] text-[#85261e] shadow-xs">
+            <Loader2 className="h-7 w-7 animate-spin" />
+          </div>
+          <div>
+            <h2 className="text-base font-black text-[#1c110c] tracking-tight uppercase">Admin Verification</h2>
+            <p className="mt-1 text-xs text-neutral-500 font-medium">Validating administrative credentials...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 2. Unauthorized screen (displayed briefly before redirect or if redirect is interrupted)
+  if (authState === "unauthorized") {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#faf6f3] px-4 font-sans selection:bg-[#85261e] selection:text-white">
+        <div className="flex flex-col items-center gap-4 rounded-3xl border border-[#eedfd8] bg-white p-8 sm:p-10 shadow-xl max-w-sm text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-red-50 border border-red-200 text-red-700 shadow-xs">
+            <ShieldAlert className="h-7 w-7" />
+          </div>
+          <div>
+            <h2 className="text-base font-black text-[#1c110c] tracking-tight uppercase">Access Restricted</h2>
+            <p className="mt-1 text-xs text-neutral-600 font-medium">
+              Administrator sign-in is required to access the Department Administration Console.
+            </p>
+          </div>
+          <Link
+            href={`/admin/login?redirect=${encodeURIComponent(pathname || "/admin")}`}
+            className="w-full rounded-xl bg-[#33110e] px-5 py-2.5 text-xs font-bold text-white hover:bg-[#85261e] transition shadow-xs flex items-center justify-center gap-2"
+          >
+            Go to Admin Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const isHod = adminUser?.role === "HOD_ADMIN" || adminUser?.roles?.includes("HOD_ADMIN");
 
   return (
     <div className="flex min-h-screen bg-[#faf6f3] font-sans">

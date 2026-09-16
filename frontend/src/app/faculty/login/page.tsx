@@ -44,6 +44,17 @@ export default function FacultyLoginPage() {
     },
   });
 
+  const getRedirectDestination = (defaultPath = "/faculty") => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const redirect = params.get("redirect");
+      if (redirect && redirect.startsWith("/") && !redirect.startsWith("//")) {
+        return redirect;
+      }
+    }
+    return defaultPath;
+  };
+
   const onSubmit = async (data: FacultyLoginInput) => {
     setLoading(true);
     try {
@@ -68,7 +79,7 @@ export default function FacultyLoginPage() {
           window.dispatchEvent(new CustomEvent("nith_faculty_storage_update"));
         }
         toast.success("Welcome to the Faculty Portal!");
-        router.push("/faculty");
+        router.push(getRedirectDestination("/faculty"));
         return;
       }
     } catch (err: any) {

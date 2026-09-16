@@ -34,6 +34,7 @@ import {
   Calendar,
 } from "lucide-react";
 import { useDepartment } from "@/context/department-context";
+import { clearAuthSession } from "@/lib/auth-guard";
 
 interface SidebarSection {
   section: string;
@@ -187,8 +188,7 @@ export function AdminSidebar() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("auth_user");
+    clearAuthSession();
     router.push("/admin/login");
   };
 

@@ -44,6 +44,17 @@ export default function AdminLoginPage() {
     },
   });
 
+  const getRedirectDestination = (defaultPath = "/admin") => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const redirect = params.get("redirect");
+      if (redirect && redirect.startsWith("/") && !redirect.startsWith("//")) {
+        return redirect;
+      }
+    }
+    return defaultPath;
+  };
+
   const onSubmit = async (data: AdminLoginInput) => {
     setLoading(true);
     const emailLower = data.email.trim().toLowerCase();
@@ -66,7 +77,7 @@ export default function AdminLoginPage() {
           window.dispatchEvent(new CustomEvent("nith_faculty_storage_update"));
         }
         toast.success("Signed in to Department Admin Console!");
-        router.push("/admin");
+        router.push(getRedirectDestination("/admin"));
         return;
       }
     } catch (err: any) {
@@ -92,7 +103,7 @@ export default function AdminLoginPage() {
           window.dispatchEvent(new CustomEvent("nith_faculty_storage_update"));
         }
         toast.success("Signed in to Department Admin Console!");
-        router.push("/admin");
+        router.push(getRedirectDestination("/admin"));
         return;
       }
 
