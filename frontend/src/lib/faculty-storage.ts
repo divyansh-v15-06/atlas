@@ -195,14 +195,29 @@ export function resolveFacultyBaseline(faculty: any, section: string): any[] {
   }
 
   if (section === "patents") {
-    if (Array.isArray(baseFaculty.patents)) {
-      return baseFaculty.patents;
-    }
-    const legacyId = baseFaculty.legacy_id;
-    return MOCK_PATENTS.filter((p: any) => {
-      if (p.faculty_ids && p.faculty_ids.includes(baseFaculty.id)) return true;
-      if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
-      return false;
+    const rawList =
+      Array.isArray(baseFaculty.patents) && baseFaculty.patents.length > 0
+        ? baseFaculty.patents
+        : (() => {
+            const legacyId = baseFaculty.legacy_id;
+            return MOCK_PATENTS.filter((p: any) => {
+              if (p.faculty_ids && p.faculty_ids.includes(baseFaculty.id)) return true;
+              if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
+              return false;
+            });
+          })();
+
+    return rawList.map((p: any) => {
+      const isGranted = (p.status || "").toLowerCase().includes("grant");
+      const patentNo =
+        p.patent_number ||
+        p.grant_number ||
+        (isGranted ? p.application_number : "") ||
+        "";
+      return {
+        ...p,
+        patent_number: patentNo,
+      };
     });
   }
 

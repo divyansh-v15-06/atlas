@@ -132,7 +132,7 @@ export default function PatentModal({ item }: Props) {
                                                     Reference ID:
                                                 </div>
                                                 <div className='text-[#202529] pl-2 md:pl-0'>
-                                                    {item?.referenceNo}
+                                                    {item?.patent_number || item?.grant_number || item?.application_number || item?.referenceNo}
                                                 </div>
                                             </div>
                                         </td>

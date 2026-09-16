@@ -2660,7 +2660,16 @@ export default function FacultyPortfolioPage({
                                 )}
                               </td>
                               <td className="p-3.5 align-top font-mono text-neutral-700 font-semibold text-sm">
-                                {pat.application_number || pat.patent_number || "—"}
+                                {pat.patent_number ? (
+                                  <div>
+                                    <span className="text-emerald-800 font-bold block">Patent: {pat.patent_number}</span>
+                                    {pat.application_number && pat.application_number !== pat.patent_number && (
+                                      <span className="text-xs text-neutral-500 block">App: {pat.application_number}</span>
+                                    )}
+                                  </div>
+                                ) : (
+                                  pat.application_number || pat.referenceNo || "—"
+                                )}
                               </td>
                               <td className="p-3.5 text-center align-top">
                                 <span
@@ -4807,6 +4816,14 @@ export default function FacultyPortfolioPage({
                     <tr className="bg-white">
                       <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Consultancy Amount</td>
                       <td className="p-3.5 text-neutral-900 font-bold text-sm">₹ {Number(detailItem.amount).toLocaleString("en-IN")}</td>
+                    </tr>
+                  )}
+                  {(detailItem.patent_number || (detailItem.status?.toLowerCase().includes("grant") && detailItem.application_number)) && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Patent / Grant Number</td>
+                      <td className="p-3.5 font-mono text-emerald-800 font-bold text-sm">
+                        {detailItem.patent_number || detailItem.grant_number || detailItem.application_number}
+                      </td>
                     </tr>
                   )}
                   {detailItem.application_number && (

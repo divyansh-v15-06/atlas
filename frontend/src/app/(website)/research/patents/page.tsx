@@ -509,14 +509,18 @@ export default function PatentsPage() {
                   <div className="py-2.5 grid grid-cols-12 gap-2">
                     <span className="col-span-4 font-bold text-[#33110e]">Application No:</span>
                     <span className="col-span-8 text-neutral-900 font-mono font-bold">
-                      {selectedPatent.application_number || "—"}
+                      {selectedPatent.application_number || selectedPatent.reference_no || selectedPatent.referenceNo || "—"}
                     </span>
                   </div>
 
                   <div className="py-2.5 grid grid-cols-12 gap-2">
-                    <span className="col-span-4 font-bold text-[#33110e]">Patent Number:</span>
+                    <span className="col-span-4 font-bold text-[#33110e]">Patent / Grant No:</span>
                     <span className="col-span-8 text-emerald-800 font-mono font-bold">
-                      {selectedPatent.patent_number || "Under Examination / Published"}
+                      {selectedPatent.patent_number ||
+                        selectedPatent.grant_number ||
+                        (selectedPatent.status?.toLowerCase().includes("grant")
+                          ? selectedPatent.application_number
+                          : "Under Examination / Published")}
                     </span>
                   </div>
 
