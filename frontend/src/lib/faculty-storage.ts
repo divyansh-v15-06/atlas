@@ -222,14 +222,31 @@ export function resolveFacultyBaseline(faculty: any, section: string): any[] {
   }
 
   if (section === "projects") {
-    if (Array.isArray(baseFaculty.projects)) {
-      return baseFaculty.projects;
-    }
-    const legacyId = baseFaculty.legacy_id;
-    return MOCK_PROJECTS.filter((p: any) => {
-      if (p.faculty_ids && p.faculty_ids.includes(baseFaculty.id)) return true;
-      if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
-      return false;
+    const rawList =
+      Array.isArray(baseFaculty.projects) && baseFaculty.projects.length > 0
+        ? baseFaculty.projects
+        : (() => {
+            const legacyId = baseFaculty.legacy_id;
+            return MOCK_PROJECTS.filter((p: any) => {
+              if (p.faculty_ids && p.faculty_ids.includes(baseFaculty.id)) return true;
+              if (legacyId && p.faculty_legacy_ids && p.faculty_legacy_ids.includes(legacyId)) return true;
+              return false;
+            });
+          })();
+
+    return rawList.map((p: any) => {
+      const match = MOCK_PROJECTS.find(
+        (mp: any) =>
+          mp.id === p.id ||
+          (p.legacy_id && (mp as any).legacy_id === p.legacy_id) ||
+          mp.title === p.title
+      );
+      return {
+        ...p,
+        raw_investigators: p.raw_investigators || match?.raw_investigators || "Faculty Investigators",
+        principal_investigator: p.principal_investigator || match?.principal_investigator || "",
+        co_principal_investigator: p.co_principal_investigator || match?.co_principal_investigator || "",
+      };
     });
   }
 

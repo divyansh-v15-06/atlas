@@ -527,6 +527,24 @@ export default function ProjectsPage() {
                     </span>
                   </div>
 
+                  {selectedProject.principal_investigator && (
+                    <div className="py-2.5 grid grid-cols-12 gap-2">
+                      <span className="col-span-4 font-bold text-[#33110e]">Principal Investigator:</span>
+                      <span className="col-span-8 text-neutral-800 font-semibold leading-relaxed">
+                        {selectedProject.principal_investigator}
+                      </span>
+                    </div>
+                  )}
+
+                  {selectedProject.co_principal_investigator && (
+                    <div className="py-2.5 grid grid-cols-12 gap-2">
+                      <span className="col-span-4 font-bold text-[#33110e]">Co-Principal Investigator:</span>
+                      <span className="col-span-8 text-neutral-800 font-semibold leading-relaxed">
+                        {selectedProject.co_principal_investigator}
+                      </span>
+                    </div>
+                  )}
+
                   <div className="py-2.5 grid grid-cols-12 gap-2">
                     <span className="col-span-4 font-bold text-[#33110e]">Project Title:</span>
                     <span className="col-span-8 text-neutral-900 font-bold leading-relaxed">

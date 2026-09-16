@@ -131,23 +131,29 @@ export const MOCK_PATENTS: (Patent & { raw_inventors?: string; year?: number })[
     };
   });
 
-export const MOCK_PROJECTS: (Project & { raw_investigators?: string; year?: number })[] =
-  databaseSeed.projects.map((prj: any) => ({
-    id: prj.id,
-    title: prj.title,
-    funding_agency: prj.funding_agency || "DST-SERB / MeitY",
-    status: (prj.status as any) || "Ongoing",
-    project_type: "Sponsored R&D",
-    start_date: `${prj.year || "2023"}-04-01`,
-    end_date: `${Number(prj.year || 2023) + 3}-03-31`,
-    year: Number(prj.year) || 2023,
-    total_sanctioned_amount: Number(prj.total_sanctioned_amount) || 2500000,
-    total_amount_received: Number(prj.total_amount_received) || 2500000,
-    scheme: "Core Research Grant",
-    reference_number: prj.reference_number || `CRG/${prj.year || 2023}/084`,
-    raw_investigators: prj.raw_investigators || "Faculty Investigators",
-    faculty_ids: prj.faculty_ids || [],
-  }));
+export const MOCK_PROJECTS: (Project & {
+  raw_investigators?: string;
+  year?: number;
+  principal_investigator?: string;
+  co_principal_investigator?: string;
+})[] = databaseSeed.projects.map((prj: any) => ({
+  id: prj.id,
+  title: prj.title,
+  funding_agency: prj.funding_agency || "DST-SERB / MeitY",
+  status: (prj.status as any) || "Ongoing",
+  project_type: "Sponsored R&D",
+  start_date: `${prj.year || "2023"}-04-01`,
+  end_date: `${Number(prj.year || 2023) + 3}-03-31`,
+  year: Number(prj.year) || 2023,
+  total_sanctioned_amount: Number(prj.total_sanctioned_amount) || 2500000,
+  total_amount_received: Number(prj.total_amount_received) || 2500000,
+  scheme: "Core Research Grant",
+  reference_number: prj.reference_number || `CRG/${prj.year || 2023}/084`,
+  raw_investigators: prj.raw_investigators || "Faculty Investigators",
+  principal_investigator: prj.principal_investigator || "",
+  co_principal_investigator: prj.co_principal_investigator || "",
+  faculty_ids: prj.faculty_ids || [],
+}));
 
 export const MOCK_CONSULTANCIES = (databaseSeed.consultancies || []).map((c: any) => ({
   id: c.id,

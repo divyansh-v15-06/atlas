@@ -4776,14 +4776,26 @@ export default function FacultyPortfolioPage({
                       <td className="p-3.5 text-neutral-700 leading-relaxed text-sm">{detailItem.description}</td>
                     </tr>
                   )}
-                  {(detailItem.author_text || detailItem.authors || detailItem.student_name || detailItem.raw_inventors || detailItem.convenor) && (
+                  {(detailItem.author_text || detailItem.authors || detailItem.student_name || detailItem.raw_investigators || detailItem.raw_inventors || detailItem.convenor) && (
                     <tr className="bg-white">
                       <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">
-                        {detailItem.student_name ? "Scholar / Student" : detailItem.raw_inventors ? "Inventors" : "Authors / Investigators"}
+                        {detailItem.student_name ? "Scholar / Student" : detailItem.raw_investigators ? "Investigators" : detailItem.raw_inventors ? "Inventors" : "Authors / Investigators"}
                       </td>
                       <td className="p-3.5 text-neutral-800 font-medium text-sm">
-                        {detailItem.author_text || detailItem.authors || detailItem.student_name || detailItem.raw_inventors || detailItem.convenor}
+                        {detailItem.author_text || detailItem.authors || detailItem.student_name || detailItem.raw_investigators || detailItem.raw_inventors || detailItem.convenor}
                       </td>
+                    </tr>
+                  )}
+                  {detailItem.principal_investigator && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Principal Investigator</td>
+                      <td className="p-3.5 text-neutral-800 font-medium text-sm">{detailItem.principal_investigator}</td>
+                    </tr>
+                  )}
+                  {detailItem.co_principal_investigator && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Co-Principal Investigator</td>
+                      <td className="p-3.5 text-neutral-800 font-medium text-sm">{detailItem.co_principal_investigator}</td>
                     </tr>
                   )}
                   {(detailItem.journal_or_conference_name || detailItem.venue_name || detailItem.venue) && (

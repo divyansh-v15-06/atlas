@@ -1410,7 +1410,7 @@
         {
           "id": "e38a707e-b497-5ad9-b11e-7ed50a057035",
           "legacy_id": 711,
-          "title": "Buffer-loss estimation to address congestion in 6LoWPAN based resource-restricted \u2018Internet of Healthcare Things\u2019 network",
+          "title": "Buffer-loss estimation to address congestion in 6LoWPAN based resource-restricted ‘Internet of Healthcare Things’ network",
           "venue_name": "Computer Communications",
           "journal_or_conference_name": "Computer Communications",
           "volume": "181",
@@ -2136,8 +2136,8 @@
           "id": "f1a6148b-52ac-5871-b03a-a60eefaff6c7",
           "legacy_id": 744,
           "title": "New Routing Protocol for Wireless Sensor Networks",
-          "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
-          "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
+          "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
+          "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
           "volume": "",
           "issue": "",
           "page_range": "",
@@ -2167,8 +2167,8 @@
           "id": "4614baf7-53b3-57f3-925b-fa55941a2779",
           "legacy_id": 745,
           "title": "Data Indexing and Scheduling for Heterogeneous Multiple Broadcast Channels",
-          "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
-          "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
+          "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
+          "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
           "volume": "",
           "issue": "",
           "page_range": "",
@@ -2198,8 +2198,8 @@
           "id": "940e0190-caa3-5c36-80c2-8f44c0c385c5",
           "legacy_id": 746,
           "title": "Data Replication in Mobile Ad hoc Networks",
-          "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
-          "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
+          "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
+          "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
           "volume": "",
           "issue": "",
           "page_range": "",
@@ -2291,8 +2291,8 @@
           "id": "d43a18d9-35aa-5758-a980-1af35aa0fb98",
           "legacy_id": 749,
           "title": "A Secure and Highly Available Architecture for SNMP Based Monitoring of Network Devices",
-          "venue_name": "International Conference on Network Security (ICON\u201907)",
-          "journal_or_conference_name": "International Conference on Network Security (ICON\u201907)",
+          "venue_name": "International Conference on Network Security (ICON’07)",
+          "journal_or_conference_name": "International Conference on Network Security (ICON’07)",
           "volume": "",
           "issue": "",
           "page_range": "",
@@ -2446,8 +2446,8 @@
           "id": "b2c3f8a6-7768-5e7d-b386-2d4eaffc6f2f",
           "legacy_id": 754,
           "title": "Parch: A Peer-to-Peer Based Email Archival Application",
-          "venue_name": "International Conference on Data Management (ICDM\u201908)",
-          "journal_or_conference_name": "International Conference on Data Management (ICDM\u201908)",
+          "venue_name": "International Conference on Data Management (ICDM’08)",
+          "journal_or_conference_name": "International Conference on Data Management (ICDM’08)",
           "volume": "",
           "issue": "",
           "page_range": "622-630",
@@ -2477,8 +2477,8 @@
           "id": "81465738-346c-5919-a4e8-7123bf267d01",
           "legacy_id": 755,
           "title": "Multicast Routing Protocol for MANET: A Survey",
-          "venue_name": "National Conference FCPC\u2019 09 at H.I.E.T",
-          "journal_or_conference_name": "National Conference FCPC\u2019 09 at H.I.E.T",
+          "venue_name": "National Conference FCPC’ 09 at H.I.E.T",
+          "journal_or_conference_name": "National Conference FCPC’ 09 at H.I.E.T",
           "volume": "",
           "issue": "",
           "page_range": "",
@@ -2664,9 +2664,9 @@
         {
           "id": "8e24395c-1608-5497-a7b0-28d687c68836",
           "legacy_id": 761,
-          "title": "A comparative molecular modeling study of mitoxantrone and its analogues with 5\u2019-CCCGGG-3\u2019 and 5\u2019-ATCGAT-3\u2019 DNA hexamer sequences",
-          "venue_name": "International Conference on frontiers in prevention, diagnosis and therapy of cancer (FPDTC \u2013 2009)",
-          "journal_or_conference_name": "International Conference on frontiers in prevention, diagnosis and therapy of cancer (FPDTC \u2013 2009)",
+          "title": "A comparative molecular modeling study of mitoxantrone and its analogues with 5’-CCCGGG-3’ and 5’-ATCGAT-3’ DNA hexamer sequences",
+          "venue_name": "International Conference on frontiers in prevention, diagnosis and therapy of cancer (FPDTC – 2009)",
+          "journal_or_conference_name": "International Conference on frontiers in prevention, diagnosis and therapy of cancer (FPDTC – 2009)",
           "volume": "",
           "issue": "",
           "page_range": "422-433",
@@ -3394,8 +3394,8 @@
           "journal_or_conference_name": "International Conference on Advances in Computing and Communication (ICACC)",
           "volume": "",
           "issue": "",
-          "page_range": "274\u2013287",
-          "pages": "274\u2013287",
+          "page_range": "274–287",
+          "pages": "274–287",
           "year": 2011,
           "month": null,
           "academic_session": "2011-2012",
@@ -4392,8 +4392,8 @@
           "journal_or_conference_name": "Wireless Networks",
           "volume": "23",
           "issue": "",
-          "page_range": "1669\u20131687",
-          "pages": "1669\u20131687",
+          "page_range": "1669–1687",
+          "pages": "1669–1687",
           "year": 2017,
           "month": null,
           "academic_session": "2017-2018",
@@ -4486,7 +4486,7 @@
         {
           "id": "dba7b272-787a-58d4-9348-5f68ffa5a1f8",
           "legacy_id": 1068,
-          "title": "DDoS Attacks Detection in \u2018Internet of Medical Things\u2019 Using Machine Learning Techniques",
+          "title": "DDoS Attacks Detection in ‘Internet of Medical Things’ Using Machine Learning Techniques",
           "venue_name": "2022 IEEE Conference on Interdisciplinary Approaches in Technology and Management for Social Innovation (IATMSI)",
           "journal_or_conference_name": "2022 IEEE Conference on Interdisciplinary Approaches in Technology and Management for Social Innovation (IATMSI)",
           "volume": "1",
@@ -4658,8 +4658,8 @@
           "journal_or_conference_name": "Contemporary Computing: 4th International Conference, IC3 2011, Noida",
           "volume": "",
           "issue": "",
-          "page_range": "415\u2013425",
-          "pages": "415\u2013425",
+          "page_range": "415–425",
+          "pages": "415–425",
           "year": 2011,
           "month": null,
           "academic_session": "2011-2012",
@@ -5103,8 +5103,8 @@
           "status": "Ongoing",
           "reference_number": "",
           "funding_agency": "Science and enginerring research board",
-          "total_sanctioned_amount": 601271.0,
-          "total_amount_received": 601271.0,
+          "total_sanctioned_amount": 601271,
+          "total_amount_received": 601271,
           "year": 2024,
           "raw_investigators": "Prof. Lalit Awasthi(PI)",
           "faculty_ids": [
@@ -5112,7 +5112,9 @@
           ],
           "faculty_legacy_ids": [
             1
-          ]
+          ],
+          "principal_investigator": "Prof. Lalit Awasthi(PI)",
+          "co_principal_investigator": null
         },
         {
           "id": "80f2cde6-cb71-50f5-a32e-b54962ac781a",
@@ -5121,8 +5123,8 @@
           "status": "Completed",
           "reference_number": "",
           "funding_agency": "Ministry of human Resource Development.Govt.of India",
-          "total_sanctioned_amount": 1200000.0,
-          "total_amount_received": 1200000.0,
+          "total_sanctioned_amount": 1200000,
+          "total_amount_received": 1200000,
           "year": 2005,
           "raw_investigators": "Prof. Lalit Awasthi(PI)",
           "faculty_ids": [
@@ -5130,7 +5132,9 @@
           ],
           "faculty_legacy_ids": [
             1
-          ]
+          ],
+          "principal_investigator": "Prof. Lalit Awasthi(PI)",
+          "co_principal_investigator": null
         },
         {
           "id": "d3168543-6ded-5631-86d6-a2fccd17fe09",
@@ -5139,8 +5143,8 @@
           "status": "Completed",
           "reference_number": "",
           "funding_agency": "TEQIP, IUST",
-          "total_sanctioned_amount": 400000.0,
-          "total_amount_received": 400000.0,
+          "total_sanctioned_amount": 400000,
+          "total_amount_received": 400000,
           "year": 2019,
           "raw_investigators": "Prof. Lalit Awasthi(PI)",
           "faculty_ids": [
@@ -5148,7 +5152,9 @@
           ],
           "faculty_legacy_ids": [
             1
-          ]
+          ],
+          "principal_investigator": "Prof. Lalit Awasthi(PI)",
+          "co_principal_investigator": null
         },
         {
           "id": "258ac72e-35ed-5b66-b398-4b9d2c1cde9c",
@@ -5157,8 +5163,8 @@
           "status": "Ongoing",
           "reference_number": "",
           "funding_agency": "DST",
-          "total_sanctioned_amount": 7279000.0,
-          "total_amount_received": 7279000.0,
+          "total_sanctioned_amount": 7279000,
+          "total_amount_received": 7279000,
           "year": 2021,
           "raw_investigators": "Prof. Lalit Awasthi(PI)",
           "faculty_ids": [
@@ -5166,7 +5172,9 @@
           ],
           "faculty_legacy_ids": [
             1
-          ]
+          ],
+          "principal_investigator": "Prof. Lalit Awasthi(PI)",
+          "co_principal_investigator": null
         }
       ],
       "supervisions": [
@@ -5316,17 +5324,17 @@
           "year": 2001
         },
         {
-          "title": "Selected for Contributory paper for main presentation under the Theme \u201cImproving Quality through Attainment of Learning Outcomes\u201d in the 3rd World Summit on Accreditation (WOSA 2016) Theme: Quality Assurance through Outcome Based Accreditation",
+          "title": "Selected for Contributory paper for main presentation under the Theme “Improving Quality through Attainment of Learning Outcomes” in the 3rd World Summit on Accreditation (WOSA 2016) Theme: Quality Assurance through Outcome Based Accreditation",
           "organization": "WOSA 2016 18th- 20th March, 2016",
           "year": 2016
         },
         {
-          "title": "Consolation prize for paper \u201cReputation Base Trust for Mobile Agents",
+          "title": "Consolation prize for paper “Reputation Base Trust for Mobile Agents",
           "organization": "ADCON 2011 held during 16-18 Decempber, 2011 at NITK Surthkal",
           "year": 2011
         },
         {
-          "title": "Best Paper Award for the paper \u201cAdoption of Video Confrencing in Technical Institutions \u2013 a Case Study of NIT Hamirpur\u201d,",
+          "title": "Best Paper Award for the paper “Adoption of Video Confrencing in Technical Institutions – a Case Study of NIT Hamirpur”,",
           "organization": "presented in the ISTE Section Annual Convention SAC-07 held during Novemeber 18-19, 2007 at NIT Hamirpur.",
           "year": 2007
         },
@@ -5341,7 +5349,7 @@
           "title": "(Key note speaker ) Artificial Intelligence and Data Analytics: From Dawn till Dusk & Beyond",
           "venue": "Guru Jambheshwar University of Science and Technology, Hisar -125001, Haryana",
           "date": "2024-03-18",
-          "description": "One Week Online Faculty Development Programme (FDP) on \u201cArtificial Intelligence and Data Analytics (AIDA-2024)\u201d from 18-03-2024 to 23-03-2024."
+          "description": "One Week Online Faculty Development Programme (FDP) on “Artificial Intelligence and Data Analytics (AIDA-2024)” from 18-03-2024 to 23-03-2024."
         },
         {
           "title": "Artificial Intelligence powered Insight into Cyber Threat Intelligence: Challenges, Opportunities and Cyber Landscape",
@@ -5365,7 +5373,7 @@
           "title": "Fabric Defect Detection using Deep Learning",
           "venue": "NIT Jalandhar",
           "date": "2024-02-19",
-          "description": "short-term course (STC) on \u201cIndustry 4.0 challenges and interdependencies\u201d sponsored by Agmatel Pvt ltd., during February 19th- 23rd, 2024."
+          "description": "short-term course (STC) on “Industry 4.0 challenges and interdependencies” sponsored by Agmatel Pvt ltd., during February 19th- 23rd, 2024."
         },
         {
           "title": "Work Life Balance",
@@ -5377,7 +5385,7 @@
           "title": "Android Security",
           "venue": "NIT Hamirpur",
           "date": "2023-09-25",
-          "description": "Short Term Course on \u201cRecent Trends in Networks & Communication: Theory & Challenges (RTNC-2023)\u201d, 25th-29th September, 2023"
+          "description": "Short Term Course on “Recent Trends in Networks & Communication: Theory & Challenges (RTNC-2023)”, 25th-29th September, 2023"
         },
         {
           "title": "Artificial Intelligence powered Cyber Threat: Challenges, Opportunities and Cyber Landscape",
@@ -5398,10 +5406,10 @@
           "description": "Short Term Course on Computer Vision and Intelligent Applications (CVIA-23) during August 11-16, 2023, NIT Kurukshetra,"
         },
         {
-          "title": "Machine Learning and it\u2019s Applications",
+          "title": "Machine Learning and it’s Applications",
           "venue": "NIT Hamirpur",
           "date": "2023-12-11",
-          "description": "e-STC on \u201cSoftware Tools for Academicians and Researchers (STAR-2023)\u201d, 11-16 December 2023, Electrical Engineering Department, NIT Hamirpur"
+          "description": "e-STC on “Software Tools for Academicians and Researchers (STAR-2023)”, 11-16 December 2023, Electrical Engineering Department, NIT Hamirpur"
         },
         {
           "title": "Multilingual Approach to imparting Education recommended by NEP-2020: Issues and Challenges,",
@@ -5413,7 +5421,7 @@
           "title": "Deep Learning for Natural Language Processing",
           "venue": "NIT Jalandhar",
           "date": "2020-09-21",
-          "description": "Recent advances in Data Science, Image and Natural Language Processing\u201d (RADSINP-2020), September 21- 25, 2020)"
+          "description": "Recent advances in Data Science, Image and Natural Language Processing” (RADSINP-2020), September 21- 25, 2020)"
         },
         {
           "title": "Deep Learning Tools and Techniques for Natural Language Processing,",
@@ -5461,7 +5469,7 @@
           "title": "Cloud Computing: Innovation Enabler 2019",
           "venue": "NIT Jalandhar",
           "date": "",
-          "description": "TEQIP-III sponsored short-term course (STC) on \u201cResearch Trends in Cloud, Fog and Edge Computing (RTCC-2019)"
+          "description": "TEQIP-III sponsored short-term course (STC) on “Research Trends in Cloud, Fog and Edge Computing (RTCC-2019)"
         },
         {
           "title": "Machine Learning Algorithms and Evaluation Metrics",
@@ -5473,7 +5481,7 @@
           "title": "Video Conferencing System 2008",
           "venue": "NIT Hamirpur",
           "date": "",
-          "description": "workshop on \u201cICT Infrastructure Awareness\u201d"
+          "description": "workshop on “ICT Infrastructure Awareness”"
         },
         {
           "title": "Fundamentals of VHDL 2007",
@@ -5485,7 +5493,7 @@
           "title": "Introduction to VHDL 2007",
           "venue": "NIT Hamirpur",
           "date": "",
-          "description": "short term course on \u201cVLSI Design & Tools-VLSI-07\u201d"
+          "description": "short term course on “VLSI Design & Tools-VLSI-07”"
         },
         {
           "title": "Algorithmic approaches for VLSI design 2006",
@@ -5603,8 +5611,8 @@
           "journal_or_conference_name": "Artificial Intelligence Review",
           "volume": "54",
           "issue": "4",
-          "page_range": "2917\ufffd3006",
-          "pages": "2917\ufffd3006",
+          "page_range": "2917�3006",
+          "pages": "2917�3006",
           "year": 2020,
           "month": 10,
           "academic_session": "2020-2021",
@@ -5641,7 +5649,7 @@
           "year": 2015,
           "month": null,
           "academic_session": "2015-2016",
-          "doi": "DOI:\ufffd10.14569/IJACSA.2015.061025",
+          "doi": "DOI:�10.14569/IJACSA.2015.061025",
           "research_type_id": 1,
           "publication_type": "Journal",
           "type": "JOURNAL",
@@ -5799,8 +5807,8 @@
           "journal_or_conference_name": "Artificial Intelligence Review",
           "volume": "36",
           "issue": "4",
-          "page_range": "311\u2013321",
-          "pages": "311\u2013321",
+          "page_range": "311–321",
+          "pages": "311–321",
           "year": 2011,
           "month": null,
           "academic_session": "2010-2011",
@@ -6631,9 +6639,9 @@
         {
           "id": "d2999a75-67ef-5d0e-a9fc-0d483ac2e8f8",
           "legacy_id": 930,
-          "title": "\u092e\u0936\u0940\u0928 \u0906\u0927\u093e\u0930\u093f\u0924 \u092d\u093e\u0937\u093e \u0905\u0928\u0941\u0935\u093e\u0926 \u092e\u0947\u0902 \u0938\u0902\u0926\u0930\u094d\u092d \u0928\u093f\u0930\u093e\u0915\u0930\u0923 \u0915\u093e \u092e\u0939\u0924\u094d\u0935.",
-          "venue_name": "\u092d\u093e\u0930\u0924\u0940\u092f \u0935\u0948\u091c\u094d\u091e\u093e\u0928\u093f\u0915 \u090f\u0935\u0902 \u0914\u0926\u094d\u092f\u094b\u0917\u093f\u0915 \u0905\u0928\u0941\u0938\u0902\u0927\u093e\u0928 \u092a\u0924\u094d\u0930\u093f\u0915\u093e",
-          "journal_or_conference_name": "\u092d\u093e\u0930\u0924\u0940\u092f \u0935\u0948\u091c\u094d\u091e\u093e\u0928\u093f\u0915 \u090f\u0935\u0902 \u0914\u0926\u094d\u092f\u094b\u0917\u093f\u0915 \u0905\u0928\u0941\u0938\u0902\u0927\u093e\u0928 \u092a\u0924\u094d\u0930\u093f\u0915\u093e",
+          "title": "मशीन आधारित भाषा अनुवाद में संदर्भ निराकरण का महत्व.",
+          "venue_name": "भारतीय वैज्ञानिक एवं औद्योगिक अनुसंधान पत्रिका",
+          "journal_or_conference_name": "भारतीय वैज्ञानिक एवं औद्योगिक अनुसंधान पत्रिका",
           "volume": "",
           "issue": "",
           "page_range": "49-54",
@@ -6647,8 +6655,8 @@
           "type": "JOURNAL",
           "indexing": "SCI(E)",
           "journal_quartile": "T",
-          "author_text": "\u091a\u0947\u0924\u0928 \u0905\u0917\u094d\u0930\u0935\u093e\u0932 \u090f\u0935\u0902 \u0915\u092e\u0932\u0947\u0936 \u0926\u0924\u094d\u0924\u093e",
-          "raw_authors": "\u091a\u0947\u0924\u0928 \u0905\u0917\u094d\u0930\u0935\u093e\u0932 \u090f\u0935\u0902 \u0915\u092e\u0932\u0947\u0936 \u0926\u0924\u094d\u0924\u093e",
+          "author_text": "चेतन अग्रवाल एवं कमलेश दत्ता",
+          "raw_authors": "चेतन अग्रवाल एवं कमलेश दत्ता",
           "isbn": "",
           "is_sci": true,
           "is_scopus": true,
@@ -6700,8 +6708,8 @@
           "journal_or_conference_name": "Wireless Personal Communications",
           "volume": "123",
           "issue": "",
-          "page_range": "3127\u20133145",
-          "pages": "3127\u20133145",
+          "page_range": "3127–3145",
+          "pages": "3127–3145",
           "year": 2022,
           "month": null,
           "academic_session": "2021-2022",
@@ -7292,7 +7300,7 @@
         {
           "id": "97bc955c-42d0-5cab-8065-c2933b38470d",
           "legacy_id": 1398,
-          "title": "Attacks in WSN and their Countermeasure, book chapter in Case Studies in Secure Computing \u2013 Achievements and Trends",
+          "title": "Attacks in WSN and their Countermeasure, book chapter in Case Studies in Secure Computing – Achievements and Trends",
           "venue_name": "CRC Press, Taylor and Francis group",
           "journal_or_conference_name": "CRC Press, Taylor and Francis group",
           "volume": "",
@@ -7499,10 +7507,10 @@
           "status": "Ongoing",
           "reference_number": "SR/FST/ET-1/2023/1308",
           "funding_agency": "DST",
-          "total_sanctioned_amount": 22300000.0,
-          "total_amount_received": 22300000.0,
+          "total_sanctioned_amount": 22300000,
+          "total_amount_received": 22300000,
           "year": 2024,
-          "raw_investigators": "Dr. Naveen Chauhan(CO-PI)",
+          "raw_investigators": "Dr. Naveen Chauhan(CO-PI), Dr Rajeev Kumar (Co-PI)",
           "faculty_ids": [
             "5e12253b-db56-5e31-9e51-19ab6edac297",
             "c17e0191-445a-5f4d-961b-fb830ce9136c",
@@ -7516,7 +7524,9 @@
             5,
             9,
             10
-          ]
+          ],
+          "principal_investigator": "Dr. Naveen Chauhan(CO-PI)",
+          "co_principal_investigator": "Dr Rajeev Kumar (Co-PI)"
         },
         {
           "id": "d0b55e01-55ec-59ae-a232-dec8739ecd61",
@@ -7525,16 +7535,18 @@
           "status": "Completed",
           "reference_number": "",
           "funding_agency": "Municipal Corporation Simla",
-          "total_sanctioned_amount": 350000.0,
-          "total_amount_received": 350000.0,
+          "total_sanctioned_amount": 350000,
+          "total_amount_received": 350000,
           "year": 2013,
-          "raw_investigators": null,
+          "raw_investigators": "Dr. Kamlesh Dutta",
           "faculty_ids": [
             "5e12253b-db56-5e31-9e51-19ab6edac297"
           ],
           "faculty_legacy_ids": [
             2
-          ]
+          ],
+          "principal_investigator": null,
+          "co_principal_investigator": "Dr. Kamlesh Dutta"
         },
         {
           "id": "eb5b9830-e147-5230-b178-394aeba7cae3",
@@ -7543,8 +7555,8 @@
           "status": "Completed",
           "reference_number": "",
           "funding_agency": "DieTY",
-          "total_sanctioned_amount": 830000.0,
-          "total_amount_received": 830000.0,
+          "total_sanctioned_amount": 830000,
+          "total_amount_received": 830000,
           "year": 2014,
           "raw_investigators": "Dr. Kamlesh Dutta",
           "faculty_ids": [
@@ -7552,7 +7564,9 @@
           ],
           "faculty_legacy_ids": [
             2
-          ]
+          ],
+          "principal_investigator": "Dr. Kamlesh Dutta",
+          "co_principal_investigator": null
         },
         {
           "id": "da459cb7-be4e-55ee-84bf-a4a42c586c15",
@@ -7562,8 +7576,8 @@
           "funding_agency": "Cisco/UNDP",
           "sponsor": "Cisco/UNDP",
           "status": "Completed",
-          "sanctioned_amount": 0.0,
-          "total_sanctioned_amount": 0.0,
+          "sanctioned_amount": 0,
+          "total_sanctioned_amount": 0,
           "year": 1999,
           "investigators": "Dr. Kamlesh Dutta",
           "raw_investigators": "Dr. Kamlesh Dutta",
@@ -7573,7 +7587,9 @@
           ],
           "faculty_legacy_ids": [
             2
-          ]
+          ],
+          "principal_investigator": "Dr. Kamlesh Dutta",
+          "co_principal_investigator": null
         }
       ],
       "supervisions": [],
@@ -7628,7 +7644,7 @@
           "legacy_id": 22,
           "title": "IPV6 Consultancy Services for RINL, Visakhapatnam Steel Plant",
           "client_organisation": "RINL, Visakhapatnam Steel Plant",
-          "amount": 2000000.0,
+          "amount": 2000000,
           "start_year": 2024,
           "academic_session": "2022-2023",
           "status": "Completed",
@@ -7787,23 +7803,23 @@
         },
         {
           "title": "Austin, Texas, US for presenting paper in 27th IEEE International Performance Computing and Communications Conference",
-          "description": "Best Paper Award, Paper presentation:: T.P. Sharma, R.C. Joshi, Manoj Misra, \u201cTuning Data Reporting and Sensing for Continuous Monitoring in Wireless Sensor Networks,\u201d"
+          "description": "Best Paper Award, Paper presentation:: T.P. Sharma, R.C. Joshi, Manoj Misra, “Tuning Data Reporting and Sensing for Continuous Monitoring in Wireless Sensor Networks,”"
         },
         {
           "title": "Madrid, Spain for presenting paper in International Conference on Computer, Electrical, and Systems Sciences, and Engineering (ICCESSE 2012)",
-          "description": "Paper presentation and Session Chair: T.P. Sharma, \u201cHandling Mobility Using Virtual Grid in Static Wireless Sensor Networks\u201d, International Conference on Computer, Electrical, and Systems Sciences, and Engineering (ICCESSE 2012)"
+          "description": "Paper presentation and Session Chair: T.P. Sharma, “Handling Mobility Using Virtual Grid in Static Wireless Sensor Networks”, International Conference on Computer, Electrical, and Systems Sciences, and Engineering (ICCESSE 2012)"
         },
         {
           "title": "Perth, Australia for presenting paper in International Conference on Communications, Networking and Mobile Computing",
-          "description": "Paper presentation and Session Chair: Vipan Arora, T.P. Sharma, K. Raj, \u201cAn Optimal Storage Node Placement in Wireless Sensor Networks,\u201d International Conference on Communications, Networking and Mobile Computing, Perth, Australia, December 6-7, 2012."
+          "description": "Paper presentation and Session Chair: Vipan Arora, T.P. Sharma, K. Raj, “An Optimal Storage Node Placement in Wireless Sensor Networks,” International Conference on Communications, Networking and Mobile Computing, Perth, Australia, December 6-7, 2012."
         },
         {
           "title": "Toronto, Canada for presenting paper in International Conference on Computer and Information Technology (ICCIT 2014)",
-          "description": "Paper presentation: K.P. Sharma, T.P. Sharma, \u201cLoad-Enabled Deployment and Sensing Range Optimization for Lifetime Enhancement of WSNs\u201d, International Conference on Computer and Information Technology (ICCIT 2014)"
+          "description": "Paper presentation: K.P. Sharma, T.P. Sharma, “Load-Enabled Deployment and Sensing Range Optimization for Lifetime Enhancement of WSNs”, International Conference on Computer and Information Technology (ICCIT 2014)"
         },
         {
           "title": "New York, US for presenting paper in International Conference on Computer Networks and Systems Security (ICCNSS 2013)",
-          "description": "Paper presentation: Kulwardhan Singh, T.P. Sharma, \u201cREDD: Reliable Energy-efficient Data dissemination in wireless sensor network\u201d, International Conference on Computer Networks and Systems Security (ICCNSS 2013), 05-06 June, 2013."
+          "description": "Paper presentation: Kulwardhan Singh, T.P. Sharma, “REDD: Reliable Energy-efficient Data dissemination in wireless sensor network”, International Conference on Computer Networks and Systems Security (ICCNSS 2013), 05-06 June, 2013."
         },
         {
           "title": "Melbourne, Australia for presenting paper in International Conference on Computer and Automation Engineering (ICCAE)",
@@ -9715,16 +9731,18 @@
           "status": "Completed",
           "reference_number": "L-14011/20/2014-HRD Dated 12.02.2015 and 1(2)/2012-ISEA(Vol.II) dated 27.03.2015",
           "funding_agency": "MeitY",
-          "total_sanctioned_amount": 3700000.0,
-          "total_amount_received": 3700000.0,
+          "total_sanctioned_amount": 3700000,
+          "total_amount_received": 3700000,
           "year": 2021,
-          "raw_investigators": "Dr. T.P. Sharma",
+          "raw_investigators": "Dr. T.P. Sharma, Dr. Naveen Chauhan",
           "faculty_ids": [
             "c17e0191-445a-5f4d-961b-fb830ce9136c"
           ],
           "faculty_legacy_ids": [
             3
-          ]
+          ],
+          "principal_investigator": "Dr. T.P. Sharma",
+          "co_principal_investigator": "Dr. Naveen Chauhan"
         },
         {
           "id": "97e00ab9-342d-57c5-a807-804aea24afac",
@@ -9733,16 +9751,18 @@
           "status": "Ongoing",
           "reference_number": "NIT Hamirpur L-14017/1/2022-HRD",
           "funding_agency": "MeitY",
-          "total_sanctioned_amount": 20100000.0,
-          "total_amount_received": 20100000.0,
+          "total_sanctioned_amount": 20100000,
+          "total_amount_received": 20100000,
           "year": 2024,
-          "raw_investigators": "Dr. T.P. Sharma",
+          "raw_investigators": "Dr. T.P. Sharma, Dr. Naveen Chauhan",
           "faculty_ids": [
             "c17e0191-445a-5f4d-961b-fb830ce9136c"
           ],
           "faculty_legacy_ids": [
             3
-          ]
+          ],
+          "principal_investigator": "Dr. T.P. Sharma",
+          "co_principal_investigator": "Dr. Naveen Chauhan"
         },
         {
           "id": "a82a72d3-22ca-50c1-99ab-b08ff69d3c92",
@@ -9751,10 +9771,10 @@
           "status": "Ongoing",
           "reference_number": "SR/FST/ET-1/2023/1308",
           "funding_agency": "DST",
-          "total_sanctioned_amount": 22300000.0,
-          "total_amount_received": 22300000.0,
+          "total_sanctioned_amount": 22300000,
+          "total_amount_received": 22300000,
           "year": 2024,
-          "raw_investigators": "Dr. Naveen Chauhan(CO-PI)",
+          "raw_investigators": "Dr. Naveen Chauhan(CO-PI), Dr Rajeev Kumar (Co-PI)",
           "faculty_ids": [
             "5e12253b-db56-5e31-9e51-19ab6edac297",
             "c17e0191-445a-5f4d-961b-fb830ce9136c",
@@ -9768,7 +9788,9 @@
             5,
             9,
             10
-          ]
+          ],
+          "principal_investigator": "Dr. Naveen Chauhan(CO-PI)",
+          "co_principal_investigator": "Dr Rajeev Kumar (Co-PI)"
         }
       ],
       "supervisions": [
@@ -10273,7 +10295,7 @@
         {
           "id": "0f02f8a3-13d2-5f58-9dd9-9e9229c7f668",
           "legacy_id": 127,
-          "title": "Civil Engineering Conference \u2013 Innovation for Sustainability (CEC-2016)",
+          "title": "Civil Engineering Conference – Innovation for Sustainability (CEC-2016)",
           "category": "organized",
           "event_type": "conference",
           "venue": "NIT Hamirpur",
@@ -10451,7 +10473,7 @@
           "legacy_id": 19,
           "title": "Consultancy Service to Kangra Central Cooperative Bank for establishment of ATMs",
           "client_organisation": "Kangra Central Cooperative Bank",
-          "amount": 545770.0,
+          "amount": 545770,
           "start_year": 2024,
           "academic_session": "2021-2022",
           "status": "Completed",
@@ -10468,7 +10490,7 @@
           "legacy_id": 20,
           "title": "Consultancy Service to Kangra Central Cooperative Bank for establishment of CBS and Internet Banking",
           "client_organisation": "Kangra Central Cooperative Bank, Dharamsala",
-          "amount": 4537086.0,
+          "amount": 4537086,
           "start_year": 2024,
           "academic_session": "2021-2022",
           "status": "Completed",
@@ -10485,7 +10507,7 @@
           "legacy_id": 21,
           "title": "Consultancy Service to Kangra Central Cooperative Bank for establishment of surveillance and Biometric Attendance System",
           "client_organisation": "Kangra Central Cooperative Bank",
-          "amount": 540569.0,
+          "amount": 540569,
           "start_year": 2024,
           "academic_session": "2022-2023",
           "status": "Completed",
@@ -10948,8 +10970,8 @@
           "journal_or_conference_name": "Neural Computing and applications",
           "volume": "33",
           "issue": "8.5",
-          "page_range": "14147\u201314165",
-          "pages": "14147\u201314165",
+          "page_range": "14147–14165",
+          "pages": "14147–14165",
           "year": 2021,
           "month": 5,
           "academic_session": "2021-2022",
@@ -11041,8 +11063,8 @@
           "journal_or_conference_name": "Wireless Networks",
           "volume": "24",
           "issue": "8",
-          "page_range": "2957\u20132971",
-          "pages": "2957\u20132971",
+          "page_range": "2957–2971",
+          "pages": "2957–2971",
           "year": 2017,
           "month": 4,
           "academic_session": "2016-2017",
@@ -12284,7 +12306,7 @@
         {
           "id": "3c0a0191-a4df-5b6f-aa56-9091d100594b",
           "legacy_id": 1312,
-          "title": "Study on temperature (\u03c4) variation for SimCLR-based activity recognition",
+          "title": "Study on temperature (τ) variation for SimCLR-based activity recognition",
           "venue_name": "Signal, Image and Video Processing",
           "journal_or_conference_name": "Signal, Image and Video Processing",
           "volume": "16",
@@ -12315,7 +12337,7 @@
         {
           "id": "4e22ca35-e07c-510a-86e6-af980e9a5ab9",
           "legacy_id": 1313,
-          "title": "Energy\u2011efficient cluster\u2011based routing protocol for heterogeneous wireless sensor network",
+          "title": "Energy‑efficient cluster‑based routing protocol for heterogeneous wireless sensor network",
           "venue_name": "Annals of Telecommunications",
           "journal_or_conference_name": "Annals of Telecommunications",
           "volume": "80",
@@ -12663,10 +12685,10 @@
           "status": "Completed",
           "reference_number": "SCSTE/F(8)-1/2016-Vol.-I-5592",
           "funding_agency": "HP State Council for Science Technology & Environment",
-          "total_sanctioned_amount": 663000.0,
-          "total_amount_received": 663000.0,
+          "total_sanctioned_amount": 663000,
+          "total_amount_received": 663000,
           "year": 2016,
-          "raw_investigators": "Dr. Naveen Chauhan",
+          "raw_investigators": "Dr. Naveen Chauhan, Dr. Rajeev Kumar",
           "faculty_ids": [
             "6c4f2340-35a3-5b21-b580-081dad7f5ab1",
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
@@ -12674,7 +12696,9 @@
           "faculty_legacy_ids": [
             4,
             5
-          ]
+          ],
+          "principal_investigator": "Dr. Naveen Chauhan",
+          "co_principal_investigator": "Dr. Rajeev Kumar"
         },
         {
           "id": "1027ae3b-dacf-5b58-88e3-cbd7f5768050",
@@ -12683,16 +12707,18 @@
           "status": "Completed",
           "reference_number": "STC/F(8)-6/2019(R&D2019-20-417 dated 29-6-2020",
           "funding_agency": "HIMCOSTE",
-          "total_sanctioned_amount": 560000.0,
-          "total_amount_received": 560000.0,
+          "total_sanctioned_amount": 560000,
+          "total_amount_received": 560000,
           "year": 2020,
-          "raw_investigators": "Dr Siddhartha Chauhan",
+          "raw_investigators": "Dr Siddhartha Chauhan, Dr Pardeep Singh",
           "faculty_ids": [
             "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
           ],
           "faculty_legacy_ids": [
             4
-          ]
+          ],
+          "principal_investigator": "Dr Siddhartha Chauhan",
+          "co_principal_investigator": "Dr Pardeep Singh"
         }
       ],
       "supervisions": [
@@ -13381,7 +13407,7 @@
           "legacy_id": 30,
           "title": "Automation of Dr. Rajendra Prasad Govt. Medical College, Kangra",
           "client_organisation": "DR.R.P.G.M.C Kangra at Tanda",
-          "amount": 5389000.0,
+          "amount": 5389000,
           "start_year": 2025,
           "academic_session": "2024-2025",
           "status": "Ongoing",
@@ -13398,7 +13424,7 @@
           "legacy_id": 31,
           "title": "Establishment of ATMs, EFT switching and Allied Services to Punjab State Cooperative Bank and DCCBs, PSCB Chandigarh",
           "client_organisation": "PSCB, Chandigarh",
-          "amount": 4085000.0,
+          "amount": 4085000,
           "start_year": 2025,
           "academic_session": "2024-2025",
           "status": "Completed",
@@ -13415,7 +13441,7 @@
           "legacy_id": 32,
           "title": "Migration from IPv4 to IPv6 of 27 LANs and Applications and websites of RINL, VIZAG Steel, Vishakhapatnam",
           "client_organisation": "RINL VIZAG Steel",
-          "amount": 2000000.0,
+          "amount": 2000000,
           "start_year": 2025,
           "academic_session": "2024-2025",
           "status": "Completed",
@@ -13432,7 +13458,7 @@
           "legacy_id": 33,
           "title": "Providing Consultancy for IT Services (Setting up of Integrated Control Command Centre) for Dharamshala Smart City Project",
           "client_organisation": "Dharamshala Smart City Limited, Dharmshala",
-          "amount": 10600000.0,
+          "amount": 10600000,
           "start_year": 2025,
           "academic_session": "2025-2026",
           "status": "Completed",
@@ -13771,7 +13797,7 @@
         {
           "id": "e38a707e-b497-5ad9-b11e-7ed50a057035",
           "legacy_id": 711,
-          "title": "Buffer-loss estimation to address congestion in 6LoWPAN based resource-restricted \u2018Internet of Healthcare Things\u2019 network",
+          "title": "Buffer-loss estimation to address congestion in 6LoWPAN based resource-restricted ‘Internet of Healthcare Things’ network",
           "venue_name": "Computer Communications",
           "journal_or_conference_name": "Computer Communications",
           "volume": "181",
@@ -14238,8 +14264,8 @@
           "journal_or_conference_name": "Peer-to-Peer Networking and Applications",
           "volume": "17",
           "issue": "",
-          "page_range": "3815\u20133840",
-          "pages": "3815\u20133840",
+          "page_range": "3815–3840",
+          "pages": "3815–3840",
           "year": 2024,
           "month": 9,
           "academic_session": "2024-2025",
@@ -14264,7 +14290,7 @@
         {
           "id": "489990f1-bdcb-55e7-bd35-5dac838fe343",
           "legacy_id": 1029,
-          "title": "A secure framework for IoT\u2010based healthcare using blockchain and IPFS",
+          "title": "A secure framework for IoT‐based healthcare using blockchain and IPFS",
           "venue_name": "Security and Privacy",
           "journal_or_conference_name": "Security and Privacy",
           "volume": "7",
@@ -14364,8 +14390,8 @@
           "journal_or_conference_name": "Multimedia Tools and Applications",
           "volume": "83",
           "issue": "",
-          "page_range": "65315\u201365339",
-          "pages": "65315\u201365339",
+          "page_range": "65315–65339",
+          "pages": "65315–65339",
           "year": 2024,
           "month": 1,
           "academic_session": "2024-2025",
@@ -14421,7 +14447,7 @@
         {
           "id": "b267e73d-8c74-5e7d-933d-36fd8c7ceef8",
           "legacy_id": 1036,
-          "title": "DDC\u2010OMDC: Deadline\u2010based data collection using optimal mobile data collectors in Internet of Things",
+          "title": "DDC‐OMDC: Deadline‐based data collection using optimal mobile data collectors in Internet of Things",
           "venue_name": "International Journal of Communication Systems",
           "journal_or_conference_name": "International Journal of Communication Systems",
           "volume": "36",
@@ -14523,8 +14549,8 @@
           "journal_or_conference_name": "Wireless Networks",
           "volume": "23",
           "issue": "",
-          "page_range": "1669\u20131687",
-          "pages": "1669\u20131687",
+          "page_range": "1669–1687",
+          "pages": "1669–1687",
           "year": 2017,
           "month": null,
           "academic_session": "2017-2018",
@@ -14993,7 +15019,7 @@
         {
           "id": "dba7b272-787a-58d4-9348-5f68ffa5a1f8",
           "legacy_id": 1068,
-          "title": "DDoS Attacks Detection in \u2018Internet of Medical Things\u2019 Using Machine Learning Techniques",
+          "title": "DDoS Attacks Detection in ‘Internet of Medical Things’ Using Machine Learning Techniques",
           "venue_name": "2022 IEEE Conference on Interdisciplinary Approaches in Technology and Management for Social Innovation (IATMSI)",
           "journal_or_conference_name": "2022 IEEE Conference on Interdisciplinary Approaches in Technology and Management for Social Innovation (IATMSI)",
           "volume": "1",
@@ -15128,8 +15154,8 @@
           "id": "03d17cc5-9ef7-5a7b-9f77-af61bacb1be9",
           "legacy_id": 1072,
           "title": "Node activity based routing in opportunistic networks",
-          "venue_name": "Futuristic Trends in Network and Communication Technologies: First International Conference, FTNCT 2018, Solan, India, February 9\u201310, 2018, Revised Selected Papers",
-          "journal_or_conference_name": "Futuristic Trends in Network and Communication Technologies: First International Conference, FTNCT 2018, Solan, India, February 9\u201310, 2018, Revised Selected Papers",
+          "venue_name": "Futuristic Trends in Network and Communication Technologies: First International Conference, FTNCT 2018, Solan, India, February 9–10, 2018, Revised Selected Papers",
+          "journal_or_conference_name": "Futuristic Trends in Network and Communication Technologies: First International Conference, FTNCT 2018, Solan, India, February 9–10, 2018, Revised Selected Papers",
           "volume": "958",
           "issue": "",
           "page_range": "265-277",
@@ -15499,7 +15525,7 @@
         {
           "id": "05d731ba-4778-5cba-b8d0-0ca9ada37428",
           "legacy_id": 1086,
-          "title": "Cbrm\u2013cluster based replica management in mobile adhoc networks",
+          "title": "Cbrm–cluster based replica management in mobile adhoc networks",
           "venue_name": "Advanced Computing, Networking and Security: International Conference, ADCONS 2011",
           "journal_or_conference_name": "Advanced Computing, Networking and Security: International Conference, ADCONS 2011",
           "volume": "",
@@ -15632,8 +15658,8 @@
           "journal_or_conference_name": "Contemporary Computing: 4th International Conference, IC3 2011, Noida",
           "volume": "",
           "issue": "",
-          "page_range": "415\u2013425",
-          "pages": "415\u2013425",
+          "page_range": "415–425",
+          "pages": "415–425",
           "year": 2011,
           "month": null,
           "academic_session": "2011-2012",
@@ -15698,8 +15724,8 @@
           "journal_or_conference_name": "Lecture Notes in Electrical Engineering",
           "volume": "990",
           "issue": "",
-          "page_range": "299\u2013309",
-          "pages": "299\u2013309",
+          "page_range": "299–309",
+          "pages": "299–309",
           "year": 2023,
           "month": null,
           "academic_session": "2022-2023",
@@ -15921,8 +15947,8 @@
           "journal_or_conference_name": "Advances in Intelligent Systems and Computing",
           "volume": "719",
           "issue": "",
-          "page_range": "465\u2013471",
-          "pages": "465\u2013471",
+          "page_range": "465–471",
+          "pages": "465–471",
           "year": 2017,
           "month": null,
           "academic_session": "2017-2018",
@@ -15985,8 +16011,8 @@
           "journal_or_conference_name": "International Conference on Innovative Computing and Communications",
           "volume": "",
           "issue": "",
-          "page_range": "297\u2013305",
-          "pages": "297\u2013305",
+          "page_range": "297–305",
+          "pages": "297–305",
           "year": 2018,
           "month": 11,
           "academic_session": "2018-2019",
@@ -16042,7 +16068,7 @@
         {
           "id": "597d0de2-e1cb-55ba-b0b2-c23381509d96",
           "legacy_id": 1367,
-          "title": "Enhanced Hybrid Congestion Mitigation Strategy for \u20186LoWPAN-RPL based patient-centric IoHT\u2019",
+          "title": "Enhanced Hybrid Congestion Mitigation Strategy for ‘6LoWPAN-RPL based patient-centric IoHT’",
           "venue_name": "Computer Networks",
           "journal_or_conference_name": "Computer Networks",
           "volume": "255",
@@ -16138,20 +16164,22 @@
         {
           "id": "8eed6f38-6742-5464-84c2-4e97f9ffe2a5",
           "legacy_id": 6,
-          "title": "Information Security Education and Awareness (ISEA) Phase \u2013 II",
+          "title": "Information Security Education and Awareness (ISEA) Phase – II",
           "status": "Completed",
           "reference_number": "NIT/HMR/R&C/ISEA/PROJECT/357-360",
           "funding_agency": "Ministry of Electronics & Information Technology (MeitY)",
-          "total_sanctioned_amount": 365000.0,
-          "total_amount_received": 365000.0,
+          "total_sanctioned_amount": 365000,
+          "total_amount_received": 365000,
           "year": 2015,
-          "raw_investigators": "Dr. TP Sharma",
+          "raw_investigators": "Dr. TP Sharma, Dr. Naveen Chauhan",
           "faculty_ids": [
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
           ],
           "faculty_legacy_ids": [
             5
-          ]
+          ],
+          "principal_investigator": "Dr. TP Sharma",
+          "co_principal_investigator": "Dr. Naveen Chauhan"
         },
         {
           "id": "2750486a-9676-535c-b329-2f31b5a3f257",
@@ -16160,10 +16188,10 @@
           "status": "Completed",
           "reference_number": "SCSTE/F(8)-1/2016-Vol.-I-5592",
           "funding_agency": "HP State Council for Science Technology & Environment",
-          "total_sanctioned_amount": 663000.0,
-          "total_amount_received": 663000.0,
+          "total_sanctioned_amount": 663000,
+          "total_amount_received": 663000,
           "year": 2016,
-          "raw_investigators": "Dr. Naveen Chauhan",
+          "raw_investigators": "Dr. Naveen Chauhan, Dr. Rajeev Kumar",
           "faculty_ids": [
             "6c4f2340-35a3-5b21-b580-081dad7f5ab1",
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
@@ -16171,7 +16199,9 @@
           "faculty_legacy_ids": [
             4,
             5
-          ]
+          ],
+          "principal_investigator": "Dr. Naveen Chauhan",
+          "co_principal_investigator": "Dr. Rajeev Kumar"
         },
         {
           "id": "a82a72d3-22ca-50c1-99ab-b08ff69d3c92",
@@ -16180,10 +16210,10 @@
           "status": "Ongoing",
           "reference_number": "SR/FST/ET-1/2023/1308",
           "funding_agency": "DST",
-          "total_sanctioned_amount": 22300000.0,
-          "total_amount_received": 22300000.0,
+          "total_sanctioned_amount": 22300000,
+          "total_amount_received": 22300000,
           "year": 2024,
-          "raw_investigators": "Dr. Naveen Chauhan(CO-PI)",
+          "raw_investigators": "Dr. Naveen Chauhan(CO-PI), Dr Rajeev Kumar (Co-PI)",
           "faculty_ids": [
             "5e12253b-db56-5e31-9e51-19ab6edac297",
             "c17e0191-445a-5f4d-961b-fb830ce9136c",
@@ -16197,7 +16227,9 @@
             5,
             9,
             10
-          ]
+          ],
+          "principal_investigator": "Dr. Naveen Chauhan(CO-PI)",
+          "co_principal_investigator": "Dr Rajeev Kumar (Co-PI)"
         },
         {
           "id": "5872de24-ddde-59bc-8706-10594a497735",
@@ -16206,16 +16238,18 @@
           "status": "Completed",
           "reference_number": "STC/F(8)-2(R&D 20-21)-273",
           "funding_agency": "HP State Council for Science Technology & Environment",
-          "total_sanctioned_amount": 650000.0,
-          "total_amount_received": 650000.0,
+          "total_sanctioned_amount": 650000,
+          "total_amount_received": 650000,
           "year": 2021,
-          "raw_investigators": "Dr. Naveen Chauhan",
+          "raw_investigators": "Dr. Naveen Chauhan, Prof. Lalit Kumar Awasthi (DoCSE NIT Hamirpur), Dr. Rajeev Kumar (DoCSE NIT Hamirpur) and Dr. Rajesh Sharma (Deptt. of Cardiology IGMC Shimla)",
           "faculty_ids": [
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
           ],
           "faculty_legacy_ids": [
             5
-          ]
+          ],
+          "principal_investigator": "Dr. Naveen Chauhan",
+          "co_principal_investigator": "Prof. Lalit Kumar Awasthi (DoCSE NIT Hamirpur), Dr. Rajeev Kumar (DoCSE NIT Hamirpur) and Dr. Rajesh Sharma (Deptt. of Cardiology IGMC Shimla)"
         },
         {
           "id": "9885f897-6ad0-5c9d-b100-5b9f5422119f",
@@ -16224,16 +16258,18 @@
           "status": "Ongoing",
           "reference_number": "F.NO. L-14017/1/2022-HRD",
           "funding_agency": "MeitY",
-          "total_sanctioned_amount": 20600000.0,
-          "total_amount_received": 20600000.0,
+          "total_sanctioned_amount": 20600000,
+          "total_amount_received": 20600000,
           "year": 2024,
-          "raw_investigators": "Dr. T.P. Sharma",
+          "raw_investigators": "Dr. T.P. Sharma, Dr. Naveen Chauhan",
           "faculty_ids": [
             "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
           ],
           "faculty_legacy_ids": [
             5
-          ]
+          ],
+          "principal_investigator": "Dr. T.P. Sharma",
+          "co_principal_investigator": "Dr. Naveen Chauhan"
         }
       ],
       "supervisions": [
@@ -16693,7 +16729,7 @@
           "category": "organized",
           "event_type": "STC",
           "venue": "DoCSE, NIT Hamirpur",
-          "sponsoring_agency": "ISEA Project Phase \u2013 II",
+          "sponsoring_agency": "ISEA Project Phase – II",
           "start_date": "2016-03-11",
           "end_date": "2016-03-16",
           "academic_session": "2024-2025",
@@ -16714,7 +16750,7 @@
           "category": "organized",
           "event_type": "STC",
           "venue": "DoCSE, NIT Hamirpur",
-          "sponsoring_agency": "ISEA Project Phase \u2013 II",
+          "sponsoring_agency": "ISEA Project Phase – II",
           "start_date": "2007-02-02",
           "end_date": "2007-02-07",
           "academic_session": "2024-2025",
@@ -16939,8 +16975,8 @@
           "journal_or_conference_name": "Artificial Intelligence Review",
           "volume": "54",
           "issue": "4",
-          "page_range": "2917\ufffd3006",
-          "pages": "2917\ufffd3006",
+          "page_range": "2917�3006",
+          "pages": "2917�3006",
           "year": 2020,
           "month": 10,
           "academic_session": "2020-2021",
@@ -17008,7 +17044,7 @@
           "year": 2015,
           "month": null,
           "academic_session": "2015-2016",
-          "doi": "DOI:\ufffd10.14569/IJACSA.2015.061025",
+          "doi": "DOI:�10.14569/IJACSA.2015.061025",
           "research_type_id": 1,
           "publication_type": "Journal",
           "type": "JOURNAL",
@@ -17632,7 +17668,7 @@
         {
           "id": "92676bcd-cc3d-5189-adf4-9e85bd0bc34a",
           "legacy_id": 1188,
-          "title": "Fake Profile Detection on Social Networks\u2014A Survey",
+          "title": "Fake Profile Detection on Social Networks—A Survey",
           "venue_name": "Proceedings of International Conference on Recent Innovations in Computing (ICRIC)",
           "journal_or_conference_name": "Proceedings of International Conference on Recent Innovations in Computing (ICRIC)",
           "volume": "2",
@@ -17792,8 +17828,8 @@
           "journal_or_conference_name": "International Conference on Intelligent Cyber-Physical Systems(ICPS-2021)",
           "volume": "",
           "issue": "",
-          "page_range": "285\u2013302",
-          "pages": "285\u2013302",
+          "page_range": "285–302",
+          "pages": "285–302",
           "year": 2022,
           "month": 1,
           "academic_session": "2021-2022",
@@ -17823,8 +17859,8 @@
           "journal_or_conference_name": "Proceedings of ICETIT 2019",
           "volume": "",
           "issue": "",
-          "page_range": "229\u2013237",
-          "pages": "229\u2013237",
+          "page_range": "229–237",
+          "pages": "229–237",
           "year": 2019,
           "month": 9,
           "academic_session": "2019-2020",
@@ -17916,8 +17952,8 @@
           "journal_or_conference_name": "First International Conference of Springer on Advanced Informatics for Computing Research, ICAICR 2017",
           "volume": "",
           "issue": "",
-          "page_range": "121\u2013129",
-          "pages": "121\u2013129",
+          "page_range": "121–129",
+          "pages": "121–129",
           "year": 2017,
           "month": 7,
           "academic_session": "2017-2018",
@@ -18068,13 +18104,13 @@
         {
           "id": "54c6e257-3315-5d09-bf77-ff3e089f4f63",
           "legacy_id": 1512,
-          "title": "A panorama of text summarization research: bibliometric trends and developments (2000\u20132024)",
+          "title": "A panorama of text summarization research: bibliometric trends and developments (2000–2024)",
           "venue_name": "Neural Computing and Applications",
           "journal_or_conference_name": "Neural Computing and Applications",
           "volume": "37",
           "issue": "",
-          "page_range": "20917\u201320956",
-          "pages": "20917\u201320956",
+          "page_range": "20917–20956",
+          "pages": "20917–20956",
           "year": 2025,
           "month": 9,
           "academic_session": "2025-2026",
@@ -18392,7 +18428,7 @@
         {
           "id": "489990f1-bdcb-55e7-bd35-5dac838fe343",
           "legacy_id": 1029,
-          "title": "A secure framework for IoT\u2010based healthcare using blockchain and IPFS",
+          "title": "A secure framework for IoT‐based healthcare using blockchain and IPFS",
           "venue_name": "Security and Privacy",
           "journal_or_conference_name": "Security and Privacy",
           "volume": "7",
@@ -18425,7 +18461,7 @@
         {
           "id": "b267e73d-8c74-5e7d-933d-36fd8c7ceef8",
           "legacy_id": 1036,
-          "title": "DDC\u2010OMDC: Deadline\u2010based data collection using optimal mobile data collectors in Internet of Things",
+          "title": "DDC‐OMDC: Deadline‐based data collection using optimal mobile data collectors in Internet of Things",
           "venue_name": "International Journal of Communication Systems",
           "journal_or_conference_name": "International Journal of Communication Systems",
           "volume": "36",
@@ -18592,7 +18628,7 @@
         {
           "id": "05d731ba-4778-5cba-b8d0-0ca9ada37428",
           "legacy_id": 1086,
-          "title": "Cbrm\u2013cluster based replica management in mobile adhoc networks",
+          "title": "Cbrm–cluster based replica management in mobile adhoc networks",
           "venue_name": "Advanced Computing, Networking and Security: International Conference, ADCONS 2011",
           "journal_or_conference_name": "Advanced Computing, Networking and Security: International Conference, ADCONS 2011",
           "volume": "",
@@ -18762,10 +18798,10 @@
           "status": "Ongoing",
           "reference_number": "SR/FST/ET-1/2023/1308",
           "funding_agency": "DST",
-          "total_sanctioned_amount": 22300000.0,
-          "total_amount_received": 22300000.0,
+          "total_sanctioned_amount": 22300000,
+          "total_amount_received": 22300000,
           "year": 2024,
-          "raw_investigators": "Dr. Naveen Chauhan(CO-PI)",
+          "raw_investigators": "Dr. Naveen Chauhan(CO-PI), Dr Rajeev Kumar (Co-PI)",
           "faculty_ids": [
             "5e12253b-db56-5e31-9e51-19ab6edac297",
             "c17e0191-445a-5f4d-961b-fb830ce9136c",
@@ -18779,7 +18815,9 @@
             5,
             9,
             10
-          ]
+          ],
+          "principal_investigator": "Dr. Naveen Chauhan(CO-PI)",
+          "co_principal_investigator": "Dr Rajeev Kumar (Co-PI)"
         }
       ],
       "supervisions": [
@@ -19218,8 +19256,8 @@
           "journal_or_conference_name": "Mobile Networks and Applications, Springer",
           "volume": "28",
           "issue": "2",
-          "page_range": "782\ufffd794",
-          "pages": "782\ufffd794",
+          "page_range": "782�794",
+          "pages": "782�794",
           "year": 2023,
           "month": null,
           "academic_session": "2022-2023",
@@ -19249,8 +19287,8 @@
           "journal_or_conference_name": "Multimedia Tools and Applications, Springer",
           "volume": "82",
           "issue": "6",
-          "page_range": "8447\ufffd8466",
-          "pages": "8447\ufffd8466",
+          "page_range": "8447�8466",
+          "pages": "8447�8466",
           "year": 2022,
           "month": null,
           "academic_session": "2022-2023",
@@ -19435,8 +19473,8 @@
           "journal_or_conference_name": "Peer to Peer Networking and Appli- cations, Springer",
           "volume": "15",
           "issue": "",
-          "page_range": "206\ufffd220",
-          "pages": "206\ufffd220",
+          "page_range": "206�220",
+          "pages": "206�220",
           "year": 2021,
           "month": null,
           "academic_session": "2021-2022",
@@ -19652,8 +19690,8 @@
           "journal_or_conference_name": "Peer To Peer Networking and Application, Springer",
           "volume": "14",
           "issue": "",
-          "page_range": "439\ufffd452",
-          "pages": "439\ufffd452",
+          "page_range": "439�452",
+          "pages": "439�452",
           "year": 2020,
           "month": null,
           "academic_session": "2020-2021",
@@ -19973,8 +20011,8 @@
           "type": "CONFERENCE",
           "indexing": "Scopus",
           "journal_quartile": "T",
-          "author_text": "Mayank Dhiman, Nitin Gupta, Kuldeep s. Jadon, Ujjwal Gupta and Yashwant Kumar, \ufffd",
-          "raw_authors": "Mayank Dhiman, Nitin Gupta, Kuldeep s. Jadon, Ujjwal Gupta and Yashwant Kumar, \ufffd",
+          "author_text": "Mayank Dhiman, Nitin Gupta, Kuldeep s. Jadon, Ujjwal Gupta and Yashwant Kumar, �",
+          "raw_authors": "Mayank Dhiman, Nitin Gupta, Kuldeep s. Jadon, Ujjwal Gupta and Yashwant Kumar, �",
           "isbn": "",
           "is_sci": false,
           "is_scopus": true,
@@ -20205,7 +20243,7 @@
         {
           "id": "c69bec6a-3568-5a00-97b0-a748ba029635",
           "legacy_id": 1000,
-          "title": "\ufffdSecrecy Analysis of Underlay Cognitive Radio with Delayed Channel Information\",",
+          "title": "�Secrecy Analysis of Underlay Cognitive Radio with Delayed Channel Information\",",
           "venue_name": "3rd Springer International Conference on Wireless Intelligent and Distributed Environment for Communication (WIDECOM), Ryerson University, Ontario, Canada, June 2020",
           "journal_or_conference_name": "3rd Springer International Conference on Wireless Intelligent and Distributed Environment for Communication (WIDECOM), Ryerson University, Ontario, Canada, June 2020",
           "volume": "51",
@@ -20407,8 +20445,8 @@
           "type": "CONFERENCE",
           "indexing": "Scopus",
           "journal_quartile": "T",
-          "author_text": "Nitin Gupta, Sanjay K. Dhurandher, Isaac Woungang and Joel J. P. C. Rodrigues, \ufffd",
-          "raw_authors": "Nitin Gupta, Sanjay K. Dhurandher, Isaac Woungang and Joel J. P. C. Rodrigues, \ufffd",
+          "author_text": "Nitin Gupta, Sanjay K. Dhurandher, Isaac Woungang and Joel J. P. C. Rodrigues, �",
+          "raw_authors": "Nitin Gupta, Sanjay K. Dhurandher, Isaac Woungang and Joel J. P. C. Rodrigues, �",
           "isbn": "",
           "is_sci": false,
           "is_scopus": true,
@@ -20423,8 +20461,8 @@
           "id": "dc01c071-39ab-5445-a516-def2ff9d2593",
           "legacy_id": 1007,
           "title": "On the Probability of Appearance of Primary User in IEEE 802.22 WRAN using an Artificial Neural Network Learning Technique\",",
-          "venue_name": "Proceedings of IEEE India International Conference On Information Processing (IICIP\ufffd16), New Delhi,",
-          "journal_or_conference_name": "Proceedings of IEEE India International Conference On Information Processing (IICIP\ufffd16), New Delhi,",
+          "venue_name": "Proceedings of IEEE India International Conference On Information Processing (IICIP�16), New Delhi,",
+          "journal_or_conference_name": "Proceedings of IEEE India International Conference On Information Processing (IICIP�16), New Delhi,",
           "volume": "",
           "issue": "",
           "page_range": "1-5",
@@ -20542,10 +20580,10 @@
           "status": "Ongoing",
           "reference_number": "SR/FST/ET-1/2023/1308",
           "funding_agency": "DST",
-          "total_sanctioned_amount": 22300000.0,
-          "total_amount_received": 22300000.0,
+          "total_sanctioned_amount": 22300000,
+          "total_amount_received": 22300000,
           "year": 2024,
-          "raw_investigators": "Dr. Naveen Chauhan(CO-PI)",
+          "raw_investigators": "Dr. Naveen Chauhan(CO-PI), Dr Rajeev Kumar (Co-PI)",
           "faculty_ids": [
             "5e12253b-db56-5e31-9e51-19ab6edac297",
             "c17e0191-445a-5f4d-961b-fb830ce9136c",
@@ -20559,7 +20597,9 @@
             5,
             9,
             10
-          ]
+          ],
+          "principal_investigator": "Dr. Naveen Chauhan(CO-PI)",
+          "co_principal_investigator": "Dr Rajeev Kumar (Co-PI)"
         }
       ],
       "supervisions": [
@@ -21518,8 +21558,8 @@
           "id": "5859a4c4-ee48-59bd-a50b-f581f966aec8",
           "legacy_id": 1414,
           "title": "Finding Maximum Independent Sets using ACO_GA Algorithm",
-          "venue_name": "The 29th Annual International Conference on Advanced Computing and Communications (ADCOM 2024) during 18 \u2212 20 December 2024, IIIT Bangalore",
-          "journal_or_conference_name": "The 29th Annual International Conference on Advanced Computing and Communications (ADCOM 2024) during 18 \u2212 20 December 2024, IIIT Bangalore",
+          "venue_name": "The 29th Annual International Conference on Advanced Computing and Communications (ADCOM 2024) during 18 − 20 December 2024, IIIT Bangalore",
+          "journal_or_conference_name": "The 29th Annual International Conference on Advanced Computing and Communications (ADCOM 2024) during 18 − 20 December 2024, IIIT Bangalore",
           "volume": "29",
           "issue": "",
           "page_range": "16",
@@ -21549,8 +21589,8 @@
           "id": "36072ee1-99c2-58b3-9ae8-8df683c40db2",
           "legacy_id": 1415,
           "title": "Ant Colony Optimization-Enhanced MPR Selection for Efficient FANET Routing",
-          "venue_name": "The 27th International Symposium on Wireless Personal Multi- media Communications (WPMC-2024)\u2013 \u201cSecure 6G \u2013 AI Nexus: Where Technology Meets Humanity\u201d, 17-20 November 2024 Sharda University, Greater Noida (NCR-Delhi), India",
-          "journal_or_conference_name": "The 27th International Symposium on Wireless Personal Multi- media Communications (WPMC-2024)\u2013 \u201cSecure 6G \u2013 AI Nexus: Where Technology Meets Humanity\u201d, 17-20 November 2024 Sharda University, Greater Noida (NCR-Delhi), India",
+          "venue_name": "The 27th International Symposium on Wireless Personal Multi- media Communications (WPMC-2024)– “Secure 6G – AI Nexus: Where Technology Meets Humanity”, 17-20 November 2024 Sharda University, Greater Noida (NCR-Delhi), India",
+          "journal_or_conference_name": "The 27th International Symposium on Wireless Personal Multi- media Communications (WPMC-2024)– “Secure 6G – AI Nexus: Where Technology Meets Humanity”, 17-20 November 2024 Sharda University, Greater Noida (NCR-Delhi), India",
           "volume": "27",
           "issue": "",
           "page_range": "22",
@@ -21765,7 +21805,7 @@
         {
           "id": "20ad2e6e-e6c1-5458-b7ea-a1867df94d8a",
           "legacy_id": 1424,
-          "title": "Hop-Constrained Oblivious Routing using Prim\u2019s-Sollin\u2019s Algorithm",
+          "title": "Hop-Constrained Oblivious Routing using Prim’s-Sollin’s Algorithm",
           "venue_name": "The 38th International Conference on Advanced Information Networking and Applications (AINA-2024) Kitakyushu International Convention Center, Kitakyushu, Japan",
           "journal_or_conference_name": "The 38th International Conference on Advanced Information Networking and Applications (AINA-2024) Kitakyushu International Convention Center, Kitakyushu, Japan",
           "volume": "38",
@@ -21889,7 +21929,7 @@
         {
           "id": "a2916794-94e4-5cce-8fd9-7732feaa10dd",
           "legacy_id": 1459,
-          "title": "Dijkstra\u2019s Shortest Path in Sleeping Model",
+          "title": "Dijkstra’s Shortest Path in Sleeping Model",
           "venue_name": "8th International Conference on Computing in Engineering and Technology (ICCET 2023) during July 14-15, 2023, at NIT Patna",
           "journal_or_conference_name": "8th International Conference on Computing in Engineering and Technology (ICCET 2023) during July 14-15, 2023, at NIT Patna",
           "volume": "8",
@@ -22045,8 +22085,8 @@
           "id": "ec5e2f75-9933-5c87-a2fd-8ec86e28dfaa",
           "legacy_id": 1464,
           "title": "On scheduling transactions in grid computing system using Gaussian ACO considering load",
-          "venue_name": "27th annual International Conference on Advanced Com- puting and Communications (ADCOM 2022) at Bangalore during 9th\u221211th March 2023",
-          "journal_or_conference_name": "27th annual International Conference on Advanced Com- puting and Communications (ADCOM 2022) at Bangalore during 9th\u221211th March 2023",
+          "venue_name": "27th annual International Conference on Advanced Com- puting and Communications (ADCOM 2022) at Bangalore during 9th−11th March 2023",
+          "journal_or_conference_name": "27th annual International Conference on Advanced Com- puting and Communications (ADCOM 2022) at Bangalore during 9th−11th March 2023",
           "volume": "27",
           "issue": "",
           "page_range": "6",
@@ -22076,8 +22116,8 @@
           "id": "ab6cb241-0198-5135-ba1d-5bf92d34611d",
           "legacy_id": 1465,
           "title": "A Deterministic Distributed Algorithm for All Pairs Shortest Paths in Linear Time",
-          "venue_name": "The 27th annual International Conference on Advanced Computing and Communications (ADCOM 2022) at Bangalore during 9th \u2212 11th March 2023",
-          "journal_or_conference_name": "The 27th annual International Conference on Advanced Computing and Communications (ADCOM 2022) at Bangalore during 9th \u2212 11th March 2023",
+          "venue_name": "The 27th annual International Conference on Advanced Computing and Communications (ADCOM 2022) at Bangalore during 9th − 11th March 2023",
+          "journal_or_conference_name": "The 27th annual International Conference on Advanced Computing and Communications (ADCOM 2022) at Bangalore during 9th − 11th March 2023",
           "volume": "27",
           "issue": "",
           "page_range": "9",
@@ -22107,8 +22147,8 @@
           "id": "072ba906-5c99-5698-b8c3-509a13adbdcf",
           "legacy_id": 1466,
           "title": "Dependability Analysis for Transaction Processing in On-Demand Computing System",
-          "venue_name": "18th International Conference on Distributed Computing and Intelligent Technology held on 19th \u2212 23rd January 2022, KIIT University, Bhubaneswar, Odisha, India",
-          "journal_or_conference_name": "18th International Conference on Distributed Computing and Intelligent Technology held on 19th \u2212 23rd January 2022, KIIT University, Bhubaneswar, Odisha, India",
+          "venue_name": "18th International Conference on Distributed Computing and Intelligent Technology held on 19th − 23rd January 2022, KIIT University, Bhubaneswar, Odisha, India",
+          "journal_or_conference_name": "18th International Conference on Distributed Computing and Intelligent Technology held on 19th − 23rd January 2022, KIIT University, Bhubaneswar, Odisha, India",
           "volume": "18",
           "issue": "",
           "page_range": "10",
@@ -22138,8 +22178,8 @@
           "id": "9b5a802e-7181-561a-800c-9fc317e745e1",
           "legacy_id": 1467,
           "title": "IoT based oxygen concentrators",
-          "venue_name": "Demo & Exhibits Track, COMSNETS 2022 in 14th International Conference on COMmunication Systems & NETworkS January 3 \u2212 9, Hybrid Conference, Bengaluru, India",
-          "journal_or_conference_name": "Demo & Exhibits Track, COMSNETS 2022 in 14th International Conference on COMmunication Systems & NETworkS January 3 \u2212 9, Hybrid Conference, Bengaluru, India",
+          "venue_name": "Demo & Exhibits Track, COMSNETS 2022 in 14th International Conference on COMmunication Systems & NETworkS January 3 − 9, Hybrid Conference, Bengaluru, India",
+          "journal_or_conference_name": "Demo & Exhibits Track, COMSNETS 2022 in 14th International Conference on COMmunication Systems & NETworkS January 3 − 9, Hybrid Conference, Bengaluru, India",
           "volume": "14",
           "issue": "",
           "page_range": "9",
@@ -22485,8 +22525,8 @@
           "id": "98fa2fc9-32cf-5fe1-a47d-21998ef49045",
           "legacy_id": 1480,
           "title": "Distributed Routing for Underwater Wireless Sensor Networks Using Cuckoo Search-Ant Colony Optimization",
-          "venue_name": "he 13th ACM International Conference on Underwater Networks & Systems (WUWNet\u201918) December 3-5, 2018, Shenzhen, China",
-          "journal_or_conference_name": "he 13th ACM International Conference on Underwater Networks & Systems (WUWNet\u201918) December 3-5, 2018, Shenzhen, China",
+          "venue_name": "he 13th ACM International Conference on Underwater Networks & Systems (WUWNet’18) December 3-5, 2018, Shenzhen, China",
+          "journal_or_conference_name": "he 13th ACM International Conference on Underwater Networks & Systems (WUWNet’18) December 3-5, 2018, Shenzhen, China",
           "volume": "13",
           "issue": "",
           "page_range": "9",
@@ -23603,7 +23643,7 @@
         {
           "id": "23a48370-5ac8-5794-9a3a-eabe90ea17ce",
           "legacy_id": 645,
-          "title": "Recent Advances in DL-based Text Summariza- tion: A Systematic Review\u201d",
+          "title": "Recent Advances in DL-based Text Summariza- tion: A Systematic Review”",
           "venue_name": "3rd International Conference on Advance Computing and Innovative Technologies in Engineering (ICACITE)",
           "journal_or_conference_name": "3rd International Conference on Advance Computing and Innovative Technologies in Engineering (ICACITE)",
           "volume": "",
@@ -24009,8 +24049,8 @@
           "id": "c2f71d64-53c2-5812-bdbd-898d09443212",
           "legacy_id": 847,
           "title": "An Automated Tomato Maturity Grading System Using Transfer Learning Based AlexNet.",
-          "venue_name": "Ing\u00e9nierie des Syst\u00e8mes d\u2019Information",
-          "journal_or_conference_name": "Ing\u00e9nierie des Syst\u00e8mes d\u2019Information",
+          "venue_name": "Ingénierie des Systèmes d’Information",
+          "journal_or_conference_name": "Ingénierie des Systèmes d’Information",
           "volume": "26",
           "issue": "2",
           "page_range": "191-200",
@@ -24775,8 +24815,8 @@
           "journal_or_conference_name": "Neural Computing and Applications",
           "volume": "36",
           "issue": "",
-          "page_range": "22905\u201322921",
-          "pages": "22905\u201322921",
+          "page_range": "22905–22921",
+          "pages": "22905–22921",
           "year": 2024,
           "month": 4,
           "academic_session": "2023-2024",
@@ -25307,7 +25347,7 @@
         {
           "id": "b02de7fb-afa4-5c83-9487-ffc7d8e74e09",
           "legacy_id": 1499,
-          "title": "Speech signal\u2019s phase information based Alzheimer\u2019s disease detection using deep learning",
+          "title": "Speech signal’s phase information based Alzheimer’s disease detection using deep learning",
           "venue_name": "International Journal of Speech Technology",
           "journal_or_conference_name": "International Journal of Speech Technology",
           "volume": "",
@@ -25714,8 +25754,8 @@
           "status": "Completed",
           "reference_number": "SSY/2023/001110",
           "funding_agency": "SERB",
-          "total_sanctioned_amount": 350000.0,
-          "total_amount_received": 350000.0,
+          "total_sanctioned_amount": 350000,
+          "total_amount_received": 350000,
           "year": 2023,
           "raw_investigators": "Dr. Arun Kumar Yadav",
           "faculty_ids": [
@@ -25723,7 +25763,9 @@
           ],
           "faculty_legacy_ids": [
             12
-          ]
+          ],
+          "principal_investigator": "Dr. Arun Kumar Yadav",
+          "co_principal_investigator": null
         },
         {
           "id": "9e0a3c01-c5e7-5393-9869-b12c71274f3d",
@@ -25732,16 +25774,18 @@
           "status": "Ongoing",
           "reference_number": "CST/D-701",
           "funding_agency": "UP-CST",
-          "total_sanctioned_amount": 130800.0,
-          "total_amount_received": 130800.0,
+          "total_sanctioned_amount": 130800,
+          "total_amount_received": 130800,
           "year": 2024,
-          "raw_investigators": "Dr. Prakash Kumar Singh",
+          "raw_investigators": "Dr. Prakash Kumar Singh, Dr. Arun Kumar Yadav",
           "faculty_ids": [
             "edbab47f-a36c-5216-9914-5b5561bc8137"
           ],
           "faculty_legacy_ids": [
             12
-          ]
+          ],
+          "principal_investigator": "Dr. Prakash Kumar Singh",
+          "co_principal_investigator": "Dr. Arun Kumar Yadav"
         },
         {
           "id": "99652a34-74eb-50d7-9bce-8e4102eb9091",
@@ -25750,16 +25794,18 @@
           "status": "Ongoing",
           "reference_number": "CST/D-12",
           "funding_agency": "UP-CST",
-          "total_sanctioned_amount": 130800.0,
-          "total_amount_received": 130800.0,
+          "total_sanctioned_amount": 130800,
+          "total_amount_received": 130800,
           "year": 2024,
-          "raw_investigators": "Dr. Vibhash Yadav",
+          "raw_investigators": "Dr. Vibhash Yadav, Dr. Arun Kumar Yadav",
           "faculty_ids": [
             "edbab47f-a36c-5216-9914-5b5561bc8137"
           ],
           "faculty_legacy_ids": [
             12
-          ]
+          ],
+          "principal_investigator": "Dr. Vibhash Yadav",
+          "co_principal_investigator": "Dr. Arun Kumar Yadav"
         },
         {
           "id": "693865b7-6bfb-56bb-9a7d-b0ae5fcdcbff",
@@ -25768,16 +25814,18 @@
           "status": "Completed",
           "reference_number": "CST/D-2783",
           "funding_agency": "UP-CST",
-          "total_sanctioned_amount": 104400.0,
-          "total_amount_received": 104400.0,
+          "total_sanctioned_amount": 104400,
+          "total_amount_received": 104400,
           "year": 2019,
-          "raw_investigators": "Dr. Sonam Gupta",
+          "raw_investigators": "Dr. Sonam Gupta, Dr. Arun Kumar Yadav",
           "faculty_ids": [
             "edbab47f-a36c-5216-9914-5b5561bc8137"
           ],
           "faculty_legacy_ids": [
             12
-          ]
+          ],
+          "principal_investigator": "Dr. Sonam Gupta",
+          "co_principal_investigator": "Dr. Arun Kumar Yadav"
         }
       ],
       "supervisions": [
@@ -26938,7 +26986,7 @@
         {
           "id": "b02de7fb-afa4-5c83-9487-ffc7d8e74e09",
           "legacy_id": 1499,
-          "title": "Speech signal\u2019s phase information based Alzheimer\u2019s disease detection using deep learning",
+          "title": "Speech signal’s phase information based Alzheimer’s disease detection using deep learning",
           "venue_name": "International Journal of Speech Technology",
           "journal_or_conference_name": "International Journal of Speech Technology",
           "volume": "",
@@ -27831,8 +27879,8 @@
           "type": "CONFERENCE",
           "indexing": "Scopus",
           "journal_quartile": "T",
-          "author_text": "Manick;\ufffdJyoti Srivastava",
-          "raw_authors": "Manick;\ufffdJyoti Srivastava",
+          "author_text": "Manick;�Jyoti Srivastava",
+          "raw_authors": "Manick;�Jyoti Srivastava",
           "isbn": "",
           "is_sci": false,
           "is_scopus": true,
@@ -28996,8 +29044,8 @@
           "journal_or_conference_name": "International Conference on Deep Learning, Artificial Intelligence and Robotics (ICDLAIR) 2023",
           "volume": "1001",
           "issue": "",
-          "page_range": "789\u2013795",
-          "pages": "789\u2013795",
+          "page_range": "789–795",
+          "pages": "789–795",
           "year": 2024,
           "month": null,
           "academic_session": "2023-2024",
@@ -30576,16 +30624,18 @@
           "status": "Completed",
           "reference_number": "",
           "funding_agency": "NPIU,MHRD",
-          "total_sanctioned_amount": 1137000.0,
-          "total_amount_received": 1137000.0,
+          "total_sanctioned_amount": 1137000,
+          "total_amount_received": 1137000,
           "year": 2020,
-          "raw_investigators": "Mohammad Khalid Pandit",
+          "raw_investigators": "Mohammad Khalid Pandit, Mohammad Ahsan Chishti, Roohie Naaz, Assif Assad, Shioaib Amin",
           "faculty_ids": [
             "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
           ],
           "faculty_legacy_ids": [
             17
-          ]
+          ],
+          "principal_investigator": "Mohammad Khalid Pandit",
+          "co_principal_investigator": "Mohammad Ahsan Chishti, Roohie Naaz, Assif Assad, Shioaib Amin"
         },
         {
           "id": "fc5781be-49a4-534e-a879-fa2661fc7fac",
@@ -30594,16 +30644,18 @@
           "status": "Completed",
           "reference_number": "",
           "funding_agency": "TEQIP, IUST",
-          "total_sanctioned_amount": 200000.0,
-          "total_amount_received": 200000.0,
+          "total_sanctioned_amount": 200000,
+          "total_amount_received": 200000,
           "year": 2020,
-          "raw_investigators": "Mohammad Khalid Pandit",
+          "raw_investigators": "Mohammad Khalid Pandit, Shoaib Amin Banday",
           "faculty_ids": [
             "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
           ],
           "faculty_legacy_ids": [
             17
-          ]
+          ],
+          "principal_investigator": "Mohammad Khalid Pandit",
+          "co_principal_investigator": "Shoaib Amin Banday"
         },
         {
           "id": "b98edf0c-b18b-5da6-98a5-01321a4ec922",
@@ -30612,34 +30664,38 @@
           "status": "Completed",
           "reference_number": "",
           "funding_agency": "TEQIP, IUST",
-          "total_sanctioned_amount": 200000.0,
-          "total_amount_received": 200000.0,
+          "total_sanctioned_amount": 200000,
+          "total_amount_received": 200000,
           "year": 2020,
-          "raw_investigators": "Shoaib Amin Banday",
+          "raw_investigators": "Shoaib Amin Banday, Mohammad Khalid Pandit",
           "faculty_ids": [
             "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
           ],
           "faculty_legacy_ids": [
             17
-          ]
+          ],
+          "principal_investigator": "Shoaib Amin Banday",
+          "co_principal_investigator": "Mohammad Khalid Pandit"
         },
         {
           "id": "a1058fd6-d74c-511d-8e1c-a9d287f73d15",
           "legacy_id": 13,
-          "title": "Using Longitudinal data for early detection and progress monitoring Alzheimer\u2019s disease",
+          "title": "Using Longitudinal data for early detection and progress monitoring Alzheimer’s disease",
           "status": "Ongoing",
           "reference_number": "",
           "funding_agency": "JK DST",
-          "total_sanctioned_amount": 709000.0,
-          "total_amount_received": 709000.0,
+          "total_sanctioned_amount": 709000,
+          "total_amount_received": 709000,
           "year": 2022,
-          "raw_investigators": "Assif Assad",
+          "raw_investigators": "Assif Assad, Mohammad Khalid Pandit, Rayees Dar",
           "faculty_ids": [
             "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
           ],
           "faculty_legacy_ids": [
             17
-          ]
+          ],
+          "principal_investigator": "Assif Assad",
+          "co_principal_investigator": "Mohammad Khalid Pandit, Rayees Dar"
         }
       ],
       "supervisions": [
@@ -31657,13 +31713,13 @@
           "title": "ICT enabled Teaching & Learning",
           "venue": "Indira Gandhi National Tribal University (IGNTU), Amarkantak, Madhya Pradesh",
           "date": "",
-          "description": "Faculty Induction Programme (Guru Dakshata),\u201d organized by the Malaviya Mission Teacher Training Centre (MMTTC) on 21st November 2024."
+          "description": "Faculty Induction Programme (Guru Dakshata),” organized by the Malaviya Mission Teacher Training Centre (MMTTC) on 21st November 2024."
         },
         {
           "title": "Introduction to Internet of Things (Sensor & Wireless Sensor Networks)",
           "venue": "SD Bansal College of Technology, Indore, Madhya Pradesh",
           "date": "",
-          "description": "ONE WEEK (Offline) ATAL FDP on \u201cNext Generation Robotics Enabled by IoT for Sustainable Development\u201d on 09th September 2024"
+          "description": "ONE WEEK (Offline) ATAL FDP on “Next Generation Robotics Enabled by IoT for Sustainable Development” on 09th September 2024"
         }
       ],
       "exposures": [],
@@ -31671,7 +31727,7 @@
         {
           "id": "83f9d767-f749-5ba2-8a75-2c18451a2025",
           "legacy_id": 1427,
-          "title": "Secure and Embedded Processing Framework for Payload Scattering in Image Steganography with Low Computation Time, Vol. 130, pp. 2679\u20132695, 2023.",
+          "title": "Secure and Embedded Processing Framework for Payload Scattering in Image Steganography with Low Computation Time, Vol. 130, pp. 2679–2695, 2023.",
           "venue_name": "Wireless Personal Communication (Springer)",
           "journal_or_conference_name": "Wireless Personal Communication (Springer)",
           "volume": "Vol. 130",
@@ -31733,7 +31789,7 @@
         {
           "id": "cca5f819-5980-57a0-a63e-585d0b4e36ee",
           "legacy_id": 1429,
-          "title": "An Energy\u2011Efficient Clustering Algorithm for Maximizing Lifetime of Wireless Sensor Networks using Machine Learning, Vol. 28, pp. 853\u2013867, 2023",
+          "title": "An Energy‑Efficient Clustering Algorithm for Maximizing Lifetime of Wireless Sensor Networks using Machine Learning, Vol. 28, pp. 853–867, 2023",
           "venue_name": "Mobile Networks & Applications (Springer)",
           "journal_or_conference_name": "Mobile Networks & Applications (Springer)",
           "volume": "Volume 28",
@@ -31769,8 +31825,8 @@
           "journal_or_conference_name": "International Journal of Medical Engineering and Informatics (Inder Science)",
           "volume": "Vol. 15",
           "issue": "No. 1",
-          "page_range": "pp.70\u201383",
-          "pages": "pp.70\u201383",
+          "page_range": "pp.70–83",
+          "pages": "pp.70–83",
           "year": 2022,
           "month": 11,
           "academic_session": "2023-2024",
@@ -31831,8 +31887,8 @@
           "journal_or_conference_name": "Cluster Computing (Springer)",
           "volume": "Vol. 26",
           "issue": "6",
-          "page_range": "pp. 3907\u20133930",
-          "pages": "pp. 3907\u20133930",
+          "page_range": "pp. 3907–3930",
+          "pages": "pp. 3907–3930",
           "year": 2022,
           "month": 11,
           "academic_session": "2022-2023",
@@ -31893,8 +31949,8 @@
           "journal_or_conference_name": "Multimedia Tools & Applications (Springer)",
           "volume": "Vol.81,",
           "issue": "No. 22,",
-          "page_range": "pp. 32093\u201332115, 2022.",
-          "pages": "pp. 32093\u201332115, 2022.",
+          "page_range": "pp. 32093–32115, 2022.",
+          "pages": "pp. 32093–32115, 2022.",
           "year": 2022,
           "month": 4,
           "academic_session": "2022-2023",
@@ -32105,13 +32161,13 @@
         {
           "id": "0a5b28f8-e834-5f2f-a0d6-57c5206a8b14",
           "legacy_id": 1441,
-          "title": "Uncertainty in Sensor Data Acquisition for SOA System, Vol. 30, No. 10, pp. 3177\u20133187, 2018",
+          "title": "Uncertainty in Sensor Data Acquisition for SOA System, Vol. 30, No. 10, pp. 3177–3187, 2018",
           "venue_name": "Neural Computing and Applications (Springer)",
           "journal_or_conference_name": "Neural Computing and Applications (Springer)",
           "volume": "Vol. 30,",
           "issue": "No. 10,",
-          "page_range": "pp. 3177\u20133187, 2018",
-          "pages": "pp. 3177\u20133187, 2018",
+          "page_range": "pp. 3177–3187, 2018",
+          "pages": "pp. 3177–3187, 2018",
           "year": 2018,
           "month": 11,
           "academic_session": "2018-2019",
@@ -32203,8 +32259,8 @@
           "journal_or_conference_name": "Springer Smart Systems: Innovations in Computing (SSIC 2021), Jaipur (RJ)",
           "volume": "vol 235.",
           "issue": "",
-          "page_range": "pp 411\u2013418",
-          "pages": "pp 411\u2013418",
+          "page_range": "pp 411–418",
+          "pages": "pp 411–418",
           "year": 2021,
           "month": 9,
           "academic_session": "2021-2022",
@@ -32260,7 +32316,7 @@
         {
           "id": "656f6ba2-210f-5853-9c97-8d8e28bbbb60",
           "legacy_id": 1447,
-          "title": "Analysis of the Indian IT Sector\u2013Investigating the Role of Technology for Software Process Improvement through Knowledge Management",
+          "title": "Analysis of the Indian IT Sector–Investigating the Role of Technology for Software Process Improvement through Knowledge Management",
           "venue_name": "IEEE International Conference on Communication System & Network Technologies (CSNT 2021), Bhopal (MP)",
           "journal_or_conference_name": "IEEE International Conference on Communication System & Network Technologies (CSNT 2021), Bhopal (MP)",
           "volume": "",
@@ -32327,8 +32383,8 @@
           "journal_or_conference_name": "IET Press, UK",
           "volume": "",
           "issue": "",
-          "page_range": "p. i\u2013i (20)",
-          "pages": "p. i\u2013i (20)",
+          "page_range": "p. i–i (20)",
+          "pages": "p. i–i (20)",
           "year": 2023,
           "month": null,
           "academic_session": "2022-2023",
@@ -32666,8 +32722,8 @@
           "status": "Completed",
           "reference_number": "PCC-Grant-202121",
           "funding_agency": "Prince Mohammad Bin Fahd University, Saudi Arabia",
-          "total_sanctioned_amount": 428074.0,
-          "total_amount_received": 428074.0,
+          "total_sanctioned_amount": 428074,
+          "total_amount_received": 428074,
           "year": 2021,
           "raw_investigators": "Dr. Robin Singh Bhadoria",
           "faculty_ids": [
@@ -32675,7 +32731,9 @@
           ],
           "faculty_legacy_ids": [
             20
-          ]
+          ],
+          "principal_investigator": "Dr. Robin Singh Bhadoria",
+          "co_principal_investigator": null
         }
       ],
       "supervisions": [
@@ -32946,8 +33004,8 @@
           "journal_or_conference_name": "The Visual Computer",
           "volume": "35",
           "issue": "",
-          "page_range": "1393\u20131410",
-          "pages": "1393\u20131410",
+          "page_range": "1393–1410",
+          "pages": "1393–1410",
           "year": 2018,
           "month": null,
           "academic_session": "2018-2019",
@@ -33008,8 +33066,8 @@
           "journal_or_conference_name": "Multimedia Tools and Applications",
           "volume": "80",
           "issue": "",
-          "page_range": "9993\u20131001",
-          "pages": "9993\u20131001",
+          "page_range": "9993–1001",
+          "pages": "9993–1001",
           "year": 2021,
           "month": null,
           "academic_session": "2020-2021",
@@ -33039,8 +33097,8 @@
           "journal_or_conference_name": "Multimedia Tools and Applications",
           "volume": "83",
           "issue": "",
-          "page_range": "27723\u201327746",
-          "pages": "27723\u201327746",
+          "page_range": "27723–27746",
+          "pages": "27723–27746",
           "year": 2023,
           "month": null,
           "academic_session": "2023-2024",
@@ -33101,8 +33159,8 @@
           "journal_or_conference_name": "8th International Conference on Pattern Recognition and Machine Intelligence (PReMI), Tezpur, India",
           "volume": "",
           "issue": "",
-          "page_range": "507\u2013514",
-          "pages": "507\u2013514",
+          "page_range": "507–514",
+          "pages": "507–514",
           "year": 2019,
           "month": null,
           "academic_session": "2019-2020",
@@ -33132,8 +33190,8 @@
           "journal_or_conference_name": "18th International Conference on Computer Analysis of Images and Patters (CAIP), Salerno, Italy",
           "volume": "",
           "issue": "",
-          "page_range": "648\u2013658",
-          "pages": "648\u2013658",
+          "page_range": "648–658",
+          "pages": "648–658",
           "year": 2019,
           "month": null,
           "academic_session": "2019-2020",
@@ -33163,8 +33221,8 @@
           "journal_or_conference_name": "7th International Conference on Mining Intelligence and Knowledge Exploration (MIKE), Goa, India",
           "volume": "",
           "issue": "",
-          "page_range": "153\u2013164",
-          "pages": "153\u2013164",
+          "page_range": "153–164",
+          "pages": "153–164",
           "year": 2020,
           "month": null,
           "academic_session": "2020-2021",
@@ -33194,8 +33252,8 @@
           "journal_or_conference_name": "7th International Conference on Mining Intelligence and Knowledge Exploration (MIKE), Goa, India",
           "volume": "",
           "issue": "",
-          "page_range": "296\u2013307",
-          "pages": "296\u2013307",
+          "page_range": "296–307",
+          "pages": "296–307",
           "year": 2020,
           "month": null,
           "academic_session": "2020-2021",
@@ -34661,7 +34719,7 @@
     {
       "id": "23a48370-5ac8-5794-9a3a-eabe90ea17ce",
       "legacy_id": 645,
-      "title": "Recent Advances in DL-based Text Summariza- tion: A Systematic Review\u201d",
+      "title": "Recent Advances in DL-based Text Summariza- tion: A Systematic Review”",
       "venue_name": "3rd International Conference on Advance Computing and Innovative Technologies in Engineering (ICACITE)",
       "journal_or_conference_name": "3rd International Conference on Advance Computing and Innovative Technologies in Engineering (ICACITE)",
       "volume": "",
@@ -36473,7 +36531,7 @@
     {
       "id": "e38a707e-b497-5ad9-b11e-7ed50a057035",
       "legacy_id": 711,
-      "title": "Buffer-loss estimation to address congestion in 6LoWPAN based resource-restricted \u2018Internet of Healthcare Things\u2019 network",
+      "title": "Buffer-loss estimation to address congestion in 6LoWPAN based resource-restricted ‘Internet of Healthcare Things’ network",
       "venue_name": "Computer Communications",
       "journal_or_conference_name": "Computer Communications",
       "volume": "181",
@@ -37230,8 +37288,8 @@
       "id": "f1a6148b-52ac-5871-b03a-a60eefaff6c7",
       "legacy_id": 744,
       "title": "New Routing Protocol for Wireless Sensor Networks",
-      "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
-      "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
+      "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
+      "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
       "volume": "",
       "issue": "",
       "page_range": "",
@@ -37261,8 +37319,8 @@
       "id": "4614baf7-53b3-57f3-925b-fa55941a2779",
       "legacy_id": 745,
       "title": "Data Indexing and Scheduling for Heterogeneous Multiple Broadcast Channels",
-      "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
-      "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
+      "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
+      "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
       "volume": "",
       "issue": "",
       "page_range": "",
@@ -37292,8 +37350,8 @@
       "id": "940e0190-caa3-5c36-80c2-8f44c0c385c5",
       "legacy_id": 746,
       "title": "Data Replication in Mobile Ad hoc Networks",
-      "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
-      "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC\u201907)",
+      "venue_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
+      "journal_or_conference_name": "National Conference on Emerging Trends in Computing and Communication (ETCC’07)",
       "volume": "",
       "issue": "",
       "page_range": "",
@@ -37385,8 +37443,8 @@
       "id": "d43a18d9-35aa-5758-a980-1af35aa0fb98",
       "legacy_id": 749,
       "title": "A Secure and Highly Available Architecture for SNMP Based Monitoring of Network Devices",
-      "venue_name": "International Conference on Network Security (ICON\u201907)",
-      "journal_or_conference_name": "International Conference on Network Security (ICON\u201907)",
+      "venue_name": "International Conference on Network Security (ICON’07)",
+      "journal_or_conference_name": "International Conference on Network Security (ICON’07)",
       "volume": "",
       "issue": "",
       "page_range": "",
@@ -37540,8 +37598,8 @@
       "id": "b2c3f8a6-7768-5e7d-b386-2d4eaffc6f2f",
       "legacy_id": 754,
       "title": "Parch: A Peer-to-Peer Based Email Archival Application",
-      "venue_name": "International Conference on Data Management (ICDM\u201908)",
-      "journal_or_conference_name": "International Conference on Data Management (ICDM\u201908)",
+      "venue_name": "International Conference on Data Management (ICDM’08)",
+      "journal_or_conference_name": "International Conference on Data Management (ICDM’08)",
       "volume": "",
       "issue": "",
       "page_range": "622-630",
@@ -37571,8 +37629,8 @@
       "id": "81465738-346c-5919-a4e8-7123bf267d01",
       "legacy_id": 755,
       "title": "Multicast Routing Protocol for MANET: A Survey",
-      "venue_name": "National Conference FCPC\u2019 09 at H.I.E.T",
-      "journal_or_conference_name": "National Conference FCPC\u2019 09 at H.I.E.T",
+      "venue_name": "National Conference FCPC’ 09 at H.I.E.T",
+      "journal_or_conference_name": "National Conference FCPC’ 09 at H.I.E.T",
       "volume": "",
       "issue": "",
       "page_range": "",
@@ -37758,9 +37816,9 @@
     {
       "id": "8e24395c-1608-5497-a7b0-28d687c68836",
       "legacy_id": 761,
-      "title": "A comparative molecular modeling study of mitoxantrone and its analogues with 5\u2019-CCCGGG-3\u2019 and 5\u2019-ATCGAT-3\u2019 DNA hexamer sequences",
-      "venue_name": "International Conference on frontiers in prevention, diagnosis and therapy of cancer (FPDTC \u2013 2009)",
-      "journal_or_conference_name": "International Conference on frontiers in prevention, diagnosis and therapy of cancer (FPDTC \u2013 2009)",
+      "title": "A comparative molecular modeling study of mitoxantrone and its analogues with 5’-CCCGGG-3’ and 5’-ATCGAT-3’ DNA hexamer sequences",
+      "venue_name": "International Conference on frontiers in prevention, diagnosis and therapy of cancer (FPDTC – 2009)",
+      "journal_or_conference_name": "International Conference on frontiers in prevention, diagnosis and therapy of cancer (FPDTC – 2009)",
       "volume": "",
       "issue": "",
       "page_range": "422-433",
@@ -38488,8 +38546,8 @@
       "journal_or_conference_name": "International Conference on Advances in Computing and Communication (ICACC)",
       "volume": "",
       "issue": "",
-      "page_range": "274\u2013287",
-      "pages": "274\u2013287",
+      "page_range": "274–287",
+      "pages": "274–287",
       "year": 2011,
       "month": null,
       "academic_session": "2011-2012",
@@ -39426,8 +39484,8 @@
       "journal_or_conference_name": "Artificial Intelligence Review",
       "volume": "54",
       "issue": "4",
-      "page_range": "2917\ufffd3006",
-      "pages": "2917\ufffd3006",
+      "page_range": "2917�3006",
+      "pages": "2917�3006",
       "year": 2020,
       "month": 10,
       "academic_session": "2020-2021",
@@ -39495,7 +39553,7 @@
       "year": 2015,
       "month": null,
       "academic_session": "2015-2016",
-      "doi": "DOI:\ufffd10.14569/IJACSA.2015.061025",
+      "doi": "DOI:�10.14569/IJACSA.2015.061025",
       "research_type_id": 1,
       "publication_type": "Journal",
       "type": "JOURNAL",
@@ -40271,8 +40329,8 @@
       "id": "c2f71d64-53c2-5812-bdbd-898d09443212",
       "legacy_id": 847,
       "title": "An Automated Tomato Maturity Grading System Using Transfer Learning Based AlexNet.",
-      "venue_name": "Ing\u00e9nierie des Syst\u00e8mes d\u2019Information",
-      "journal_or_conference_name": "Ing\u00e9nierie des Syst\u00e8mes d\u2019Information",
+      "venue_name": "Ingénierie des Systèmes d’Information",
+      "journal_or_conference_name": "Ingénierie des Systèmes d’Information",
       "volume": "26",
       "issue": "2",
       "page_range": "191-200",
@@ -41137,8 +41195,8 @@
       "type": "CONFERENCE",
       "indexing": "Scopus",
       "journal_quartile": "T",
-      "author_text": "Manick;\ufffdJyoti Srivastava",
-      "raw_authors": "Manick;\ufffdJyoti Srivastava",
+      "author_text": "Manick;�Jyoti Srivastava",
+      "raw_authors": "Manick;�Jyoti Srivastava",
       "isbn": "",
       "is_sci": false,
       "is_scopus": true,
@@ -41314,8 +41372,8 @@
       "journal_or_conference_name": "Artificial Intelligence Review",
       "volume": "36",
       "issue": "4",
-      "page_range": "311\u2013321",
-      "pages": "311\u2013321",
+      "page_range": "311–321",
+      "pages": "311–321",
       "year": 2011,
       "month": null,
       "academic_session": "2010-2011",
@@ -42146,9 +42204,9 @@
     {
       "id": "d2999a75-67ef-5d0e-a9fc-0d483ac2e8f8",
       "legacy_id": 930,
-      "title": "\u092e\u0936\u0940\u0928 \u0906\u0927\u093e\u0930\u093f\u0924 \u092d\u093e\u0937\u093e \u0905\u0928\u0941\u0935\u093e\u0926 \u092e\u0947\u0902 \u0938\u0902\u0926\u0930\u094d\u092d \u0928\u093f\u0930\u093e\u0915\u0930\u0923 \u0915\u093e \u092e\u0939\u0924\u094d\u0935.",
-      "venue_name": "\u092d\u093e\u0930\u0924\u0940\u092f \u0935\u0948\u091c\u094d\u091e\u093e\u0928\u093f\u0915 \u090f\u0935\u0902 \u0914\u0926\u094d\u092f\u094b\u0917\u093f\u0915 \u0905\u0928\u0941\u0938\u0902\u0927\u093e\u0928 \u092a\u0924\u094d\u0930\u093f\u0915\u093e",
-      "journal_or_conference_name": "\u092d\u093e\u0930\u0924\u0940\u092f \u0935\u0948\u091c\u094d\u091e\u093e\u0928\u093f\u0915 \u090f\u0935\u0902 \u0914\u0926\u094d\u092f\u094b\u0917\u093f\u0915 \u0905\u0928\u0941\u0938\u0902\u0927\u093e\u0928 \u092a\u0924\u094d\u0930\u093f\u0915\u093e",
+      "title": "मशीन आधारित भाषा अनुवाद में संदर्भ निराकरण का महत्व.",
+      "venue_name": "भारतीय वैज्ञानिक एवं औद्योगिक अनुसंधान पत्रिका",
+      "journal_or_conference_name": "भारतीय वैज्ञानिक एवं औद्योगिक अनुसंधान पत्रिका",
       "volume": "",
       "issue": "",
       "page_range": "49-54",
@@ -42162,8 +42220,8 @@
       "type": "JOURNAL",
       "indexing": "SCI(E)",
       "journal_quartile": "T",
-      "author_text": "\u091a\u0947\u0924\u0928 \u0905\u0917\u094d\u0930\u0935\u093e\u0932 \u090f\u0935\u0902 \u0915\u092e\u0932\u0947\u0936 \u0926\u0924\u094d\u0924\u093e",
-      "raw_authors": "\u091a\u0947\u0924\u0928 \u0905\u0917\u094d\u0930\u0935\u093e\u0932 \u090f\u0935\u0902 \u0915\u092e\u0932\u0947\u0936 \u0926\u0924\u094d\u0924\u093e",
+      "author_text": "चेतन अग्रवाल एवं कमलेश दत्ता",
+      "raw_authors": "चेतन अग्रवाल एवं कमलेश दत्ता",
       "isbn": "",
       "is_sci": true,
       "is_scopus": true,
@@ -42215,8 +42273,8 @@
       "journal_or_conference_name": "Wireless Personal Communications",
       "volume": "123",
       "issue": "",
-      "page_range": "3127\u20133145",
-      "pages": "3127\u20133145",
+      "page_range": "3127–3145",
+      "pages": "3127–3145",
       "year": 2022,
       "month": null,
       "academic_session": "2021-2022",
@@ -43213,8 +43271,8 @@
       "journal_or_conference_name": "Mobile Networks and Applications, Springer",
       "volume": "28",
       "issue": "2",
-      "page_range": "782\ufffd794",
-      "pages": "782\ufffd794",
+      "page_range": "782�794",
+      "pages": "782�794",
       "year": 2023,
       "month": null,
       "academic_session": "2022-2023",
@@ -43244,8 +43302,8 @@
       "journal_or_conference_name": "Multimedia Tools and Applications, Springer",
       "volume": "82",
       "issue": "6",
-      "page_range": "8447\ufffd8466",
-      "pages": "8447\ufffd8466",
+      "page_range": "8447�8466",
+      "pages": "8447�8466",
       "year": 2022,
       "month": null,
       "academic_session": "2022-2023",
@@ -43430,8 +43488,8 @@
       "journal_or_conference_name": "Peer to Peer Networking and Appli- cations, Springer",
       "volume": "15",
       "issue": "",
-      "page_range": "206\ufffd220",
-      "pages": "206\ufffd220",
+      "page_range": "206�220",
+      "pages": "206�220",
       "year": 2021,
       "month": null,
       "academic_session": "2021-2022",
@@ -43647,8 +43705,8 @@
       "journal_or_conference_name": "Peer To Peer Networking and Application, Springer",
       "volume": "14",
       "issue": "",
-      "page_range": "439\ufffd452",
-      "pages": "439\ufffd452",
+      "page_range": "439�452",
+      "pages": "439�452",
       "year": 2020,
       "month": null,
       "academic_session": "2020-2021",
@@ -43968,8 +44026,8 @@
       "type": "CONFERENCE",
       "indexing": "Scopus",
       "journal_quartile": "T",
-      "author_text": "Mayank Dhiman, Nitin Gupta, Kuldeep s. Jadon, Ujjwal Gupta and Yashwant Kumar, \ufffd",
-      "raw_authors": "Mayank Dhiman, Nitin Gupta, Kuldeep s. Jadon, Ujjwal Gupta and Yashwant Kumar, \ufffd",
+      "author_text": "Mayank Dhiman, Nitin Gupta, Kuldeep s. Jadon, Ujjwal Gupta and Yashwant Kumar, �",
+      "raw_authors": "Mayank Dhiman, Nitin Gupta, Kuldeep s. Jadon, Ujjwal Gupta and Yashwant Kumar, �",
       "isbn": "",
       "is_sci": false,
       "is_scopus": true,
@@ -44200,7 +44258,7 @@
     {
       "id": "c69bec6a-3568-5a00-97b0-a748ba029635",
       "legacy_id": 1000,
-      "title": "\ufffdSecrecy Analysis of Underlay Cognitive Radio with Delayed Channel Information\",",
+      "title": "�Secrecy Analysis of Underlay Cognitive Radio with Delayed Channel Information\",",
       "venue_name": "3rd Springer International Conference on Wireless Intelligent and Distributed Environment for Communication (WIDECOM), Ryerson University, Ontario, Canada, June 2020",
       "journal_or_conference_name": "3rd Springer International Conference on Wireless Intelligent and Distributed Environment for Communication (WIDECOM), Ryerson University, Ontario, Canada, June 2020",
       "volume": "51",
@@ -44402,8 +44460,8 @@
       "type": "CONFERENCE",
       "indexing": "Scopus",
       "journal_quartile": "T",
-      "author_text": "Nitin Gupta, Sanjay K. Dhurandher, Isaac Woungang and Joel J. P. C. Rodrigues, \ufffd",
-      "raw_authors": "Nitin Gupta, Sanjay K. Dhurandher, Isaac Woungang and Joel J. P. C. Rodrigues, \ufffd",
+      "author_text": "Nitin Gupta, Sanjay K. Dhurandher, Isaac Woungang and Joel J. P. C. Rodrigues, �",
+      "raw_authors": "Nitin Gupta, Sanjay K. Dhurandher, Isaac Woungang and Joel J. P. C. Rodrigues, �",
       "isbn": "",
       "is_sci": false,
       "is_scopus": true,
@@ -44418,8 +44476,8 @@
       "id": "dc01c071-39ab-5445-a516-def2ff9d2593",
       "legacy_id": 1007,
       "title": "On the Probability of Appearance of Primary User in IEEE 802.22 WRAN using an Artificial Neural Network Learning Technique\",",
-      "venue_name": "Proceedings of IEEE India International Conference On Information Processing (IICIP\ufffd16), New Delhi,",
-      "journal_or_conference_name": "Proceedings of IEEE India International Conference On Information Processing (IICIP\ufffd16), New Delhi,",
+      "venue_name": "Proceedings of IEEE India International Conference On Information Processing (IICIP�16), New Delhi,",
+      "journal_or_conference_name": "Proceedings of IEEE India International Conference On Information Processing (IICIP�16), New Delhi,",
       "volume": "",
       "issue": "",
       "page_range": "1-5",
@@ -44856,8 +44914,8 @@
       "journal_or_conference_name": "Peer-to-Peer Networking and Applications",
       "volume": "17",
       "issue": "",
-      "page_range": "3815\u20133840",
-      "pages": "3815\u20133840",
+      "page_range": "3815–3840",
+      "pages": "3815–3840",
       "year": 2024,
       "month": 9,
       "academic_session": "2024-2025",
@@ -44882,7 +44940,7 @@
     {
       "id": "489990f1-bdcb-55e7-bd35-5dac838fe343",
       "legacy_id": 1029,
-      "title": "A secure framework for IoT\u2010based healthcare using blockchain and IPFS",
+      "title": "A secure framework for IoT‐based healthcare using blockchain and IPFS",
       "venue_name": "Security and Privacy",
       "journal_or_conference_name": "Security and Privacy",
       "volume": "7",
@@ -44982,8 +45040,8 @@
       "journal_or_conference_name": "Multimedia Tools and Applications",
       "volume": "83",
       "issue": "",
-      "page_range": "65315\u201365339",
-      "pages": "65315\u201365339",
+      "page_range": "65315–65339",
+      "pages": "65315–65339",
       "year": 2024,
       "month": 1,
       "academic_session": "2024-2025",
@@ -45039,7 +45097,7 @@
     {
       "id": "b267e73d-8c74-5e7d-933d-36fd8c7ceef8",
       "legacy_id": 1036,
-      "title": "DDC\u2010OMDC: Deadline\u2010based data collection using optimal mobile data collectors in Internet of Things",
+      "title": "DDC‐OMDC: Deadline‐based data collection using optimal mobile data collectors in Internet of Things",
       "venue_name": "International Journal of Communication Systems",
       "journal_or_conference_name": "International Journal of Communication Systems",
       "volume": "36",
@@ -45174,8 +45232,8 @@
       "journal_or_conference_name": "Wireless Networks",
       "volume": "23",
       "issue": "",
-      "page_range": "1669\u20131687",
-      "pages": "1669\u20131687",
+      "page_range": "1669–1687",
+      "pages": "1669–1687",
       "year": 2017,
       "month": null,
       "academic_session": "2017-2018",
@@ -45644,7 +45702,7 @@
     {
       "id": "dba7b272-787a-58d4-9348-5f68ffa5a1f8",
       "legacy_id": 1068,
-      "title": "DDoS Attacks Detection in \u2018Internet of Medical Things\u2019 Using Machine Learning Techniques",
+      "title": "DDoS Attacks Detection in ‘Internet of Medical Things’ Using Machine Learning Techniques",
       "venue_name": "2022 IEEE Conference on Interdisciplinary Approaches in Technology and Management for Social Innovation (IATMSI)",
       "journal_or_conference_name": "2022 IEEE Conference on Interdisciplinary Approaches in Technology and Management for Social Innovation (IATMSI)",
       "volume": "1",
@@ -45779,8 +45837,8 @@
       "id": "03d17cc5-9ef7-5a7b-9f77-af61bacb1be9",
       "legacy_id": 1072,
       "title": "Node activity based routing in opportunistic networks",
-      "venue_name": "Futuristic Trends in Network and Communication Technologies: First International Conference, FTNCT 2018, Solan, India, February 9\u201310, 2018, Revised Selected Papers",
-      "journal_or_conference_name": "Futuristic Trends in Network and Communication Technologies: First International Conference, FTNCT 2018, Solan, India, February 9\u201310, 2018, Revised Selected Papers",
+      "venue_name": "Futuristic Trends in Network and Communication Technologies: First International Conference, FTNCT 2018, Solan, India, February 9–10, 2018, Revised Selected Papers",
+      "journal_or_conference_name": "Futuristic Trends in Network and Communication Technologies: First International Conference, FTNCT 2018, Solan, India, February 9–10, 2018, Revised Selected Papers",
       "volume": "958",
       "issue": "",
       "page_range": "265-277",
@@ -46150,7 +46208,7 @@
     {
       "id": "05d731ba-4778-5cba-b8d0-0ca9ada37428",
       "legacy_id": 1086,
-      "title": "Cbrm\u2013cluster based replica management in mobile adhoc networks",
+      "title": "Cbrm–cluster based replica management in mobile adhoc networks",
       "venue_name": "Advanced Computing, Networking and Security: International Conference, ADCONS 2011",
       "journal_or_conference_name": "Advanced Computing, Networking and Security: International Conference, ADCONS 2011",
       "volume": "",
@@ -46283,8 +46341,8 @@
       "journal_or_conference_name": "Contemporary Computing: 4th International Conference, IC3 2011, Noida",
       "volume": "",
       "issue": "",
-      "page_range": "415\u2013425",
-      "pages": "415\u2013425",
+      "page_range": "415–425",
+      "pages": "415–425",
       "year": 2011,
       "month": null,
       "academic_session": "2011-2012",
@@ -46349,8 +46407,8 @@
       "journal_or_conference_name": "Lecture Notes in Electrical Engineering",
       "volume": "990",
       "issue": "",
-      "page_range": "299\u2013309",
-      "pages": "299\u2013309",
+      "page_range": "299–309",
+      "pages": "299–309",
       "year": 2023,
       "month": null,
       "academic_session": "2022-2023",
@@ -46572,8 +46630,8 @@
       "journal_or_conference_name": "Advances in Intelligent Systems and Computing",
       "volume": "719",
       "issue": "",
-      "page_range": "465\u2013471",
-      "pages": "465\u2013471",
+      "page_range": "465–471",
+      "pages": "465–471",
       "year": 2017,
       "month": null,
       "academic_session": "2017-2018",
@@ -46702,8 +46760,8 @@
       "journal_or_conference_name": "Neural Computing and Applications",
       "volume": "36",
       "issue": "",
-      "page_range": "22905\u201322921",
-      "pages": "22905\u201322921",
+      "page_range": "22905–22921",
+      "pages": "22905–22921",
       "year": 2024,
       "month": 4,
       "academic_session": "2023-2024",
@@ -46857,8 +46915,8 @@
       "journal_or_conference_name": "Neural Computing and applications",
       "volume": "33",
       "issue": "8.5",
-      "page_range": "14147\u201314165",
-      "pages": "14147\u201314165",
+      "page_range": "14147–14165",
+      "pages": "14147–14165",
       "year": 2021,
       "month": 5,
       "academic_session": "2021-2022",
@@ -46950,8 +47008,8 @@
       "journal_or_conference_name": "Wireless Networks",
       "volume": "24",
       "issue": "8",
-      "page_range": "2957\u20132971",
-      "pages": "2957\u20132971",
+      "page_range": "2957–2971",
+      "pages": "2957–2971",
       "year": 2017,
       "month": 4,
       "academic_session": "2016-2017",
@@ -47133,7 +47191,7 @@
     {
       "id": "92676bcd-cc3d-5189-adf4-9e85bd0bc34a",
       "legacy_id": 1188,
-      "title": "Fake Profile Detection on Social Networks\u2014A Survey",
+      "title": "Fake Profile Detection on Social Networks—A Survey",
       "venue_name": "Proceedings of International Conference on Recent Innovations in Computing (ICRIC)",
       "journal_or_conference_name": "Proceedings of International Conference on Recent Innovations in Computing (ICRIC)",
       "volume": "2",
@@ -47293,8 +47351,8 @@
       "journal_or_conference_name": "International Conference on Intelligent Cyber-Physical Systems(ICPS-2021)",
       "volume": "",
       "issue": "",
-      "page_range": "285\u2013302",
-      "pages": "285\u2013302",
+      "page_range": "285–302",
+      "pages": "285–302",
       "year": 2022,
       "month": 1,
       "academic_session": "2021-2022",
@@ -47324,8 +47382,8 @@
       "journal_or_conference_name": "Proceedings of ICETIT 2019",
       "volume": "",
       "issue": "",
-      "page_range": "229\u2013237",
-      "pages": "229\u2013237",
+      "page_range": "229–237",
+      "pages": "229–237",
       "year": 2019,
       "month": 9,
       "academic_session": "2019-2020",
@@ -47417,8 +47475,8 @@
       "journal_or_conference_name": "First International Conference of Springer on Advanced Informatics for Computing Research, ICAICR 2017",
       "volume": "",
       "issue": "",
-      "page_range": "121\u2013129",
-      "pages": "121\u2013129",
+      "page_range": "121–129",
+      "pages": "121–129",
       "year": 2017,
       "month": 7,
       "academic_session": "2017-2018",
@@ -47636,8 +47694,8 @@
       "journal_or_conference_name": "The Visual Computer",
       "volume": "35",
       "issue": "",
-      "page_range": "1393\u20131410",
-      "pages": "1393\u20131410",
+      "page_range": "1393–1410",
+      "pages": "1393–1410",
       "year": 2018,
       "month": null,
       "academic_session": "2018-2019",
@@ -47698,8 +47756,8 @@
       "journal_or_conference_name": "Multimedia Tools and Applications",
       "volume": "80",
       "issue": "",
-      "page_range": "9993\u20131001",
-      "pages": "9993\u20131001",
+      "page_range": "9993–1001",
+      "pages": "9993–1001",
       "year": 2021,
       "month": null,
       "academic_session": "2020-2021",
@@ -47729,8 +47787,8 @@
       "journal_or_conference_name": "Multimedia Tools and Applications",
       "volume": "83",
       "issue": "",
-      "page_range": "27723\u201327746",
-      "pages": "27723\u201327746",
+      "page_range": "27723–27746",
+      "pages": "27723–27746",
       "year": 2023,
       "month": null,
       "academic_session": "2023-2024",
@@ -47791,8 +47849,8 @@
       "journal_or_conference_name": "8th International Conference on Pattern Recognition and Machine Intelligence (PReMI), Tezpur, India",
       "volume": "",
       "issue": "",
-      "page_range": "507\u2013514",
-      "pages": "507\u2013514",
+      "page_range": "507–514",
+      "pages": "507–514",
       "year": 2019,
       "month": null,
       "academic_session": "2019-2020",
@@ -47822,8 +47880,8 @@
       "journal_or_conference_name": "18th International Conference on Computer Analysis of Images and Patters (CAIP), Salerno, Italy",
       "volume": "",
       "issue": "",
-      "page_range": "648\u2013658",
-      "pages": "648\u2013658",
+      "page_range": "648–658",
+      "pages": "648–658",
       "year": 2019,
       "month": null,
       "academic_session": "2019-2020",
@@ -47853,8 +47911,8 @@
       "journal_or_conference_name": "7th International Conference on Mining Intelligence and Knowledge Exploration (MIKE), Goa, India",
       "volume": "",
       "issue": "",
-      "page_range": "153\u2013164",
-      "pages": "153\u2013164",
+      "page_range": "153–164",
+      "pages": "153–164",
       "year": 2020,
       "month": null,
       "academic_session": "2020-2021",
@@ -47884,8 +47942,8 @@
       "journal_or_conference_name": "7th International Conference on Mining Intelligence and Knowledge Exploration (MIKE), Goa, India",
       "volume": "",
       "issue": "",
-      "page_range": "296\u2013307",
-      "pages": "296\u2013307",
+      "page_range": "296–307",
+      "pages": "296–307",
       "year": 2020,
       "month": null,
       "academic_session": "2020-2021",
@@ -50375,7 +50433,7 @@
     {
       "id": "3c0a0191-a4df-5b6f-aa56-9091d100594b",
       "legacy_id": 1312,
-      "title": "Study on temperature (\u03c4) variation for SimCLR-based activity recognition",
+      "title": "Study on temperature (τ) variation for SimCLR-based activity recognition",
       "venue_name": "Signal, Image and Video Processing",
       "journal_or_conference_name": "Signal, Image and Video Processing",
       "volume": "16",
@@ -50406,7 +50464,7 @@
     {
       "id": "4e22ca35-e07c-510a-86e6-af980e9a5ab9",
       "legacy_id": 1313,
-      "title": "Energy\u2011efficient cluster\u2011based routing protocol for heterogeneous wireless sensor network",
+      "title": "Energy‑efficient cluster‑based routing protocol for heterogeneous wireless sensor network",
       "venue_name": "Annals of Telecommunications",
       "journal_or_conference_name": "Annals of Telecommunications",
       "volume": "80",
@@ -51626,8 +51684,8 @@
       "journal_or_conference_name": "International Conference on Innovative Computing and Communications",
       "volume": "",
       "issue": "",
-      "page_range": "297\u2013305",
-      "pages": "297\u2013305",
+      "page_range": "297–305",
+      "pages": "297–305",
       "year": 2018,
       "month": 11,
       "academic_session": "2018-2019",
@@ -51683,7 +51741,7 @@
     {
       "id": "597d0de2-e1cb-55ba-b0b2-c23381509d96",
       "legacy_id": 1367,
-      "title": "Enhanced Hybrid Congestion Mitigation Strategy for \u20186LoWPAN-RPL based patient-centric IoHT\u2019",
+      "title": "Enhanced Hybrid Congestion Mitigation Strategy for ‘6LoWPAN-RPL based patient-centric IoHT’",
       "venue_name": "Computer Networks",
       "journal_or_conference_name": "Computer Networks",
       "volume": "255",
@@ -52122,8 +52180,8 @@
       "journal_or_conference_name": "International Conference on Deep Learning, Artificial Intelligence and Robotics (ICDLAIR) 2023",
       "volume": "1001",
       "issue": "",
-      "page_range": "789\u2013795",
-      "pages": "789\u2013795",
+      "page_range": "789–795",
+      "pages": "789–795",
       "year": 2024,
       "month": null,
       "academic_session": "2023-2024",
@@ -52458,7 +52516,7 @@
     {
       "id": "97bc955c-42d0-5cab-8065-c2933b38470d",
       "legacy_id": 1398,
-      "title": "Attacks in WSN and their Countermeasure, book chapter in Case Studies in Secure Computing \u2013 Achievements and Trends",
+      "title": "Attacks in WSN and their Countermeasure, book chapter in Case Studies in Secure Computing – Achievements and Trends",
       "venue_name": "CRC Press, Taylor and Francis group",
       "journal_or_conference_name": "CRC Press, Taylor and Francis group",
       "volume": "",
@@ -52967,8 +53025,8 @@
       "id": "5859a4c4-ee48-59bd-a50b-f581f966aec8",
       "legacy_id": 1414,
       "title": "Finding Maximum Independent Sets using ACO_GA Algorithm",
-      "venue_name": "The 29th Annual International Conference on Advanced Computing and Communications (ADCOM 2024) during 18 \u2212 20 December 2024, IIIT Bangalore",
-      "journal_or_conference_name": "The 29th Annual International Conference on Advanced Computing and Communications (ADCOM 2024) during 18 \u2212 20 December 2024, IIIT Bangalore",
+      "venue_name": "The 29th Annual International Conference on Advanced Computing and Communications (ADCOM 2024) during 18 − 20 December 2024, IIIT Bangalore",
+      "journal_or_conference_name": "The 29th Annual International Conference on Advanced Computing and Communications (ADCOM 2024) during 18 − 20 December 2024, IIIT Bangalore",
       "volume": "29",
       "issue": "",
       "page_range": "16",
@@ -52998,8 +53056,8 @@
       "id": "36072ee1-99c2-58b3-9ae8-8df683c40db2",
       "legacy_id": 1415,
       "title": "Ant Colony Optimization-Enhanced MPR Selection for Efficient FANET Routing",
-      "venue_name": "The 27th International Symposium on Wireless Personal Multi- media Communications (WPMC-2024)\u2013 \u201cSecure 6G \u2013 AI Nexus: Where Technology Meets Humanity\u201d, 17-20 November 2024 Sharda University, Greater Noida (NCR-Delhi), India",
-      "journal_or_conference_name": "The 27th International Symposium on Wireless Personal Multi- media Communications (WPMC-2024)\u2013 \u201cSecure 6G \u2013 AI Nexus: Where Technology Meets Humanity\u201d, 17-20 November 2024 Sharda University, Greater Noida (NCR-Delhi), India",
+      "venue_name": "The 27th International Symposium on Wireless Personal Multi- media Communications (WPMC-2024)– “Secure 6G – AI Nexus: Where Technology Meets Humanity”, 17-20 November 2024 Sharda University, Greater Noida (NCR-Delhi), India",
+      "journal_or_conference_name": "The 27th International Symposium on Wireless Personal Multi- media Communications (WPMC-2024)– “Secure 6G – AI Nexus: Where Technology Meets Humanity”, 17-20 November 2024 Sharda University, Greater Noida (NCR-Delhi), India",
       "volume": "27",
       "issue": "",
       "page_range": "22",
@@ -53214,7 +53272,7 @@
     {
       "id": "20ad2e6e-e6c1-5458-b7ea-a1867df94d8a",
       "legacy_id": 1424,
-      "title": "Hop-Constrained Oblivious Routing using Prim\u2019s-Sollin\u2019s Algorithm",
+      "title": "Hop-Constrained Oblivious Routing using Prim’s-Sollin’s Algorithm",
       "venue_name": "The 38th International Conference on Advanced Information Networking and Applications (AINA-2024) Kitakyushu International Convention Center, Kitakyushu, Japan",
       "journal_or_conference_name": "The 38th International Conference on Advanced Information Networking and Applications (AINA-2024) Kitakyushu International Convention Center, Kitakyushu, Japan",
       "volume": "38",
@@ -53307,7 +53365,7 @@
     {
       "id": "83f9d767-f749-5ba2-8a75-2c18451a2025",
       "legacy_id": 1427,
-      "title": "Secure and Embedded Processing Framework for Payload Scattering in Image Steganography with Low Computation Time, Vol. 130, pp. 2679\u20132695, 2023.",
+      "title": "Secure and Embedded Processing Framework for Payload Scattering in Image Steganography with Low Computation Time, Vol. 130, pp. 2679–2695, 2023.",
       "venue_name": "Wireless Personal Communication (Springer)",
       "journal_or_conference_name": "Wireless Personal Communication (Springer)",
       "volume": "Vol. 130",
@@ -53369,7 +53427,7 @@
     {
       "id": "cca5f819-5980-57a0-a63e-585d0b4e36ee",
       "legacy_id": 1429,
-      "title": "An Energy\u2011Efficient Clustering Algorithm for Maximizing Lifetime of Wireless Sensor Networks using Machine Learning, Vol. 28, pp. 853\u2013867, 2023",
+      "title": "An Energy‑Efficient Clustering Algorithm for Maximizing Lifetime of Wireless Sensor Networks using Machine Learning, Vol. 28, pp. 853–867, 2023",
       "venue_name": "Mobile Networks & Applications (Springer)",
       "journal_or_conference_name": "Mobile Networks & Applications (Springer)",
       "volume": "Volume 28",
@@ -53405,8 +53463,8 @@
       "journal_or_conference_name": "International Journal of Medical Engineering and Informatics (Inder Science)",
       "volume": "Vol. 15",
       "issue": "No. 1",
-      "page_range": "pp.70\u201383",
-      "pages": "pp.70\u201383",
+      "page_range": "pp.70–83",
+      "pages": "pp.70–83",
       "year": 2022,
       "month": 11,
       "academic_session": "2023-2024",
@@ -53467,8 +53525,8 @@
       "journal_or_conference_name": "Cluster Computing (Springer)",
       "volume": "Vol. 26",
       "issue": "6",
-      "page_range": "pp. 3907\u20133930",
-      "pages": "pp. 3907\u20133930",
+      "page_range": "pp. 3907–3930",
+      "pages": "pp. 3907–3930",
       "year": 2022,
       "month": 11,
       "academic_session": "2022-2023",
@@ -53529,8 +53587,8 @@
       "journal_or_conference_name": "Multimedia Tools & Applications (Springer)",
       "volume": "Vol.81,",
       "issue": "No. 22,",
-      "page_range": "pp. 32093\u201332115, 2022.",
-      "pages": "pp. 32093\u201332115, 2022.",
+      "page_range": "pp. 32093–32115, 2022.",
+      "pages": "pp. 32093–32115, 2022.",
       "year": 2022,
       "month": 4,
       "academic_session": "2022-2023",
@@ -53741,13 +53799,13 @@
     {
       "id": "0a5b28f8-e834-5f2f-a0d6-57c5206a8b14",
       "legacy_id": 1441,
-      "title": "Uncertainty in Sensor Data Acquisition for SOA System, Vol. 30, No. 10, pp. 3177\u20133187, 2018",
+      "title": "Uncertainty in Sensor Data Acquisition for SOA System, Vol. 30, No. 10, pp. 3177–3187, 2018",
       "venue_name": "Neural Computing and Applications (Springer)",
       "journal_or_conference_name": "Neural Computing and Applications (Springer)",
       "volume": "Vol. 30,",
       "issue": "No. 10,",
-      "page_range": "pp. 3177\u20133187, 2018",
-      "pages": "pp. 3177\u20133187, 2018",
+      "page_range": "pp. 3177–3187, 2018",
+      "pages": "pp. 3177–3187, 2018",
       "year": 2018,
       "month": 11,
       "academic_session": "2018-2019",
@@ -53839,8 +53897,8 @@
       "journal_or_conference_name": "Springer Smart Systems: Innovations in Computing (SSIC 2021), Jaipur (RJ)",
       "volume": "vol 235.",
       "issue": "",
-      "page_range": "pp 411\u2013418",
-      "pages": "pp 411\u2013418",
+      "page_range": "pp 411–418",
+      "pages": "pp 411–418",
       "year": 2021,
       "month": 9,
       "academic_session": "2021-2022",
@@ -53896,7 +53954,7 @@
     {
       "id": "656f6ba2-210f-5853-9c97-8d8e28bbbb60",
       "legacy_id": 1447,
-      "title": "Analysis of the Indian IT Sector\u2013Investigating the Role of Technology for Software Process Improvement through Knowledge Management",
+      "title": "Analysis of the Indian IT Sector–Investigating the Role of Technology for Software Process Improvement through Knowledge Management",
       "venue_name": "IEEE International Conference on Communication System & Network Technologies (CSNT 2021), Bhopal (MP)",
       "journal_or_conference_name": "IEEE International Conference on Communication System & Network Technologies (CSNT 2021), Bhopal (MP)",
       "volume": "",
@@ -53963,8 +54021,8 @@
       "journal_or_conference_name": "IET Press, UK",
       "volume": "",
       "issue": "",
-      "page_range": "p. i\u2013i (20)",
-      "pages": "p. i\u2013i (20)",
+      "page_range": "p. i–i (20)",
+      "pages": "p. i–i (20)",
       "year": 2023,
       "month": null,
       "academic_session": "2022-2023",
@@ -54268,7 +54326,7 @@
     {
       "id": "a2916794-94e4-5cce-8fd9-7732feaa10dd",
       "legacy_id": 1459,
-      "title": "Dijkstra\u2019s Shortest Path in Sleeping Model",
+      "title": "Dijkstra’s Shortest Path in Sleeping Model",
       "venue_name": "8th International Conference on Computing in Engineering and Technology (ICCET 2023) during July 14-15, 2023, at NIT Patna",
       "journal_or_conference_name": "8th International Conference on Computing in Engineering and Technology (ICCET 2023) during July 14-15, 2023, at NIT Patna",
       "volume": "8",
@@ -54424,8 +54482,8 @@
       "id": "ec5e2f75-9933-5c87-a2fd-8ec86e28dfaa",
       "legacy_id": 1464,
       "title": "On scheduling transactions in grid computing system using Gaussian ACO considering load",
-      "venue_name": "27th annual International Conference on Advanced Com- puting and Communications (ADCOM 2022) at Bangalore during 9th\u221211th March 2023",
-      "journal_or_conference_name": "27th annual International Conference on Advanced Com- puting and Communications (ADCOM 2022) at Bangalore during 9th\u221211th March 2023",
+      "venue_name": "27th annual International Conference on Advanced Com- puting and Communications (ADCOM 2022) at Bangalore during 9th−11th March 2023",
+      "journal_or_conference_name": "27th annual International Conference on Advanced Com- puting and Communications (ADCOM 2022) at Bangalore during 9th−11th March 2023",
       "volume": "27",
       "issue": "",
       "page_range": "6",
@@ -54455,8 +54513,8 @@
       "id": "ab6cb241-0198-5135-ba1d-5bf92d34611d",
       "legacy_id": 1465,
       "title": "A Deterministic Distributed Algorithm for All Pairs Shortest Paths in Linear Time",
-      "venue_name": "The 27th annual International Conference on Advanced Computing and Communications (ADCOM 2022) at Bangalore during 9th \u2212 11th March 2023",
-      "journal_or_conference_name": "The 27th annual International Conference on Advanced Computing and Communications (ADCOM 2022) at Bangalore during 9th \u2212 11th March 2023",
+      "venue_name": "The 27th annual International Conference on Advanced Computing and Communications (ADCOM 2022) at Bangalore during 9th − 11th March 2023",
+      "journal_or_conference_name": "The 27th annual International Conference on Advanced Computing and Communications (ADCOM 2022) at Bangalore during 9th − 11th March 2023",
       "volume": "27",
       "issue": "",
       "page_range": "9",
@@ -54486,8 +54544,8 @@
       "id": "072ba906-5c99-5698-b8c3-509a13adbdcf",
       "legacy_id": 1466,
       "title": "Dependability Analysis for Transaction Processing in On-Demand Computing System",
-      "venue_name": "18th International Conference on Distributed Computing and Intelligent Technology held on 19th \u2212 23rd January 2022, KIIT University, Bhubaneswar, Odisha, India",
-      "journal_or_conference_name": "18th International Conference on Distributed Computing and Intelligent Technology held on 19th \u2212 23rd January 2022, KIIT University, Bhubaneswar, Odisha, India",
+      "venue_name": "18th International Conference on Distributed Computing and Intelligent Technology held on 19th − 23rd January 2022, KIIT University, Bhubaneswar, Odisha, India",
+      "journal_or_conference_name": "18th International Conference on Distributed Computing and Intelligent Technology held on 19th − 23rd January 2022, KIIT University, Bhubaneswar, Odisha, India",
       "volume": "18",
       "issue": "",
       "page_range": "10",
@@ -54517,8 +54575,8 @@
       "id": "9b5a802e-7181-561a-800c-9fc317e745e1",
       "legacy_id": 1467,
       "title": "IoT based oxygen concentrators",
-      "venue_name": "Demo & Exhibits Track, COMSNETS 2022 in 14th International Conference on COMmunication Systems & NETworkS January 3 \u2212 9, Hybrid Conference, Bengaluru, India",
-      "journal_or_conference_name": "Demo & Exhibits Track, COMSNETS 2022 in 14th International Conference on COMmunication Systems & NETworkS January 3 \u2212 9, Hybrid Conference, Bengaluru, India",
+      "venue_name": "Demo & Exhibits Track, COMSNETS 2022 in 14th International Conference on COMmunication Systems & NETworkS January 3 − 9, Hybrid Conference, Bengaluru, India",
+      "journal_or_conference_name": "Demo & Exhibits Track, COMSNETS 2022 in 14th International Conference on COMmunication Systems & NETworkS January 3 − 9, Hybrid Conference, Bengaluru, India",
       "volume": "14",
       "issue": "",
       "page_range": "9",
@@ -54864,8 +54922,8 @@
       "id": "98fa2fc9-32cf-5fe1-a47d-21998ef49045",
       "legacy_id": 1480,
       "title": "Distributed Routing for Underwater Wireless Sensor Networks Using Cuckoo Search-Ant Colony Optimization",
-      "venue_name": "he 13th ACM International Conference on Underwater Networks & Systems (WUWNet\u201918) December 3-5, 2018, Shenzhen, China",
-      "journal_or_conference_name": "he 13th ACM International Conference on Underwater Networks & Systems (WUWNet\u201918) December 3-5, 2018, Shenzhen, China",
+      "venue_name": "he 13th ACM International Conference on Underwater Networks & Systems (WUWNet’18) December 3-5, 2018, Shenzhen, China",
+      "journal_or_conference_name": "he 13th ACM International Conference on Underwater Networks & Systems (WUWNet’18) December 3-5, 2018, Shenzhen, China",
       "volume": "13",
       "issue": "",
       "page_range": "9",
@@ -55425,7 +55483,7 @@
     {
       "id": "b02de7fb-afa4-5c83-9487-ffc7d8e74e09",
       "legacy_id": 1499,
-      "title": "Speech signal\u2019s phase information based Alzheimer\u2019s disease detection using deep learning",
+      "title": "Speech signal’s phase information based Alzheimer’s disease detection using deep learning",
       "venue_name": "International Journal of Speech Technology",
       "journal_or_conference_name": "International Journal of Speech Technology",
       "volume": "",
@@ -55768,13 +55826,13 @@
     {
       "id": "54c6e257-3315-5d09-bf77-ff3e089f4f63",
       "legacy_id": 1512,
-      "title": "A panorama of text summarization research: bibliometric trends and developments (2000\u20132024)",
+      "title": "A panorama of text summarization research: bibliometric trends and developments (2000–2024)",
       "venue_name": "Neural Computing and Applications",
       "journal_or_conference_name": "Neural Computing and Applications",
       "volume": "37",
       "issue": "",
-      "page_range": "20917\u201320956",
-      "pages": "20917\u201320956",
+      "page_range": "20917–20956",
+      "pages": "20917–20956",
       "year": 2025,
       "month": 9,
       "academic_session": "2025-2026",
@@ -56313,8 +56371,8 @@
       "status": "Completed",
       "reference_number": "SSY/2023/001110",
       "funding_agency": "SERB",
-      "total_sanctioned_amount": 350000.0,
-      "total_amount_received": 350000.0,
+      "total_sanctioned_amount": 350000,
+      "total_amount_received": 350000,
       "year": 2023,
       "raw_investigators": "Dr. Arun Kumar Yadav",
       "faculty_ids": [
@@ -56322,7 +56380,9 @@
       ],
       "faculty_legacy_ids": [
         12
-      ]
+      ],
+      "principal_investigator": "Dr. Arun Kumar Yadav",
+      "co_principal_investigator": null
     },
     {
       "id": "9e0a3c01-c5e7-5393-9869-b12c71274f3d",
@@ -56331,16 +56391,18 @@
       "status": "Ongoing",
       "reference_number": "CST/D-701",
       "funding_agency": "UP-CST",
-      "total_sanctioned_amount": 130800.0,
-      "total_amount_received": 130800.0,
+      "total_sanctioned_amount": 130800,
+      "total_amount_received": 130800,
       "year": 2024,
-      "raw_investigators": "Dr. Prakash Kumar Singh",
+      "raw_investigators": "Dr. Prakash Kumar Singh, Dr. Arun Kumar Yadav",
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137"
       ],
       "faculty_legacy_ids": [
         12
-      ]
+      ],
+      "principal_investigator": "Dr. Prakash Kumar Singh",
+      "co_principal_investigator": "Dr. Arun Kumar Yadav"
     },
     {
       "id": "99652a34-74eb-50d7-9bce-8e4102eb9091",
@@ -56349,34 +56411,38 @@
       "status": "Ongoing",
       "reference_number": "CST/D-12",
       "funding_agency": "UP-CST",
-      "total_sanctioned_amount": 130800.0,
-      "total_amount_received": 130800.0,
+      "total_sanctioned_amount": 130800,
+      "total_amount_received": 130800,
       "year": 2024,
-      "raw_investigators": "Dr. Vibhash Yadav",
+      "raw_investigators": "Dr. Vibhash Yadav, Dr. Arun Kumar Yadav",
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137"
       ],
       "faculty_legacy_ids": [
         12
-      ]
+      ],
+      "principal_investigator": "Dr. Vibhash Yadav",
+      "co_principal_investigator": "Dr. Arun Kumar Yadav"
     },
     {
       "id": "8eed6f38-6742-5464-84c2-4e97f9ffe2a5",
       "legacy_id": 6,
-      "title": "Information Security Education and Awareness (ISEA) Phase \u2013 II",
+      "title": "Information Security Education and Awareness (ISEA) Phase – II",
       "status": "Completed",
       "reference_number": "NIT/HMR/R&C/ISEA/PROJECT/357-360",
       "funding_agency": "Ministry of Electronics & Information Technology (MeitY)",
-      "total_sanctioned_amount": 365000.0,
-      "total_amount_received": 365000.0,
+      "total_sanctioned_amount": 365000,
+      "total_amount_received": 365000,
       "year": 2015,
-      "raw_investigators": "Dr. TP Sharma",
+      "raw_investigators": "Dr. TP Sharma, Dr. Naveen Chauhan",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
       ],
       "faculty_legacy_ids": [
         5
-      ]
+      ],
+      "principal_investigator": "Dr. TP Sharma",
+      "co_principal_investigator": "Dr. Naveen Chauhan"
     },
     {
       "id": "2750486a-9676-535c-b329-2f31b5a3f257",
@@ -56385,10 +56451,10 @@
       "status": "Completed",
       "reference_number": "SCSTE/F(8)-1/2016-Vol.-I-5592",
       "funding_agency": "HP State Council for Science Technology & Environment",
-      "total_sanctioned_amount": 663000.0,
-      "total_amount_received": 663000.0,
+      "total_sanctioned_amount": 663000,
+      "total_amount_received": 663000,
       "year": 2016,
-      "raw_investigators": "Dr. Naveen Chauhan",
+      "raw_investigators": "Dr. Naveen Chauhan, Dr. Rajeev Kumar",
       "faculty_ids": [
         "6c4f2340-35a3-5b21-b580-081dad7f5ab1",
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
@@ -56396,7 +56462,9 @@
       "faculty_legacy_ids": [
         4,
         5
-      ]
+      ],
+      "principal_investigator": "Dr. Naveen Chauhan",
+      "co_principal_investigator": "Dr. Rajeev Kumar"
     },
     {
       "id": "0fe42bc5-514c-5c2b-9219-b6707ba09d31",
@@ -56405,16 +56473,18 @@
       "status": "Completed",
       "reference_number": "",
       "funding_agency": "NPIU,MHRD",
-      "total_sanctioned_amount": 1137000.0,
-      "total_amount_received": 1137000.0,
+      "total_sanctioned_amount": 1137000,
+      "total_amount_received": 1137000,
       "year": 2020,
-      "raw_investigators": "Mohammad Khalid Pandit",
+      "raw_investigators": "Mohammad Khalid Pandit, Mohammad Ahsan Chishti, Roohie Naaz, Assif Assad, Shioaib Amin",
       "faculty_ids": [
         "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
       ],
       "faculty_legacy_ids": [
         17
-      ]
+      ],
+      "principal_investigator": "Mohammad Khalid Pandit",
+      "co_principal_investigator": "Mohammad Ahsan Chishti, Roohie Naaz, Assif Assad, Shioaib Amin"
     },
     {
       "id": "fc5781be-49a4-534e-a879-fa2661fc7fac",
@@ -56423,16 +56493,18 @@
       "status": "Completed",
       "reference_number": "",
       "funding_agency": "TEQIP, IUST",
-      "total_sanctioned_amount": 200000.0,
-      "total_amount_received": 200000.0,
+      "total_sanctioned_amount": 200000,
+      "total_amount_received": 200000,
       "year": 2020,
-      "raw_investigators": "Mohammad Khalid Pandit",
+      "raw_investigators": "Mohammad Khalid Pandit, Shoaib Amin Banday",
       "faculty_ids": [
         "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
       ],
       "faculty_legacy_ids": [
         17
-      ]
+      ],
+      "principal_investigator": "Mohammad Khalid Pandit",
+      "co_principal_investigator": "Shoaib Amin Banday"
     },
     {
       "id": "b98edf0c-b18b-5da6-98a5-01321a4ec922",
@@ -56441,34 +56513,38 @@
       "status": "Completed",
       "reference_number": "",
       "funding_agency": "TEQIP, IUST",
-      "total_sanctioned_amount": 200000.0,
-      "total_amount_received": 200000.0,
+      "total_sanctioned_amount": 200000,
+      "total_amount_received": 200000,
       "year": 2020,
-      "raw_investigators": "Shoaib Amin Banday",
+      "raw_investigators": "Shoaib Amin Banday, Mohammad Khalid Pandit",
       "faculty_ids": [
         "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
       ],
       "faculty_legacy_ids": [
         17
-      ]
+      ],
+      "principal_investigator": "Shoaib Amin Banday",
+      "co_principal_investigator": "Mohammad Khalid Pandit"
     },
     {
       "id": "a1058fd6-d74c-511d-8e1c-a9d287f73d15",
       "legacy_id": 13,
-      "title": "Using Longitudinal data for early detection and progress monitoring Alzheimer\u2019s disease",
+      "title": "Using Longitudinal data for early detection and progress monitoring Alzheimer’s disease",
       "status": "Ongoing",
       "reference_number": "",
       "funding_agency": "JK DST",
-      "total_sanctioned_amount": 709000.0,
-      "total_amount_received": 709000.0,
+      "total_sanctioned_amount": 709000,
+      "total_amount_received": 709000,
       "year": 2022,
-      "raw_investigators": "Assif Assad",
+      "raw_investigators": "Assif Assad, Mohammad Khalid Pandit, Rayees Dar",
       "faculty_ids": [
         "26c2fd67-8cf4-5d5d-b843-d783e1568e38"
       ],
       "faculty_legacy_ids": [
         17
-      ]
+      ],
+      "principal_investigator": "Assif Assad",
+      "co_principal_investigator": "Mohammad Khalid Pandit, Rayees Dar"
     },
     {
       "id": "54a45ed0-cfa6-5538-9ebc-257e874c6678",
@@ -56477,8 +56553,8 @@
       "status": "Completed",
       "reference_number": "PCC-Grant-202121",
       "funding_agency": "Prince Mohammad Bin Fahd University, Saudi Arabia",
-      "total_sanctioned_amount": 428074.0,
-      "total_amount_received": 428074.0,
+      "total_sanctioned_amount": 428074,
+      "total_amount_received": 428074,
       "year": 2021,
       "raw_investigators": "Dr. Robin Singh Bhadoria",
       "faculty_ids": [
@@ -56486,7 +56562,9 @@
       ],
       "faculty_legacy_ids": [
         20
-      ]
+      ],
+      "principal_investigator": "Dr. Robin Singh Bhadoria",
+      "co_principal_investigator": null
     },
     {
       "id": "693865b7-6bfb-56bb-9a7d-b0ae5fcdcbff",
@@ -56495,16 +56573,18 @@
       "status": "Completed",
       "reference_number": "CST/D-2783",
       "funding_agency": "UP-CST",
-      "total_sanctioned_amount": 104400.0,
-      "total_amount_received": 104400.0,
+      "total_sanctioned_amount": 104400,
+      "total_amount_received": 104400,
       "year": 2019,
-      "raw_investigators": "Dr. Sonam Gupta",
+      "raw_investigators": "Dr. Sonam Gupta, Dr. Arun Kumar Yadav",
       "faculty_ids": [
         "edbab47f-a36c-5216-9914-5b5561bc8137"
       ],
       "faculty_legacy_ids": [
         12
-      ]
+      ],
+      "principal_investigator": "Dr. Sonam Gupta",
+      "co_principal_investigator": "Dr. Arun Kumar Yadav"
     },
     {
       "id": "1027ae3b-dacf-5b58-88e3-cbd7f5768050",
@@ -56513,16 +56593,18 @@
       "status": "Completed",
       "reference_number": "STC/F(8)-6/2019(R&D2019-20-417 dated 29-6-2020",
       "funding_agency": "HIMCOSTE",
-      "total_sanctioned_amount": 560000.0,
-      "total_amount_received": 560000.0,
+      "total_sanctioned_amount": 560000,
+      "total_amount_received": 560000,
       "year": 2020,
-      "raw_investigators": "Dr Siddhartha Chauhan",
+      "raw_investigators": "Dr Siddhartha Chauhan, Dr Pardeep Singh",
       "faculty_ids": [
         "6c4f2340-35a3-5b21-b580-081dad7f5ab1"
       ],
       "faculty_legacy_ids": [
         4
-      ]
+      ],
+      "principal_investigator": "Dr Siddhartha Chauhan",
+      "co_principal_investigator": "Dr Pardeep Singh"
     },
     {
       "id": "40159ea7-6b1b-5ea0-b4e6-02c027b9c2c5",
@@ -56531,16 +56613,18 @@
       "status": "Completed",
       "reference_number": "L-14011/20/2014-HRD Dated 12.02.2015 and 1(2)/2012-ISEA(Vol.II) dated 27.03.2015",
       "funding_agency": "MeitY",
-      "total_sanctioned_amount": 3700000.0,
-      "total_amount_received": 3700000.0,
+      "total_sanctioned_amount": 3700000,
+      "total_amount_received": 3700000,
       "year": 2021,
-      "raw_investigators": "Dr. T.P. Sharma",
+      "raw_investigators": "Dr. T.P. Sharma, Dr. Naveen Chauhan",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
       ],
       "faculty_legacy_ids": [
         3
-      ]
+      ],
+      "principal_investigator": "Dr. T.P. Sharma",
+      "co_principal_investigator": "Dr. Naveen Chauhan"
     },
     {
       "id": "97e00ab9-342d-57c5-a807-804aea24afac",
@@ -56549,16 +56633,18 @@
       "status": "Ongoing",
       "reference_number": "NIT Hamirpur L-14017/1/2022-HRD",
       "funding_agency": "MeitY",
-      "total_sanctioned_amount": 20100000.0,
-      "total_amount_received": 20100000.0,
+      "total_sanctioned_amount": 20100000,
+      "total_amount_received": 20100000,
       "year": 2024,
-      "raw_investigators": "Dr. T.P. Sharma",
+      "raw_investigators": "Dr. T.P. Sharma, Dr. Naveen Chauhan",
       "faculty_ids": [
         "c17e0191-445a-5f4d-961b-fb830ce9136c"
       ],
       "faculty_legacy_ids": [
         3
-      ]
+      ],
+      "principal_investigator": "Dr. T.P. Sharma",
+      "co_principal_investigator": "Dr. Naveen Chauhan"
     },
     {
       "id": "a82a72d3-22ca-50c1-99ab-b08ff69d3c92",
@@ -56567,10 +56653,10 @@
       "status": "Ongoing",
       "reference_number": "SR/FST/ET-1/2023/1308",
       "funding_agency": "DST",
-      "total_sanctioned_amount": 22300000.0,
-      "total_amount_received": 22300000.0,
+      "total_sanctioned_amount": 22300000,
+      "total_amount_received": 22300000,
       "year": 2024,
-      "raw_investigators": "Dr. Naveen Chauhan(CO-PI)",
+      "raw_investigators": "Dr. Naveen Chauhan(CO-PI), Dr Rajeev Kumar (Co-PI)",
       "faculty_ids": [
         "5e12253b-db56-5e31-9e51-19ab6edac297",
         "c17e0191-445a-5f4d-961b-fb830ce9136c",
@@ -56584,7 +56670,9 @@
         5,
         9,
         10
-      ]
+      ],
+      "principal_investigator": "Dr. Naveen Chauhan(CO-PI)",
+      "co_principal_investigator": "Dr Rajeev Kumar (Co-PI)"
     },
     {
       "id": "5872de24-ddde-59bc-8706-10594a497735",
@@ -56593,16 +56681,18 @@
       "status": "Completed",
       "reference_number": "STC/F(8)-2(R&D 20-21)-273",
       "funding_agency": "HP State Council for Science Technology & Environment",
-      "total_sanctioned_amount": 650000.0,
-      "total_amount_received": 650000.0,
+      "total_sanctioned_amount": 650000,
+      "total_amount_received": 650000,
       "year": 2021,
-      "raw_investigators": "Dr. Naveen Chauhan",
+      "raw_investigators": "Dr. Naveen Chauhan, Prof. Lalit Kumar Awasthi (DoCSE NIT Hamirpur), Dr. Rajeev Kumar (DoCSE NIT Hamirpur) and Dr. Rajesh Sharma (Deptt. of Cardiology IGMC Shimla)",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
       ],
       "faculty_legacy_ids": [
         5
-      ]
+      ],
+      "principal_investigator": "Dr. Naveen Chauhan",
+      "co_principal_investigator": "Prof. Lalit Kumar Awasthi (DoCSE NIT Hamirpur), Dr. Rajeev Kumar (DoCSE NIT Hamirpur) and Dr. Rajesh Sharma (Deptt. of Cardiology IGMC Shimla)"
     },
     {
       "id": "9885f897-6ad0-5c9d-b100-5b9f5422119f",
@@ -56611,16 +56701,18 @@
       "status": "Ongoing",
       "reference_number": "F.NO. L-14017/1/2022-HRD",
       "funding_agency": "MeitY",
-      "total_sanctioned_amount": 20600000.0,
-      "total_amount_received": 20600000.0,
+      "total_sanctioned_amount": 20600000,
+      "total_amount_received": 20600000,
       "year": 2024,
-      "raw_investigators": "Dr. T.P. Sharma",
+      "raw_investigators": "Dr. T.P. Sharma, Dr. Naveen Chauhan",
       "faculty_ids": [
         "853a73f2-13a5-5c4f-a25f-21fd5d695f93"
       ],
       "faculty_legacy_ids": [
         5
-      ]
+      ],
+      "principal_investigator": "Dr. T.P. Sharma",
+      "co_principal_investigator": "Dr. Naveen Chauhan"
     },
     {
       "id": "16692d6e-bfce-5bab-8941-a99c66e83900",
@@ -56629,8 +56721,8 @@
       "status": "Ongoing",
       "reference_number": "",
       "funding_agency": "Science and enginerring research board",
-      "total_sanctioned_amount": 601271.0,
-      "total_amount_received": 601271.0,
+      "total_sanctioned_amount": 601271,
+      "total_amount_received": 601271,
       "year": 2024,
       "raw_investigators": "Prof. Lalit Awasthi(PI)",
       "faculty_ids": [
@@ -56638,7 +56730,9 @@
       ],
       "faculty_legacy_ids": [
         1
-      ]
+      ],
+      "principal_investigator": "Prof. Lalit Awasthi(PI)",
+      "co_principal_investigator": null
     },
     {
       "id": "80f2cde6-cb71-50f5-a32e-b54962ac781a",
@@ -56647,8 +56741,8 @@
       "status": "Completed",
       "reference_number": "",
       "funding_agency": "Ministry of human Resource Development.Govt.of India",
-      "total_sanctioned_amount": 1200000.0,
-      "total_amount_received": 1200000.0,
+      "total_sanctioned_amount": 1200000,
+      "total_amount_received": 1200000,
       "year": 2005,
       "raw_investigators": "Prof. Lalit Awasthi(PI)",
       "faculty_ids": [
@@ -56656,7 +56750,9 @@
       ],
       "faculty_legacy_ids": [
         1
-      ]
+      ],
+      "principal_investigator": "Prof. Lalit Awasthi(PI)",
+      "co_principal_investigator": null
     },
     {
       "id": "d3168543-6ded-5631-86d6-a2fccd17fe09",
@@ -56665,8 +56761,8 @@
       "status": "Completed",
       "reference_number": "",
       "funding_agency": "TEQIP, IUST",
-      "total_sanctioned_amount": 400000.0,
-      "total_amount_received": 400000.0,
+      "total_sanctioned_amount": 400000,
+      "total_amount_received": 400000,
       "year": 2019,
       "raw_investigators": "Prof. Lalit Awasthi(PI)",
       "faculty_ids": [
@@ -56674,7 +56770,9 @@
       ],
       "faculty_legacy_ids": [
         1
-      ]
+      ],
+      "principal_investigator": "Prof. Lalit Awasthi(PI)",
+      "co_principal_investigator": null
     },
     {
       "id": "258ac72e-35ed-5b66-b398-4b9d2c1cde9c",
@@ -56683,8 +56781,8 @@
       "status": "Ongoing",
       "reference_number": "",
       "funding_agency": "DST",
-      "total_sanctioned_amount": 7279000.0,
-      "total_amount_received": 7279000.0,
+      "total_sanctioned_amount": 7279000,
+      "total_amount_received": 7279000,
       "year": 2021,
       "raw_investigators": "Prof. Lalit Awasthi(PI)",
       "faculty_ids": [
@@ -56692,7 +56790,9 @@
       ],
       "faculty_legacy_ids": [
         1
-      ]
+      ],
+      "principal_investigator": "Prof. Lalit Awasthi(PI)",
+      "co_principal_investigator": null
     },
     {
       "id": "d0b55e01-55ec-59ae-a232-dec8739ecd61",
@@ -56701,16 +56801,18 @@
       "status": "Completed",
       "reference_number": "",
       "funding_agency": "Municipal Corporation Simla",
-      "total_sanctioned_amount": 350000.0,
-      "total_amount_received": 350000.0,
+      "total_sanctioned_amount": 350000,
+      "total_amount_received": 350000,
       "year": 2013,
-      "raw_investigators": null,
+      "raw_investigators": "Dr. Kamlesh Dutta",
       "faculty_ids": [
         "5e12253b-db56-5e31-9e51-19ab6edac297"
       ],
       "faculty_legacy_ids": [
         2
-      ]
+      ],
+      "principal_investigator": null,
+      "co_principal_investigator": "Dr. Kamlesh Dutta"
     },
     {
       "id": "eb5b9830-e147-5230-b178-394aeba7cae3",
@@ -56719,8 +56821,8 @@
       "status": "Completed",
       "reference_number": "",
       "funding_agency": "DieTY",
-      "total_sanctioned_amount": 830000.0,
-      "total_amount_received": 830000.0,
+      "total_sanctioned_amount": 830000,
+      "total_amount_received": 830000,
       "year": 2014,
       "raw_investigators": "Dr. Kamlesh Dutta",
       "faculty_ids": [
@@ -56728,7 +56830,9 @@
       ],
       "faculty_legacy_ids": [
         2
-      ]
+      ],
+      "principal_investigator": "Dr. Kamlesh Dutta",
+      "co_principal_investigator": null
     },
     {
       "id": "da459cb7-be4e-55ee-84bf-a4a42c586c15",
@@ -56738,8 +56842,8 @@
       "funding_agency": "Cisco/UNDP",
       "sponsor": "Cisco/UNDP",
       "status": "Completed",
-      "sanctioned_amount": 0.0,
-      "total_sanctioned_amount": 0.0,
+      "sanctioned_amount": 0,
+      "total_sanctioned_amount": 0,
       "year": 1999,
       "investigators": "Dr. Kamlesh Dutta",
       "raw_investigators": "Dr. Kamlesh Dutta",
@@ -56749,7 +56853,9 @@
       ],
       "faculty_legacy_ids": [
         2
-      ]
+      ],
+      "principal_investigator": "Dr. Kamlesh Dutta",
+      "co_principal_investigator": null
     }
   ],
   "students": [
@@ -62259,7 +62365,7 @@
       "programme_id": "66666666-6666-6666-6666-666666666663",
       "programme_name": "Dual Degree CSE",
       "roll_number": "21DCS018",
-      "name": "\ufffd\ufffdNILU KUMARI",
+      "name": "��NILU KUMARI",
       "email": "21DCS018@nith.ac.in",
       "admission_year": 2025,
       "current_semester": 9
@@ -66092,7 +66198,7 @@
       "department_id": "22222222-2222-2222-2222-222222222222",
       "category": "achievement",
       "title": "2nd International Conference on Artificial Intelligence, Machine Learning & Intelligent Systems (ICAMS-2025)",
-      "description": "The 2nd International Conference on Artificial Intelligence, Machine Learning & Intelligent Systems (ICAMS 2025) was scheduled on February 7\u20138, 2025, at the National Institute of Technology (NIT) Hamirpur, Himachal Pradesh, India. Organized by the Department of Computer Science and Engineering at NIT Hamirpur. The Organising Chairman is Dr. Naveen Chauhan, DoCSE, NIT Hamirpur. The Organising Secretary is Dr. Mohammad Khalid Pradit and Dr. Ajay Kumar Mallick, DoCSE, NIT Hamirpur. The inaugural ceremony of ICAMS 2025 was held on February 7, 2025, at the National Institute of Technology (NIT) Hamirpur in presence of Prof. Hiralal Murlidhar Suryawanshi, Director of NIT Hamirpur, Prof. Archana Santosh Nanoty, Registrar, NIT Hamirpur, and other expert from reputed institutes. The Valedictory Ceremony of the ICAMS 2025 was held on 8th February 2025 at NIT Hamirpur, marking the successful conclusion of the two-day conference in the esteemed presence of Prof. H.M. Suryawanshi, Director, NIT Hamirpur, Prof. Archana Santosh Nanoty, Registrar and other delegates.",
+      "description": "The 2nd International Conference on Artificial Intelligence, Machine Learning & Intelligent Systems (ICAMS 2025) was scheduled on February 7–8, 2025, at the National Institute of Technology (NIT) Hamirpur, Himachal Pradesh, India. Organized by the Department of Computer Science and Engineering at NIT Hamirpur. The Organising Chairman is Dr. Naveen Chauhan, DoCSE, NIT Hamirpur. The Organising Secretary is Dr. Mohammad Khalid Pradit and Dr. Ajay Kumar Mallick, DoCSE, NIT Hamirpur. The inaugural ceremony of ICAMS 2025 was held on February 7, 2025, at the National Institute of Technology (NIT) Hamirpur in presence of Prof. Hiralal Murlidhar Suryawanshi, Director of NIT Hamirpur, Prof. Archana Santosh Nanoty, Registrar, NIT Hamirpur, and other expert from reputed institutes. The Valedictory Ceremony of the ICAMS 2025 was held on 8th February 2025 at NIT Hamirpur, marking the successful conclusion of the two-day conference in the esteemed presence of Prof. H.M. Suryawanshi, Director, NIT Hamirpur, Prof. Archana Santosh Nanoty, Registrar and other delegates.",
       "photo_url": "https://res.cloudinary.com/eqvhqx5q/image/upload/v1789427510/fqjszlj2lscybnisrf1m.jpg",
       "pdf_url": "https://sites.google.com/nith.ac.in/icams2025/home",
       "publish_date": "2025-06-13"
@@ -66249,7 +66355,7 @@
       "legacy_id": 19,
       "title": "Consultancy Service to Kangra Central Cooperative Bank for establishment of ATMs",
       "client_organisation": "Kangra Central Cooperative Bank",
-      "amount": 545770.0,
+      "amount": 545770,
       "start_year": 2024,
       "academic_session": "2021-2022",
       "status": "Completed",
@@ -66266,7 +66372,7 @@
       "legacy_id": 20,
       "title": "Consultancy Service to Kangra Central Cooperative Bank for establishment of CBS and Internet Banking",
       "client_organisation": "Kangra Central Cooperative Bank, Dharamsala",
-      "amount": 4537086.0,
+      "amount": 4537086,
       "start_year": 2024,
       "academic_session": "2021-2022",
       "status": "Completed",
@@ -66283,7 +66389,7 @@
       "legacy_id": 21,
       "title": "Consultancy Service to Kangra Central Cooperative Bank for establishment of surveillance and Biometric Attendance System",
       "client_organisation": "Kangra Central Cooperative Bank",
-      "amount": 540569.0,
+      "amount": 540569,
       "start_year": 2024,
       "academic_session": "2022-2023",
       "status": "Completed",
@@ -66300,7 +66406,7 @@
       "legacy_id": 22,
       "title": "IPV6 Consultancy Services for RINL, Visakhapatnam Steel Plant",
       "client_organisation": "RINL, Visakhapatnam Steel Plant",
-      "amount": 2000000.0,
+      "amount": 2000000,
       "start_year": 2024,
       "academic_session": "2022-2023",
       "status": "Completed",
@@ -66317,7 +66423,7 @@
       "legacy_id": 30,
       "title": "Automation of Dr. Rajendra Prasad Govt. Medical College, Kangra",
       "client_organisation": "DR.R.P.G.M.C Kangra at Tanda",
-      "amount": 5389000.0,
+      "amount": 5389000,
       "start_year": 2025,
       "academic_session": "2024-2025",
       "status": "Ongoing",
@@ -66334,7 +66440,7 @@
       "legacy_id": 31,
       "title": "Establishment of ATMs, EFT switching and Allied Services to Punjab State Cooperative Bank and DCCBs, PSCB Chandigarh",
       "client_organisation": "PSCB, Chandigarh",
-      "amount": 4085000.0,
+      "amount": 4085000,
       "start_year": 2025,
       "academic_session": "2024-2025",
       "status": "Completed",
@@ -66351,7 +66457,7 @@
       "legacy_id": 32,
       "title": "Migration from IPv4 to IPv6 of 27 LANs and Applications and websites of RINL, VIZAG Steel, Vishakhapatnam",
       "client_organisation": "RINL VIZAG Steel",
-      "amount": 2000000.0,
+      "amount": 2000000,
       "start_year": 2025,
       "academic_session": "2024-2025",
       "status": "Completed",
@@ -66368,7 +66474,7 @@
       "legacy_id": 33,
       "title": "Providing Consultancy for IT Services (Setting up of Integrated Control Command Centre) for Dharamshala Smart City Project",
       "client_organisation": "Dharamshala Smart City Limited, Dharmshala",
-      "amount": 10600000.0,
+      "amount": 10600000,
       "start_year": 2025,
       "academic_session": "2025-2026",
       "status": "Completed",
@@ -66722,7 +66828,7 @@
     {
       "id": "9df14977-28b9-592c-ae97-6da0b14e5cb4",
       "legacy_id": 50,
-      "title": "National Conference on Emerging Trends in Computing & Communication(ETCC\ufffd08)",
+      "title": "National Conference on Emerging Trends in Computing & Communication(ETCC�08)",
       "category": "organized",
       "event_type": "conference",
       "venue": "NIT Hamirpur",
@@ -66939,7 +67045,7 @@
     {
       "id": "0f02f8a3-13d2-5f58-9dd9-9e9229c7f668",
       "legacy_id": 127,
-      "title": "Civil Engineering Conference \u2013 Innovation for Sustainability (CEC-2016)",
+      "title": "Civil Engineering Conference – Innovation for Sustainability (CEC-2016)",
       "category": "organized",
       "event_type": "conference",
       "venue": "NIT Hamirpur",
@@ -67378,7 +67484,7 @@
       "category": "organized",
       "event_type": "STC",
       "venue": "DoCSE, NIT Hamirpur",
-      "sponsoring_agency": "ISEA Project Phase \u2013 II",
+      "sponsoring_agency": "ISEA Project Phase – II",
       "start_date": "2016-03-11",
       "end_date": "2016-03-16",
       "academic_session": "2024-2025",
@@ -67399,7 +67505,7 @@
       "category": "organized",
       "event_type": "STC",
       "venue": "DoCSE, NIT Hamirpur",
-      "sponsoring_agency": "ISEA Project Phase \u2013 II",
+      "sponsoring_agency": "ISEA Project Phase – II",
       "start_date": "2007-02-02",
       "end_date": "2007-02-07",
       "academic_session": "2024-2025",
