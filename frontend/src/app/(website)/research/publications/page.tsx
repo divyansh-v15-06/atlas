@@ -102,53 +102,77 @@ export default function PublicationsPage() {
             fac.legacy_id &&
             pub.faculty_legacy_ids?.includes(Number(fac.legacy_id));
 
-          if (matchLegacy) return true;
+          const matchUUID =
+            pub.faculty_ids &&
+            (pub.faculty_ids.includes(fac.id) || pub.faculty_ids.includes(String(fac.id)));
 
-          const authorText = (
-            pub.author_text ||
-            pub.authors?.map((a: any) => a.author_name).join(" ") ||
-            ""
-          ).toLowerCase();
+          if (!matchLegacy && !matchUUID) {
+            const authorText = (
+              pub.author_text ||
+              pub.authors?.map((a: any) => a.author_name).join(" ") ||
+              ""
+            ).toLowerCase();
 
-          // Clean title prefixes (Dr., Prof., etc.)
-          const cleanName = fac.full_name
-            .replace(/^(Dr\.|Prof\.|Mr\.|Mrs\.|Ms\.)\s*/i, "")
-            .replace(/\(Mrs\.\)/i, "")
-            .replace(/\./g, "")
-            .trim()
-            .toLowerCase();
+            // Clean title prefixes (Dr., Prof., etc.)
+            const cleanName = fac.full_name
+              .replace(/^(Dr\.|Prof\.|Mr\.|Mrs\.|Ms\.)\s*/i, "")
+              .replace(/\(Mrs\.\)/i, "")
+              .replace(/\./g, "")
+              .trim()
+              .toLowerCase();
 
-          const nameWords = cleanName.split(/\s+/).filter((w: string) => w.length > 2);
+            const nameWords = cleanName.split(/\s+/).filter((w: string) => w.length > 2);
 
-          const hasFullName = authorText.includes(cleanName);
-          const hasFirstAndLast =
-            nameWords.length >= 2 &&
-            authorText.includes(nameWords[0]) &&
-            authorText.includes(nameWords[nameWords.length - 1]);
+            const hasFullName = authorText.includes(cleanName);
+            const hasFirstAndLast =
+              nameWords.length >= 2 &&
+              authorText.includes(nameWords[0]) &&
+              authorText.includes(nameWords[nameWords.length - 1]);
 
-          // Special aliases
-          let hasAlias = false;
-          if (cleanName.includes("khalid")) {
-            hasAlias = authorText.includes("khalid");
-          } else if (cleanName.includes("arun")) {
-            hasAlias = authorText.includes("arun") && authorText.includes("yadav");
-          } else if (cleanName.includes("kamlesh")) {
-            hasAlias = authorText.includes("kamlesh");
-          } else if (cleanName.includes("awasthi")) {
-            hasAlias = authorText.includes("awasthi");
-          } else if (cleanName.includes("chauhan")) {
-            hasAlias = authorText.includes("chauhan") && authorText.includes(nameWords[0]);
-          }
+            // Special aliases
+            let hasAlias = false;
+            if (cleanName.includes("khalid")) {
+              hasAlias = authorText.includes("khalid");
+            } else if (cleanName.includes("arun")) {
+              hasAlias = authorText.includes("arun") && authorText.includes("yadav");
+            } else if (cleanName.includes("kamlesh")) {
+              hasAlias = authorText.includes("kamlesh");
+            } else if (cleanName.includes("awasthi")) {
+              hasAlias = authorText.includes("awasthi");
+            } else if (cleanName.includes("chauhan")) {
+              hasAlias = authorText.includes("chauhan") && authorText.includes(nameWords[0]);
+            }
 
-          if (!hasFullName && !hasFirstAndLast && !hasAlias) {
-            return false;
+            if (!hasFullName && !hasFirstAndLast && !hasAlias) {
+              return false;
+            }
           }
         }
       }
 
       // Indexing Filter
       if (selectedIndexing !== "ALL") {
-        if (pub.indexing?.toLowerCase() !== selectedIndexing.toLowerCase()) {
+        const pubInd = (pub.indexing || "").toLowerCase();
+        const selInd = selectedIndexing.toLowerCase();
+
+        if (selInd === "sci(e)" || selInd === "sci" || selInd === "scie") {
+          const isSci =
+            (pubInd.includes("sci") && !pubInd.includes("esci")) || pub.is_sci === true;
+          if (!isSci) return false;
+        } else if (selInd === "scopus") {
+          const isScopus = pubInd.includes("scopus") || pub.is_scopus === true;
+          if (!isScopus) return false;
+        } else if (selInd === "esci") {
+          if (!pubInd.includes("esci")) return false;
+        } else if (selInd === "other") {
+          const isKnown =
+            pubInd.includes("sci") ||
+            pubInd.includes("scopus") ||
+            pubInd.includes("esci") ||
+            pub.is_sci === true ||
+            pub.is_scopus === true;
+          if (isKnown) return false;
+        } else if (pubInd !== selInd) {
           return false;
         }
       }
