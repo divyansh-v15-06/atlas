@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { MOCK_ANNOUNCEMENTS } from "@/lib/mock-data";
+import { formatDate } from "@/lib/utils";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
 
@@ -136,7 +137,7 @@ export default function AnnouncementsPage() {
                   </span>
                 )}
                 <span className="flex items-center gap-1 text-xs text-neutral-500 font-mono">
-                  <Calendar className="w-3.5 h-3.5 text-[#85261e]" /> Published: {ann.publish_date}
+                  <Calendar className="w-3.5 h-3.5 text-[#85261e]" /> Published: {formatDate(ann.publish_date)}
                 </span>
               </div>
 

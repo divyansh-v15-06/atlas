@@ -67,6 +67,7 @@ import {
 import { FaLinkedin, FaGoogle } from "react-icons/fa";
 import { SiScopus } from "react-icons/si";
 import { toast } from "sonner";
+import { formatDate } from "@/lib/utils";
 import {
   MOCK_FACULTY,
   MOCK_PHD_SCHOLARS,
@@ -2802,7 +2803,7 @@ export default function FacultyPortfolioPage({
                             </td>
                             <td className="p-3.5 align-top text-neutral-700 text-sm">
                               <div className="font-semibold text-neutral-900">{evt.venue || "NIT Hamirpur"}</div>
-                              <div className="text-xs text-neutral-500">{evt.start_date} to {evt.end_date}</div>
+                              <div className="text-xs text-neutral-500">{formatDate(evt.start_date, "")}{evt.end_date ? ` to ${formatDate(evt.end_date, "")}` : ""}</div>
                             </td>
                             <td className="p-3.5 text-center align-top space-y-1.5">
                               <button
@@ -2907,7 +2908,7 @@ export default function FacultyPortfolioPage({
                             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-neutral-600">
                               <span className="font-semibold text-[#85261e]">{talk.venue || "Host Institution"}</span>
                               <span>•</span>
-                              <span className="text-neutral-500">{talk.date}</span>
+                              <span className="text-neutral-500">{formatDate(talk.date)}</span>
                             </div>
                             {talk.description && (
                               <p className="text-sm text-neutral-600 leading-relaxed pt-0.5">{talk.description}</p>
@@ -3074,7 +3075,7 @@ export default function FacultyPortfolioPage({
                               {adm.organization || "NIT Hamirpur"}
                             </td>
                             <td className="p-3.5 text-center align-top text-neutral-700 font-semibold text-sm">
-                              {adm.start_date ? `${adm.start_date} to ${adm.end_date || "Present"}` : "Completed"}
+                              {adm.start_date ? `${formatDate(adm.start_date)} to ${adm.end_date === "Present" ? "Present" : formatDate(adm.end_date)}` : "Completed"}
                             </td>
                           </tr>
                         ))}
@@ -4981,16 +4982,28 @@ export default function FacultyPortfolioPage({
                       <td className="p-3.5 text-neutral-800 font-semibold text-sm">{detailItem.host_organization}</td>
                     </tr>
                   )}
+                  {detailItem.filing_date && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Filing Date</td>
+                      <td className="p-3.5 font-mono text-neutral-800 font-semibold text-sm">{formatDate(detailItem.filing_date)}</td>
+                    </tr>
+                  )}
+                  {detailItem.grant_date && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Grant Date</td>
+                      <td className="p-3.5 font-mono text-emerald-800 font-semibold text-sm">{formatDate(detailItem.grant_date)}</td>
+                    </tr>
+                  )}
                   {(detailItem.start_date || detailItem.date || detailItem.talk_date) && (
                     <tr className="bg-white">
                       <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Start Date</td>
-                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">{detailItem.start_date || detailItem.date || detailItem.talk_date}</td>
+                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">{formatDate(detailItem.start_date || detailItem.date || detailItem.talk_date)}</td>
                     </tr>
                   )}
                   {detailItem.end_date && (
                     <tr className="bg-white">
                       <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">End Date</td>
-                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">{detailItem.end_date}</td>
+                      <td className="p-3.5 text-neutral-800 font-semibold text-sm">{formatDate(detailItem.end_date)}</td>
                     </tr>
                   )}
                   {detailItem.abstract_text && (

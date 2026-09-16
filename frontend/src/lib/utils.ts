@@ -10,16 +10,42 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 /**
- * Format a date to a human-readable string.
+ * Format a date to DD-MM-YYYY string (Indian / NITH standard).
+ * Handles ISO strings, Date objects, year-only strings, and special cases like 'Present'.
  */
-export function formatDate(date: string | Date | null | undefined): string {
-  if (!date) return "—";
-  const d = new Date(date);
-  return d.toLocaleDateString("en-IN", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+export function formatDate(
+  date: string | Date | null | undefined,
+  fallback: string = "—"
+): string {
+  if (!date) return fallback;
+  const str = String(date).trim();
+  if (!str || str === "—" || str.toLowerCase() === "n/a") return fallback;
+  if (str.toLowerCase() === "present") return "Present";
+  if (/^\d{4}$/.test(str)) return str;
+
+  // Match YYYY-MM-DD or YYYY-M-D (with optional T... time or timestamp)
+  const isoMatch = /^(\d{4})-(\d{1,2})-(\d{1,2})(?:[T\s].*)?$/.exec(str);
+  if (isoMatch) {
+    const [, yyyy, mm, dd] = isoMatch;
+    return `${dd.padStart(2, "0")}-${mm.padStart(2, "0")}-${yyyy}`;
+  }
+
+  // Match DD-MM-YYYY or DD/MM/YYYY
+  const dmyMatch = /^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/.exec(str);
+  if (dmyMatch) {
+    const [, dd, mm, yyyy] = dmyMatch;
+    return `${dd.padStart(2, "0")}-${mm.padStart(2, "0")}-${yyyy}`;
+  }
+
+  const d = new Date(str);
+  if (!isNaN(d.getTime())) {
+    const dd = String(d.getDate()).padStart(2, "0");
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const yyyy = d.getFullYear();
+    return `${dd}-${mm}-${yyyy}`;
+  }
+
+  return str;
 }
 
 /**

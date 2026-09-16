@@ -16,6 +16,7 @@ import {
   Lightbulb,
 } from "lucide-react";
 import { toast } from "sonner";
+import { formatDate } from "@/lib/utils";
 import { MOCK_PATENTS, MOCK_FACULTY } from "@/lib/mock-data";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
@@ -541,7 +542,7 @@ export default function PatentsPage() {
                   <div className="py-2.5 grid grid-cols-12 gap-2">
                     <span className="col-span-4 font-bold text-[#33110e]">Filing Date:</span>
                     <span className="col-span-8 text-neutral-800 font-mono">
-                      {selectedPatent.filing_date || `${selectedPatent.year || 2023}-05-10`}
+                      {formatDate(selectedPatent.filing_date || `${selectedPatent.year || 2023}-05-10`)}
                     </span>
                   </div>
 
@@ -549,7 +550,7 @@ export default function PatentsPage() {
                     <div className="py-2.5 grid grid-cols-12 gap-2">
                       <span className="col-span-4 font-bold text-[#33110e]">Grant Date:</span>
                       <span className="col-span-8 text-emerald-800 font-mono font-bold">
-                        {selectedPatent.grant_date}
+                        {formatDate(selectedPatent.grant_date)}
                       </span>
                     </div>
                   )}

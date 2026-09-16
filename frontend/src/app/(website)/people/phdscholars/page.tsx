@@ -20,6 +20,7 @@ import {
 import { FaLinkedin, FaGoogle } from "react-icons/fa";
 import { SiScopus } from "react-icons/si";
 import { MOCK_PHD_SCHOLARS } from "@/lib/mock-data";
+import { formatDate } from "@/lib/utils";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
 
@@ -219,7 +220,7 @@ function ScholarCard({ sch }: ScholarCardProps) {
           <div className="flex items-center gap-1.5 text-[11px] text-neutral-500 pt-0.5">
             <Calendar className="w-3 h-3 text-[#85261e]" />
             {sch.registration_year && <span>Registered: {sch.registration_year}</span>}
-            {sch.end_date && <span>• Completed: {sch.end_date}</span>}
+            {sch.end_date && <span>• Completed: {formatDate(sch.end_date)}</span>}
           </div>
         )}
       </div>
@@ -566,7 +567,7 @@ export default function PhdScholarsPage() {
                             </span>
                             {sch.end_date && (
                               <div className="text-[10px] text-neutral-400 mt-0.5">
-                                {sch.end_date}
+                                {formatDate(sch.end_date)}
                               </div>
                             )}
                           </td>

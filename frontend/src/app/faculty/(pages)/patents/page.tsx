@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { MOCK_FACULTY, MOCK_PATENTS } from "@/lib/mock-data";
+import { formatDate } from "@/lib/utils";
 import { getStoredData, saveFacultyRecord } from "@/lib/faculty-storage";
 import AssociatedFacultyPicker from "@/components/faculty/AssociatedFacultyPicker";
 import {
@@ -346,7 +347,7 @@ export default function FacultyPatentsPage() {
               <div className="p-2.5 rounded-xl bg-[#fff9f6] border border-[#eedfd8]/60 space-y-0.5">
                 <span className="text-[10px] font-bold text-neutral-400 uppercase">Filing / Grant Date</span>
                 <p className="font-semibold text-neutral-800">
-                  {pat.grant_date ? `Granted: ${pat.grant_date}` : `Filed: ${pat.filing_date || "Recorded"}`}
+                  {pat.grant_date ? `Granted: ${formatDate(pat.grant_date)}` : `Filed: ${formatDate(pat.filing_date, "Recorded")}`}
                 </p>
               </div>
             </div>

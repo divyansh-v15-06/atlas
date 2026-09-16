@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import axios from 'axios'
 import Link from 'next/link'
+import { formatDate } from '@/lib/utils'
 
 type Props = {}
 
@@ -91,7 +92,7 @@ export default function News({}: Props) {
                             className=' text-[0.8rem] md:text-[1rem] font-semibold flex items-center'
                         >
                             {/* @ts-ignore */}
-                            Publish date: {data.date&&new Date(data.date).toLocaleDateString('en-GB')}
+                            Publish date: {formatDate(data.date)}
                         </div>
                     </div>
                 </div>

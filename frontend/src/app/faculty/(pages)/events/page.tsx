@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { MOCK_FACULTY, MOCK_EVENTS } from "@/lib/mock-data";
+import { formatDate } from "@/lib/utils";
 import { getStoredData, saveFacultyRecord } from "@/lib/faculty-storage";
 import AssociatedFacultyPicker from "@/components/faculty/AssociatedFacultyPicker";
 import { ACADEMIC_SESSIONS } from "@/lib/faculty-constants";
@@ -300,7 +301,7 @@ export default function FacultyEventsPage() {
               )}
 
               <span className="text-xs font-bold text-neutral-400 ml-auto font-mono">
-                {ev.start_date} {ev.end_date && ev.end_date !== ev.start_date ? `to ${ev.end_date}` : ""}
+                {formatDate(ev.start_date)} {ev.end_date && ev.end_date !== ev.start_date ? `to ${formatDate(ev.end_date)}` : ""}
               </span>
             </div>
 

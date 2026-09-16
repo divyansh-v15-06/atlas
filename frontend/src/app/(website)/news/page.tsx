@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Megaphone, Award, ArrowRight } from "lucide-react";
 import { MOCK_ANNOUNCEMENTS, MOCK_POSTS } from "@/lib/mock-data";
+import { formatDate } from "@/lib/utils";
 
 export default function NewsOverviewPage() {
   return (
@@ -30,7 +31,7 @@ export default function NewsOverviewPage() {
           <div className="space-y-4">
             {MOCK_ANNOUNCEMENTS.map((ann) => (
               <div key={ann.id} className="rounded-xl border border-border/80 bg-background p-4">
-                <span className="text-xs font-mono text-muted-foreground">{ann.publish_date}</span>
+                <span className="text-xs font-mono text-muted-foreground">{formatDate(ann.publish_date)}</span>
                 <h3 className="mt-1 text-sm font-bold text-foreground">{ann.title}</h3>
                 <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{ann.body}</p>
               </div>

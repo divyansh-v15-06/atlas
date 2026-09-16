@@ -16,6 +16,7 @@ import {
   Users,
 } from "lucide-react";
 import { toast } from "sonner";
+import { formatDate } from "@/lib/utils";
 import { MOCK_EVENTS, MOCK_FACULTY } from "@/lib/mock-data";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
@@ -172,7 +173,7 @@ export default function EventsPage() {
 
   const handleCopyCitation = (eventItem: any) => {
     const organizers = [eventItem.coordinator, eventItem.convenor].filter(Boolean).join(" (Convenor: ") + (eventItem.convenor ? ")" : "");
-    const citation = `"${eventItem.title}." Type: ${eventItem.event_type || "Event"}. Organizers: ${organizers || "Department of CSE"}. Sponsoring Agency: ${eventItem.sponsoring_agency || "NIT Hamirpur"}. Duration: ${eventItem.start_date || ""} to ${eventItem.end_date || ""}. Venue: ${eventItem.venue || "NIT Hamirpur"}. Session: ${eventItem.academic_session || "—"}.`;
+    const citation = `"${eventItem.title}." Type: ${eventItem.event_type || "Event"}. Organizers: ${organizers || "Department of CSE"}. Sponsoring Agency: ${eventItem.sponsoring_agency || "NIT Hamirpur"}. Duration: ${formatDate(eventItem.start_date, "")} to ${formatDate(eventItem.end_date, "")}. Venue: ${eventItem.venue || "NIT Hamirpur"}. Session: ${eventItem.academic_session || "—"}.`;
     navigator.clipboard.writeText(citation);
     setCopiedId(eventItem.id);
     toast.success("Event details copied to clipboard!");
@@ -451,7 +452,7 @@ export default function EventsPage() {
                           <Calendar className="w-3.5 h-3.5 text-[#85261e]" />
                           <span>
                             {eventItem.start_date
-                              ? `${eventItem.start_date}${eventItem.end_date && eventItem.end_date !== eventItem.start_date ? ` to ${eventItem.end_date}` : ""}`
+                              ? `${formatDate(eventItem.start_date)}${eventItem.end_date && eventItem.end_date !== eventItem.start_date ? ` to ${formatDate(eventItem.end_date)}` : ""}`
                               : "—"}
                           </span>
                         </div>
@@ -595,7 +596,7 @@ export default function EventsPage() {
                     <span className="col-span-4 font-bold text-[#33110e]">Duration / Dates:</span>
                     <span className="col-span-8 text-neutral-900 font-mono font-bold">
                       {selectedEvent.start_date
-                        ? `${selectedEvent.start_date}${selectedEvent.end_date && selectedEvent.end_date !== selectedEvent.start_date ? ` to ${selectedEvent.end_date}` : ""}`
+                        ? `${formatDate(selectedEvent.start_date)}${selectedEvent.end_date && selectedEvent.end_date !== selectedEvent.start_date ? ` to ${formatDate(selectedEvent.end_date)}` : ""}`
                         : "—"}
                     </span>
                   </div>

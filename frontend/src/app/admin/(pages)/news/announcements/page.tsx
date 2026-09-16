@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useDepartment } from "@/context/department-context";
+import { formatDate } from "@/lib/utils";
 
 interface AnnouncementItem {
   id: string;
@@ -272,7 +273,7 @@ export default function AdminAnnouncementsPage() {
 
                   <span className="text-[10.5px] font-mono text-[#6b5c58] flex items-center gap-1">
                     <Clock className="w-3 h-3 text-neutral-400" />
-                    {ann.publish_date}
+                    {formatDate(ann.publish_date)}
                   </span>
                 </div>
 

@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { MOCK_FACULTY } from "@/lib/mock-data";
+import { formatDate } from "@/lib/utils";
 import { getStoredData, saveFacultyRecord } from "@/lib/faculty-storage";
 import AssociatedFacultyPicker from "@/components/faculty/AssociatedFacultyPicker";
 import { ACADEMIC_SESSIONS } from "@/lib/faculty-constants";
@@ -243,8 +244,8 @@ export default function ExpertTalksPage() {
               )}
 
               <span className="text-xs font-bold text-neutral-400 ml-auto font-mono">
-                {talk.start_date || talk.date || "Delivered"}
-                {talk.end_date && talk.end_date !== talk.start_date && ` to ${talk.end_date}`}
+                {formatDate(talk.start_date || talk.date, "Delivered")}
+                {talk.end_date && talk.end_date !== talk.start_date && ` to ${formatDate(talk.end_date)}`}
               </span>
             </div>
 

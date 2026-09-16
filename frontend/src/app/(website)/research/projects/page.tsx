@@ -10,11 +10,10 @@ import {
   ChevronRight,
   RotateCcw,
   Copy,
-  Check,
   X,
 } from "lucide-react";
 import { toast } from "sonner";
-import { formatINR } from "@/lib/utils";
+import { formatINR, formatDate } from "@/lib/utils";
 import { MOCK_PROJECTS, MOCK_FACULTY } from "@/lib/mock-data";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
@@ -422,7 +421,7 @@ export default function ProjectsPage() {
                           )}
                           <span>
                             <span className="font-sans font-semibold text-neutral-700">Duration:</span>{" "}
-                            {project.start_date?.split("-")[0] || "2023"} - {project.end_date?.split("-")[0] || "2026"}
+                            {project.start_date ? formatDate(project.start_date) : (project.year || "2023")} - {project.end_date ? formatDate(project.end_date) : "Present"}
                           </span>
                         </div>
                       </td>
@@ -603,14 +602,14 @@ export default function ProjectsPage() {
                   <div className="py-2.5 grid grid-cols-12 gap-2">
                     <span className="col-span-4 font-bold text-[#33110e]">Start Date:</span>
                     <span className="col-span-8 text-neutral-800 font-mono">
-                      {selectedProject.start_date || `${selectedProject.year || 2023}-04-01`}
+                      {formatDate(selectedProject.start_date || `${selectedProject.year || 2023}-04-01`)}
                     </span>
                   </div>
 
                   <div className="py-2.5 grid grid-cols-12 gap-2">
                     <span className="col-span-4 font-bold text-[#33110e]">End Date:</span>
                     <span className="col-span-8 text-neutral-800 font-mono">
-                      {selectedProject.end_date || `${Number(selectedProject.year || 2023) + 3}-03-31`}
+                      {formatDate(selectedProject.end_date || `${Number(selectedProject.year || 2023) + 3}-03-31`)}
                     </span>
                   </div>
                 </div>

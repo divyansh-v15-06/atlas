@@ -12,6 +12,7 @@ import {
   MOCK_STUDENTS,
   MOCK_ANNOUNCEMENTS,
 } from "@/lib/mock-data";
+import { formatDate } from "@/lib/utils";
 import {
   Award,
   BookOpen,
@@ -468,7 +469,7 @@ export default function HomePage() {
                       <div className="flex items-center justify-between text-[10px] text-[#85261e] font-semibold mb-1">
                         <span className="flex items-center gap-1">
                           <Calendar className="w-3 h-3 text-[#85261e]" />
-                          <span>{ann.publish_date}</span>
+                          <span>{formatDate(ann.publish_date)}</span>
                         </span>
                         <span className={`${ann.badgeColor} text-white text-[9px] px-1.5 py-0.2 rounded font-bold uppercase`}>
                           {ann.category}
@@ -1055,7 +1056,7 @@ export default function HomePage() {
                     <div>
                       <div className="flex items-center gap-1 text-[11px] text-neutral-500 mb-1">
                         <Calendar className="w-3 h-3 text-[#85261e]" />
-                        <span>{item.publish_date}</span>
+                        <span>{formatDate(item.publish_date)}</span>
                       </div>
                       <h4 className="text-sm font-bold text-[#1c110c] line-clamp-2 leading-snug">
                         {item.title}

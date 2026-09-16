@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { MOCK_FACULTY } from "@/lib/mock-data";
 import { resolveFacultyDepartment } from "@/lib/faculty-storage";
+import { formatDate } from "@/lib/utils";
 
 interface InternalNotice {
   id: string;
@@ -234,7 +235,7 @@ export default function FacultyNoticesPage() {
 
                 <div className="flex items-center gap-1.5 text-xs text-neutral-500 font-medium">
                   <Calendar className="w-3.5 h-3.5 text-[#85261e]" />
-                  <span>Issued: {notice.publish_date}</span>
+                  <span>Issued: {formatDate(notice.publish_date)}</span>
                 </div>
               </div>
 
@@ -312,7 +313,7 @@ export default function FacultyNoticesPage() {
 
             <div className="text-[11px] text-neutral-500 space-y-1">
               <p><strong>Issuing Authority:</strong> {selectedNotice.issued_by}</p>
-              <p><strong>Date of Publication:</strong> {selectedNotice.publish_date}</p>
+              <p><strong>Date of Publication:</strong> {formatDate(selectedNotice.publish_date)}</p>
               <p><strong>Classification:</strong> Internal Departmental Communication</p>
             </div>
 

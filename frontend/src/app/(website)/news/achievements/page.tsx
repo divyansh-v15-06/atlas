@@ -2,6 +2,7 @@
 
 import { Award, Calendar, ExternalLink, FileText, Sparkles, Trophy } from "lucide-react";
 import { MOCK_ACHIEVEMENTS } from "@/lib/mock-data";
+import { formatDate } from "@/lib/utils";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
 
@@ -62,7 +63,7 @@ export default function AchievementsPage() {
                       {item.category}
                     </span>
                     <span className="flex items-center gap-1 text-xs text-neutral-500 font-mono">
-                      <Calendar className="w-3.5 h-3.5 text-[#85261e]" /> {item.publish_date}
+                      <Calendar className="w-3.5 h-3.5 text-[#85261e]" /> {formatDate(item.publish_date)}
                     </span>
                   </div>
 
