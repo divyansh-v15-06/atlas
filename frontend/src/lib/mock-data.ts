@@ -41,7 +41,11 @@ export const MOCK_FACULTY = databaseSeed.faculty.map((f: any) => ({
   expert_talks: f.expert_talks || [],
   exposures: f.exposures || [],
   supervisions: f.supervisions || [],
-  publications: f.publications || [],
+  publications: (f.publications || []).map((p: any) => {
+    const q = p.journal_quartile || p.quartile;
+    const validQ = q && ["Q1", "Q2", "Q3", "Q4"].includes(String(q).toUpperCase().trim()) ? String(q).toUpperCase().trim() : undefined;
+    return { ...p, journal_quartile: validQ, quartile: validQ };
+  }),
   patents: f.patents || [],
   projects: f.projects || [],
   events: f.events || [],
@@ -83,7 +87,7 @@ export const MOCK_PUBLICATIONS: (Publication & {
   doi: p.doi || "",
   issn_isbn: p.isbn || "",
   indexing: p.indexing || "Other",
-  journal_quartile: p.journal_quartile || "T",
+  journal_quartile: (p.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(String(p.journal_quartile).toUpperCase().trim())) ? p.journal_quartile.toUpperCase().trim() : undefined,
   author_text: p.author_text || p.raw_authors || "Faculty",
   impact_factor: p.is_sci ? 3.5 : 0,
   is_sci: Boolean(p.is_sci),

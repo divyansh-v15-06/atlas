@@ -140,7 +140,7 @@ const ACADEMIC_SESSIONS = [
   "2010-2011",
 ];
 
-const JOURNAL_QUARTILES = ["Q1", "Q2", "Q3", "Q4", "T"];
+const JOURNAL_QUARTILES = ["Not Applicable", "Q1", "Q2", "Q3", "Q4"];
 const EVENT_POSTS = ["Chairman", "Convenor", "Coordinator", "Organizing Secretary", "Other"];
 const EVENT_TYPES = ["FDP / STC", "Conference", "Workshop", "Symposium", "Seminar", "STC", "E-STC", "GIAN"];
 const EVENT_CATEGORIES = [
@@ -266,7 +266,13 @@ export default function FacultyPortfolioPage({
   useEffect(() => {
     if (baseFaculty) {
       setFaculty(getStoredObject(baseFaculty, "profile", baseFaculty));
-      setAllFacultyPubs(getStoredData(baseFaculty, "publications", baseFaculty.publications || []));
+      const rawPubs = getStoredData(baseFaculty, "publications", baseFaculty.publications || []);
+      const cleanPubs = (rawPubs || []).map((p: any) => {
+        const q = p.journal_quartile || p.quartile;
+        const validQ = q && ["Q1", "Q2", "Q3", "Q4"].includes(String(q).toUpperCase().trim()) ? String(q).toUpperCase().trim() : undefined;
+        return { ...p, journal_quartile: validQ, quartile: validQ };
+      });
+      setAllFacultyPubs(cleanPubs);
       setAllFacultyPatents(getStoredData(baseFaculty, "patents", baseFaculty.patents || []));
       setAllFacultyProjects(getStoredData(baseFaculty, "projects", baseFaculty.projects || []));
       setAllSupervisions(getStoredData(baseFaculty, "supervisions", baseFaculty.supervisions || []));
@@ -325,7 +331,7 @@ export default function FacultyPortfolioPage({
               journal_or_conference_name: p.venue || p.journal_or_conference_name,
               page_range: p.pages || p.page_range,
               author_text: p.raw_authors || p.author_text,
-              journal_quartile: p.quartile || p.journal_quartile || "T",
+              journal_quartile: (p.quartile || p.journal_quartile) && ["Q1", "Q2", "Q3", "Q4"].includes(String(p.quartile || p.journal_quartile).toUpperCase().trim()) ? String(p.quartile || p.journal_quartile).toUpperCase().trim() : undefined,
               publication_type: ptype,
               type: p.publication_type,
               research_type_id: rtype,
@@ -769,7 +775,10 @@ export default function FacultyPortfolioPage({
 
   // Open Details Modal
   const openDetails = (item: any) => {
-    setDetailItem(item);
+    if (!item) return;
+    const q = item.journal_quartile || item.quartile;
+    const validQ = q && ["Q1", "Q2", "Q3", "Q4"].includes(String(q).toUpperCase().trim()) ? String(q).toUpperCase().trim() : undefined;
+    setDetailItem({ ...item, journal_quartile: validQ, quartile: validQ });
     setIsDetailsModalOpen(true);
   };
 
@@ -905,7 +914,7 @@ export default function FacultyPortfolioPage({
         month: "",
         academic_session: "2024-2025",
         indexing: "Scopus",
-        journal_quartile: "T",
+        journal_quartile: "",
         isbn: "",
         author_text: faculty?.full_name || "",
         journal_or_conference_name: "",
@@ -1148,7 +1157,7 @@ export default function FacultyPortfolioPage({
         academic_session: formData.academic_session || "2024-2025",
         doi: canonicalDoi,
         indexing: finalIndexing,
-        journal_quartile: formData.journal_quartile || "T",
+        journal_quartile: (formData.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(String(formData.journal_quartile).toUpperCase().trim())) ? String(formData.journal_quartile).toUpperCase().trim() : undefined,
         isbn: formData.isbn || "",
         abstract_text: formData.abstract_text || "",
         faculty_ids: assignedFacultyIds,
@@ -2540,9 +2549,9 @@ export default function FacultyPortfolioPage({
                                       SCI
                                     </span>
                                   )}
-                                  {pub.journal_quartile && (
+                                  {pub.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(pub.journal_quartile.toUpperCase().trim()) && (
                                     <span className="inline-block px-2.5 py-1 rounded bg-purple-50 text-purple-800 border border-purple-200 text-xs font-bold">
-                                      {pub.journal_quartile === "T" ? "T (Temp)" : `Q${pub.journal_quartile}`}
+                                      {pub.journal_quartile.toUpperCase().startsWith("Q") ? pub.journal_quartile.toUpperCase() : `Q${pub.journal_quartile}`}
                                     </span>
                                   )}
                                   {!pub.indexing && !pub.is_scopus && !pub.is_sci && (
@@ -3646,15 +3655,15 @@ export default function FacultyPortfolioPage({
                       <label className="font-bold text-neutral-700">Journal Quartile</label>
                       <select
                         name="journal_quartile"
-                        value={formData.journal_quartile || "T"}
+                        value={formData.journal_quartile || ""}
                         onChange={handleInputChange}
                         className="w-full p-2.5 rounded-xl border border-[#eedfd8] focus:ring-1 focus:ring-[#85261e] focus:outline-none bg-white"
                       >
+                        <option value="">Not Applicable</option>
                         <option value="Q1">Q1 (Top Quartile)</option>
                         <option value="Q2">Q2 (Second Quartile)</option>
                         <option value="Q3">Q3 (Third Quartile)</option>
                         <option value="Q4">Q4 (Fourth Quartile)</option>
-                        <option value="T">T (Temporary / Unclassified)</option>
                       </select>
                     </div>
                   )}
@@ -4885,11 +4894,11 @@ export default function FacultyPortfolioPage({
                       </td>
                     </tr>
                   )}
-                  {detailItem.journal_quartile && (
+                  {detailItem.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(String(detailItem.journal_quartile).toUpperCase().trim()) && (
                     <tr className="bg-white">
                       <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Journal Quartile</td>
                       <td className="p-3.5 font-semibold text-purple-900 text-sm">
-                        {detailItem.journal_quartile === "T" ? "T (Temporary)" : `Q${detailItem.journal_quartile}`}
+                        {String(detailItem.journal_quartile).toUpperCase().startsWith("Q") ? String(detailItem.journal_quartile).toUpperCase() : `Q${detailItem.journal_quartile}`}
                       </td>
                     </tr>
                   )}

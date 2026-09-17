@@ -412,6 +412,21 @@ export function getStoredData<T>(faculty: any, section: string, defaultFallback:
       }
     }
 
+    if (section === "publications") {
+      return result.map((item: any) => {
+        if (!item) return item;
+        const q = item.journal_quartile || item.quartile;
+        const validQ = q && ["Q1", "Q2", "Q3", "Q4"].includes(String(q).toUpperCase().trim())
+          ? String(q).toUpperCase().trim()
+          : undefined;
+        return {
+          ...item,
+          journal_quartile: validQ,
+          quartile: validQ,
+        };
+      }) as T[];
+    }
+
     return result as T[];
   } catch (err) {
     console.error(`Error reading persistent storage for ${section}:`, err);
@@ -477,6 +492,13 @@ export function syncMultiFacultyRecord(
     // Adding or editing a record
     clearFacultyDeletion(currentFaculty, section, record);
 
+    let activeRecord = record;
+    if (section === "publications" && record) {
+      const q = record.journal_quartile || record.quartile;
+      const validQ = q && ["Q1", "Q2", "Q3", "Q4"].includes(String(q).toUpperCase().trim()) ? String(q).toUpperCase().trim() : undefined;
+      activeRecord = { ...record, journal_quartile: validQ, quartile: validQ };
+    }
+
     // 1. Update current faculty store
     let currentList: any[] = [];
     try {
@@ -484,11 +506,11 @@ export function syncMultiFacultyRecord(
       if (raw) currentList = JSON.parse(raw) || [];
     } catch {}
 
-    const existingIndex = currentList.findIndex((item) => isMatchingRecord(item, record));
+    const existingIndex = currentList.findIndex((item) => isMatchingRecord(item, activeRecord));
     if (existingIndex >= 0) {
-      currentList[existingIndex] = { ...currentList[existingIndex], ...record };
+      currentList[existingIndex] = { ...currentList[existingIndex], ...activeRecord };
     } else {
-      currentList = [record, ...currentList];
+      currentList = [activeRecord, ...currentList];
     }
     localStorage.setItem(currentKey, JSON.stringify(currentList));
 
@@ -506,11 +528,11 @@ export function syncMultiFacultyRecord(
           if (rawCo) coList = JSON.parse(rawCo) || [];
         } catch {}
 
-        const coIndex = coList.findIndex((item) => isMatchingRecord(item, record));
+        const coIndex = coList.findIndex((item) => isMatchingRecord(item, activeRecord));
         if (coIndex >= 0) {
-          coList[coIndex] = { ...coList[coIndex], ...record };
+          coList[coIndex] = { ...coList[coIndex], ...activeRecord };
         } else {
-          coList = [record, ...coList];
+          coList = [activeRecord, ...coList];
         }
         localStorage.setItem(coKey, JSON.stringify(coList));
       }

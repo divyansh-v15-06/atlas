@@ -256,9 +256,9 @@ export default function FacultyDashboardPage() {
                       {pub.indexing}
                     </span>
                   )}
-                  {pub.journal_quartile && pub.journal_quartile !== "N/A" && (
+                  {pub.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(pub.journal_quartile.toUpperCase().trim()) && (
                     <span className="bg-amber-100 text-amber-900 border border-amber-300 text-[10px] font-bold px-2 py-0.5 rounded">
-                      {pub.journal_quartile}
+                      {pub.journal_quartile.toUpperCase().trim()}
                     </span>
                   )}
                   <span className="text-[11px] font-mono text-neutral-500 ml-auto">

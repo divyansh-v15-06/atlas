@@ -15,14 +15,11 @@ import {
   ExternalLink,
   MapPin,
   Users,
-  Edit,
-  Trash2,
-  Shield,
 } from "lucide-react";
 import { toast } from "sonner";
 import { formatDate } from "@/lib/utils";
 import { MOCK_FACULTY } from "@/lib/mock-data";
-import { getStoredEvents, deleteStoredEvent, updateOrAddStoredEvent } from "@/lib/faculty-storage";
+import { getStoredEvents } from "@/lib/faculty-storage";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
 
@@ -34,21 +31,6 @@ export default function EventsPage() {
 
   // Events State from persistent storage
   const [eventsList, setEventsList] = useState<any[]>(() => getStoredEvents());
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editFormData, setEditFormData] = useState<any>({
-    title: "",
-    event_type: "Workshop",
-    category: "organized",
-    start_date: "",
-    end_date: "",
-    academic_session: "2024-2025",
-    venue: "NIT Hamirpur",
-    sponsoring_agency: "NIT Hamirpur",
-    coordinator: "",
-    convenor: "",
-    link_url: "",
-  });
 
   useEffect(() => {
     const handleUpdate = () => {
@@ -57,70 +39,11 @@ export default function EventsPage() {
     window.addEventListener("nith_events_updated", handleUpdate);
     window.addEventListener("storage", handleUpdate);
 
-    if (typeof window !== "undefined") {
-      const rawUser = localStorage.getItem("auth_user");
-      if (rawUser) {
-        try {
-          const u = JSON.parse(rawUser);
-          if (
-            u.role === "ADMIN" ||
-            u.role === "HOD_ADMIN" ||
-            u.roles?.includes("ADMIN") ||
-            u.roles?.includes("HOD_ADMIN")
-          ) {
-            setIsAdmin(true);
-          }
-        } catch {}
-      }
-    }
-
     return () => {
       window.removeEventListener("nith_events_updated", handleUpdate);
       window.removeEventListener("storage", handleUpdate);
     };
   }, []);
-
-  const handleOpenEdit = (ev: any) => {
-    setEditFormData({
-      id: ev.id,
-      title: ev.title || "",
-      event_type: ev.event_type || "Workshop",
-      category: ev.category || "organized",
-      start_date: ev.start_date || "",
-      end_date: ev.end_date || ev.start_date || "",
-      academic_session: ev.academic_session || "2024-2025",
-      venue: ev.venue || "NIT Hamirpur",
-      sponsoring_agency: ev.sponsoring_agency || "NIT Hamirpur",
-      coordinator: ev.coordinator || "",
-      convenor: ev.convenor || "",
-      link_url: ev.link_url || "",
-      faculty_ids: ev.faculty_ids || [],
-    });
-    setIsEditModalOpen(true);
-  };
-
-  const handleSaveEdit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editFormData.title?.trim()) {
-      toast.error("Please enter an event title");
-      return;
-    }
-    const updated = updateOrAddStoredEvent(editFormData);
-    setEventsList(updated);
-    setIsEditModalOpen(false);
-    toast.success("Event updated successfully!");
-  };
-
-  const handleDeleteEvent = (id: string, title: string) => {
-    if (window.confirm(`Are you sure you want to delete "${title}"?`)) {
-      const updated = deleteStoredEvent(id);
-      setEventsList(updated);
-      if (selectedEvent?.id === id) {
-        setSelectedEvent(null);
-      }
-      toast.success("Event deleted successfully!");
-    }
-  };
 
   // Filters State
   const [selectedType, setSelectedType] = useState<string>("ALL");
@@ -308,23 +231,6 @@ export default function EventsPage() {
           </p>
         </div>
       </div>
-
-      {isAdmin && (
-        <div className="bg-emerald-50 border border-emerald-300 rounded-xl p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs shadow-2xs">
-          <div className="flex items-center gap-2 text-emerald-900 font-semibold">
-            <Shield className="w-4 h-4 text-emerald-700 shrink-0" />
-            <span>
-              <strong>Administrator Access Active:</strong> You can edit or delete any event directly from the table below, or manage events and deduplication in the Admin Portal.
-            </span>
-          </div>
-          <Link
-            href="/admin/research/events"
-            className="px-3 py-1.5 rounded-lg bg-[#33110e] hover:bg-[#85261e] text-white font-bold text-xs transition shrink-0 flex items-center gap-1 cursor-pointer"
-          >
-            Admin Events Portal →
-          </Link>
-        </div>
-      )}
 
       {!hasData ? (
         <DepartmentEmptyState sectionTitle="Academic Event Records" />
@@ -584,26 +490,6 @@ export default function EventsPage() {
                           >
                             Details
                           </button>
-                          {isAdmin && (
-                            <>
-                              <button
-                                type="button"
-                                onClick={() => handleOpenEdit(eventItem)}
-                                className="p-1 rounded-md border border-[#eedfd8] bg-white text-neutral-700 hover:text-[#85261e] hover:border-[#85261e] transition cursor-pointer shadow-2xs"
-                                title="Edit Event"
-                              >
-                                <Edit className="w-3.5 h-3.5" />
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleDeleteEvent(eventItem.id, eventItem.title)}
-                                className="p-1 rounded-md border border-[#eedfd8] bg-white text-neutral-500 hover:text-red-600 hover:border-red-300 transition cursor-pointer shadow-2xs"
-                                title="Delete Event"
-                              >
-                                <Trash2 className="w-3.5 h-3.5" />
-                              </button>
-                            </>
-                          )}
                         </div>
                       </td>
                     </tr>
@@ -787,32 +673,6 @@ export default function EventsPage() {
                   </button>
 
                   <div className="flex items-center gap-2">
-                    {isAdmin && (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const ev = selectedEvent;
-                            setSelectedEvent(null);
-                            handleOpenEdit(ev);
-                          }}
-                          className="px-3 py-1.5 rounded-lg border border-[#eedfd8] bg-white text-neutral-700 hover:text-[#85261e] font-semibold text-xs transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
-                        >
-                          <Edit className="w-3.5 h-3.5" /> Edit Event
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const id = selectedEvent.id;
-                            const title = selectedEvent.title;
-                            handleDeleteEvent(id, title);
-                          }}
-                          className="px-3 py-1.5 rounded-lg border border-red-200 bg-red-50 text-red-700 hover:bg-red-600 hover:text-white font-semibold text-xs transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" /> Delete
-                        </button>
-                      </>
-                    )}
                     <button
                       onClick={() => setSelectedEvent(null)}
                       className="px-4 py-1.5 rounded-lg bg-[#33110e] hover:bg-[#85261e] text-white text-xs font-bold transition shadow-xs cursor-pointer"
@@ -821,171 +681,6 @@ export default function EventsPage() {
                     </button>
                   </div>
                 </div>
-              </div>
-            </div>
-          )}
-
-          {/* Admin Inline Edit Modal */}
-          {isEditModalOpen && (
-            <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
-              <div className="bg-white border border-[#eedfd8] rounded-2xl shadow-xl max-w-2xl w-full p-6 space-y-5 my-8">
-                <div className="flex items-center justify-between border-b border-[#eedfd8] pb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="p-2 rounded-lg bg-[#fff9f6] text-[#85261e] border border-[#eedfd8]">
-                      <Calendar className="w-4 h-4 text-[#85261e]" />
-                    </span>
-                    <h3 className="text-base font-bold text-[#1c110c]">Edit Academic Event Details</h3>
-                  </div>
-                  <button
-                    onClick={() => setIsEditModalOpen(false)}
-                    className="p-1.5 rounded-lg text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 transition"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-
-                <form onSubmit={handleSaveEdit} className="space-y-4 text-xs">
-                  <div>
-                    <label className="block font-bold text-neutral-800 mb-1">
-                      Event Title <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={editFormData.title || ""}
-                      onChange={(e) => setEditFormData({ ...editFormData, title: e.target.value })}
-                      className="w-full px-3 py-2 rounded-xl border border-[#eedfd8] text-xs focus:outline-hidden focus:border-[#85261e]"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block font-bold text-neutral-800 mb-1">Event Type</label>
-                      <input
-                        type="text"
-                        value={editFormData.event_type || ""}
-                        onChange={(e) => setEditFormData({ ...editFormData, event_type: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl border border-[#eedfd8] text-xs focus:outline-hidden"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block font-bold text-neutral-800 mb-1">Category</label>
-                      <select
-                        value={editFormData.category || "organized"}
-                        onChange={(e) => setEditFormData({ ...editFormData, category: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl border border-[#eedfd8] text-xs capitalize font-semibold focus:outline-hidden"
-                      >
-                        <option value="organized">Organized</option>
-                        <option value="attended">Attended</option>
-                        <option value="invited">Invited</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div>
-                      <label className="block font-bold text-neutral-800 mb-1">Start Date</label>
-                      <input
-                        type="date"
-                        value={editFormData.start_date || ""}
-                        onChange={(e) => setEditFormData({ ...editFormData, start_date: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl border border-[#eedfd8] text-xs focus:outline-hidden"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block font-bold text-neutral-800 mb-1">End Date</label>
-                      <input
-                        type="date"
-                        value={editFormData.end_date || ""}
-                        onChange={(e) => setEditFormData({ ...editFormData, end_date: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl border border-[#eedfd8] text-xs focus:outline-hidden"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block font-bold text-neutral-800 mb-1">Academic Session</label>
-                      <input
-                        type="text"
-                        value={editFormData.academic_session || ""}
-                        onChange={(e) => setEditFormData({ ...editFormData, academic_session: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl border border-[#eedfd8] text-xs focus:outline-hidden"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block font-bold text-neutral-800 mb-1">Venue</label>
-                      <input
-                        type="text"
-                        value={editFormData.venue || ""}
-                        onChange={(e) => setEditFormData({ ...editFormData, venue: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl border border-[#eedfd8] text-xs focus:outline-hidden"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block font-bold text-neutral-800 mb-1">Sponsoring Agency</label>
-                      <input
-                        type="text"
-                        value={editFormData.sponsoring_agency || ""}
-                        onChange={(e) => setEditFormData({ ...editFormData, sponsoring_agency: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl border border-[#eedfd8] text-xs focus:outline-hidden"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                      <label className="block font-bold text-neutral-800 mb-1">Coordinator(s)</label>
-                      <input
-                        type="text"
-                        value={editFormData.coordinator || ""}
-                        onChange={(e) => setEditFormData({ ...editFormData, coordinator: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl border border-[#eedfd8] text-xs focus:outline-hidden"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block font-bold text-neutral-800 mb-1">Convenor(s)</label>
-                      <input
-                        type="text"
-                        value={editFormData.convenor || ""}
-                        onChange={(e) => setEditFormData({ ...editFormData, convenor: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl border border-[#eedfd8] text-xs focus:outline-hidden"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block font-bold text-neutral-800 mb-1">Brochure Link</label>
-                    <input
-                      type="url"
-                      value={editFormData.link_url || ""}
-                      onChange={(e) => setEditFormData({ ...editFormData, link_url: e.target.value })}
-                      className="w-full px-3 py-2 rounded-xl border border-[#eedfd8] text-xs focus:outline-hidden"
-                    />
-                  </div>
-
-                  <div className="flex items-center justify-end gap-2 pt-3 border-t border-[#eedfd8]">
-                    <button
-                      type="button"
-                      onClick={() => setIsEditModalOpen(false)}
-                      className="px-4 py-2 rounded-xl border border-[#eedfd8] text-xs font-semibold text-neutral-600 hover:bg-neutral-50 transition cursor-pointer"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-5 py-2 rounded-xl bg-[#33110e] hover:bg-[#85261e] text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
-                    >
-                      <Check className="w-3.5 h-3.5" />
-                      Save Changes
-                    </button>
-                  </div>
-                </form>
               </div>
             </div>
           )}

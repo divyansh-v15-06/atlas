@@ -110,7 +110,7 @@ const AdminModalPublications = ({
         academicSession: '',
         yeartemp: '',
         isbn:'',
-        journalQuartile: 'T',
+        journalQuartile: '',
     })
     const [faculties, setFaculties] = useState([])
     const [indexingOptions, setIndexingOptions] = useState([])
@@ -238,7 +238,7 @@ const AdminModalPublications = ({
             academicSession: '',
             yeartemp: '',
             isbn:'',
-            journalQuartile: 'T',
+            journalQuartile: '',
         });
     }
 
@@ -423,14 +423,14 @@ const AdminModalPublications = ({
                                         <Select
                                             id='journalQuartile'
                                             value={{
-                                                value: formData.journalQuartile,
-                                                label: formData.journalQuartile === 'T' ? 'T (Temporary)' : formData.journalQuartile
+                                                value: formData.journalQuartile || '',
+                                                label: (formData.journalQuartile && ['Q1', 'Q2', 'Q3', 'Q4'].includes(formData.journalQuartile.toUpperCase())) ? formData.journalQuartile : 'Not Applicable'
                                             }}
                                             onChange={(selectedOption) =>
-                                                setFormData((prev) => ({ ...prev, journalQuartile: selectedOption.value }))
+                                                setFormData((prev) => ({ ...prev, journalQuartile: selectedOption ? selectedOption.value : '' }))
                                             }
                                             options={[
-                                                { value: 'T', label: 'T (Temporary)' },
+                                                { value: '', label: 'Not Applicable' },
                                                 { value: 'Q1', label: 'Q1' },
                                                 { value: 'Q2', label: 'Q2' },
                                                 { value: 'Q3', label: 'Q3' },

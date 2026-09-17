@@ -32,7 +32,7 @@ export const MONTHS = [
   "December",
 ];
 
-export const JOURNAL_QUARTILES = ["Q1", "Q2", "Q3", "Q4", "T", "N/A"];
+export const JOURNAL_QUARTILES = ["Not Applicable", "Q1", "Q2", "Q3", "Q4"];
 
 export const INDEXING_OPTIONS = [
   "SCI(E) / Web of Science",

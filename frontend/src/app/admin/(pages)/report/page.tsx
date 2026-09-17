@@ -82,7 +82,7 @@ export default function AdminReportPage() {
             Journal: p.journal_or_conference_name,
             Year: p.year,
             DOI: p.doi,
-            Indexing: p.journal_quartile || p.indexing || "Scopus",
+            Indexing: (p.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(p.journal_quartile.toUpperCase().trim())) ? p.journal_quartile.toUpperCase().trim() : (p.indexing || "Scopus"),
           }));
         } else if (reportType === "nirf") {
           csvData = [

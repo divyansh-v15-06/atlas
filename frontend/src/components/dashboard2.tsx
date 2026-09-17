@@ -70,7 +70,7 @@ function buildFacultyFallbackAnalytics(faculty: any): AnalyticsData {
   const publicationsData: PublicationItem[] = storedPubs.map((p: any) => ({
     year: Number(p.year) || 2024,
     type: p.publication_type || p.type || "Journal",
-    indexing: p.journal_quartile || p.indexing || "Scopus",
+    indexing: p.indexing || (p.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(p.journal_quartile.toUpperCase().trim()) ? p.journal_quartile.toUpperCase().trim() : "Scopus"),
   }));
 
   // 2. Personal Projects

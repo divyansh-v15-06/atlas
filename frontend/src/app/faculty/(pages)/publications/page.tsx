@@ -52,7 +52,7 @@ export default function FacultyPublicationsPage() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [indexing, setIndexing] = useState("Scopus");
   const [customIndexing, setCustomIndexing] = useState("");
-  const [quartile, setQuartile] = useState("Q1");
+  const [quartile, setQuartile] = useState("Not Applicable");
   const [isbn, setIsbn] = useState("");
   const [volume, setVolume] = useState("");
   const [issue, setIssue] = useState("");
@@ -163,7 +163,7 @@ export default function FacultyPublicationsPage() {
     setYear(new Date().getFullYear());
     setIndexing("Scopus");
     setCustomIndexing("");
-    setQuartile("Q1");
+    setQuartile("Not Applicable");
     setIsbn("");
     setVolume("");
     setIssue("");
@@ -186,7 +186,7 @@ export default function FacultyPublicationsPage() {
     setYear(Number(pub.year) || new Date().getFullYear());
     setIndexing(pub.indexing || "Scopus");
     setCustomIndexing(pub.custom_indexing || "");
-    setQuartile(pub.journal_quartile || "Q1");
+    setQuartile(pub.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(pub.journal_quartile.toUpperCase().trim()) ? pub.journal_quartile.toUpperCase().trim() : "Not Applicable");
     setIsbn(pub.isbn || "");
     setVolume(pub.volume || "");
     setIssue(pub.issue || "");
@@ -251,7 +251,7 @@ export default function FacultyPublicationsPage() {
       academic_session: academicSession,
       indexing: effectiveIndexing,
       custom_indexing: customIndexing.trim() || undefined,
-      journal_quartile: pubType === "Journal" && quartile !== "N/A" ? quartile : undefined,
+      journal_quartile: pubType === "Journal" && ["Q1", "Q2", "Q3", "Q4"].includes(quartile.toUpperCase().trim()) ? quartile.toUpperCase().trim() : undefined,
       isbn: (pubType === "Book" || pubType === "Book Chapter") && isbn.trim() ? isbn.trim() : undefined,
       doi: doi.trim() || undefined,
       author_text: authors.trim() || faculty.full_name,
@@ -303,7 +303,7 @@ export default function FacultyPublicationsPage() {
         pages: pages.trim() || undefined,
         year: Number(year) || new Date().getFullYear(),
         indexing: effectiveIndexing,
-        quartile: pubType === "Journal" && quartile !== "N/A" ? quartile : undefined,
+        quartile: pubType === "Journal" && ["Q1", "Q2", "Q3", "Q4"].includes(quartile.toUpperCase().trim()) ? quartile.toUpperCase().trim() : undefined,
         raw_authors: authors.trim() || faculty.full_name,
         department_ids: [faculty.department_id || "22222222-2222-2222-2222-222222222222"],
         authors: structuredAuthors,
@@ -400,9 +400,9 @@ export default function FacultyPublicationsPage() {
                 {pub.publication_type || pub.type || "Publication"}
               </span>
 
-              {pub.journal_quartile && (
+              {pub.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(pub.journal_quartile.toUpperCase().trim()) && (
                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-900 border border-amber-300">
-                  {pub.journal_quartile}
+                  {pub.journal_quartile.toUpperCase().startsWith("Q") ? pub.journal_quartile.toUpperCase() : `Q${pub.journal_quartile}`}
                 </span>
               )}
 

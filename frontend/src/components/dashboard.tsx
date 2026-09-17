@@ -49,7 +49,7 @@ function buildFallbackAnalytics(): AnalyticsData {
   const publicationsData: PublicationItem[] = MOCK_PUBLICATIONS.map((p, idx) => ({
     year: Number(p.year) || 2024,
     type: p.publication_type,
-    indexing: p.journal_quartile || p.indexing || "Scopus",
+    indexing: p.indexing || (p.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(p.journal_quartile.toUpperCase().trim()) ? p.journal_quartile.toUpperCase().trim() : "Scopus"),
     facultyIds: [(idx % MOCK_FACULTY.length) + 1],
   }));
 
