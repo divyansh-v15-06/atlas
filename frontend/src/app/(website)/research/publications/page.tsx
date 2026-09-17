@@ -455,8 +455,11 @@ export default function PublicationsPage() {
                         {pub.venue_name || pub.journal_or_conference_name}
                       </span>
                       {pub.volume && `, Vol. ${pub.volume}`}
-                      {pub.issue && ` (${pub.issue})`}
-                      {pub.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(pub.journal_quartile.toUpperCase().trim()) && `, Quartile: ${pub.journal_quartile.toUpperCase().trim()}`}
+                      {(() => {
+                        const rawQ = pub.journal_quartile || pub.quartile;
+                        const q = rawQ ? String(rawQ).toUpperCase().trim() : null;
+                        return q && ["Q1", "Q2", "Q3", "Q4"].includes(q) ? `, Quartile: ${q}` : null;
+                      })()}
                       {pub.page_range && `, pp. ${pub.page_range}`}
                     </p>
                   </td>
@@ -585,14 +588,18 @@ export default function PublicationsPage() {
                 </span>
               </div>
 
-              {selectedPub.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(selectedPub.journal_quartile.toUpperCase().trim()) && (
-                <div className="py-2.5 grid grid-cols-12 gap-2">
-                  <span className="col-span-4 font-bold text-[#33110e]">Journal Quartile:</span>
-                  <span className="col-span-8 font-mono font-bold text-neutral-800">
-                    {selectedPub.journal_quartile.toUpperCase().trim()}
-                  </span>
-                </div>
-              )}
+              {(() => {
+                const rawQ = selectedPub.journal_quartile || selectedPub.quartile;
+                const q = rawQ ? String(rawQ).toUpperCase().trim() : null;
+                return q && ["Q1", "Q2", "Q3", "Q4"].includes(q) ? (
+                  <div className="py-2.5 grid grid-cols-12 gap-2">
+                    <span className="col-span-4 font-bold text-[#33110e]">Journal Quartile:</span>
+                    <span className="col-span-8 font-mono font-bold text-neutral-800">
+                      {q}
+                    </span>
+                  </div>
+                ) : null;
+              })()}
 
               <div className="py-2.5 grid grid-cols-12 gap-2">
                 <span className="col-span-4 font-bold text-[#33110e]">Page:</span>

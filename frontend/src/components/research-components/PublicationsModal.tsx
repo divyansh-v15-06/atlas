@@ -154,20 +154,24 @@ export default function PublicationsModal({ item }: Props) {
                                             </td>
                                         </tr>
                                     )}
-                                    {item?.journalQuartile && ['Q1', 'Q2', 'Q3', 'Q4'].includes(String(item.journalQuartile).toUpperCase().trim()) && (
-                                        <tr>
-                                            <td className='p-2 text-left border-b border-r border-1 border-solid border-[#dde2e6]'>
-                                                <div className='flex'>
-                                                    <div className='text-[#103870] w-1/4 md:w-1/5 text-base font-semibold'>
-                                                        Journal Quartile:
+                                    {(() => {
+                                        const rawQ = item?.journalQuartile || item?.journal_quartile || item?.quartile;
+                                        const q = rawQ ? String(rawQ).toUpperCase().trim() : null;
+                                        return q && ['Q1', 'Q2', 'Q3', 'Q4'].includes(q) ? (
+                                            <tr>
+                                                <td className='p-2 text-left border-b border-r border-1 border-solid border-[#dde2e6]'>
+                                                    <div className='flex'>
+                                                        <div className='text-[#103870] w-1/4 md:w-1/5 text-base font-semibold'>
+                                                            Journal Quartile:
+                                                        </div>
+                                                        <div className='text-[#202529] w-3/4 md:w-4/5'>
+                                                            {q}
+                                                        </div>
                                                     </div>
-                                                    <div className='text-[#202529] w-3/4 md:w-4/5'>
-                                                        {String(item.journalQuartile).toUpperCase().trim()}
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    )}
+                                                </td>
+                                            </tr>
+                                        ) : null;
+                                    })()}
                                     {item?.pageNo &&
                                         item.pageNo.includes('-') &&
                                         item.pageNo

@@ -341,6 +341,7 @@ export default function FacultyPortfolioPage({
               page_range: p.pages || p.page_range,
               author_text: p.raw_authors || p.author_text,
               journal_quartile: (p.quartile || p.journal_quartile) && ["Q1", "Q2", "Q3", "Q4"].includes(String(p.quartile || p.journal_quartile).toUpperCase().trim()) ? String(p.quartile || p.journal_quartile).toUpperCase().trim() : undefined,
+              quartile: (p.quartile || p.journal_quartile) && ["Q1", "Q2", "Q3", "Q4"].includes(String(p.quartile || p.journal_quartile).toUpperCase().trim()) ? String(p.quartile || p.journal_quartile).toUpperCase().trim() : undefined,
               publication_type: ptype,
               type: p.publication_type,
               research_type_id: rtype,
@@ -2603,12 +2604,17 @@ export default function FacultyPortfolioPage({
                                       SCI
                                     </span>
                                   )}
-                                  {pub.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(pub.journal_quartile.toUpperCase().trim()) && (
-                                    <span className="inline-block px-2.5 py-1 rounded bg-purple-50 text-purple-800 border border-purple-200 text-xs font-bold">
-                                      {pub.journal_quartile.toUpperCase().startsWith("Q") ? pub.journal_quartile.toUpperCase() : `Q${pub.journal_quartile}`}
-                                    </span>
-                                  )}
-                                  {!pub.indexing && !pub.is_scopus && !pub.is_sci && (
+                                  {(() => {
+                                    const rawQ = pub.journal_quartile || pub.quartile;
+                                    const q = rawQ ? String(rawQ).toUpperCase().trim() : null;
+                                    const isQ = q && ["Q1", "Q2", "Q3", "Q4"].includes(q);
+                                    return isQ ? (
+                                      <span className="inline-block px-2.5 py-1 rounded bg-purple-50 text-purple-800 border border-purple-200 text-xs font-bold">
+                                        {q}
+                                      </span>
+                                    ) : null;
+                                  })()}
+                                  {!pub.indexing && !pub.is_scopus && !pub.is_sci && !((pub.journal_quartile || pub.quartile) && ["Q1", "Q2", "Q3", "Q4"].includes(String(pub.journal_quartile || pub.quartile).toUpperCase().trim())) && (
                                     <span className="text-neutral-400 text-xs">—</span>
                                   )}
                                 </td>
@@ -4954,14 +4960,19 @@ export default function FacultyPortfolioPage({
                       </td>
                     </tr>
                   )}
-                  {detailItem.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(String(detailItem.journal_quartile).toUpperCase().trim()) && (
-                    <tr className="bg-white">
-                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Journal Quartile</td>
-                      <td className="p-3.5 font-semibold text-purple-900 text-sm">
-                        {String(detailItem.journal_quartile).toUpperCase().startsWith("Q") ? String(detailItem.journal_quartile).toUpperCase() : `Q${detailItem.journal_quartile}`}
-                      </td>
-                    </tr>
-                  )}
+                  {(() => {
+                    const rawQ = detailItem.journal_quartile || detailItem.quartile;
+                    const q = rawQ ? String(rawQ).toUpperCase().trim() : null;
+                    const isQ = q && ["Q1", "Q2", "Q3", "Q4"].includes(q);
+                    return isQ ? (
+                      <tr className="bg-white">
+                        <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Journal Quartile</td>
+                        <td className="p-3.5 font-semibold text-purple-900 text-sm">
+                          {q}
+                        </td>
+                      </tr>
+                    ) : null;
+                  })()}
                   {detailItem.isbn && (
                     <tr className="bg-white">
                       <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">ISBN Number</td>
