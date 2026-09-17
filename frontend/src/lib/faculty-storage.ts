@@ -415,6 +415,7 @@ export function getStoredData<T>(faculty: any, section: string, defaultFallback:
     if (section === "publications") {
       return result.map((item: any) => {
         if (!item) return item;
+        const q = item.journal_quartile || item.quartile;
         const baseMatch = baseline.find((base) => isMatchingRecord(base, item));
         const q = item.journal_quartile || item.quartile || baseMatch?.journal_quartile || baseMatch?.quartile;
         const validQ = q && ["Q1", "Q2", "Q3", "Q4"].includes(String(q).toUpperCase().trim())

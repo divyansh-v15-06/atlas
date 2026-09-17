@@ -2604,6 +2604,12 @@ export default function FacultyPortfolioPage({
                                       SCI
                                     </span>
                                   )}
+                                  {pub.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(pub.journal_quartile.toUpperCase().trim()) && (
+                                    <span className="inline-block px-2.5 py-1 rounded bg-purple-50 text-purple-800 border border-purple-200 text-xs font-bold">
+                                      {pub.journal_quartile.toUpperCase().startsWith("Q") ? pub.journal_quartile.toUpperCase() : `Q${pub.journal_quartile}`}
+                                    </span>
+                                  )}
+                                  {!pub.indexing && !pub.is_scopus && !pub.is_sci && (
                                   {(() => {
                                     const rawQ = pub.journal_quartile || pub.quartile;
                                     const q = rawQ ? String(rawQ).toUpperCase().trim() : null;
@@ -4957,6 +4963,14 @@ export default function FacultyPortfolioPage({
                         <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-800 border border-blue-300">
                           {detailItem.indexing}
                         </span>
+                      </td>
+                    </tr>
+                  )}
+                  {detailItem.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(String(detailItem.journal_quartile).toUpperCase().trim()) && (
+                    <tr className="bg-white">
+                      <td className="p-3.5 w-1/3 font-bold text-neutral-700 bg-neutral-50/80 text-sm">Journal Quartile</td>
+                      <td className="p-3.5 font-semibold text-purple-900 text-sm">
+                        {String(detailItem.journal_quartile).toUpperCase().startsWith("Q") ? String(detailItem.journal_quartile).toUpperCase() : `Q${detailItem.journal_quartile}`}
                       </td>
                     </tr>
                   )}

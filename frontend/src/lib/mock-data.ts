@@ -94,6 +94,7 @@ export const MOCK_PUBLICATIONS: (Publication & {
   doi: p.doi || "",
   issn_isbn: p.isbn || "",
   indexing: p.indexing || "Other",
+  journal_quartile: (p.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(String(p.journal_quartile).toUpperCase().trim())) ? p.journal_quartile.toUpperCase().trim() : undefined,
   journal_quartile: ((p.journal_quartile || p.quartile) && ["Q1", "Q2", "Q3", "Q4"].includes(String(p.journal_quartile || p.quartile).toUpperCase().trim())) ? String(p.journal_quartile || p.quartile).toUpperCase().trim() : undefined,
   quartile: ((p.journal_quartile || p.quartile) && ["Q1", "Q2", "Q3", "Q4"].includes(String(p.journal_quartile || p.quartile).toUpperCase().trim())) ? String(p.journal_quartile || p.quartile).toUpperCase().trim() : undefined,
   author_text: p.author_text || p.raw_authors || "Faculty",

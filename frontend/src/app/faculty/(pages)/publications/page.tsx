@@ -186,6 +186,7 @@ export default function FacultyPublicationsPage() {
     setYear(Number(pub.year) || new Date().getFullYear());
     setIndexing(pub.indexing || "Scopus");
     setCustomIndexing(pub.custom_indexing || "");
+    setQuartile(pub.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(pub.journal_quartile.toUpperCase().trim()) ? pub.journal_quartile.toUpperCase().trim() : "Not Applicable");
     setQuartile((pub.journal_quartile || pub.quartile) && ["Q1", "Q2", "Q3", "Q4"].includes(String(pub.journal_quartile || pub.quartile).toUpperCase().trim()) ? String(pub.journal_quartile || pub.quartile).toUpperCase().trim() : "Not Applicable");
     setIsbn(pub.isbn || "");
     setVolume(pub.volume || "");
@@ -401,6 +402,11 @@ export default function FacultyPublicationsPage() {
                 {pub.publication_type || pub.type || "Publication"}
               </span>
 
+              {pub.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(pub.journal_quartile.toUpperCase().trim()) && (
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-900 border border-amber-300">
+                  {pub.journal_quartile.toUpperCase().startsWith("Q") ? pub.journal_quartile.toUpperCase() : `Q${pub.journal_quartile}`}
+                </span>
+              )}
               {(() => {
                 const rawQ = pub.journal_quartile || pub.quartile;
                 const q = rawQ ? String(rawQ).toUpperCase().trim() : null;
