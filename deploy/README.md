@@ -21,7 +21,7 @@ Log in to your target server via SSH and execute the setup script:
 
 ```bash
 # Clone the repository (or copy deploy/setup-server.sh directly)
-git clone https://github.com/divyansh-v15-06/koiniyaraapkozadaaatahai.git /var/www/institute-portal
+git clone https://github.com/divyansh-v15-06/atlas.git /var/www/institute-portal
 cd /var/www/institute-portal
 
 # Run the automated server setup script (requires sudo/root)

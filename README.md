@@ -1,4 +1,4 @@
-# 🏛️ NIT Hamirpur Multi-Department Portal & Research Management Platform
+# 🏛️ Atlas — NIT Hamirpur Multi-Department Portal & Research Management Platform
 
 [![Production Status](https://img.shields.io/badge/Production-Live-success?style=for-the-badge&logo=nginx)](https://tempcse.nith.ac.in)
 [![Domain](https://img.shields.io/badge/Domain-tempcse.nith.ac.in-blue?style=for-the-badge)](https://tempcse.nith.ac.in)
@@ -752,7 +752,7 @@ pm2 monit
 ssh -i ~/.ssh/server_access serv-admin@14.139.56.28
 
 # 2. Navigate to project root
-cd ~/Documents/projects/koiniyaraapkozadaaatahai
+cd ~/Documents/projects/atlas
 
 # 3. Pull latest changes
 git pull origin main
