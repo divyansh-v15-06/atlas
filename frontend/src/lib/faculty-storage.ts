@@ -427,6 +427,18 @@ export function getStoredData<T>(faculty: any, section: string, defaultFallback:
       }) as T[];
     }
 
+    if (section === "projects") {
+      return result.map((item: any) => {
+        if (!item) return item;
+        const amt = Number(item.total_sanctioned_amount ?? item.sanctioned_amount ?? item.amount ?? item.funding_amount ?? item.total_amount_received ?? 0);
+        return {
+          ...item,
+          total_sanctioned_amount: isNaN(amt) ? 0 : amt,
+          sanctioned_amount: isNaN(amt) ? 0 : amt,
+        };
+      }) as T[];
+    }
+
     return result as T[];
   } catch (err) {
     console.error(`Error reading persistent storage for ${section}:`, err);
@@ -497,6 +509,13 @@ export function syncMultiFacultyRecord(
       const q = record.journal_quartile || record.quartile;
       const validQ = q && ["Q1", "Q2", "Q3", "Q4"].includes(String(q).toUpperCase().trim()) ? String(q).toUpperCase().trim() : undefined;
       activeRecord = { ...record, journal_quartile: validQ, quartile: validQ };
+    } else if (section === "projects" && record) {
+      const amt = Number(record.total_sanctioned_amount ?? record.sanctioned_amount ?? record.amount ?? record.funding_amount ?? record.total_amount_received ?? 0);
+      activeRecord = {
+        ...record,
+        total_sanctioned_amount: isNaN(amt) ? 0 : amt,
+        sanctioned_amount: isNaN(amt) ? 0 : amt,
+      };
     }
 
     // 1. Update current faculty store

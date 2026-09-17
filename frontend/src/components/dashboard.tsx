@@ -46,34 +46,94 @@ function buildFallbackAnalytics(): AnalyticsData {
     name: f.full_name,
   }));
 
-  const publicationsData: PublicationItem[] = MOCK_PUBLICATIONS.map((p, idx) => ({
-    year: Number(p.year) || 2024,
-    type: p.publication_type,
-    indexing: p.indexing || (p.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(p.journal_quartile.toUpperCase().trim()) ? p.journal_quartile.toUpperCase().trim() : "Scopus"),
-    facultyIds: [(idx % MOCK_FACULTY.length) + 1],
-  }));
+  const facultyIdToNum = new Map<string, number>();
+  const facultyLegacyToNum = new Map<number, number>();
+  MOCK_FACULTY.forEach((f, idx) => {
+    const num = idx + 1;
+    if (f.id) facultyIdToNum.set(String(f.id), num);
+    if (f.legacy_id) facultyLegacyToNum.set(Number(f.legacy_id), num);
+  });
 
-  const projectsData: ProjectItem[] = MOCK_PROJECTS.map((p, idx) => ({
-    id: idx + 1,
-    year: Number(p.year) || 2024,
-    status: p.status,
-    funding: Number(p.total_sanctioned_amount) || 1500000,
-    facultyIds: [(idx % MOCK_FACULTY.length) + 1],
-  }));
+  const publicationsData: PublicationItem[] = MOCK_PUBLICATIONS.map((p, idx) => {
+    const matchedFac: number[] = [];
+    if (Array.isArray(p.faculty_ids)) {
+      p.faculty_ids.forEach((fid: string) => {
+        if (facultyIdToNum.has(String(fid))) matchedFac.push(facultyIdToNum.get(String(fid))!);
+      });
+    }
+    if (Array.isArray(p.faculty_legacy_ids)) {
+      p.faculty_legacy_ids.forEach((lid: number) => {
+        if (facultyLegacyToNum.has(Number(lid))) matchedFac.push(facultyLegacyToNum.get(Number(lid))!);
+      });
+    }
+    return {
+      year: Number(p.year) || 2024,
+      type: p.publication_type,
+      indexing: p.indexing || (p.journal_quartile && ["Q1", "Q2", "Q3", "Q4"].includes(p.journal_quartile.toUpperCase().trim()) ? p.journal_quartile.toUpperCase().trim() : "Scopus"),
+      facultyIds: matchedFac.length > 0 ? Array.from(new Set(matchedFac)) : [(idx % MOCK_FACULTY.length) + 1],
+    };
+  });
 
-  const patentsData: PatentItem[] = MOCK_PATENTS.map((p, idx) => ({
-    id: idx + 1,
-    year: Number(p.year) || 2024,
-    status: p.status,
-    facultyIds: [(idx % MOCK_FACULTY.length) + 1],
-  }));
+  const projectsData: ProjectItem[] = MOCK_PROJECTS.map((p, idx) => {
+    const matchedFac: number[] = [];
+    if (Array.isArray(p.faculty_ids)) {
+      p.faculty_ids.forEach((fid: string) => {
+        if (facultyIdToNum.has(String(fid))) matchedFac.push(facultyIdToNum.get(String(fid))!);
+      });
+    }
+    if (Array.isArray(p.faculty_legacy_ids)) {
+      p.faculty_legacy_ids.forEach((lid: number) => {
+        if (facultyLegacyToNum.has(Number(lid))) matchedFac.push(facultyLegacyToNum.get(Number(lid))!);
+      });
+    }
+    return {
+      id: idx + 1,
+      year: Number(p.year) || 2024,
+      status: p.status,
+      funding: Number(p.total_sanctioned_amount ?? p.sanctioned_amount ?? 0),
+      facultyIds: matchedFac.length > 0 ? Array.from(new Set(matchedFac)) : [(idx % MOCK_FACULTY.length) + 1],
+    };
+  });
 
-  const eventsData: EventItem[] = MOCK_EVENTS.map((e: any, idx: number) => ({
-    id: idx + 1,
-    year: Number(e.year) || 2024,
-    type: e.event_type || "Workshop",
-    facultyIds: [(idx % MOCK_FACULTY.length) + 1],
-  }));
+  const patentsData: PatentItem[] = MOCK_PATENTS.map((p, idx) => {
+    const matchedFac: number[] = [];
+    if (Array.isArray(p.faculty_ids)) {
+      p.faculty_ids.forEach((fid: string) => {
+        if (facultyIdToNum.has(String(fid))) matchedFac.push(facultyIdToNum.get(String(fid))!);
+      });
+    }
+    if (Array.isArray(p.faculty_legacy_ids)) {
+      p.faculty_legacy_ids.forEach((lid: number) => {
+        if (facultyLegacyToNum.has(Number(lid))) matchedFac.push(facultyLegacyToNum.get(Number(lid))!);
+      });
+    }
+    return {
+      id: idx + 1,
+      year: Number(p.year) || 2024,
+      status: p.status,
+      facultyIds: matchedFac.length > 0 ? Array.from(new Set(matchedFac)) : [(idx % MOCK_FACULTY.length) + 1],
+    };
+  });
+
+  const eventsData: EventItem[] = MOCK_EVENTS.map((e: any, idx: number) => {
+    const matchedFac: number[] = [];
+    if (Array.isArray(e.faculty_ids)) {
+      e.faculty_ids.forEach((fid: string) => {
+        if (facultyIdToNum.has(String(fid))) matchedFac.push(facultyIdToNum.get(String(fid))!);
+      });
+    }
+    if (Array.isArray(e.faculty_legacy_ids)) {
+      e.faculty_legacy_ids.forEach((lid: number) => {
+        if (facultyLegacyToNum.has(Number(lid))) matchedFac.push(facultyLegacyToNum.get(Number(lid))!);
+      });
+    }
+    return {
+      id: idx + 1,
+      year: Number(e.year) || 2024,
+      type: e.event_type || "Workshop",
+      facultyIds: matchedFac.length > 0 ? Array.from(new Set(matchedFac)) : [(idx % MOCK_FACULTY.length) + 1],
+    };
+  });
 
   return {
     facultyData,

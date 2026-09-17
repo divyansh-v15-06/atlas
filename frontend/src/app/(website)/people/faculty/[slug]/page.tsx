@@ -274,7 +274,16 @@ export default function FacultyPortfolioPage({
       });
       setAllFacultyPubs(cleanPubs);
       setAllFacultyPatents(getStoredData(baseFaculty, "patents", baseFaculty.patents || []));
-      setAllFacultyProjects(getStoredData(baseFaculty, "projects", baseFaculty.projects || []));
+      const rawProjects = getStoredData(baseFaculty, "projects", baseFaculty.projects || []);
+      const cleanProjects = (rawProjects || []).map((p: any) => {
+        const amt = Number(p.total_sanctioned_amount ?? p.sanctioned_amount ?? p.amount ?? p.funding_amount ?? p.total_amount_received ?? 0);
+        return {
+          ...p,
+          total_sanctioned_amount: isNaN(amt) ? 0 : amt,
+          sanctioned_amount: isNaN(amt) ? 0 : amt,
+        };
+      });
+      setAllFacultyProjects(cleanProjects);
       setAllSupervisions(getStoredData(baseFaculty, "supervisions", baseFaculty.supervisions || []));
       setAllQualifications(getStoredData(baseFaculty, "qualifications", baseFaculty.qualifications || []));
       setAllTeachingExp(getStoredData(baseFaculty, "teaching_experiences", baseFaculty.teaching_experiences || []));
@@ -342,6 +351,32 @@ export default function FacultyPortfolioPage({
       })
       .catch(() => {});
 
+    // Fetch live projects
+    fetch(`${apiUrl}/projects?faculty_id=${baseFaculty.id}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (json?.data && Array.isArray(json.data) && json.data.length > 0) {
+          const mapped = json.data.map((p: any) => {
+            const amt = Number(p.total_sanctioned_amount ?? p.sanctioned_amount ?? p.total_amount_received ?? 0);
+            return {
+              ...p,
+              id: p.id,
+              title: p.title,
+              funding_agency: p.sponsor || p.funding_agency || "DST-SERB",
+              status: p.status || "Ongoing",
+              year: p.year,
+              total_sanctioned_amount: isNaN(amt) ? 0 : amt,
+              sanctioned_amount: isNaN(amt) ? 0 : amt,
+              reference_number: p.project_number || p.reference_number || "",
+              raw_investigators: p.raw_investigators || baseFaculty.full_name,
+              faculty_ids: p.members?.map((m: any) => m.faculty_id) || [baseFaculty.id],
+            };
+          });
+          setAllFacultyProjects(getStoredData(baseFaculty, "projects", mapped));
+        }
+      })
+      .catch(() => {});
+
     // Fetch live events
     fetch(`${apiUrl}/events?faculty_id=${baseFaculty.id}`)
       .then((res) => (res.ok ? res.json() : null))
@@ -370,7 +405,16 @@ export default function FacultyPortfolioPage({
       if (baseFaculty) {
         setAllFacultyPubs(getStoredData(baseFaculty, "publications", baseFaculty.publications || []));
         setAllFacultyPatents(getStoredData(baseFaculty, "patents", baseFaculty.patents || []));
-        setAllFacultyProjects(getStoredData(baseFaculty, "projects", baseFaculty.projects || []));
+        const rawProjects = getStoredData(baseFaculty, "projects", baseFaculty.projects || []);
+        const cleanProjects = (rawProjects || []).map((p: any) => {
+          const amt = Number(p.total_sanctioned_amount ?? p.sanctioned_amount ?? p.amount ?? p.funding_amount ?? p.total_amount_received ?? 0);
+          return {
+            ...p,
+            total_sanctioned_amount: isNaN(amt) ? 0 : amt,
+            sanctioned_amount: isNaN(amt) ? 0 : amt,
+          };
+        });
+        setAllFacultyProjects(cleanProjects);
         setAllConsultancies(getStoredData(baseFaculty, "consultancies", []));
         setAllEvents(getStoredData(baseFaculty, "events", []));
       }
@@ -596,7 +640,15 @@ export default function FacultyPortfolioPage({
 
   const totalProjectGrantsAmount = useMemo(() => {
     return allFacultyProjects.reduce((sum: number, prj: any) => {
-      return sum + (Number(prj.sanctioned_amount) || 0);
+      const amt = Number(
+        prj.total_sanctioned_amount ??
+        prj.sanctioned_amount ??
+        prj.amount ??
+        prj.funding_amount ??
+        prj.total_amount_received ??
+        0
+      );
+      return sum + (isNaN(amt) ? 0 : amt);
     }, 0);
   }, [allFacultyProjects]);
 
@@ -2190,11 +2242,13 @@ export default function FacultyPortfolioPage({
                         label: "R&D Projects",
                         main:
                           totalProjectGrantsAmount >= 10000000
-                            ? `₹${(totalProjectGrantsAmount / 10000000).toFixed(1)}Cr`
+                            ? `₹${(totalProjectGrantsAmount / 10000000).toFixed(2)}Cr`
                             : totalProjectGrantsAmount >= 100000
-                            ? `₹${(totalProjectGrantsAmount / 100000).toFixed(0)}L`
-                            : `₹${totalProjectGrantsAmount.toLocaleString("en-IN")}`,
-                        sub: `${allFacultyProjects.length} Sponsored Grants`,
+                            ? `₹${(totalProjectGrantsAmount / 100000).toFixed(1)}L`
+                            : totalProjectGrantsAmount > 0
+                            ? `₹${totalProjectGrantsAmount.toLocaleString("en-IN")}`
+                            : `₹0`,
+                        sub: `${allFacultyProjects.length} Sponsored Grant${allFacultyProjects.length !== 1 ? "s" : ""}`,
                         color: "text-[#0d9488]",
                       },
                       allFacultyPatents.length > 0 && {
@@ -2752,7 +2806,13 @@ export default function FacultyPortfolioPage({
                               {prj.funding_agency || "DST-SERB"}
                             </td>
                             <td className="p-3.5 text-center align-top font-bold text-neutral-900 text-sm">
-                              {prj.total_sanctioned_amount ? `₹ ${(prj.total_sanctioned_amount / 100000).toFixed(1)} L` : "—"}
+                              {(() => {
+                                const amt = Number(prj.total_sanctioned_amount ?? prj.sanctioned_amount ?? prj.amount ?? prj.funding_amount ?? 0);
+                                if (!amt || isNaN(amt)) return "—";
+                                if (amt >= 10000000) return `₹ ${(amt / 10000000).toFixed(2)} Cr`;
+                                if (amt >= 100000) return `₹ ${(amt / 100000).toFixed(1)} L`;
+                                return `₹ ${amt.toLocaleString("en-IN")}`;
+                              })()}
                             </td>
                             <td className="p-3.5 text-center align-top space-y-1.5">
                               <button

@@ -47,7 +47,14 @@ export const MOCK_FACULTY = databaseSeed.faculty.map((f: any) => ({
     return { ...p, journal_quartile: validQ, quartile: validQ };
   }),
   patents: f.patents || [],
-  projects: f.projects || [],
+  projects: (f.projects || []).map((p: any) => {
+    const amt = Number(p.total_sanctioned_amount ?? p.sanctioned_amount ?? p.amount ?? p.funding_amount ?? p.total_amount_received ?? 0);
+    return {
+      ...p,
+      total_sanctioned_amount: isNaN(amt) ? 0 : amt,
+      sanctioned_amount: isNaN(amt) ? 0 : amt,
+    };
+  }),
   events: f.events || [],
   consultancies: f.consultancies || [],
   profile: {
