@@ -2319,14 +2319,80 @@ export default function FacultyPortfolioPage({
 
       {/* 3. MNIT-STYLE RESEARCH IMPACT METRICS STRIP (Only display non-zero stats) */}
       {(() => {
-        const visibleMetrics = [
-          { label: "Journals", count: journalCount, tab: "journal" as TabKey, icon: BookOpen, color: "text-[#85261e] bg-[#fcf2ef]" },
-          { label: "Conferences", count: conferenceCount, tab: "conference" as TabKey, icon: Presentation, color: "text-amber-700 bg-amber-50" },
-          { label: "Patents", count: patentCount, tab: "patents" as TabKey, icon: Lightbulb, color: "text-indigo-700 bg-indigo-50" },
-          { label: "Projects", count: projectCount, tab: "projects" as TabKey, icon: Briefcase, color: "text-emerald-700 bg-emerald-50" },
-          { label: "PhD Guided", count: phdSupervisedCount, tab: "phdSupervision" as TabKey, icon: GraduationCap, color: "text-blue-700 bg-blue-50" },
-          { label: "M.Tech Guided", count: mtechSupervisions.length, tab: "mtechSupervision" as TabKey, icon: Award, color: "text-teal-700 bg-teal-50" },
-          { label: "Consultancies", count: consultancyCount, tab: "consultancies" as TabKey, icon: Building2, color: "text-purple-700 bg-purple-50" },
+        const formattedProjectGrant =
+          totalProjectGrantsAmount >= 10000000
+            ? `₹${(totalProjectGrantsAmount / 10000000).toFixed(2)}Cr`
+            : totalProjectGrantsAmount >= 100000
+            ? `₹${(totalProjectGrantsAmount / 100000).toFixed(1)}L`
+            : totalProjectGrantsAmount > 0
+            ? `₹${totalProjectGrantsAmount.toLocaleString("en-IN")}`
+            : null;
+
+        const visibleMetrics: {
+          label: string;
+          count: number;
+          displayValue?: string;
+          sub?: string;
+          tab: TabKey;
+          icon: any;
+          color: string;
+        }[] = [
+          {
+            label: "Journals",
+            count: journalCount,
+            sub: sciIndexedCount > 0 ? `${sciIndexedCount} SCI` : undefined,
+            tab: "journal" as TabKey,
+            icon: BookOpen,
+            color: "text-[#85261e] bg-[#fcf2ef]",
+          },
+          {
+            label: "Conferences",
+            count: conferenceCount,
+            tab: "conference" as TabKey,
+            icon: Presentation,
+            color: "text-amber-700 bg-amber-50",
+          },
+          {
+            label: "Patents",
+            count: patentCount,
+            sub:
+              allFacultyPatents.filter((pt: any) => (pt.status || "").toLowerCase().includes("grant")).length > 0
+                ? `${allFacultyPatents.filter((pt: any) => (pt.status || "").toLowerCase().includes("grant")).length} Granted`
+                : undefined,
+            tab: "patents" as TabKey,
+            icon: Lightbulb,
+            color: "text-indigo-700 bg-indigo-50",
+          },
+          {
+            label: formattedProjectGrant ? "R&D Projects" : "Projects",
+            count: projectCount,
+            displayValue: formattedProjectGrant || String(projectCount),
+            sub: `${projectCount} Sponsored Grant${projectCount !== 1 ? "s" : ""}`,
+            tab: "projects" as TabKey,
+            icon: Briefcase,
+            color: "text-emerald-700 bg-emerald-50",
+          },
+          {
+            label: "PhD Guided",
+            count: phdSupervisedCount,
+            tab: "phdSupervision" as TabKey,
+            icon: GraduationCap,
+            color: "text-blue-700 bg-blue-50",
+          },
+          {
+            label: "M.Tech Guided",
+            count: mtechSupervisions.length,
+            tab: "mtechSupervision" as TabKey,
+            icon: Award,
+            color: "text-teal-700 bg-teal-50",
+          },
+          {
+            label: "Consultancies",
+            count: consultancyCount,
+            tab: "consultancies" as TabKey,
+            icon: Building2,
+            color: "text-purple-700 bg-purple-50",
+          },
         ].filter((stat) => stat.count > 0);
 
         if (visibleMetrics.length === 0) return null;
@@ -2369,12 +2435,17 @@ export default function FacultyPortfolioPage({
                         <Icon className="w-5 h-5" />
                       </div>
                       <div className="min-w-0">
-                        <div className="text-xl sm:text-2xl font-black text-neutral-900 leading-tight">
-                          {stat.count}
+                        <div className="text-xl sm:text-2xl font-black text-neutral-900 leading-tight truncate">
+                          {stat.displayValue || stat.count}
                         </div>
                         <div className="text-xs font-bold text-neutral-500 uppercase tracking-wider truncate">
                           {stat.label}
                         </div>
+                        {stat.sub && (
+                          <div className="text-[11px] font-medium text-neutral-400 truncate">
+                            {stat.sub}
+                          </div>
+                        )}
                       </div>
                     </button>
                   );
@@ -2580,61 +2651,6 @@ export default function FacultyPortfolioPage({
                       Interactive Analytics
                     </span>
                   </div>
-
-                  {/* Scholarly Metrics Grid (Only display non-zero metrics) */}
-                  {(() => {
-                    const cards = [
-                      allFacultyPubs.length > 0 && {
-                        label: "Publications",
-                        main: allFacultyPubs.length,
-                        sub: `${sciIndexedCount > 0 ? `${sciIndexedCount} SCI` : ""}${
-                          sciIndexedCount > 0 && scopusIndexedCount > 0 ? " · " : ""
-                        }${scopusIndexedCount > 0 ? `${scopusIndexedCount} Scopus` : ""}` || "Peer-Reviewed",
-                        color: "text-[#85261e]",
-                      },
-                      allFacultyProjects.length > 0 && {
-                        label: "R&D Projects",
-                        main:
-                          totalProjectGrantsAmount >= 10000000
-                            ? `₹${(totalProjectGrantsAmount / 10000000).toFixed(2)}Cr`
-                            : totalProjectGrantsAmount >= 100000
-                            ? `₹${(totalProjectGrantsAmount / 100000).toFixed(1)}L`
-                            : totalProjectGrantsAmount > 0
-                            ? `₹${totalProjectGrantsAmount.toLocaleString("en-IN")}`
-                            : `₹0`,
-                        sub: `${allFacultyProjects.length} Sponsored Grant${allFacultyProjects.length !== 1 ? "s" : ""}`,
-                        color: "text-[#0d9488]",
-                      },
-                      allFacultyPatents.length > 0 && {
-                        label: "Patents",
-                        main: allFacultyPatents.length,
-                        sub: `${allFacultyPatents.filter((pt: any) => (pt.status || "").toLowerCase().includes("grant")).length} Granted`,
-                        color: "text-amber-600",
-                      },
-                      phdSupervisedCount > 0 && {
-                        label: "Ph.D. Scholars",
-                        main: phdSupervisedCount,
-                        sub: "Guided / Defended",
-                        color: "text-indigo-600",
-                      },
-                    ].filter(Boolean) as { label: string; main: any; sub: string; color: string }[];
-
-                    if (cards.length === 0) return null;
-
-                    return (
-                      <div className={`grid grid-cols-2 ${cards.length >= 4 ? "sm:grid-cols-4" : cards.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-3`}>
-                        {cards.map((card, i) => (
-                          <div key={i} className="p-4 rounded-xl bg-[#faf8f6] border border-[#eedfd8] text-center">
-                            <span className="text-[11px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">
-                              {card.label}
-                            </span>
-                            <span className={`text-2xl sm:text-3xl font-black ${card.color}`}>{card.main}</span>
-                            <span className="text-[11px] text-neutral-500 block mt-1">{card.sub}</span>
-                          </div>
-                        ))}
-                      </div>
-                    );
-                  })()}
 
                   {/* Visual Charts */}
                   <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 pt-1">
