@@ -101,6 +101,8 @@ export type TabKey =
   | "consultancies"
   | "experttalk"
   | "researchSupervision"
+  | "phdSupervision"
+  | "mtechSupervision"
   | "administrativeexperience"
   | "honors"
   | "internationalAndNationalExposure"
@@ -604,15 +606,24 @@ export default function FacultyPortfolioPage({
   const honorCount = allHonors.length;
   const exposureCount = allExposures.length;
 
-  const phdSupervisedCount = useMemo(() => {
-    const phdList = combinedSupervisions.filter(
-      (s: any) =>
-        s.level?.toLowerCase().includes("ph") ||
-        s.programme?.toLowerCase().includes("ph") ||
-        !s.level
-    );
-    return phdList.length > 0 ? phdList.length : combinedSupervisions.length;
+  const phdSupervisions = useMemo(() => {
+    return combinedSupervisions.filter((s: any) => {
+      const lvl = String(s.level || s.programme || "").toLowerCase();
+      return lvl.includes("ph") || lvl.includes("doc");
+    });
   }, [combinedSupervisions]);
+
+  const mtechSupervisions = useMemo(() => {
+    return combinedSupervisions.filter((s: any) => {
+      const lvl = String(s.level || s.programme || "").toLowerCase();
+      return !lvl.includes("ph") && !lvl.includes("doc");
+    });
+  }, [combinedSupervisions]);
+
+  const phdCount = phdSupervisions.length;
+  const mtechCount = mtechSupervisions.length;
+  const phdSupervisedCount = phdCount;
+  const mtechSupervisedCount = mtechCount;
 
   // Analytics & Research Trends
   const facultyPubsTimeline = useMemo(() => {
@@ -737,7 +748,8 @@ export default function FacultyPortfolioPage({
     { key: "events", label: "Events", icon: Calendar, count: eventCount },
     { key: "consultancies", label: "Consultancies", icon: Building2, count: consultancyCount },
     { key: "experttalk", label: "Expert Talk", icon: Mic, count: expertTalkCount },
-    { key: "researchSupervision", label: "Research Supervision", icon: GraduationCap, count: supervisionCount },
+    { key: "phdSupervision", label: "Ph.D. Supervision", icon: GraduationCap, count: phdCount },
+    { key: "mtechSupervision", label: "M.Tech Theses", icon: Award, count: mtechCount },
     { key: "courses", label: "Courses Taught", icon: BookOpenCheck, count: coursesCount },
     { key: "administrativeexperience", label: "Administrative Experience", icon: Award, count: adminExpCount },
     { key: "honors", label: "Honors & Recognitions", icon: Trophy, count: honorCount },
@@ -1050,9 +1062,9 @@ export default function FacultyPortfolioPage({
         academic_session: "2024-2025",
         description: "",
       });
-    } else if (activeTab === "researchSupervision") {
+    } else if (activeTab === "researchSupervision" || activeTab === "phdSupervision" || activeTab === "mtechSupervision") {
       setFormData({
-        level: "Ph.D.",
+        level: activeTab === "mtechSupervision" ? "M.Tech" : "Ph.D.",
         student_name: "",
         roll_number: "",
         thesis_title: "",
@@ -1470,7 +1482,7 @@ export default function FacultyPortfolioPage({
       syncMultiFacultyRecord(baseFaculty, "expert_talks", record, selectedAssociatedFaculty, false);
       setAllTalks(getStoredData(baseFaculty, "expert_talks", []));
       toast.success(`Expert talk ${formMode === "edit" ? "updated" : "saved"} & synced!`);
-    } else if (activeTab === "researchSupervision") {
+    } else if (activeTab === "researchSupervision" || activeTab === "phdSupervision" || activeTab === "mtechSupervision") {
       const assignedFacultyIds = Array.from(
         new Set([
           baseFaculty.employee_code,
@@ -1593,7 +1605,7 @@ export default function FacultyPortfolioPage({
       const nextList = allTalks.filter((t) => t.id !== item.id);
       setAllTalks(nextList);
       setStoredData(baseFaculty, "expert_talks", nextList);
-    } else if (activeTab === "researchSupervision") {
+    } else if (activeTab === "researchSupervision" || activeTab === "phdSupervision" || activeTab === "mtechSupervision") {
       const nextList = combinedSupervisions.filter((s) => s.id !== item.id);
       setAllSupervisions(nextList);
       setStoredData(baseFaculty, "supervisions", nextList);
@@ -1739,7 +1751,342 @@ export default function FacultyPortfolioPage({
   const linkedInUrl = faculty.profile?.linkedin_url || faculty.linkedin_url || "https://linkedin.com";
   const researchGateUrl = faculty.profile?.rg_url || `https://www.researchgate.net/search?q=${encodeURIComponent(faculty.full_name)}`;
   const vidwanUrl = faculty.profile?.vidwan_url || `https://vidwan.inflibnet.ac.in/search?q=${encodeURIComponent(faculty.full_name)}`;
-  const publonsUrl = faculty.profile?.publons_url || `https://www.webofscience.com/wos/author/record?search=${encodeURIComponent(faculty.full_name)}`;
+  const renderSupervisionCard = (
+    title: string,
+    records: any[],
+    defaultLevel: "Ph.D." | "M.Tech / PG",
+    tabKeyForAction: "phdSupervision" | "mtechSupervision",
+    icon: any = GraduationCap
+  ) => {
+    const IconComp = icon;
+    return (
+      <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
+        <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <IconComp className="w-5 h-5 text-[#85261e]" />
+            <h3 className="text-sm sm:text-base font-bold text-[#85261e] tracking-tight uppercase flex items-center gap-2">
+              {title}
+            </h3>
+            <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#fff9f6] text-[#85261e] border border-[#eedfd8]">
+              {records.length}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 self-end sm:self-auto">
+            {/* View Switcher: List vs Table */}
+            <div className="flex items-center bg-white border border-[#eedfd8] rounded-xl p-0.5 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => setSupervisionViewMode("list")}
+                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                  supervisionViewMode === "list"
+                    ? "bg-[#85261e] text-white shadow-xs"
+                    : "text-neutral-600 hover:text-neutral-900"
+                }`}
+              >
+                <LayoutList className="w-3.5 h-3.5" /> List
+              </button>
+              <button
+                type="button"
+                onClick={() => setSupervisionViewMode("table")}
+                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                  supervisionViewMode === "table"
+                    ? "bg-[#85261e] text-white shadow-xs"
+                    : "text-neutral-600 hover:text-neutral-900"
+                }`}
+              >
+                <TableIcon className="w-3.5 h-3.5" /> Table
+              </button>
+            </div>
+
+            {canEdit && (
+              <button
+                type="button"
+                onClick={() => {
+                  setFormData({
+                    level: defaultLevel === "Ph.D." ? "Ph.D." : "M.Tech",
+                    student_name: "",
+                    roll_number: "",
+                    thesis_title: "",
+                    status: "Ongoing",
+                    year: new Date().getFullYear(),
+                    academic_session: "2024-2025",
+                    co_supervisor: "",
+                  });
+                  setFormMode("add");
+                  setEditingItem(null);
+                  setSelectedAssociatedFaculty([]);
+                  setIsFormModalOpen(true);
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#85261e] text-white hover:bg-[#33110e] transition font-bold text-xs shadow-xs cursor-pointer"
+              >
+                <Plus className="w-3.5 h-3.5" /> Add {defaultLevel === "Ph.D." ? "Ph.D." : "M.Tech"}
+              </button>
+            )}
+          </div>
+        </div>
+
+        {records.length > 0 ? (
+          supervisionViewMode === "list" ? (
+            <div className="divide-y divide-[#eedfd8]/60 p-4 sm:p-6 bg-white">
+              {records.map((s: any, idx: number) => {
+                let levelLabel = s.level || defaultLevel;
+                const lvlLower = String(levelLabel).toLowerCase();
+                if (lvlLower.includes("ph") || lvlLower.includes("doc")) {
+                  levelLabel = "Ph.D.";
+                } else if (
+                  lvlLower.includes("m.tech") ||
+                  lvlLower.includes("mtech") ||
+                  lvlLower.includes("pg") ||
+                  lvlLower.includes("master")
+                ) {
+                  levelLabel = "M.Tech / PG";
+                } else if (
+                  lvlLower.includes("b.tech") ||
+                  lvlLower.includes("btech") ||
+                  lvlLower.includes("ug") ||
+                  lvlLower.includes("bachelor")
+                ) {
+                  levelLabel = "B.Tech";
+                }
+
+                let statusText = s.status || "Completed";
+                const stLower = String(statusText).toLowerCase();
+                if (stLower.includes("pass") || stLower.includes("complet") || stLower.includes("award")) {
+                  statusText = "Completed";
+                } else if (stLower.includes("ong") || stLower.includes("pursu")) {
+                  statusText = "Ongoing";
+                }
+
+                let year = s.year;
+                if (!year) {
+                  if (s.end_date) {
+                    const match = String(s.end_date).match(/\b(19|20)\d{2}\b/);
+                    if (match) year = match[0];
+                  } else if (s.registration_year) {
+                    const match = String(s.registration_year).match(/\b(19|20)\d{2}\b/);
+                    if (match) year = match[0];
+                  }
+                }
+
+                const statusYearLabel = year ? `${statusText} (${year})` : statusText;
+                const thesisTitle = s.thesis_title || s.dissertation_title || s.topic;
+
+                return (
+                  <div
+                    key={s.id || idx}
+                    className="py-3.5 first:pt-0 last:pb-0 group hover:bg-[#fffcfb] -mx-2 px-2 rounded-lg transition"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 text-sm sm:text-[15px]">
+                      <div className="text-neutral-900 leading-snug">
+                        <span className="font-bold text-neutral-900">[{levelLabel}]</span>{" "}
+                        <span className="font-bold text-neutral-900">{s.student_name}</span>{" "}
+                        {s.roll_number && (
+                          <span className="text-neutral-500 font-normal">
+                            ({s.roll_number})
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-xs sm:text-sm text-neutral-600 font-normal whitespace-nowrap sm:text-right">
+                        {statusYearLabel}
+                      </div>
+                    </div>
+
+                    {thesisTitle && (
+                      <div className="mt-1 text-xs sm:text-sm text-neutral-600 italic font-serif leading-relaxed">
+                        &ldquo;{thesisTitle}&rdquo;
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between gap-2 mt-1.5 text-xs text-neutral-500">
+                      <div className="flex flex-wrap items-center gap-3">
+                        {s.co_supervisor && (
+                          <span>
+                            <strong className="text-neutral-700 font-medium">Co-Supervisor:</strong>{" "}
+                            {s.co_supervisor}
+                          </span>
+                        )}
+                        {(s.linkedin_url || s.google_scholar_url || s.scopus_url) && (
+                          <div className="flex items-center gap-2">
+                            {s.linkedin_url && (
+                              <a
+                                href={s.linkedin_url.startsWith("http") ? s.linkedin_url : `https://${s.linkedin_url}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[#0077b5] hover:opacity-80 transition"
+                                title="LinkedIn"
+                              >
+                                <FaLinkedin className="w-3 h-3" />
+                              </a>
+                            )}
+                            {s.google_scholar_url && (
+                              <a
+                                href={s.google_scholar_url.startsWith("http") ? s.google_scholar_url : `https://${s.google_scholar_url}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[#4285F4] hover:opacity-80 transition"
+                                title="Google Scholar"
+                              >
+                                <FaGoogle className="w-3 h-3" />
+                              </a>
+                            )}
+                            {s.scopus_url && (
+                              <a
+                                href={s.scopus_url.startsWith("http") ? s.scopus_url : `https://${s.scopus_url}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[#ff671b] hover:opacity-80 transition"
+                                title="Scopus"
+                              >
+                                <SiScopus className="w-3 h-3" />
+                              </a>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => openDetails(s)}
+                          className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#85261e] hover:underline cursor-pointer"
+                        >
+                          <Info className="w-3 h-3" /> Details
+                        </button>
+                        {canEdit && (
+                          <>
+                            <button
+                              type="button"
+                              onClick={() => openEditModal(s)}
+                              className="p-1 rounded text-neutral-500 hover:text-blue-600 hover:bg-neutral-100 transition"
+                              title="Edit"
+                            >
+                              <Edit className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteRecord(s)}
+                              className="p-1 rounded text-neutral-500 hover:text-red-600 hover:bg-neutral-100 transition"
+                              title="Delete"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr className="bg-[#1f1412] text-white uppercase text-xs font-bold tracking-wider">
+                    <th className="p-3.5 w-14 text-center border-r border-neutral-700">Sr.</th>
+                    <th className="p-3.5 border-r border-neutral-700">Scholar Name</th>
+                    <th className="p-3.5 border-r border-neutral-700 min-w-[240px]">Thesis / Research Title</th>
+                    <th className="p-3.5 w-28 text-center border-r border-neutral-700">Program</th>
+                    <th className="p-3.5 w-28 text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-[#eedfd8]/60">
+                  {records.map((s: any, idx: number) => (
+                    <tr key={s.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
+                      <td className="p-3.5 text-center text-neutral-500 font-mono font-bold align-top text-sm">
+                        {idx + 1}
+                      </td>
+                      <td className="p-3.5 align-top">
+                        <div className="flex items-center gap-3">
+                          {s.photo_url ? (
+                            <img
+                              src={s.photo_url}
+                              alt={s.student_name}
+                              className="w-10 h-10 object-cover object-top rounded-xl border border-[#eedfd8] shadow-2xs flex-shrink-0"
+                            />
+                          ) : (
+                            <div className="w-10 h-10 rounded-xl bg-[#fff9f6] border border-[#eedfd8] flex items-center justify-center text-[#85261e] font-bold text-xs flex-shrink-0">
+                              {s.student_name?.charAt(0) || "S"}
+                            </div>
+                          )}
+                          <div className="space-y-0.5 min-w-0">
+                            <div className="font-bold text-neutral-900 text-sm leading-snug">{s.student_name}</div>
+                            {s.roll_number && (
+                              <div className="font-mono text-xs text-[#85261e] font-medium">Roll: {s.roll_number}</div>
+                            )}
+                            {(s.linkedin_url || s.google_scholar_url || s.scopus_url) && (
+                              <div className="flex items-center gap-2 pt-0.5">
+                                {s.linkedin_url && (
+                                  <a
+                                    href={s.linkedin_url.startsWith("http") ? s.linkedin_url : `https://${s.linkedin_url}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[#0077b5] hover:opacity-80 transition"
+                                    title="LinkedIn"
+                                  >
+                                    <FaLinkedin className="w-3 h-3" />
+                                  </a>
+                                )}
+                                {s.google_scholar_url && (
+                                  <a
+                                    href={s.google_scholar_url.startsWith("http") ? s.google_scholar_url : `https://${s.google_scholar_url}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[#4285F4] hover:opacity-80 transition"
+                                    title="Google Scholar"
+                                  >
+                                    <FaGoogle className="w-3 h-3" />
+                                  </a>
+                                )}
+                                {s.scopus_url && (
+                                  <a
+                                    href={s.scopus_url.startsWith("http") ? s.scopus_url : `https://${s.scopus_url}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[#ff671b] hover:opacity-80 transition"
+                                    title="Scopus"
+                                  >
+                                    <SiScopus className="w-3 h-3" />
+                                  </a>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+                      <td className="p-3.5 align-top space-y-1">
+                        <div className="text-neutral-900 font-semibold leading-snug text-sm">{s.thesis_title}</div>
+                        {s.co_supervisor && (
+                          <div className="text-xs text-neutral-500">Co-Supervisor: {s.co_supervisor}</div>
+                        )}
+                      </td>
+                      <td className="p-3.5 text-center align-top font-bold text-[#85261e] text-sm">
+                        {s.level || defaultLevel}
+                      </td>
+                      <td className="p-3.5 text-center align-top space-y-1.5">
+                        <button
+                          type="button"
+                          onClick={() => openDetails(s)}
+                          className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] hover:bg-[#85261e] hover:text-white transition font-bold text-xs cursor-pointer shadow-2xs"
+                        >
+                          <Info className="w-3.5 h-3.5" /> Details
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )
+        ) : (
+          <div className="p-12 text-center text-neutral-500 text-sm">
+            No {title.toLowerCase()} records listed.
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-[#faf8f6] font-sans pb-16">
@@ -1977,7 +2324,8 @@ export default function FacultyPortfolioPage({
           { label: "Conferences", count: conferenceCount, tab: "conference" as TabKey, icon: Presentation, color: "text-amber-700 bg-amber-50" },
           { label: "Patents", count: patentCount, tab: "patents" as TabKey, icon: Lightbulb, color: "text-indigo-700 bg-indigo-50" },
           { label: "Projects", count: projectCount, tab: "projects" as TabKey, icon: Briefcase, color: "text-emerald-700 bg-emerald-50" },
-          { label: "PhD Guided", count: phdSupervisedCount, tab: "researchSupervision" as TabKey, icon: GraduationCap, color: "text-blue-700 bg-blue-50" },
+          { label: "PhD Guided", count: phdSupervisedCount, tab: "phdSupervision" as TabKey, icon: GraduationCap, color: "text-blue-700 bg-blue-50" },
+          { label: "M.Tech Guided", count: mtechSupervisions.length, tab: "mtechSupervision" as TabKey, icon: Award, color: "text-teal-700 bg-teal-50" },
           { label: "Consultancies", count: consultancyCount, tab: "consultancies" as TabKey, icon: Building2, color: "text-purple-700 bg-purple-50" },
         ].filter((stat) => stat.count > 0);
 
@@ -2112,6 +2460,8 @@ export default function FacultyPortfolioPage({
                   {activeTab === "consultancies" && "Industrial Consultancies"}
                   {activeTab === "experttalk" && "Keynote Lectures & Expert Talks"}
                   {activeTab === "researchSupervision" && "Research Scholar Supervision"}
+                  {activeTab === "phdSupervision" && "Ph.D. / Doctoral Theses Guidance"}
+                  {activeTab === "mtechSupervision" && "M.Tech / Postgraduate Theses Guidance"}
                   {activeTab === "administrativeexperience" && "Administrative Experience"}
                   {activeTab === "honors" && "Honors & Recognitions Achieved"}
                   {activeTab === "internationalAndNationalExposure" && "International & National Exposure"}
@@ -3004,316 +3354,42 @@ export default function FacultyPortfolioPage({
               </div>
             )}
 
-            {/* 11. RESEARCH SUPERVISION TAB */}
+            {/* 11A. PH.D. SUPERVISION TAB */}
+            {activeTab === "phdSupervision" &&
+              renderSupervisionCard(
+                "Ph.D. / Doctoral Theses Guidance",
+                phdSupervisions,
+                "Ph.D.",
+                "phdSupervision",
+                GraduationCap
+              )}
+
+            {/* 11B. M.TECH SUPERVISION TAB */}
+            {activeTab === "mtechSupervision" &&
+              renderSupervisionCard(
+                "M.Tech / Postgraduate Theses Guidance",
+                mtechSupervisions,
+                "M.Tech / PG",
+                "mtechSupervision",
+                Award
+              )}
+
+            {/* BACKWARD COMPATIBILITY / COMBINED SUPERVISION TAB */}
             {activeTab === "researchSupervision" && (
-              <div className="bg-white rounded-2xl border border-[#eedfd8] shadow-xs overflow-hidden">
-                <div className="p-4 bg-[#fdf5f2] border-b border-[#eedfd8] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div className="flex items-center gap-2">
-                    <GraduationCap className="w-5 h-5 text-[#85261e]" />
-                    <h3 className="text-sm sm:text-base font-bold text-[#85261e] tracking-tight uppercase flex items-center gap-2">
-                      RESEARCH GUIDANCE (PH.D. &amp; M.TECH THESES)
-                    </h3>
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#fff9f6] text-[#85261e] border border-[#eedfd8]">
-                      {combinedSupervisions.length}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2 self-end sm:self-auto">
-                    {/* View Switcher: List vs Table */}
-                    <div className="flex items-center bg-white border border-[#eedfd8] rounded-xl p-0.5 shadow-2xs">
-                      <button
-                        type="button"
-                        onClick={() => setSupervisionViewMode("list")}
-                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-                          supervisionViewMode === "list"
-                            ? "bg-[#85261e] text-white shadow-xs"
-                            : "text-neutral-600 hover:text-neutral-900"
-                        }`}
-                      >
-                        <LayoutList className="w-3.5 h-3.5" /> List
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setSupervisionViewMode("table")}
-                        className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-                          supervisionViewMode === "table"
-                            ? "bg-[#85261e] text-white shadow-xs"
-                            : "text-neutral-600 hover:text-neutral-900"
-                        }`}
-                      >
-                        <TableIcon className="w-3.5 h-3.5" /> Table
-                      </button>
-                    </div>
-
-                    {canEdit && (
-                      <button
-                        type="button"
-                        onClick={openAddModal}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#85261e] text-white hover:bg-[#33110e] transition font-bold text-xs shadow-xs cursor-pointer"
-                      >
-                        <Plus className="w-3.5 h-3.5" /> Add Guidance
-                      </button>
-                    )}
-                  </div>
-                </div>
-
-                {combinedSupervisions.length > 0 ? (
-                  supervisionViewMode === "list" ? (
-                    <div className="divide-y divide-[#eedfd8]/60 p-4 sm:p-6 bg-white">
-                      {combinedSupervisions.map((s: any, idx: number) => {
-                        let levelLabel = s.level || "Ph.D.";
-                        const lvlLower = String(levelLabel).toLowerCase();
-                        if (lvlLower.includes("ph") || lvlLower.includes("doc")) {
-                          levelLabel = "Ph.D.";
-                        } else if (
-                          lvlLower.includes("m.tech") ||
-                          lvlLower.includes("mtech") ||
-                          lvlLower.includes("pg") ||
-                          lvlLower.includes("master")
-                        ) {
-                          levelLabel = "M.Tech / PG";
-                        } else if (
-                          lvlLower.includes("b.tech") ||
-                          lvlLower.includes("btech") ||
-                          lvlLower.includes("ug") ||
-                          lvlLower.includes("bachelor")
-                        ) {
-                          levelLabel = "B.Tech";
-                        }
-
-                        let statusText = s.status || "Completed";
-                        const stLower = String(statusText).toLowerCase();
-                        if (stLower.includes("pass") || stLower.includes("complet") || stLower.includes("award")) {
-                          statusText = "Completed";
-                        } else if (stLower.includes("ong") || stLower.includes("pursu")) {
-                          statusText = "Ongoing";
-                        }
-
-                        let year = s.year;
-                        if (!year) {
-                          if (s.end_date) {
-                            const match = String(s.end_date).match(/\b(19|20)\d{2}\b/);
-                            if (match) year = match[0];
-                          } else if (s.registration_year) {
-                            const match = String(s.registration_year).match(/\b(19|20)\d{2}\b/);
-                            if (match) year = match[0];
-                          }
-                        }
-
-                        const statusYearLabel = year ? `${statusText} (${year})` : statusText;
-                        const thesisTitle = s.thesis_title || s.dissertation_title || s.topic;
-
-                        return (
-                          <div
-                            key={s.id || idx}
-                            className="py-3.5 first:pt-0 last:pb-0 group hover:bg-[#fffcfb] -mx-2 px-2 rounded-lg transition"
-                          >
-                            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 text-sm sm:text-[15px]">
-                              <div className="text-neutral-900 leading-snug">
-                                <span className="font-bold text-neutral-900">[{levelLabel}]</span>{" "}
-                                <span className="font-bold text-neutral-900">{s.student_name}</span>{" "}
-                                {s.roll_number && (
-                                  <span className="text-neutral-500 font-normal">
-                                    ({s.roll_number})
-                                  </span>
-                                )}
-                              </div>
-                              <div className="text-xs sm:text-sm text-neutral-600 font-normal whitespace-nowrap sm:text-right">
-                                {statusYearLabel}
-                              </div>
-                            </div>
-
-                            {thesisTitle && (
-                              <div className="mt-1 text-xs sm:text-sm text-neutral-600 italic font-serif leading-relaxed">
-                                &ldquo;{thesisTitle}&rdquo;
-                              </div>
-                            )}
-
-                            <div className="flex items-center justify-between gap-2 mt-1.5 text-xs text-neutral-500">
-                              <div className="flex flex-wrap items-center gap-3">
-                                {s.co_supervisor && (
-                                  <span>
-                                    <strong className="text-neutral-700 font-medium">Co-Supervisor:</strong>{" "}
-                                    {s.co_supervisor}
-                                  </span>
-                                )}
-                                {(s.linkedin_url || s.google_scholar_url || s.scopus_url) && (
-                                  <div className="flex items-center gap-2">
-                                    {s.linkedin_url && (
-                                      <a
-                                        href={s.linkedin_url.startsWith("http") ? s.linkedin_url : `https://${s.linkedin_url}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[#0077b5] hover:opacity-80 transition"
-                                        title="LinkedIn"
-                                      >
-                                        <FaLinkedin className="w-3 h-3" />
-                                      </a>
-                                    )}
-                                    {s.google_scholar_url && (
-                                      <a
-                                        href={s.google_scholar_url.startsWith("http") ? s.google_scholar_url : `https://${s.google_scholar_url}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[#4285F4] hover:opacity-80 transition"
-                                        title="Google Scholar"
-                                      >
-                                        <FaGoogle className="w-3 h-3" />
-                                      </a>
-                                    )}
-                                    {s.scopus_url && (
-                                      <a
-                                        href={s.scopus_url.startsWith("http") ? s.scopus_url : `https://${s.scopus_url}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-[#ff671b] hover:opacity-80 transition"
-                                        title="Scopus"
-                                      >
-                                        <SiScopus className="w-3 h-3" />
-                                      </a>
-                                    )}
-                                  </div>
-                                )}
-                              </div>
-
-                              <div className="flex items-center gap-2">
-                                <button
-                                  type="button"
-                                  onClick={() => openDetails(s)}
-                                  className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#85261e] hover:underline cursor-pointer"
-                                >
-                                  <Info className="w-3 h-3" /> Details
-                                </button>
-                                {canEdit && (
-                                  <>
-                                    <button
-                                      type="button"
-                                      onClick={() => openEditModal(s)}
-                                      className="p-1 rounded text-neutral-500 hover:text-blue-600 hover:bg-neutral-100 transition"
-                                      title="Edit"
-                                    >
-                                      <Edit className="w-3.5 h-3.5" />
-                                    </button>
-                                    <button
-                                      type="button"
-                                      onClick={() => handleDeleteRecord(s)}
-                                      className="p-1 rounded text-neutral-500 hover:text-red-600 hover:bg-neutral-100 transition"
-                                      title="Delete"
-                                    >
-                                      <Trash2 className="w-3.5 h-3.5" />
-                                    </button>
-                                  </>
-                                )}
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  ) : (
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-sm border-collapse">
-                        <thead>
-                          <tr className="bg-[#1f1412] text-white uppercase text-xs font-bold tracking-wider">
-                            <th className="p-3.5 w-14 text-center border-r border-neutral-700">Sr.</th>
-                            <th className="p-3.5 border-r border-neutral-700">Scholar Name</th>
-                            <th className="p-3.5 border-r border-neutral-700 min-w-[240px]">Thesis / Research Title</th>
-                            <th className="p-3.5 w-28 text-center border-r border-neutral-700">Program</th>
-                            <th className="p-3.5 w-28 text-center">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-[#eedfd8]/60">
-                          {combinedSupervisions.map((s: any, idx: number) => (
-                            <tr key={s.id || idx} className={idx % 2 === 1 ? "bg-[#fffaf8]" : "bg-white"}>
-                              <td className="p-3.5 text-center text-neutral-500 font-mono font-bold align-top text-sm">
-                                {idx + 1}
-                              </td>
-                              <td className="p-3.5 align-top">
-                                <div className="flex items-center gap-3">
-                                  {s.photo_url ? (
-                                    <img
-                                      src={s.photo_url}
-                                      alt={s.student_name}
-                                      className="w-10 h-10 object-cover object-top rounded-xl border border-[#eedfd8] shadow-2xs flex-shrink-0"
-                                    />
-                                  ) : (
-                                    <div className="w-10 h-10 rounded-xl bg-[#fff9f6] border border-[#eedfd8] flex items-center justify-center text-[#85261e] font-bold text-xs flex-shrink-0">
-                                      {s.student_name?.charAt(0) || "S"}
-                                    </div>
-                                  )}
-                                  <div className="space-y-0.5 min-w-0">
-                                    <div className="font-bold text-neutral-900 text-sm leading-snug">{s.student_name}</div>
-                                    {s.roll_number && (
-                                      <div className="font-mono text-xs text-[#85261e] font-medium">Roll: {s.roll_number}</div>
-                                    )}
-                                    {(s.linkedin_url || s.google_scholar_url || s.scopus_url) && (
-                                      <div className="flex items-center gap-2 pt-0.5">
-                                        {s.linkedin_url && (
-                                          <a
-                                            href={s.linkedin_url.startsWith("http") ? s.linkedin_url : `https://${s.linkedin_url}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-[#0077b5] hover:opacity-80 transition"
-                                            title="LinkedIn"
-                                          >
-                                            <FaLinkedin className="w-3 h-3" />
-                                          </a>
-                                        )}
-                                        {s.google_scholar_url && (
-                                          <a
-                                            href={s.google_scholar_url.startsWith("http") ? s.google_scholar_url : `https://${s.google_scholar_url}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-[#4285F4] hover:opacity-80 transition"
-                                            title="Google Scholar"
-                                          >
-                                            <FaGoogle className="w-3 h-3" />
-                                          </a>
-                                        )}
-                                        {s.scopus_url && (
-                                          <a
-                                            href={s.scopus_url.startsWith("http") ? s.scopus_url : `https://${s.scopus_url}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-[#ff671b] hover:opacity-80 transition"
-                                            title="Scopus"
-                                          >
-                                            <SiScopus className="w-3 h-3" />
-                                          </a>
-                                        )}
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                              </td>
-                              <td className="p-3.5 align-top space-y-1">
-                                <div className="text-neutral-900 font-semibold leading-snug text-sm">{s.thesis_title}</div>
-                                {s.co_supervisor && (
-                                  <div className="text-xs text-neutral-500">Co-Supervisor: {s.co_supervisor}</div>
-                                )}
-                              </td>
-                              <td className="p-3.5 text-center align-top font-bold text-[#85261e] text-sm">
-                                {s.level || "Ph.D."}
-                              </td>
-                              <td className="p-3.5 text-center align-top space-y-1.5">
-                                <button
-                                  type="button"
-                                  onClick={() => openDetails(s)}
-                                  className="w-full inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] hover:bg-[#85261e] hover:text-white transition font-bold text-xs cursor-pointer shadow-2xs"
-                                >
-                                  <Info className="w-3.5 h-3.5" /> Details
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )
-                ) : (
-                  <div className="p-12 text-center text-neutral-500 text-sm">
-                    No supervision records listed.
-                  </div>
+              <div className="space-y-6">
+                {renderSupervisionCard(
+                  "Ph.D. / Doctoral Theses Guidance",
+                  phdSupervisions,
+                  "Ph.D.",
+                  "phdSupervision",
+                  GraduationCap
+                )}
+                {renderSupervisionCard(
+                  "M.Tech / Postgraduate Theses Guidance",
+                  mtechSupervisions,
+                  "M.Tech / PG",
+                  "mtechSupervision",
+                  Award
                 )}
               </div>
             )}
@@ -4693,7 +4769,7 @@ export default function FacultyPortfolioPage({
               )}
 
               {/* Form fields for RESEARCH SUPERVISION */}
-              {activeTab === "researchSupervision" && (
+              {(activeTab === "researchSupervision" || activeTab === "phdSupervision" || activeTab === "mtechSupervision") && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1">
                     <label className="font-bold text-neutral-700">Degree / Program *</label>
