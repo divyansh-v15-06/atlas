@@ -1753,6 +1753,7 @@ export default function FacultyPortfolioPage({
   const linkedInUrl = faculty.profile?.linkedin_url || faculty.linkedin_url || "https://linkedin.com";
   const researchGateUrl = faculty.profile?.rg_url || `https://www.researchgate.net/search?q=${encodeURIComponent(faculty.full_name)}`;
   const vidwanUrl = faculty.profile?.vidwan_url || `https://vidwan.inflibnet.ac.in/search?q=${encodeURIComponent(faculty.full_name)}`;
+  const publonsUrl = faculty.profile?.publons_url || faculty.publons_url || `https://www.webofscience.com/wos/author/search?q=${encodeURIComponent(faculty.full_name)}`;
   const renderSupervisionCard = (
     title: string,
     records: any[],
