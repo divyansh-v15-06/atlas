@@ -23,6 +23,7 @@ import { MOCK_PHD_SCHOLARS } from "@/lib/mock-data";
 import { formatDate } from "@/lib/utils";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
+import { useFacultyVisibility } from "@/lib/faculty-visibility";
 
 const ITEMS_PER_PAGE = 24;
 
@@ -230,6 +231,7 @@ function ScholarCard({ sch }: ScholarCardProps) {
 
 export default function PhdScholarsPage() {
   const { activeDepartment } = useDepartment();
+  const { isSupervisorVisible } = useFacultyVisibility(activeDepartment.slug);
   const [scholarsList, setScholarsList] = useState<any[]>(() =>
     MOCK_PHD_SCHOLARS.map(normalizeScholar)
   );
@@ -239,6 +241,13 @@ export default function PhdScholarsPage() {
   const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const hasData = activeDepartment.slug === "cse";
+
+  // Reset supervisor filter if selected supervisor is hidden
+  useEffect(() => {
+    if (supervisorFilter !== "ALL" && !isSupervisorVisible(supervisorFilter)) {
+      setSupervisorFilter("ALL");
+    }
+  }, [supervisorFilter, isSupervisorVisible]);
 
   useEffect(() => {
     const loadScholars = async () => {
@@ -277,17 +286,19 @@ export default function PhdScholarsPage() {
     loadScholars();
   }, [activeDepartment.slug]);
 
-  // Extract unique supervisors list
+  // Extract unique visible supervisors list (excluding hidden faculty members)
   const supervisorsList = useMemo(() => {
     if (!hasData) return [];
     const set = new Set<string>();
     scholarsList.forEach((p) => {
       if (p.supervisor && p.supervisor !== "Faculty Supervisor") {
-        set.add(p.supervisor);
+        if (isSupervisorVisible(p.supervisor)) {
+          set.add(p.supervisor);
+        }
       }
     });
     return Array.from(set).sort();
-  }, [hasData, scholarsList]);
+  }, [hasData, scholarsList, isSupervisorVisible]);
 
   const countByStatus = useMemo(() => {
     if (!hasData) return { total: 0, pursuing: 0, passed: 0 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Search,
   Award,
@@ -20,12 +20,14 @@ import { formatDate } from "@/lib/utils";
 import { MOCK_PATENTS, MOCK_FACULTY } from "@/lib/mock-data";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
+import { useFacultyVisibility } from "@/lib/faculty-visibility";
 
 const ITEMS_PER_PAGE = 20;
 
 export default function PatentsPage() {
   const { activeDepartment } = useDepartment();
   const hasData = activeDepartment.slug === "cse";
+  const { visibleFaculty, filterPatents } = useFacultyVisibility(activeDepartment.slug);
 
   // Filters State
   const [selectedStatus, setSelectedStatus] = useState<string>("ALL");
@@ -42,12 +44,25 @@ export default function PatentsPage() {
   // Available Years for Dropdowns
   const availableYears = useMemo(() => {
     const years = new Set<number>();
-    MOCK_PATENTS.forEach((p) => {
+    const basePatents = filterPatents(MOCK_PATENTS);
+    basePatents.forEach((p) => {
       const yr = Number(p.year) || Number(p.filing_date?.split("-")[0]);
       if (yr) years.add(yr);
     });
     return Array.from(years).sort((a, b) => b - a);
-  }, []);
+  }, [filterPatents]);
+
+  // Synchronize selected faculty with visible faculty
+  useEffect(() => {
+    if (selectedFaculty !== "ALL") {
+      const exists = visibleFaculty.some(
+        (f: any) => String(f.id) === selectedFaculty || String(f.legacy_id) === selectedFaculty
+      );
+      if (!exists) {
+        setSelectedFaculty("ALL");
+      }
+    }
+  }, [selectedFaculty, visibleFaculty]);
 
   const handleStartYearChange = (val: string) => {
     setStartYear(val);
@@ -67,9 +82,10 @@ export default function PatentsPage() {
     }
   };
 
-  // Filter Logic
+  // Filter Logic (enforces centralized visibility)
   const filteredPatents = useMemo(() => {
-    return MOCK_PATENTS.filter((pat) => {
+    const basePatents = filterPatents(MOCK_PATENTS);
+    return basePatents.filter((pat) => {
       // Status Filter
       if (selectedStatus !== "ALL") {
         const statusNorm = (pat.status || "").toLowerCase();
@@ -96,9 +112,9 @@ export default function PatentsPage() {
         if (patYr > Number(endYear)) return false;
       }
 
-      // Faculty Inventor Filtering
+      // Faculty Inventor Filtering (visible faculty only)
       if (selectedFaculty !== "ALL") {
-        const fac = MOCK_FACULTY.find(
+        const fac = visibleFaculty.find(
           (f: any) =>
             String(f.id) === selectedFaculty ||
             String(f.legacy_id) === selectedFaculty
@@ -140,7 +156,7 @@ export default function PatentsPage() {
 
       return true;
     });
-  }, [selectedStatus, startYear, endYear, selectedFaculty, searchQuery]);
+  }, [filterPatents, visibleFaculty, selectedStatus, startYear, endYear, selectedFaculty, searchQuery]);
 
   const totalPages = Math.ceil(filteredPatents.length / ITEMS_PER_PAGE) || 1;
   const paginatedPatents = useMemo(() => {
@@ -283,7 +299,7 @@ export default function PatentsPage() {
                   className="w-full bg-white border border-[#eedfd8] rounded-lg px-3 py-2 text-xs font-semibold text-[#33110e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 >
                   <option value="ALL">All Faculty Members</option>
-                  {MOCK_FACULTY.map((f: any) => (
+                  {visibleFaculty.map((f: any) => (
                     <option key={f.id} value={f.id}>
                       {f.full_name}
                     </option>

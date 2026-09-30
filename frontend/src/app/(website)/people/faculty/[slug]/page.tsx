@@ -88,6 +88,7 @@ import {
 } from "@/lib/faculty-storage";
 import { useDepartment } from "@/context/department-context";
 import CoAuthorsInput, { CoAuthorInternal } from "@/components/faculty/CoAuthorsInput";
+import { getStoredFacultyList } from "@/lib/faculty-visibility";
 
 export type TabKey =
   | "facultyInfo"
@@ -769,15 +770,16 @@ export default function FacultyPortfolioPage({
     }
   }, [visibleSidebarItems, activeTab]);
 
-  // Active publications list based on active tab
-  // Colleague faculty list for associated faculty selection
+  // Colleague faculty list for associated faculty selection (visible faculty only)
   const colleagueFacultyList = useMemo(() => {
-    return MOCK_FACULTY.filter(
+    const list = getStoredFacultyList(activeDepartment?.slug || "cse");
+    return list.filter(
       (f: any) =>
+        f.is_visible !== false &&
         f.employee_code?.toUpperCase() !== baseFaculty?.employee_code?.toUpperCase() &&
         f.id !== baseFaculty?.id
     );
-  }, [baseFaculty]);
+  }, [baseFaculty, activeDepartment?.slug]);
 
   const filteredColleagueOptions = useMemo(() => {
     if (!facultySearchQuery.trim()) return colleagueFacultyList;

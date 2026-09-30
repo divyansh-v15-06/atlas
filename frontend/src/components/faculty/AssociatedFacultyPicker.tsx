@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Users, X, Search } from "lucide-react";
 import { MOCK_FACULTY } from "@/lib/mock-data";
+import { useFacultyVisibility } from "@/lib/faculty-visibility";
 
 export interface AssociatedFacultyPickerProps {
   selected: any[];
@@ -21,6 +22,7 @@ export default function AssociatedFacultyPicker({
   placeholder = "Type name or code (e.g. Siddhartha, CS01) to link colleagues...",
   helperText = "Linking colleagues automatically synchronizes this record onto their respective faculty profiles.",
 }: AssociatedFacultyPickerProps) {
+  const { visibleFaculty } = useFacultyVisibility();
   const [searchQuery, setSearchQuery] = useState("");
 
   const currentIdentifier = (
@@ -29,7 +31,7 @@ export default function AssociatedFacultyPicker({
     ""
   ).toLowerCase();
 
-  const filteredColleagues = MOCK_FACULTY.filter((f) => {
+  const filteredColleagues = visibleFaculty.filter((f) => {
     const fId = (f.employee_code || f.id || "").toLowerCase();
     if (currentIdentifier && fId === currentIdentifier) return false;
 

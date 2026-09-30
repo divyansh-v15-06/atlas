@@ -81,6 +81,18 @@ export default function FacultyDirectoryPage() {
     };
 
     loadFaculty();
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("nith_faculty_updated", loadFaculty);
+      window.addEventListener("storage", loadFaculty);
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("nith_faculty_updated", loadFaculty);
+        window.removeEventListener("storage", loadFaculty);
+      }
+    };
   }, [activeDepartment.id, activeDepartment.slug]);
 
   const filteredFaculty = useMemo(() => {

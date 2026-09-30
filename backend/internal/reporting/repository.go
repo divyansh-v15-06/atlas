@@ -125,7 +125,7 @@ func (r *pgRepository) GetLegacyCounts(ctx context.Context, deptID string) (*Leg
 	querySQL := `
 		SELECT 
 			(SELECT COUNT(*) FROM staff WHERE deleted_at IS NULL AND (department_id::text = $1 OR $1 = '')) AS staff,
-			(SELECT COUNT(*) FROM faculty WHERE deleted_at IS NULL) AS faculty,
+			(SELECT COUNT(*) FROM faculty WHERE deleted_at IS NULL AND is_visible = TRUE) AS faculty,
 			(SELECT COUNT(*) FROM students s JOIN programmes p ON p.id = s.programme_id WHERE s.deleted_at IS NULL AND p.level = 'UG' AND (s.department_id::text = $1 OR $1 = '')) AS bachelor_student,
 			(SELECT COUNT(DISTINCT p.id) FROM publications p LEFT JOIN publication_departments pd ON pd.publication_id = p.id WHERE p.deleted_at IS NULL AND (pd.department_id::text = $1 OR $1 = '')) AS publication,
 			(SELECT COUNT(DISTINCT pat.id) FROM patents pat LEFT JOIN patent_departments pd ON pd.patent_id = pat.id WHERE pat.deleted_at IS NULL AND (pd.department_id::text = $1 OR $1 = '')) AS patent,

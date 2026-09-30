@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Search,
   Building2,
@@ -18,12 +18,14 @@ import { formatINR } from "@/lib/utils";
 import { MOCK_CONSULTANCIES, MOCK_FACULTY } from "@/lib/mock-data";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
+import { useFacultyVisibility } from "@/lib/faculty-visibility";
 
 const ITEMS_PER_PAGE = 20;
 
 export default function ConsultancyPage() {
   const { activeDepartment } = useDepartment();
   const hasData = activeDepartment.slug === "cse";
+  const { visibleFaculty, filterConsultancies } = useFacultyVisibility(activeDepartment.slug);
 
   // Filters State
   const [selectedStatus, setSelectedStatus] = useState<string>("ALL");
@@ -37,27 +39,42 @@ export default function ConsultancyPage() {
   const [selectedConsultancy, setSelectedConsultancy] = useState<any | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  // Synchronize selected faculty with visible faculty
+  useEffect(() => {
+    if (selectedFaculty !== "ALL") {
+      const exists = visibleFaculty.some(
+        (f: any) => String(f.id) === selectedFaculty || String(f.legacy_id) === selectedFaculty
+      );
+      if (!exists) {
+        setSelectedFaculty("ALL");
+      }
+    }
+  }, [selectedFaculty, visibleFaculty]);
+
   // Available Academic Sessions
   const availableSessions = useMemo(() => {
     const sessions = new Set<string>();
-    MOCK_CONSULTANCIES.forEach((c) => {
+    const baseConsultancies = filterConsultancies(MOCK_CONSULTANCIES);
+    baseConsultancies.forEach((c) => {
       if (c.academic_session) sessions.add(c.academic_session);
     });
     return Array.from(sessions).sort().reverse();
-  }, []);
+  }, [filterConsultancies]);
 
   // Available Client Organisations
   const availableClients = useMemo(() => {
     const clients = new Set<string>();
-    MOCK_CONSULTANCIES.forEach((c) => {
+    const baseConsultancies = filterConsultancies(MOCK_CONSULTANCIES);
+    baseConsultancies.forEach((c) => {
       if (c.client_organisation) clients.add(c.client_organisation);
     });
     return Array.from(clients).sort();
-  }, []);
+  }, [filterConsultancies]);
 
-  // Filter Logic
+  // Filter Logic (enforces centralized visibility)
   const filteredConsultancies = useMemo(() => {
-    return MOCK_CONSULTANCIES.filter((c) => {
+    const baseConsultancies = filterConsultancies(MOCK_CONSULTANCIES);
+    return baseConsultancies.filter((c) => {
       // Status Filter
       if (selectedStatus !== "ALL") {
         if (c.status?.toLowerCase() !== selectedStatus.toLowerCase()) {
@@ -79,9 +96,9 @@ export default function ConsultancyPage() {
         }
       }
 
-      // Faculty Consultant Filter
+      // Faculty Consultant Filter (visible faculty only)
       if (selectedFaculty !== "ALL") {
-        const fac = MOCK_FACULTY.find(
+        const fac = visibleFaculty.find(
           (f: any) =>
             String(f.id) === selectedFaculty ||
             String(f.legacy_id) === selectedFaculty
@@ -122,7 +139,7 @@ export default function ConsultancyPage() {
 
       return true;
     });
-  }, [selectedStatus, selectedSession, selectedClient, selectedFaculty, searchQuery]);
+  }, [filterConsultancies, visibleFaculty, selectedStatus, selectedSession, selectedClient, selectedFaculty, searchQuery]);
 
   const totalPages = Math.ceil(filteredConsultancies.length / ITEMS_PER_PAGE) || 1;
   const paginatedConsultancies = useMemo(() => {
@@ -259,7 +276,7 @@ export default function ConsultancyPage() {
                   className="w-full bg-white border border-[#eedfd8] rounded-lg px-3 py-2 text-xs font-semibold text-[#33110e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 >
                   <option value="ALL">All Faculty Members</option>
-                  {MOCK_FACULTY.map((f: any) => (
+                  {visibleFaculty.map((f: any) => (
                     <option key={f.id} value={f.id}>
                       {f.full_name}
                     </option>

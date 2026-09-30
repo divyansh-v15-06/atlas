@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { Users, UserPlus, X, Plus, School, Globe, Search, ArrowUpDown } from "lucide-react";
 import { MOCK_FACULTY } from "@/lib/mock-data";
+import { useFacultyVisibility } from "@/lib/faculty-visibility";
 
 export interface CoAuthorInternal {
   id?: string;
@@ -35,6 +36,7 @@ export default function CoAuthorsInput({
   label = "Publication Co-Authors",
   helperText = "Specify contributors from within NIT Hamirpur to auto-sync to their profile, and add collaborators outside NIT Hamirpur.",
 }: CoAuthorsInputProps) {
+  const { visibleFaculty } = useFacultyVisibility();
   const [facultySearch, setFacultySearch] = useState("");
   const [externalInput, setExternalInput] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -51,7 +53,7 @@ export default function CoAuthorsInput({
     if (!facultySearch.trim()) return [];
     const q = facultySearch.toLowerCase().trim();
 
-    return MOCK_FACULTY.filter((f) => {
+    return visibleFaculty.filter((f) => {
       const fId = (f.employee_code || f.id || "").toLowerCase();
       // Exclude current author
       if (currentIdentifier && fId === currentIdentifier) return false;

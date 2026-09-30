@@ -22,6 +22,7 @@ export const MOCK_FACULTY = databaseSeed.faculty.map((f: any) => ({
   employee_code: f.employee_code,
   designation: f.designation,
   is_active: true,
+  is_visible: f.is_visible !== false,
   email: f.email,
   phone: f.phone ? `+91-1972-${f.phone}` : "+91-1972-254400",
   image_url: f.image_url || "/hod.jpg",

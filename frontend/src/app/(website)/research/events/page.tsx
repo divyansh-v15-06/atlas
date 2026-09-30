@@ -22,12 +22,14 @@ import { MOCK_FACULTY } from "@/lib/mock-data";
 import { getStoredEvents } from "@/lib/faculty-storage";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
+import { useFacultyVisibility } from "@/lib/faculty-visibility";
 
 const ITEMS_PER_PAGE = 20;
 
 export default function EventsPage() {
   const { activeDepartment } = useDepartment();
   const hasData = activeDepartment.slug === "cse";
+  const { visibleFaculty, filterEvents } = useFacultyVisibility(activeDepartment.slug);
 
   // Events State from persistent storage
   const [eventsList, setEventsList] = useState<any[]>(() => getStoredEvents());
@@ -57,36 +59,52 @@ export default function EventsPage() {
   const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  // Synchronize selected faculty with visible faculty
+  useEffect(() => {
+    if (selectedFaculty !== "ALL") {
+      const exists = visibleFaculty.some(
+        (f: any) => String(f.id) === selectedFaculty || String(f.legacy_id) === selectedFaculty
+      );
+      if (!exists) {
+        setSelectedFaculty("ALL");
+      }
+    }
+  }, [selectedFaculty, visibleFaculty]);
+
   // Available Event Types
   const availableTypes = useMemo(() => {
     const types = new Set<string>();
-    eventsList.forEach((ev: any) => {
+    const baseEvents = filterEvents(eventsList);
+    baseEvents.forEach((ev: any) => {
       if (ev.event_type) types.add(ev.event_type.trim());
     });
     return Array.from(types).sort();
-  }, [eventsList]);
+  }, [eventsList, filterEvents]);
 
   // Available Academic Sessions
   const availableSessions = useMemo(() => {
     const sessions = new Set<string>();
-    eventsList.forEach((ev: any) => {
+    const baseEvents = filterEvents(eventsList);
+    baseEvents.forEach((ev: any) => {
       if (ev.academic_session) sessions.add(ev.academic_session.trim());
     });
     return Array.from(sessions).sort().reverse();
-  }, [eventsList]);
+  }, [eventsList, filterEvents]);
 
   // Available Categories
   const availableCategories = useMemo(() => {
     const cats = new Set<string>();
-    eventsList.forEach((ev: any) => {
+    const baseEvents = filterEvents(eventsList);
+    baseEvents.forEach((ev: any) => {
       if (ev.category) cats.add(ev.category.trim());
     });
     return Array.from(cats).sort();
-  }, [eventsList]);
+  }, [eventsList, filterEvents]);
 
-  // Filter Logic
+  // Filter Logic (enforces centralized visibility)
   const filteredEvents = useMemo(() => {
-    return eventsList.filter((ev: any) => {
+    const baseEvents = filterEvents(eventsList);
+    return baseEvents.filter((ev: any) => {
       // Event Type Filter
       if (selectedType !== "ALL") {
         if ((ev.event_type || "").toLowerCase() !== selectedType.toLowerCase()) {
@@ -108,9 +126,9 @@ export default function EventsPage() {
         }
       }
 
-      // Faculty / Coordinator / Convenor Filter
+      // Faculty / Coordinator / Convenor Filter (visible faculty only)
       if (selectedFaculty !== "ALL") {
-        const fac = MOCK_FACULTY.find(
+        const fac = visibleFaculty.find(
           (f: any) =>
             String(f.id) === selectedFaculty ||
             String(f.legacy_id) === selectedFaculty
@@ -172,7 +190,7 @@ export default function EventsPage() {
 
       return true;
     });
-  }, [eventsList, selectedType, selectedSession, selectedCategory, selectedFaculty, searchQuery]);
+  }, [eventsList, filterEvents, visibleFaculty, selectedType, selectedSession, selectedCategory, selectedFaculty, searchQuery]);
 
   const totalPages = Math.ceil(filteredEvents.length / ITEMS_PER_PAGE) || 1;
   const paginatedEvents = useMemo(() => {
@@ -319,7 +337,7 @@ export default function EventsPage() {
                   className="w-full bg-white border border-[#eedfd8] rounded-lg px-3 py-2 text-xs font-semibold text-[#33110e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 >
                   <option value="ALL">All Faculty Members</option>
-                  {MOCK_FACULTY.map((f: any) => (
+                  {visibleFaculty.map((f: any) => (
                     <option key={f.id} value={f.id}>
                       {f.full_name}
                     </option>

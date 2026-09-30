@@ -198,6 +198,9 @@ export default function AdminFacultyPage() {
     if (isCse) {
       localStorage.setItem("nith_admin_faculty_list", JSON.stringify(normalized));
     }
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("nith_faculty_updated"));
+    }
   };
 
   // Metrics Counters: Sums up 100% accurately without omitting any staff

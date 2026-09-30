@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Search,
   BookOpen,
@@ -21,12 +21,14 @@ import { toast } from "sonner";
 import { MOCK_PUBLICATIONS, MOCK_FACULTY } from "@/lib/mock-data";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
+import { useFacultyVisibility } from "@/lib/faculty-visibility";
 
 const ITEMS_PER_PAGE = 20;
 
 export default function PublicationsPage() {
   const { activeDepartment } = useDepartment();
   const hasData = activeDepartment.slug === "cse";
+  const { visibleFaculty, filterPublications } = useFacultyVisibility(activeDepartment.slug);
 
   // Filters State
   const [selectedType, setSelectedType] = useState<string>("ALL");
@@ -44,11 +46,24 @@ export default function PublicationsPage() {
   // Available Years for Dropdown (e.g. 2026 down to 2005)
   const availableYears = useMemo(() => {
     const years = new Set<number>();
-    MOCK_PUBLICATIONS.forEach((p) => {
+    const basePubs = filterPublications(MOCK_PUBLICATIONS);
+    basePubs.forEach((p) => {
       if (p.year) years.add(Number(p.year));
     });
     return Array.from(years).sort((a, b) => b - a);
-  }, []);
+  }, [filterPublications]);
+
+  // Synchronize selected faculty with visible faculty (reset to ALL if currently selected faculty was hidden)
+  useEffect(() => {
+    if (selectedFaculty !== "ALL") {
+      const exists = visibleFaculty.some(
+        (f: any) => String(f.id) === selectedFaculty || String(f.legacy_id) === selectedFaculty
+      );
+      if (!exists) {
+        setSelectedFaculty("ALL");
+      }
+    }
+  }, [selectedFaculty, visibleFaculty]);
 
   const handleStartYearChange = (val: string) => {
     setStartYear(val);
@@ -68,9 +83,10 @@ export default function PublicationsPage() {
     }
   };
 
-  // Filter Logic
+  // Filter Logic (enforces centralized visibility)
   const filteredPubs = useMemo(() => {
-    return MOCK_PUBLICATIONS.filter((pub) => {
+    const basePubs = filterPublications(MOCK_PUBLICATIONS);
+    return basePubs.filter((pub) => {
       // Publication Type
       if (selectedType !== "ALL") {
         if (pub.publication_type?.toLowerCase() !== selectedType.toLowerCase()) {
@@ -90,9 +106,9 @@ export default function PublicationsPage() {
         if (pubYr > Number(endYear)) return false;
       }
 
-      // Faculty Name Filtering (Relational ID + Robust Name Normalization)
+      // Faculty Name Filtering (Relational ID + Robust Name Normalization from visible faculty only)
       if (selectedFaculty !== "ALL") {
-        const fac = MOCK_FACULTY.find(
+        const fac = visibleFaculty.find(
           (f: any) =>
             String(f.id) === selectedFaculty ||
             String(f.legacy_id) === selectedFaculty
@@ -190,7 +206,7 @@ export default function PublicationsPage() {
 
       return true;
     });
-  }, [selectedType, startYear, endYear, selectedFaculty, selectedIndexing, searchQuery]);
+  }, [filterPublications, visibleFaculty, selectedType, startYear, endYear, selectedFaculty, selectedIndexing, searchQuery]);
 
   const totalPages = Math.ceil(filteredPubs.length / ITEMS_PER_PAGE) || 1;
   const paginatedPubs = useMemo(() => {
@@ -336,7 +352,7 @@ export default function PublicationsPage() {
               className="w-full bg-white border border-[#eedfd8] rounded-lg px-3 py-2 text-xs font-semibold text-[#33110e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
             >
               <option value="ALL">All Faculty Members</option>
-              {MOCK_FACULTY.map((f: any) => (
+              {visibleFaculty.map((f: any) => (
                 <option key={f.id} value={f.id}>
                   {f.full_name}
                 </option>

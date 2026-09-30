@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Search,
   Briefcase,
@@ -17,12 +17,14 @@ import { formatINR, formatDate } from "@/lib/utils";
 import { MOCK_PROJECTS, MOCK_FACULTY } from "@/lib/mock-data";
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
+import { useFacultyVisibility } from "@/lib/faculty-visibility";
 
 const ITEMS_PER_PAGE = 20;
 
 export default function ProjectsPage() {
   const { activeDepartment } = useDepartment();
   const hasData = activeDepartment.slug === "cse";
+  const { visibleFaculty, filterProjects } = useFacultyVisibility(activeDepartment.slug);
 
   // Filters State
   const [selectedStatus, setSelectedStatus] = useState<string>("ALL");
@@ -40,21 +42,35 @@ export default function ProjectsPage() {
   // Available Years for Dropdowns
   const availableYears = useMemo(() => {
     const years = new Set<number>();
-    MOCK_PROJECTS.forEach((p) => {
+    const baseProjects = filterProjects(MOCK_PROJECTS);
+    baseProjects.forEach((p) => {
       const yr = Number(p.year) || Number(p.start_date?.split("-")[0]);
       if (yr) years.add(yr);
     });
     return Array.from(years).sort((a, b) => b - a);
-  }, []);
+  }, [filterProjects]);
 
   // Available Sponsoring Agencies
   const availableAgencies = useMemo(() => {
     const agencies = new Set<string>();
-    MOCK_PROJECTS.forEach((p) => {
+    const baseProjects = filterProjects(MOCK_PROJECTS);
+    baseProjects.forEach((p) => {
       if (p.funding_agency) agencies.add(p.funding_agency);
     });
     return Array.from(agencies).sort();
-  }, []);
+  }, [filterProjects]);
+
+  // Synchronize selected faculty with visible faculty
+  useEffect(() => {
+    if (selectedFaculty !== "ALL") {
+      const exists = visibleFaculty.some(
+        (f: any) => String(f.id) === selectedFaculty || String(f.legacy_id) === selectedFaculty
+      );
+      if (!exists) {
+        setSelectedFaculty("ALL");
+      }
+    }
+  }, [selectedFaculty, visibleFaculty]);
 
   const handleStartYearChange = (val: string) => {
     setStartYear(val);
@@ -74,9 +90,10 @@ export default function ProjectsPage() {
     }
   };
 
-  // Filter Logic
+  // Filter Logic (enforces centralized visibility)
   const filteredProjects = useMemo(() => {
-    return MOCK_PROJECTS.filter((prj) => {
+    const baseProjects = filterProjects(MOCK_PROJECTS);
+    return baseProjects.filter((prj) => {
       // Status Filter
       if (selectedStatus !== "ALL") {
         if (prj.status?.toLowerCase() !== selectedStatus.toLowerCase()) {
@@ -103,9 +120,9 @@ export default function ProjectsPage() {
         }
       }
 
-      // Faculty Investigator Filter
+      // Faculty Investigator Filter (visible faculty only)
       if (selectedFaculty !== "ALL") {
-        const fac = MOCK_FACULTY.find(
+        const fac = visibleFaculty.find(
           (f: any) =>
             String(f.id) === selectedFaculty ||
             String(f.legacy_id) === selectedFaculty
@@ -147,7 +164,7 @@ export default function ProjectsPage() {
 
       return true;
     });
-  }, [selectedStatus, startYear, endYear, selectedAgency, selectedFaculty, searchQuery]);
+  }, [filterProjects, visibleFaculty, selectedStatus, startYear, endYear, selectedAgency, selectedFaculty, searchQuery]);
 
   const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE) || 1;
   const paginatedProjects = useMemo(() => {
@@ -307,7 +324,7 @@ export default function ProjectsPage() {
                   className="w-full bg-white border border-[#eedfd8] rounded-lg px-3 py-2 text-xs font-semibold text-[#33110e] focus:outline-hidden focus:ring-1 focus:ring-[#85261e]"
                 >
                   <option value="ALL">All Faculty Members</option>
-                  {MOCK_FACULTY.map((f: any) => (
+                  {visibleFaculty.map((f: any) => (
                     <option key={f.id} value={f.id}>
                       {f.full_name}
                     </option>
