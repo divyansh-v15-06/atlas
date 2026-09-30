@@ -54,6 +54,15 @@ export function matchesFacultyName(text: string, facultyFullName: string): boole
  * or falls back to MOCK_FACULTY.
  */
 export function getStoredFacultyList(deptSlug: string = "cse"): any[] {
+  // Build lookup of seed default visibility (where contract faculty TF042-TF051 are false)
+  const seedVisibilityMap = new Map<string, boolean>();
+  MOCK_FACULTY.forEach((f: any) => {
+    const isVis = f.is_visible !== false;
+    if (f.id) seedVisibilityMap.set(String(f.id).toLowerCase(), isVis);
+    if (f.employee_code) seedVisibilityMap.set(String(f.employee_code).toUpperCase(), isVis);
+    if (f.full_name) seedVisibilityMap.set(normalizeFacultyName(f.full_name), isVis);
+  });
+
   if (typeof window !== "undefined") {
     const scopedKey = `nith_admin_faculty_list_${deptSlug}`;
     const saved =
@@ -64,7 +73,30 @@ export function getStoredFacultyList(deptSlug: string = "cse"): any[] {
       try {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
+          return parsed.map((item: any) => {
+            const fId = String(item.id || "").toLowerCase();
+            const fCode = String(item.employee_code || "").toUpperCase();
+            const fName = normalizeFacultyName(item.full_name || "");
+
+            // Contract faculty (TF...) are hidden by default unless seed / database marked otherwise
+            let isVis = item.is_visible;
+            if (fCode.startsWith("TF") || item.designation?.toLowerCase().includes("contract")) {
+              if (seedVisibilityMap.has(fCode)) {
+                isVis = seedVisibilityMap.get(fCode)!;
+              } else if (seedVisibilityMap.has(fId)) {
+                isVis = seedVisibilityMap.get(fId)!;
+              } else if (isVis === undefined) {
+                isVis = false;
+              }
+            } else if (isVis === undefined) {
+              if (fId && seedVisibilityMap.has(fId)) isVis = seedVisibilityMap.get(fId)!;
+              else if (fCode && seedVisibilityMap.has(fCode)) isVis = seedVisibilityMap.get(fCode)!;
+              else if (fName && seedVisibilityMap.has(fName)) isVis = seedVisibilityMap.get(fName)!;
+              else isVis = true;
+            }
+
+            return { ...item, is_visible: isVis };
+          });
         }
       } catch {}
     }
@@ -405,8 +437,62 @@ export function isConsultancyBelongingToVisibleFaculty(
 export function useFacultyVisibility(deptSlug: string = "cse") {
   const [facultyList, setFacultyList] = useState<any[]>(() => getStoredFacultyList(deptSlug));
 
-  const loadFaculty = useCallback(() => {
-    setFacultyList(getStoredFacultyList(deptSlug));
+  const loadFaculty = useCallback(async () => {
+    // 1. Instant sync from local/seed
+    const local = getStoredFacultyList(deptSlug);
+    setFacultyList(local);
+
+    // 2. Fetch live data from backend API for real-time synchronization
+    const rawApiUrl = process.env.NEXT_PUBLIC_API_URL || "/backend/api/v1";
+    const cleanApiUrl = rawApiUrl.endsWith("/") ? rawApiUrl.slice(0, -1) : rawApiUrl;
+    const candidates = [
+      `${cleanApiUrl}/faculty`,
+      "/backend/api/v1/faculty",
+      "http://localhost:3001/api/v1/faculty",
+    ];
+
+    for (const url of candidates) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          const json = await res.json();
+          const items = Array.isArray(json) ? json : json.data;
+          if (Array.isArray(items) && items.length > 0) {
+            const visibilityMap = new Map<string, boolean>();
+            items.forEach((item: any) => {
+              if (item.id) visibilityMap.set(String(item.id).toLowerCase(), item.is_visible !== false);
+              if (item.employee_code) visibilityMap.set(String(item.employee_code).toUpperCase(), item.is_visible !== false);
+              if (item.full_name) visibilityMap.set(normalizeFacultyName(item.full_name), item.is_visible !== false);
+            });
+
+            const merged = local.map((f: any) => {
+              const fId = String(f.id || "").toLowerCase();
+              const fCode = String(f.employee_code || "").toUpperCase();
+              const fName = normalizeFacultyName(f.full_name || "");
+
+              let isVis = f.is_visible !== false;
+              if (fId && visibilityMap.has(fId)) isVis = visibilityMap.get(fId)!;
+              else if (fCode && visibilityMap.has(fCode)) isVis = visibilityMap.get(fCode)!;
+              else if (fName && visibilityMap.has(fName)) isVis = visibilityMap.get(fName)!;
+
+              return { ...f, is_visible: isVis };
+            });
+
+            setFacultyList(merged);
+            if (typeof window !== "undefined") {
+              const scopedKey = `nith_admin_faculty_list_${deptSlug}`;
+              localStorage.setItem(scopedKey, JSON.stringify(merged));
+              if (deptSlug === "cse") {
+                localStorage.setItem("nith_admin_faculty_list", JSON.stringify(merged));
+              }
+            }
+            break;
+          }
+        }
+      } catch {
+        // Try next candidate URL
+      }
+    }
   }, [deptSlug]);
 
   useEffect(() => {
@@ -442,12 +528,12 @@ export function useFacultyVisibility(deptSlug: string = "cse") {
   const hiddenInfo = useMemo(() => getHiddenFacultyIdentifiers(facultyList), [facultyList]);
 
   const visibleFaculty = useMemo(() => {
-    return facultyList.filter((f) => f.is_visible !== false);
-  }, [facultyList]);
+    return facultyList.filter((f) => f.is_visible !== false && isFacultyVisible(f, hiddenInfo));
+  }, [facultyList, hiddenInfo]);
 
   const hiddenFaculty = useMemo(() => {
-    return facultyList.filter((f) => f.is_visible === false);
-  }, [facultyList]);
+    return facultyList.filter((f) => f.is_visible === false || !isFacultyVisible(f, hiddenInfo));
+  }, [facultyList, hiddenInfo]);
 
   const checkIsFacultyVisible = useCallback(
     (facultyOrId: any) => isFacultyVisible(facultyOrId, hiddenInfo),

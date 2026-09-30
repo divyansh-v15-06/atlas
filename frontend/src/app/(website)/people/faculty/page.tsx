@@ -23,77 +23,15 @@ import {
 import { useDepartment } from "@/context/department-context";
 import { DepartmentEmptyState } from "@/components/common/department-empty-state";
 
+import { useFacultyVisibility } from "@/lib/faculty-visibility";
+
 export default function FacultyDirectoryPage() {
   const { activeDepartment } = useDepartment();
   const [search, setSearch] = useState("");
   const [designationFilter, setDesignationFilter] = useState("ALL");
-  const [facultyList, setFacultyList] = useState<any[]>(() => {
-    return MOCK_FACULTY.filter((f) => f.is_visible !== false);
-  });
+  const { visibleFaculty: facultyList } = useFacultyVisibility(activeDepartment.slug);
 
   const hasData = activeDepartment.slug === "cse";
-
-  // Dynamically load faculty from API / Admin Storage and enforce visibility filter
-  useEffect(() => {
-    const loadFaculty = async () => {
-      // 1. Check local storage cache for instant sync with Admin actions
-      if (typeof window !== "undefined") {
-        const scopedKey = `nith_admin_faculty_list_${activeDepartment.slug}`;
-        const saved =
-          localStorage.getItem(scopedKey) ||
-          (activeDepartment.slug === "cse" ? localStorage.getItem("nith_admin_faculty_list") : null);
-
-        if (saved) {
-          try {
-            const parsed = JSON.parse(saved);
-            if (Array.isArray(parsed) && parsed.length > 0) {
-              const visibleOnly = parsed.filter((f: any) => f.is_visible !== false);
-              setFacultyList(visibleOnly);
-              return;
-            }
-          } catch {}
-        }
-      }
-
-      // 2. Fetch from backend API
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
-      try {
-        const deptParam = activeDepartment?.id
-          ? `?department_id=${encodeURIComponent(activeDepartment.id)}&visible=true`
-          : "?visible=true";
-        const res = await fetch(`${apiUrl}/faculty${deptParam}`);
-        if (res.ok) {
-          const json = await res.json();
-          const items = Array.isArray(json) ? json : json.data;
-          if (Array.isArray(items) && items.length > 0) {
-            setFacultyList(items.filter((f: any) => f.is_visible !== false));
-            return;
-          }
-        }
-      } catch {}
-
-      // 3. Fallback to MOCK_FACULTY
-      if (activeDepartment.slug === "cse") {
-        setFacultyList(MOCK_FACULTY.filter((f) => f.is_visible !== false));
-      } else {
-        setFacultyList([]);
-      }
-    };
-
-    loadFaculty();
-
-    if (typeof window !== "undefined") {
-      window.addEventListener("nith_faculty_updated", loadFaculty);
-      window.addEventListener("storage", loadFaculty);
-    }
-
-    return () => {
-      if (typeof window !== "undefined") {
-        window.removeEventListener("nith_faculty_updated", loadFaculty);
-        window.removeEventListener("storage", loadFaculty);
-      }
-    };
-  }, [activeDepartment.id, activeDepartment.slug]);
 
   const filteredFaculty = useMemo(() => {
     if (!hasData) return [];

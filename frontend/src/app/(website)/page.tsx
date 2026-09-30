@@ -119,7 +119,7 @@ export default function HomePage() {
     isCse ? TEMPCSE_HERO_SLIDES : DEFAULT_DEPARTMENT_SLIDES(activeDepartment.name, activeDepartment.code)
   );
   const [metrics, setMetrics] = useState({
-    faculty: isCse ? 27 : 0,
+    faculty: isCse ? 18 : 0,
     staff: isCse ? 4 : 0,
     publications: isCse ? 713 : 0,
     students: isCse ? 621 : 0,
@@ -158,7 +158,7 @@ export default function HomePage() {
             const totalStudents = ugCount + pgCount + pursuingPhd;
 
             const pubCount = typeof d.publication === "number" ? d.publication : (isCse ? 713 : 0);
-            const facCount = typeof d.faculty === "number" ? d.faculty : (isCse ? 27 : 0);
+            const facCount = typeof d.faculty === "number" ? d.faculty : (isCse ? 18 : 0);
             const staffCount = typeof d.staff === "number" ? d.staff : (isCse ? 4 : 0);
             const patentCount = typeof d.Patent === "number" ? d.Patent : (isCse ? 15 : 0);
             const projectCount = typeof d.Project === "number" ? d.Project : (isCse ? 8 : 0);
@@ -204,7 +204,7 @@ export default function HomePage() {
 
       if (!isCancelled) {
         setMetrics({
-          faculty: isCse ? 27 : 0,
+          faculty: isCse ? 18 : 0,
           staff: isCse ? 4 : 0,
           publications: isCse ? 713 : 0,
           students: isCse ? 621 : 0,

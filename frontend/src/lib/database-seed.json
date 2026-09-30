@@ -5418,7 +5418,8 @@
         }
       ],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": true
     },
     {
       "id": "5e12253b-db56-5e31-9e51-19ab6edac297",
@@ -7877,7 +7878,8 @@
             2
           ]
         }
-      ]
+      ],
+      "is_visible": true
     },
     {
       "id": "c17e0191-445a-5f4d-961b-fb830ce9136c",
@@ -10800,7 +10802,8 @@
             3
           ]
         }
-      ]
+      ],
+      "is_visible": true
     },
     {
       "id": "6c4f2340-35a3-5b21-b580-081dad7f5ab1",
@@ -13814,7 +13817,8 @@
             4
           ]
         }
-      ]
+      ],
+      "is_visible": true
     },
     {
       "id": "853a73f2-13a5-5c4f-a25f-21fd5d695f93",
@@ -17189,7 +17193,8 @@
           ]
         }
       ],
-      "consultancies": []
+      "consultancies": [],
+      "is_visible": true
     },
     {
       "id": "975a3e83-a789-559f-91c9-65395cb5bbdc",
@@ -18654,7 +18659,8 @@
       },
       "events": [],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": true
     },
     {
       "id": "dbb4d23e-e5e3-5f8e-8bb1-d0a790099800",
@@ -19544,7 +19550,8 @@
           ]
         }
       ],
-      "consultancies": []
+      "consultancies": [],
+      "is_visible": true
     },
     {
       "id": "fa8f838f-1d0f-5506-9c25-961dd6458f00",
@@ -21585,7 +21592,8 @@
         }
       ],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": true
     },
     {
       "id": "56a64caf-d814-5fc7-a9e1-3d12a6cd9d76",
@@ -23622,7 +23630,8 @@
       },
       "events": [],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": true
     },
     {
       "id": "edbab47f-a36c-5216-9914-5b5561bc8137",
@@ -26991,7 +27000,8 @@
           ]
         }
       ],
-      "consultancies": []
+      "consultancies": [],
+      "is_visible": true
     },
     {
       "id": "b638c21f-609f-57d2-8a24-b133e03ad4ea",
@@ -28173,7 +28183,8 @@
         }
       ],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": true
     },
     {
       "id": "4144f97d-26c3-588f-a81b-f9c7c0740347",
@@ -29250,7 +29261,8 @@
           ]
         }
       ],
-      "consultancies": []
+      "consultancies": [],
+      "is_visible": true
     },
     {
       "id": "48004e0f-8ca0-5f45-85e1-2c6cf4eada17",
@@ -30255,7 +30267,8 @@
         }
       ],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": true
     },
     {
       "id": "cfcbebac-52f4-5195-b732-d21e74137122",
@@ -30776,7 +30789,8 @@
         }
       ],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": true
     },
     {
       "id": "26c2fd67-8cf4-5d5d-b843-d783e1568e38",
@@ -31557,7 +31571,8 @@
         }
       ],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": true
     },
     {
       "id": "4f0ed2a0-960b-5ba1-bbee-6723c562a1da",
@@ -32404,7 +32419,8 @@
           ]
         }
       ],
-      "consultancies": []
+      "consultancies": [],
+      "is_visible": true
     },
     {
       "id": "c6b9e423-ae53-563f-afb8-8c06426dedb5",
@@ -33666,7 +33682,8 @@
           ]
         }
       ],
-      "consultancies": []
+      "consultancies": [],
+      "is_visible": true
     },
     {
       "id": "a9eafb31-0751-5ab7-a3a9-af7f2dbbf8e2",
@@ -34252,7 +34269,8 @@
           ]
         }
       ],
-      "consultancies": []
+      "consultancies": [],
+      "is_visible": true
     },
     {
       "id": "18f0d03c-bf43-559a-b7d1-bf4523d6c4e0",
@@ -34284,7 +34302,8 @@
       "supervisions": [],
       "events": [],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": false
     },
     {
       "id": "5651f9b9-b4a6-5f7d-b50f-e25973e4b6b9",
@@ -34319,7 +34338,8 @@
       "supervisions": [],
       "events": [],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": false
     },
     {
       "id": "cf5f575d-5d0f-5590-bcce-6e0524888d21",
@@ -34386,7 +34406,8 @@
       "supervisions": [],
       "events": [],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": false
     },
     {
       "id": "5a0ae956-355b-5463-8072-149d2907c535",
@@ -34420,7 +34441,8 @@
       "supervisions": [],
       "events": [],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": false
     },
     {
       "id": "6ef3772a-7828-5360-b13c-2205c16f2d8b",
@@ -34455,7 +34477,8 @@
       "supervisions": [],
       "events": [],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": false
     },
     {
       "id": "fccf5101-40c0-5fcb-8c3a-85ecc1e32664",
@@ -34490,7 +34513,8 @@
       "supervisions": [],
       "events": [],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": false
     },
     {
       "id": "1cb19593-d52b-543c-9ccf-fb0bd6b18e67",
@@ -34522,7 +34546,8 @@
       "supervisions": [],
       "events": [],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": false
     },
     {
       "id": "0e724c92-dc80-51b8-a65e-3426541d6d65",
@@ -34554,7 +34579,8 @@
       "supervisions": [],
       "events": [],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": false
     },
     {
       "id": "94f282ed-eed6-5d94-b67c-e524cfb954fa",
@@ -34587,7 +34613,8 @@
       "supervisions": [],
       "events": [],
       "consultancies": [],
-      "admin_experiences": []
+      "admin_experiences": [],
+      "is_visible": false
     }
   ],
   "publications": [
