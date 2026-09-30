@@ -13,6 +13,9 @@ import {
   Globe,
   Mic2,
   BookOpen,
+  Presentation,
+  Book,
+  Bookmark,
   FileText,
   Lightbulb,
   FlaskConical,
@@ -29,10 +32,15 @@ import {
 } from "lucide-react";
 import { MOCK_FACULTY } from "@/lib/mock-data";
 import { clearAuthSession } from "@/lib/auth-guard";
+import { resolveFacultyDepartment } from "@/lib/faculty-storage";
+import { useFacultySidebarCounts, FacultySidebarCounts } from "@/hooks/useFacultySidebarCounts";
 
 type SidebarLink =
-  | { label: string; href: string; icon: any }
-  | { section: string; items: { label: string; href: string; icon: any }[] };
+  | { label: string; href: string; icon: any; countKey?: keyof FacultySidebarCounts }
+  | {
+      section: string;
+      items: { label: string; href: string; icon: any; countKey?: keyof FacultySidebarCounts }[];
+    };
 
 const sidebarLinks: SidebarLink[] = [
   { label: "Dashboard", href: "/faculty", icon: LayoutDashboard },
@@ -42,30 +50,31 @@ const sidebarLinks: SidebarLink[] = [
   {
     section: "Academic Profile & CV",
     items: [
-      { label: "Qualifications", href: "/faculty/qualifications", icon: GraduationCap },
-      { label: "Teaching Experience", href: "/faculty/teaching-exp", icon: Briefcase },
-      { label: "Courses Taught", href: "/faculty/courses", icon: BookOpenCheck },
-      { label: "Administrative Roles", href: "/faculty/admin-exp", icon: ShieldCheck },
-      { label: "Honors & Awards", href: "/faculty/honors", icon: Award },
-      { label: "Foreign Visits & Exposure", href: "/faculty/exposures", icon: Globe },
-      { label: "Invited Talks & Lectures", href: "/faculty/expert-talks", icon: Mic2 },
+      { label: "Qualifications", href: "/faculty/qualifications", icon: GraduationCap, countKey: "qualifications" },
+      { label: "Teaching Experience", href: "/faculty/teaching-exp", icon: Briefcase, countKey: "teachingExp" },
+      { label: "Courses Taught", href: "/faculty/courses", icon: BookOpenCheck, countKey: "courses" },
+      { label: "Administrative Roles", href: "/faculty/admin-exp", icon: ShieldCheck, countKey: "adminExp" },
+      { label: "Honors & Awards", href: "/faculty/honors", icon: Award, countKey: "honors" },
+      { label: "Foreign Visits & Exposure", href: "/faculty/exposures", icon: Globe, countKey: "exposures" },
+      { label: "Invited Talks & Lectures", href: "/faculty/expert-talks", icon: Mic2, countKey: "expertTalks" },
     ],
   },
   {
     section: "Research & Scholarly Output",
     items: [
-      { label: "Publications (SCI/Scopus)", href: "/faculty/publications", icon: BookOpen },
-      { label: "Patents (Granted/Filed)", href: "/faculty/patents", icon: FileText },
-      { label: "R&D Sponsored Projects", href: "/faculty/projects", icon: Lightbulb },
-      { label: "Consultancies", href: "/faculty/consultancies", icon: FlaskConical },
-      { label: "Ph.D. & PG Supervisions", href: "/faculty/supervisions", icon: Users },
-      { label: "Conferences & Events", href: "/faculty/events", icon: Calendar },
+      { label: "Journal Publications", href: "/faculty/journals", icon: BookOpen, countKey: "journals" },
+      { label: "Conference Proceedings", href: "/faculty/conferences", icon: Presentation, countKey: "conferences" },
+      { label: "Books Authored / Edited", href: "/faculty/books", icon: Book, countKey: "books" },
+      { label: "Book Chapters", href: "/faculty/book-chapters", icon: Bookmark, countKey: "bookChapters" },
+      { label: "Patents (Granted/Filed)", href: "/faculty/patents", icon: FileText, countKey: "patents" },
+      { label: "R&D Sponsored Projects", href: "/faculty/projects", icon: Lightbulb, countKey: "projects" },
+      { label: "Consultancies", href: "/faculty/consultancies", icon: FlaskConical, countKey: "consultancies" },
+      { label: "Ph.D. & PG Supervisions", href: "/faculty/supervisions", icon: Users, countKey: "supervisions" },
+      { label: "Conferences & Events", href: "/faculty/events", icon: Calendar, countKey: "events" },
     ],
   },
   { label: "Export Official CV", href: "/faculty/export", icon: Download },
 ];
-
-import { resolveFacultyDepartment } from "@/lib/faculty-storage";
 
 export function FacultySidebar() {
   const pathname = usePathname();
@@ -90,6 +99,7 @@ export function FacultySidebar() {
     ) || MOCK_FACULTY[0];
 
   const facultyDept = resolveFacultyDepartment(activeFaculty, currentUser);
+  const counts = useFacultySidebarCounts(activeFaculty);
 
   const handleLogout = () => {
     clearAuthSession();
@@ -158,19 +168,35 @@ export function FacultySidebar() {
                 <div className="space-y-0.5">
                   {item.items.map((link) => {
                     const isActive = pathname === link.href;
+                    const countVal = link.countKey ? counts[link.countKey] : undefined;
+
                     return (
                       <Link
                         key={link.href}
                         href={link.href}
                         className={cn(
-                          "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition duration-150",
+                          "group flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition duration-150",
                           isActive
                             ? "bg-[#33110e] text-white shadow-xs font-semibold"
-                            : "text-neutral-700 hover:bg-[#eedfd8]/40 hover:text-[#33110e]"
+                            : "text-neutral-700 hover:bg-[#fff9f6] hover:text-[#85261e]"
                         )}
                       >
-                        <link.icon className={cn("h-4 w-4 flex-shrink-0", isActive ? "text-amber-300" : "text-[#85261e]")} />
-                        <span className="truncate">{link.label}</span>
+                        <div className="flex items-center gap-2.5 truncate">
+                          <link.icon className={cn("h-4 w-4 flex-shrink-0", isActive ? "text-amber-300" : "text-[#85261e]")} />
+                          <span className="truncate">{link.label}</span>
+                        </div>
+                        {typeof countVal === "number" && (
+                          <span
+                            className={cn(
+                              "text-xs font-bold px-2 py-0.5 rounded-full shrink-0 ml-1.5 font-mono",
+                              isActive
+                                ? "bg-white/20 text-white"
+                                : "bg-neutral-100 text-neutral-600 group-hover:bg-[#eedfd8]"
+                            )}
+                          >
+                            {countVal}
+                          </span>
+                        )}
                       </Link>
                     );
                   })}
@@ -185,14 +211,16 @@ export function FacultySidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition duration-150",
+                "group flex items-center justify-between rounded-xl px-3 py-2 text-sm font-medium transition duration-150",
                 isActive
                   ? "bg-[#33110e] text-white shadow-xs font-semibold"
-                  : "text-neutral-700 hover:bg-[#eedfd8]/40 hover:text-[#33110e]"
+                  : "text-neutral-700 hover:bg-[#fff9f6] hover:text-[#85261e]"
               )}
             >
-              <item.icon className={cn("h-4 w-4 flex-shrink-0", isActive ? "text-amber-300" : "text-[#85261e]")} />
-              <span className="truncate">{item.label}</span>
+              <div className="flex items-center gap-2.5 truncate">
+                <item.icon className={cn("h-4 w-4 flex-shrink-0", isActive ? "text-amber-300" : "text-[#85261e]")} />
+                <span className="truncate">{item.label}</span>
+              </div>
             </Link>
           );
         })}

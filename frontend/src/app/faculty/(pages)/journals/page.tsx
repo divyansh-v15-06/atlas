@@ -2,6 +2,6 @@
 
 import PublicationCategoryManager from "@/components/faculty/PublicationCategoryManager";
 
-export default function FacultyPublicationsPage() {
-  return <PublicationCategoryManager category="ALL" />;
+export default function FacultyJournalsPage() {
+  return <PublicationCategoryManager category="Journal" />;
 }
