@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin, ExternalLink, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, ExternalLink, Globe, Database } from "lucide-react";
 
 export function PublicFooter() {
   return (
@@ -91,6 +91,11 @@ export function PublicFooter() {
               <li>
                 <Link href="/research/projects" className="hover:text-amber-300 transition">
                   Sponsored R&D Projects
+                </Link>
+              </li>
+              <li>
+                <Link href="/dbinfo" className="hover:text-amber-300 transition flex items-center gap-1.5 text-amber-300 font-semibold">
+                  Database &amp; ER Architecture <Database className="w-3.5 h-3.5" />
                 </Link>
               </li>
               <li>
