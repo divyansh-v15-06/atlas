@@ -29,27 +29,6 @@ import {
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { toast } from "sonner";
 
-function DeveloperAvatar({ src, alt, initials }: { src: string; alt: string; initials: string }) {
-  const [imgError, setImgError] = useState(false);
-
-  return (
-    <div className="relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-[#85261e] shadow-sm bg-neutral-100 shrink-0 flex items-center justify-center">
-      {!imgError ? (
-        <img
-          src={src}
-          alt={alt}
-          className="w-full h-full object-cover"
-          onError={() => setImgError(true)}
-        />
-      ) : (
-        <div className="flex flex-col items-center justify-center w-full h-full bg-[#fff9f6] text-[#85261e] font-black text-xl tracking-wider select-none">
-          <span>{initials}</span>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function BuilderInfoPage() {
   const [activeCliTab, setActiveCliTab] = useState<"status" | "architecture" | "tech">("status");
   const [copiedCli, setCopiedCli] = useState<boolean>(false);
@@ -225,20 +204,21 @@ export default function BuilderInfoPage() {
             {/* 1. DIVYANSH JAMWAL CARD */}
             <div className="bg-white rounded-3xl border border-[#eedfd8] p-6 shadow-xs hover:border-[#85261e]/40 transition space-y-5 flex flex-col justify-between">
               <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <DeveloperAvatar src="/divyansh_jamwal.jpg" alt="Divyansh Jamwal" initials="DJ" />
-                  <div>
-                    <h3 className="text-xl font-black text-[#33110e] uppercase tracking-tight">
-                      Divyansh Jamwal
-                    </h3>
-                    <p className="text-xs font-medium text-neutral-500 mt-0.5">
-                      B.Tech CSE • NIT Hamirpur
-                    </p>
-                    <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                      <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
+                <div className="space-y-2">
+                  <div className="flex items-start justify-between gap-3 flex-wrap">
+                    <div>
+                      <h3 className="text-xl font-black text-[#33110e] uppercase tracking-tight">
+                        Divyansh Jamwal
+                      </h3>
+                      <p className="text-xs font-medium text-neutral-500 mt-0.5">
+                        B.Tech CSE • NIT Hamirpur
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-[10px] font-mono font-bold px-2.5 py-1 rounded-full">
                         169+ Commits
                       </span>
-                      <span className="bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
+                      <span className="bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-mono font-bold px-2.5 py-1 rounded-full">
                         +210k+ LOC
                       </span>
                     </div>
@@ -289,20 +269,21 @@ export default function BuilderInfoPage() {
             {/* 2. SHLOK GOYAL CARD */}
             <div className="bg-white rounded-3xl border border-[#eedfd8] p-6 shadow-xs hover:border-[#85261e]/40 transition space-y-5 flex flex-col justify-between">
               <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <DeveloperAvatar src="/shlok_goyal.jpg" alt="Shlok Goyal" initials="SG" />
-                  <div>
-                    <h3 className="text-xl font-black text-[#33110e] uppercase tracking-tight">
-                      Shlok Goyal
-                    </h3>
-                    <p className="text-xs font-medium text-neutral-500 mt-0.5">
-                      B.Tech CSE • NIT Hamirpur
-                    </p>
-                    <div className="flex flex-wrap items-center gap-1.5 mt-2">
-                      <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
+                <div className="space-y-2">
+                  <div className="flex items-start justify-between gap-3 flex-wrap">
+                    <div>
+                      <h3 className="text-xl font-black text-[#33110e] uppercase tracking-tight">
+                        Shlok Goyal
+                      </h3>
+                      <p className="text-xs font-medium text-neutral-500 mt-0.5">
+                        B.Tech CSE • NIT Hamirpur
+                      </p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-[10px] font-mono font-bold px-2.5 py-1 rounded-full">
                         49+ Commits
                       </span>
-                      <span className="bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
+                      <span className="bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-mono font-bold px-2.5 py-1 rounded-full">
                         +80k+ LOC
                       </span>
                     </div>
