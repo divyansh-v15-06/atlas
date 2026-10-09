@@ -95,6 +95,7 @@ export default function BuilderInfoPage() {
   const [isLiveFetched, setIsLiveFetched] = useState<boolean>(false);
   const [activeCliTab, setActiveCliTab] = useState<"status" | "architecture" | "tech">("status");
   const [copiedCli, setCopiedCli] = useState<boolean>(false);
+  const [commitFilter, setCommitFilter] = useState<"all" | "divyansh" | "shlok">("all");
 
   useEffect(() => {
     let isMounted = true;
@@ -146,6 +147,25 @@ export default function BuilderInfoPage() {
     setTimeout(() => setCopiedCli(false), 2000);
   };
 
+  const filteredCommits = commits.filter((c) => {
+    if (commitFilter === "all") return true;
+    if (commitFilter === "divyansh") {
+      return (
+        c.authorName.toLowerCase().includes("divyansh") ||
+        c.authorAvatar.toLowerCase().includes("divyansh") ||
+        (c.authorLogin && c.authorLogin.toLowerCase().includes("divyansh"))
+      );
+    }
+    if (commitFilter === "shlok") {
+      return (
+        c.authorName.toLowerCase().includes("shlok") ||
+        c.authorAvatar.toLowerCase().includes("shlok") ||
+        (c.authorLogin && c.authorLogin.toLowerCase().includes("shlok"))
+      );
+    }
+    return true;
+  });
+
   return (
     <div className="min-h-screen bg-[#faf6f3] text-[#1c110c] font-sans selection:bg-[#85261e] selection:text-white pb-20">
       {/* 1. HERO SECTION */}
@@ -179,13 +199,13 @@ export default function BuilderInfoPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3">
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 shadow-2xs">
               <p className="text-xs uppercase font-bold text-neutral-300 tracking-wider">Total Commits</p>
-              <p className="text-2xl sm:text-3xl font-black text-amber-200 mt-1">216+</p>
+              <p className="text-2xl sm:text-3xl font-black text-amber-200 mt-1">218+</p>
               <p className="text-[11px] text-neutral-300 mt-0.5">Continuous Delivery</p>
             </div>
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 shadow-2xs">
-              <p className="text-xs uppercase font-bold text-neutral-300 tracking-wider">Live Routes</p>
-              <p className="text-2xl sm:text-3xl font-black text-white mt-1">108</p>
-              <p className="text-[11px] text-neutral-300 mt-0.5">100% Verified Uptime</p>
+              <p className="text-xs uppercase font-bold text-neutral-300 tracking-wider">Code Volume</p>
+              <p className="text-2xl sm:text-3xl font-black text-white mt-1">+290k</p>
+              <p className="text-[11px] text-neutral-300 mt-0.5">Lines of Code Pushed</p>
             </div>
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 border border-white/15 shadow-2xs">
               <p className="text-xs uppercase font-bold text-neutral-300 tracking-wider">Database Tables</p>
@@ -330,9 +350,12 @@ export default function BuilderInfoPage() {
                     <p className="text-[11px] text-neutral-500 font-medium mt-0.5">
                       B.Tech CSE • NIT Hamirpur
                     </p>
-                    <div className="flex items-center gap-1.5 mt-2">
+                    <div className="flex flex-wrap items-center gap-1.5 mt-2">
                       <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
-                        167+ Commits
+                        169+ Commits
+                      </span>
+                      <span className="bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
+                        +210k+ LOC
                       </span>
                       <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
                         Backend &amp; Infra
@@ -405,9 +428,12 @@ export default function BuilderInfoPage() {
                     <p className="text-[11px] text-neutral-500 font-medium mt-0.5">
                       B.Tech CSE • NIT Hamirpur
                     </p>
-                    <div className="flex items-center gap-1.5 mt-2">
+                    <div className="flex flex-wrap items-center gap-1.5 mt-2">
                       <span className="bg-[#fff9f6] text-[#85261e] border border-[#eedfd8] text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
                         49+ Commits
+                      </span>
+                      <span className="bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
+                        +80k+ LOC
                       </span>
                       <span className="bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
                         UI &amp; App Router
@@ -494,70 +520,99 @@ export default function BuilderInfoPage() {
             </div>
           </div>
 
-          {/* Contributor Ratio Bar */}
-          <div className="space-y-2 bg-[#fff9f6] p-4 rounded-2xl border border-[#eedfd8]">
-            <div className="flex items-center justify-between text-xs font-bold">
-              <span className="text-[#33110e] flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#85261e]" />
-                Divyansh Jamwal (167+ commits • 77%)
-              </span>
-              <span className="text-[#33110e] flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-[#3b82f6]" />
-                Shlok Goyal (49+ commits • 23%)
-              </span>
+          {/* Contributor Filter Tabs & Telemetry */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#fff9f6] p-4 rounded-2xl border border-[#eedfd8]">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs font-bold text-[#33110e]">Filter Feed:</span>
+              <button
+                type="button"
+                onClick={() => setCommitFilter("all")}
+                className={`text-xs font-bold px-3 py-1.5 rounded-xl transition cursor-pointer ${
+                  commitFilter === "all"
+                    ? "bg-[#85261e] text-white shadow-xs"
+                    : "bg-white text-neutral-700 hover:bg-neutral-100 border border-[#eedfd8]"
+                }`}
+              >
+                All Commits
+              </button>
+              <button
+                type="button"
+                onClick={() => setCommitFilter("divyansh")}
+                className={`text-xs font-bold px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 ${
+                  commitFilter === "divyansh"
+                    ? "bg-[#85261e] text-white shadow-xs"
+                    : "bg-white text-neutral-700 hover:bg-neutral-100 border border-[#eedfd8]"
+                }`}
+              >
+                <span>Divyansh Jamwal</span>
+                <span className="text-[10px] opacity-75 font-mono">(169+ commits)</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setCommitFilter("shlok")}
+                className={`text-xs font-bold px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 ${
+                  commitFilter === "shlok"
+                    ? "bg-[#85261e] text-white shadow-xs"
+                    : "bg-white text-neutral-700 hover:bg-neutral-100 border border-[#eedfd8]"
+                }`}
+              >
+                <span>Shlok Goyal</span>
+                <span className="text-[10px] opacity-75 font-mono">(49+ commits)</span>
+              </button>
             </div>
-            {/* Dual color progress bar */}
-            <div className="w-full h-3 rounded-full overflow-hidden flex bg-neutral-200">
-              <div style={{ width: "77%" }} className="bg-[#85261e] h-full transition-all" title="Divyansh Jamwal (77%)" />
-              <div style={{ width: "23%" }} className="bg-[#3b82f6] h-full transition-all" title="Shlok Goyal (23%)" />
+            <div className="text-xs text-neutral-600 font-mono text-left sm:text-right">
+              Total Codebase: <strong className="text-[#33110e]">218+ Commits</strong> • <strong className="text-[#85261e]">+290,000+ Lines</strong>
             </div>
-            <p className="text-[11px] text-neutral-500 text-right">
-              Total Verified Repository Commits: <strong>216+</strong>
-            </p>
           </div>
 
           {/* Commits List */}
           <div className="space-y-2.5">
-            {commits.map((commit, index) => (
-              <div
-                key={commit.sha + index}
-                className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-2xl border border-[#eedfd8] bg-white hover:bg-[#fff9f6]/40 transition gap-3 group"
-              >
-                <div className="flex items-start sm:items-center gap-3 min-w-0">
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#eedfd8] shrink-0 mt-0.5 sm:mt-0">
-                    <Image
-                      src={commit.authorAvatar}
-                      alt={commit.authorName}
-                      fill
-                      className="object-cover"
-                      unoptimized
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-xs font-bold text-[#1c110c] group-hover:text-[#85261e] transition truncate leading-snug">
-                      {commit.message}
-                    </p>
-                    <div className="flex items-center gap-2 text-[11px] text-neutral-500 mt-0.5">
-                      <span className="font-semibold text-neutral-700">{commit.authorName}</span>
-                      <span>•</span>
-                      <span>{commit.date}</span>
+            {filteredCommits.length === 0 ? (
+              <div className="text-center py-8 text-neutral-500 text-xs bg-[#fff9f6] rounded-2xl border border-[#eedfd8]">
+                No commits found matching the selected contributor filter.
+              </div>
+            ) : (
+              filteredCommits.map((commit, index) => (
+                <div
+                  key={commit.sha + index}
+                  className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-2xl border border-[#eedfd8] bg-white hover:bg-[#fff9f6]/40 transition gap-3 group"
+                >
+                  <div className="flex items-start sm:items-center gap-3 min-w-0">
+                    <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#eedfd8] shrink-0 mt-0.5 sm:mt-0">
+                      <Image
+                        src={commit.authorAvatar}
+                        alt={commit.authorName}
+                        fill
+                        className="object-cover"
+                        unoptimized
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-[#1c110c] group-hover:text-[#85261e] transition truncate leading-snug">
+                        {commit.message}
+                      </p>
+                      <div className="flex items-center gap-2 text-[11px] text-neutral-500 mt-0.5">
+                        <span className="font-semibold text-neutral-700">{commit.authorName}</span>
+                        <span>•</span>
+                        <span>{commit.date}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
-                  <a
-                    href={commit.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-mono text-xs font-bold text-[#85261e] bg-[#fff9f6] hover:bg-[#eedfd8] px-2.5 py-1 rounded-lg border border-[#eedfd8] transition flex items-center gap-1"
-                  >
-                    <GitCommit className="w-3.5 h-3.5" />
-                    <span>{commit.sha}</span>
-                  </a>
+                  <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
+                    <a
+                      href={commit.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-mono text-xs font-bold text-[#85261e] bg-[#fff9f6] hover:bg-[#eedfd8] px-2.5 py-1 rounded-lg border border-[#eedfd8] transition flex items-center gap-1"
+                    >
+                      <GitCommit className="w-3.5 h-3.5" />
+                      <span>{commit.sha}</span>
+                    </a>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </section>
 
