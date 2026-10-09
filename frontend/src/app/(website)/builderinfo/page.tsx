@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
   Code2,
-  GitCommit,
   GitBranch,
   Github,
   Linkedin,
@@ -26,119 +25,13 @@ import {
   Globe,
   Mail,
   RefreshCw,
-  FolderGit2,
 } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { toast } from "sonner";
 
-interface CommitItem {
-  sha: string;
-  message: string;
-  authorName: string;
-  authorLogin: string;
-  authorAvatar: string;
-  date: string;
-  url: string;
-}
-
-const FALLBACK_COMMITS: CommitItem[] = [
-  {
-    sha: "28fa2ef",
-    message: "feat(dbinfo): add interactive /dbinfo route with Mermaid ER diagrams, data dictionary, and dual-sync architecture",
-    authorName: "Divyansh Jamwal",
-    authorLogin: "divyansh-v15-06",
-    authorAvatar: "https://github.com/divyansh-v15-06.png",
-    date: "Recent",
-    url: "https://github.com/divyansh-v15-06/atlas/commit/28fa2ef",
-  },
-  {
-    sha: "fab3b84",
-    message: "feat(faculty): separate publication pages (journals, conferences, books, book-chapters) and add live sidebar count badges",
-    authorName: "Divyansh Jamwal",
-    authorLogin: "divyansh-v15-06",
-    authorAvatar: "https://github.com/divyansh-v15-06.png",
-    date: "Recent",
-    url: "https://github.com/divyansh-v15-06/atlas/commit/fab3b84",
-  },
-  {
-    sha: "67cddde",
-    message: "fix(faculty): define publonsUrl to fix 500 error on faculty detail page",
-    authorName: "Divyansh Jamwal",
-    authorLogin: "divyansh-v15-06",
-    authorAvatar: "https://github.com/divyansh-v15-06.png",
-    date: "Recent",
-    url: "https://github.com/divyansh-v15-06/atlas/commit/67cddde",
-  },
-  {
-    sha: "03a76ac",
-    message: "fix(visibility): enforce centralized faculty visibility in seed, Next.js rewrites, and stale cache overrides",
-    authorName: "Divyansh Jamwal",
-    authorLogin: "divyansh-v15-06",
-    authorAvatar: "https://github.com/divyansh-v15-06.png",
-    date: "Recent",
-    url: "https://github.com/divyansh-v15-06/atlas/commit/03a76ac",
-  },
-  {
-    sha: "71ad2b4",
-    message: "feat(portal): refine responsive design, departmental news components, and academic directory layouts",
-    authorName: "Shlok Goyal",
-    authorLogin: "Shlok1729",
-    authorAvatar: "https://github.com/Shlok1729.png",
-    date: "Recent",
-    url: "https://github.com/divyansh-v15-06/atlas/commits",
-  },
-];
-
 export default function BuilderInfoPage() {
-  const [commits, setCommits] = useState<CommitItem[]>(FALLBACK_COMMITS);
-  const [isLoadingCommits, setIsLoadingCommits] = useState<boolean>(true);
-  const [isLiveFetched, setIsLiveFetched] = useState<boolean>(false);
   const [activeCliTab, setActiveCliTab] = useState<"status" | "architecture" | "tech">("status");
   const [copiedCli, setCopiedCli] = useState<boolean>(false);
-  const [commitFilter, setCommitFilter] = useState<"all" | "divyansh" | "shlok">("all");
-
-  useEffect(() => {
-    let isMounted = true;
-    const fetchGithubCommits = async () => {
-      try {
-        const res = await fetch("https://api.github.com/repos/divyansh-v15-06/atlas/commits?per_page=8");
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
-            const mapped: CommitItem[] = data.map((item: any) => ({
-              sha: (item.sha || "").substring(0, 7),
-              message: item.commit?.message?.split("\n")[0] || "Update portal codebase",
-              authorName: item.commit?.author?.name || item.author?.login || "Contributor",
-              authorLogin: item.author?.login || "divyansh-v15-06",
-              authorAvatar: item.author?.avatar_url || `https://github.com/${item.author?.login || "divyansh-v15-06"}.png`,
-              date: item.commit?.author?.date
-                ? new Date(item.commit.author.date).toLocaleDateString("en-IN", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                  })
-                : "Recent",
-              url: item.html_url || `https://github.com/divyansh-v15-06/atlas/commit/${item.sha}`,
-            }));
-
-            if (isMounted) {
-              setCommits(mapped);
-              setIsLiveFetched(true);
-            }
-          }
-        }
-      } catch (err) {
-        console.warn("Using offline commit history fallback:", err);
-      } finally {
-        if (isMounted) setIsLoadingCommits(false);
-      }
-    };
-
-    fetchGithubCommits();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   const handleCopyCli = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -146,25 +39,6 @@ export default function BuilderInfoPage() {
     toast.success("Command copied to clipboard!");
     setTimeout(() => setCopiedCli(false), 2000);
   };
-
-  const filteredCommits = commits.filter((c) => {
-    if (commitFilter === "all") return true;
-    if (commitFilter === "divyansh") {
-      return (
-        c.authorName.toLowerCase().includes("divyansh") ||
-        c.authorAvatar.toLowerCase().includes("divyansh") ||
-        (c.authorLogin && c.authorLogin.toLowerCase().includes("divyansh"))
-      );
-    }
-    if (commitFilter === "shlok") {
-      return (
-        c.authorName.toLowerCase().includes("shlok") ||
-        c.authorAvatar.toLowerCase().includes("shlok") ||
-        (c.authorLogin && c.authorLogin.toLowerCase().includes("shlok"))
-      );
-    }
-    return true;
-  });
 
   return (
     <div className="min-h-screen bg-[#faf6f3] text-[#1c110c] font-sans selection:bg-[#85261e] selection:text-white pb-20">
@@ -344,10 +218,7 @@ export default function BuilderInfoPage() {
                     <h3 className="text-xl font-black text-[#33110e] uppercase tracking-tight">
                       Divyansh Jamwal
                     </h3>
-                    <p className="text-xs font-bold text-[#85261e]">
-                      Lead Full-Stack Architect &amp; DevOps
-                    </p>
-                    <p className="text-[11px] text-neutral-500 font-medium mt-0.5">
+                    <p className="text-xs font-medium text-neutral-500 mt-0.5">
                       B.Tech CSE • NIT Hamirpur
                     </p>
                     <div className="flex flex-wrap items-center gap-1.5 mt-2">
@@ -356,9 +227,6 @@ export default function BuilderInfoPage() {
                       </span>
                       <span className="bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
                         +210k+ LOC
-                      </span>
-                      <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                        Backend &amp; Infra
                       </span>
                     </div>
                   </div>
@@ -422,10 +290,7 @@ export default function BuilderInfoPage() {
                     <h3 className="text-xl font-black text-[#33110e] uppercase tracking-tight">
                       Shlok Goyal
                     </h3>
-                    <p className="text-xs font-bold text-[#85261e]">
-                      Lead Frontend Architect &amp; UI/UX
-                    </p>
-                    <p className="text-[11px] text-neutral-500 font-medium mt-0.5">
+                    <p className="text-xs font-medium text-neutral-500 mt-0.5">
                       B.Tech CSE • NIT Hamirpur
                     </p>
                     <div className="flex flex-wrap items-center gap-1.5 mt-2">
@@ -434,9 +299,6 @@ export default function BuilderInfoPage() {
                       </span>
                       <span className="bg-amber-50 text-amber-900 border border-amber-200 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full">
                         +80k+ LOC
-                      </span>
-                      <span className="bg-blue-50 text-blue-800 border border-blue-200 text-[10px] font-bold px-2 py-0.5 rounded-full">
-                        UI &amp; App Router
                       </span>
                     </div>
                   </div>
@@ -482,137 +344,6 @@ export default function BuilderInfoPage() {
                 </a>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* ========================================================================= */}
-        {/* LIVE GITHUB REPOSITORY & COMMITS STREAM */}
-        {/* ========================================================================= */}
-        <section className="bg-white rounded-3xl border border-[#eedfd8] p-6 sm:p-8 shadow-xs space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#eedfd8] pb-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-                <h3 className="text-lg sm:text-xl font-black text-[#33110e] uppercase tracking-tight flex items-center gap-2">
-                  <FolderGit2 className="w-5 h-5 text-[#85261e]" />
-                  Live Repository Activity &amp; Commit Feed
-                </h3>
-              </div>
-              <p className="text-xs text-neutral-600 mt-1">
-                Real-time commit telemetry from GitHub repository{" "}
-                <code className="text-[#85261e] font-mono font-bold">divyansh-v15-06/atlas</code>
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-mono text-neutral-500 bg-[#fff9f6] border border-[#eedfd8] px-3 py-1 rounded-full">
-                {isLiveFetched ? "🟢 Live GitHub API" : "📦 Synchronized Snapshot"}
-              </span>
-              <a
-                href="https://github.com/divyansh-v15-06/atlas"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition"
-              >
-                <span>View on GitHub</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
-            </div>
-          </div>
-
-          {/* Contributor Filter Tabs & Telemetry */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#fff9f6] p-4 rounded-2xl border border-[#eedfd8]">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-bold text-[#33110e]">Filter Feed:</span>
-              <button
-                type="button"
-                onClick={() => setCommitFilter("all")}
-                className={`text-xs font-bold px-3 py-1.5 rounded-xl transition cursor-pointer ${
-                  commitFilter === "all"
-                    ? "bg-[#85261e] text-white shadow-xs"
-                    : "bg-white text-neutral-700 hover:bg-neutral-100 border border-[#eedfd8]"
-                }`}
-              >
-                All Commits
-              </button>
-              <button
-                type="button"
-                onClick={() => setCommitFilter("divyansh")}
-                className={`text-xs font-bold px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 ${
-                  commitFilter === "divyansh"
-                    ? "bg-[#85261e] text-white shadow-xs"
-                    : "bg-white text-neutral-700 hover:bg-neutral-100 border border-[#eedfd8]"
-                }`}
-              >
-                <span>Divyansh Jamwal</span>
-                <span className="text-[10px] opacity-75 font-mono">(169+ commits)</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setCommitFilter("shlok")}
-                className={`text-xs font-bold px-3 py-1.5 rounded-xl transition cursor-pointer flex items-center gap-1.5 ${
-                  commitFilter === "shlok"
-                    ? "bg-[#85261e] text-white shadow-xs"
-                    : "bg-white text-neutral-700 hover:bg-neutral-100 border border-[#eedfd8]"
-                }`}
-              >
-                <span>Shlok Goyal</span>
-                <span className="text-[10px] opacity-75 font-mono">(49+ commits)</span>
-              </button>
-            </div>
-            <div className="text-xs text-neutral-600 font-mono text-left sm:text-right">
-              Total Codebase: <strong className="text-[#33110e]">218+ Commits</strong> • <strong className="text-[#85261e]">+290,000+ Lines</strong>
-            </div>
-          </div>
-
-          {/* Commits List */}
-          <div className="space-y-2.5">
-            {filteredCommits.length === 0 ? (
-              <div className="text-center py-8 text-neutral-500 text-xs bg-[#fff9f6] rounded-2xl border border-[#eedfd8]">
-                No commits found matching the selected contributor filter.
-              </div>
-            ) : (
-              filteredCommits.map((commit, index) => (
-                <div
-                  key={commit.sha + index}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-2xl border border-[#eedfd8] bg-white hover:bg-[#fff9f6]/40 transition gap-3 group"
-                >
-                  <div className="flex items-start sm:items-center gap-3 min-w-0">
-                    <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#eedfd8] shrink-0 mt-0.5 sm:mt-0">
-                      <Image
-                        src={commit.authorAvatar}
-                        alt={commit.authorName}
-                        fill
-                        className="object-cover"
-                        unoptimized
-                      />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-xs font-bold text-[#1c110c] group-hover:text-[#85261e] transition truncate leading-snug">
-                        {commit.message}
-                      </p>
-                      <div className="flex items-center gap-2 text-[11px] text-neutral-500 mt-0.5">
-                        <span className="font-semibold text-neutral-700">{commit.authorName}</span>
-                        <span>•</span>
-                        <span>{commit.date}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
-                    <a
-                      href={commit.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-mono text-xs font-bold text-[#85261e] bg-[#fff9f6] hover:bg-[#eedfd8] px-2.5 py-1 rounded-lg border border-[#eedfd8] transition flex items-center gap-1"
-                    >
-                      <GitCommit className="w-3.5 h-3.5" />
-                      <span>{commit.sha}</span>
-                    </a>
-                  </div>
-                </div>
-              ))
-            )}
           </div>
         </section>
 
@@ -665,7 +396,7 @@ export default function BuilderInfoPage() {
                   [CORE DIRECTORS] &nbsp;Faculty Mentor: Dr. Arun Kumar Yadav (CS012)
                 </p>
                 <p className="text-neutral-400">
-                  [ENGINEERING] &nbsp;&nbsp;&nbsp;Divyansh Jamwal (Systems) &bull; Shlok Goyal (Frontend)
+                  [ENGINEERING] &nbsp;&nbsp;&nbsp;Divyansh Jamwal &bull; Shlok Goyal
                 </p>
               </>
             )}
