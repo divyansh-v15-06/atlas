@@ -255,7 +255,7 @@ export default function BuilderInfoPage() {
                   <span>GitHub Profile</span>
                 </a>
                 <a
-                  href="https://www.linkedin.com/in/divyansh-jamwal-95401b341/?isSelfProfile=true"
+                  href="https://www.linkedin.com/in/divyansh-jamwal-95401b341"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-[#0a66c2] hover:bg-[#084e96] text-white text-xs font-bold transition shadow-xs"
