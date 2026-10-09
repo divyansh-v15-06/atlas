@@ -173,7 +173,7 @@ export default function BuilderInfoPage() {
               {/* Action Link to Portfolio */}
               <div className="pt-2">
                 <Link
-                  href="/people/faculty/cs12"
+                  href="/people/faculty/cs012"
                   className="inline-flex items-center gap-2 rounded-xl bg-[#85261e] hover:bg-[#33110e] text-white px-4 py-2.5 text-xs font-bold shadow-xs hover:shadow-md transition cursor-pointer"
                 >
                   <span>Explore Dr. Arun Kumar Yadav&apos;s Faculty Portfolio</span>
