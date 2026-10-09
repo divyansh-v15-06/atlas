@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone, MapPin, ExternalLink, Globe, Database } from "lucide-react";
+import { Mail, Phone, MapPin, ExternalLink, Globe, Database, Code2 } from "lucide-react";
 
 export function PublicFooter() {
   return (
@@ -99,6 +99,11 @@ export function PublicFooter() {
                 </Link>
               </li>
               <li>
+                <Link href="/builderinfo" className="hover:text-amber-300 transition flex items-center gap-1.5 text-amber-300 font-semibold">
+                  Developers &amp; Credits <Code2 className="w-3.5 h-3.5" />
+                </Link>
+              </li>
+              <li>
                 <Link href="/faculty/login" className="hover:text-amber-300 transition flex items-center gap-1.5">
                   Faculty Login Portal <ExternalLink className="w-3.5 h-3.5 opacity-60" />
                 </Link>
@@ -141,8 +146,12 @@ export function PublicFooter() {
 
         <div className="mt-10 pt-6 border-t border-neutral-800 text-center text-sm text-neutral-400 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p>© {new Date().getFullYear()} National Institute of Technology Hamirpur. All Rights Reserved.</p>
-          <p className="text-xs text-neutral-500">
-            Maintained by Department of Computer Science & Engineering, NIT Hamirpur.
+          <p className="text-xs text-neutral-500 flex flex-wrap items-center justify-center gap-2">
+            <span>Maintained by Department of Computer Science &amp; Engineering, NIT Hamirpur.</span>
+            <span>•</span>
+            <Link href="/builderinfo" className="text-amber-400 hover:underline font-medium">
+              Meet the Builders
+            </Link>
           </p>
         </div>
       </div>
