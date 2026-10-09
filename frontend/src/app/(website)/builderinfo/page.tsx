@@ -214,10 +214,10 @@ export default function BuilderInfoPage() {
             <div className="flex flex-col items-center shrink-0">
               <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-2xl overflow-hidden border-3 border-[#85261e] shadow-md bg-[#fff9f6]">
                 <Image
-                  src="https://portfolios.nith.ac.in/uploads/member_details/85.jpg"
+                  src="/dr_arun_kumar_yadav.jpg"
                   alt="Dr. Arun Kumar Yadav"
                   fill
-                  className="object-cover"
+                  className="object-cover object-top"
                   unoptimized
                 />
               </div>
@@ -709,3 +709,4 @@ export default function BuilderInfoPage() {
     </div>
   );
 }
+
